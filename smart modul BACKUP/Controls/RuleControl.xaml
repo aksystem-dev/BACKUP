@@ -1,0 +1,369 @@
+﻿<UserControl x:Class="smart_modul_BACKUP.RuleControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:smart_modul_BACKUP"
+             xmlns:model="clr-namespace:SmartModulBackupClasses;assembly=SmartModulBackupClasses"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             xmlns:debug="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=model:BackupRule}" d:DesignWidth="800" >
+
+    <UserControl.Resources>
+
+        <Style TargetType="local:LabelTextBox" x:Key="ltb_bindToValid">
+            <Setter Property="LabelWidth" Value="150" />
+
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Valid, Mode=OneWay}" Value="false">
+                    <Setter Property="TextBoxBorderBrush" Value="Red" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Label" x:Key="h1">
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Background" Value="{StaticResource Gray1}" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+
+        <Style TargetType="local:LabelTextBox">
+            <Setter Property="LabelWidth" Value="150" />
+        </Style>
+
+        <Style TargetType="local:LabelPasswordBox">
+            <Setter Property="LabelWidth" Value="150" />
+        </Style>
+
+        <Style TargetType="StackPanel" x:Key="Block">
+            <Setter Property="Background" Value="{StaticResource Gray2}" />
+            <Setter Property="Margin" Value="15,15,15,0" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="Header">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="0,0,0,20" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="Background" Value="{StaticResource Blue1}" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical">
+
+        <StackPanel Style="{StaticResource Block}">
+
+            <!--#region  PODMÍNKY SPUŠTĚNÍ-->
+            <Label Content="PODMÍNKY SPUŠTĚNÍ" Style="{StaticResource Header}" />
+
+            <!--#region  ČAS SPUŠTĚNÍ-->
+
+            <Border Style="{StaticResource Block2}">
+                <StackPanel Orientation="Vertical">
+                    <Label Content="ČAS SPUŠTĚNÍ" Style="{StaticResource Header2}"  />
+
+                    <StackPanel Orientation="Vertical" Margin="15">
+                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                            <RadioButton Content="V" GroupName="timeRadio" x:Name="timeSingle" Checked="UpdateTime" IsChecked="True"
+                                         VerticalAlignment="Center" Margin="10,0,0,0" />
+                            <TextBox Width="40" x:Name="txt_h" TextChanged="UpdateTime" 
+                                     VerticalAlignment="Center" 
+                                     PreviewKeyDown="TimeFieldKeyDown" />
+                            <Label Content=":" VerticalAlignment="Center" />
+                            <TextBox Width="40" x:Name="txt_m" TextChanged="UpdateTime" VerticalAlignment="Center" 
+                                     PreviewKeyDown="TimeFieldKeyDown" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                            <RadioButton Content="OD" GroupName="timeRadio" x:Name="timeInterval" Checked="UpdateTime" 
+                                 VerticalAlignment="Center" Margin="10,0,0,0" />
+                            <TextBox Width="40" x:Name="txt_h_min" TextChanged="UpdateTime" VerticalAlignment="Center" 
+                             PreviewKeyDown="TimeFieldKeyDown" />
+                            <Label Content=":" VerticalAlignment="Center" />
+                            <TextBox Width="40" x:Name="txt_m_min" TextChanged="UpdateTime" VerticalAlignment="Center" 
+                             PreviewKeyDown="TimeFieldKeyDown" />
+                            <Label Content="DO" VerticalAlignment="Center" />
+                            <TextBox Width="40" x:Name="txt_h_max" TextChanged="UpdateTime" VerticalAlignment="Center" 
+                             PreviewKeyDown="TimeFieldKeyDown" />
+                            <Label Content=":" VerticalAlignment="Center" />
+                            <TextBox Width="40" x:Name="txt_m_max" TextChanged="UpdateTime" VerticalAlignment="Center" 
+                             PreviewKeyDown="TimeFieldKeyDown" />
+                            <Label Content="KAŽDÝCH" VerticalAlignment="Center" />
+                            <TextBox Width="40" x:Name="txt_h_int" TextChanged="UpdateTime" VerticalAlignment="Center" 
+                             PreviewKeyDown="TimeFieldKeyDown" />
+                            <Label Content=":" VerticalAlignment="Center" />
+                            <TextBox Width="40" x:Name="txt_m_int" TextChanged="UpdateTime" VerticalAlignment="Center"
+                             PreviewKeyDown="TimeFieldKeyDown" />
+                        </StackPanel>
+
+                        <Label FontSize="12" Foreground="Red" Visibility="Collapsed" Content="X" x:Name="label_timeValid" 
+                             Margin="0,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+
+            <!--#endregion-->
+            <!--#region DEN V TÝDNU-->
+
+            <Border Style="{StaticResource Block2}">
+                <StackPanel Orientation="Vertical">
+                    <Label Style="{StaticResource Header2}" Content="DATUM SPUŠTĚNÍ" />
+
+                    <StackPanel Orientation="Vertical" Margin="15" >
+                        <CheckBox Content="OMEZIT DNY V TÝDNU" FontWeight="Bold" Margin="5,0,0,0" x:Name="cb_limitWeekdays" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" />
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                            <CheckBox Content="PO" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" x:Name="cb_monday" Margin="5" />
+                            <CheckBox Content="ÚT" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" x:Name="cb_tuesday" Margin="5" />
+                            <CheckBox Content="ST" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" x:Name="cb_wednesday" Margin="5" />
+                            <CheckBox Content="ČT" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" x:Name="cb_thursday" Margin="5" />
+                            <CheckBox Content="PÁ" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" x:Name="cb_friday" Margin="5" />
+                            <CheckBox Content="SO" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" x:Name="cb_saturday" Margin="5" />
+                            <CheckBox Content="NE" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" x:Name="cb_sunday" Margin="5" />
+                        </StackPanel>
+
+
+                        <!--#endregion-->
+                        <!--#region MĚSÍC-->
+
+                        <CheckBox Content="OMEZIT MĚSÍCE" FontWeight="Bold" Margin="5,0,0,0" x:Name="cb_limitMonths" Checked="UpdateMonths" Unchecked="UpdateMonths" />
+                        <StackPanel Orientation="Horizontal" Margin="10" x:Name="panel_months">
+                        </StackPanel>
+
+                        <!--#endregion-->
+                        <!--<local:LabelTextBox LabelText="ČAS SPUŠTĚNÍ *:"
+                                    Text="{Binding Path=Conditions.Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Valid="{Binding Path=Conditions.TimeValid, Mode=OneWay}"/>-->
+                        <!--<local:LabelTextBox LabelText="MĚSÍC:"
+                                    Text="{Binding Path=Conditions.Month, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Valid="{Binding Path=Conditions.MonthValid, Mode=OneWay}"/> -->
+                        <local:LabelTextBox LabelText="DEN V MĚSÍCI:" Style="{StaticResource ltb_bindToValid}"
+                                    Text="{Binding Path=Conditions.DayInMonth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Valid="{Binding Path=Conditions.DayInMonthValid, Mode=OneWay}"/>
+                        <!--
+                <local:LabelTextBox LabelText="DEN V TÝDNU:"
+                                    Text="{Binding Path=Conditions.DayInWeek, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Valid="{Binding Path=Conditions.DayInWeekValid, Mode=OneWay}"/>-->
+                        <local:LabelTextBox LabelText="DEN V ROCE:" Style="{StaticResource ltb_bindToValid}"
+                                    Text="{Binding Path=Conditions.DayInYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Valid="{Binding Path=Conditions.DayInYearValid, Mode=OneWay}"/>
+                        <!--#endregion-->
+
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+
+        <!--<Label Content="ZDROJE ZÁLOHY" Style="{StaticResource h1}" />-->
+
+        <StackPanel Style="{StaticResource Block}">
+
+            <Label Style="{StaticResource Header}" Content="ZDROJE ZÁLOHY" />
+
+            <!--#region ZDROJE ZÁLOHY: SLOŽKY-->
+            <Border Padding="5" Margin="10,10,10,0" Background="{StaticResource Gray1}">
+                <DockPanel>
+                    <Label Content="SLOŽKY" FontSize="16" FontWeight="Bold" Foreground="Black" 
+                               DockPanel.Dock="Left" VerticalAlignment="Center" />
+                    <Button x:Name="btn_addFolderSource"
+                                Content="+" HorizontalAlignment="Right" Padding="2"
+                                FontSize="18" FontWeight="Bold"
+                                Width="40"
+                                DockPanel.Dock="Right" />
+                    <Button x:Name="btn_removeFolderSource"
+                                Content="-" HorizontalAlignment="Right" Padding="2"
+                                FontSize="18" FontWeight="Bold"
+                                Width="40"
+                                DockPanel.Dock="Right" />
+                </DockPanel>
+            </Border>
+
+            <ItemsControl Margin="10,0,10,10" 
+                              Background="{StaticResource Gray3}" Name="FolderBackups">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:BackupSourceModel}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <CheckBox Content="" Padding="0"  Grid.Row="0" Grid.Column="0" 
+                                          VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                          Margin="10" IsChecked="{Binding Path=selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <local:PathTextbox Margin="-6,0,0,0"
+                                                   Text="{Binding Path=source.path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                   PathDialogType="FolderBrowser"
+                                                   Grid.Row="0" Grid.Column="1" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!--#endregion-->
+
+            <!--#region ZDROJE ZÁLOHY: SOUBORY-->
+            <Border Padding="5" Margin="10,10,10,0" Background="{StaticResource Gray1}">
+                <DockPanel>
+                    <Label Content="SOUBORY" FontSize="16" FontWeight="Bold" Foreground="Black" 
+                               DockPanel.Dock="Left" VerticalAlignment="Center" />
+                    <Button x:Name="btn_addFileSource"
+                                Content="+" HorizontalAlignment="Right" Padding="2"
+                                FontSize="18" FontWeight="Bold"
+                                Width="40"
+                                DockPanel.Dock="Right" />
+                    <Button x:Name="btn_removeFileSource"
+                                Content="-" HorizontalAlignment="Right" Padding="2"
+                                FontSize="18" FontWeight="Bold"
+                                Width="40"
+                                DockPanel.Dock="Right" />
+                </DockPanel>
+            </Border>
+
+            <ItemsControl Margin="10,0,10,10" 
+                              Background="{StaticResource Gray3}" Name="IndividualFileBackups">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:BackupSourceModel}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <CheckBox Content="" Padding="0"  Grid.Row="0" Grid.Column="0" 
+                                          VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                          Margin="10" IsChecked="{Binding Path=selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <local:PathTextbox Margin="-6,0,0,0"
+                                                   Text="{Binding Path=source.path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                   PathDialogType="OpenFile"
+                                                   Grid.Row="0" Grid.Column="1" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!--#endregion-->
+
+            <!--#region ZDROJE ZÁLOHY: DATABÁZE-->
+            <Border Padding="5" Margin="10,10,10,0" Background="{StaticResource Gray1}">
+                <DockPanel>
+                    <Label Content="DATABÁZE" FontSize="16" FontWeight="Bold" Foreground="Black" 
+                                   DockPanel.Dock="Left" VerticalAlignment="Center" />
+
+                    <StackPanel Orientation="Horizontal" Margin="10,0,10,0" DockPanel.Dock="Right"
+                                    HorizontalAlignment="Right">
+                        <Button Content="ZÁLOHOVAT VŠECHNY" Padding="5"
+                                FontSize="12" FontWeight="Bold" Click="BackupAllDb" />
+                        <Button Content="NEZÁLOHOVAT ŽÁDNÉ" Padding="5"
+                                FontSize="12" FontWeight="Bold" Click="DontBackupAllDb" />
+                        <Button Content="AKTUALIZOVAT SEZNAM" Click="_dbReload"
+                                    FontSize="12" FontWeight="Bold" Padding="5" />
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <ItemsControl Name="DbBackups" Margin="10,0,10,10"
+                                  AlternationCount="2">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:BackupSourceModel}">
+                        <Grid Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},
+                                                           Path=(ItemsControl.AlternationIndex),
+                                                           Converter={StaticResource alternator}}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Margin="10"
+                                           Content="{Binding Path=DbInfo.name}" Grid.Row="0" Grid.Column="0"
+                                           VerticalAlignment="Center" FontSize="16"
+                                           FontWeight="{Binding Path=selected,
+                                                                Converter={StaticResource bool2bold},
+                                                                ConverterParameter={StaticResource true}}"
+                                           Foreground="{Binding Path=self,Mode=OneWay, 
+                                                                Converter={StaticResource bak_src_to_color}}"/>
+
+                            <Label Margin="10"
+                                           Content="{Binding Path=DbInfo.firma}" Grid.Row="0" Grid.Column="1"
+                                           VerticalAlignment="Center" FontSize="16"
+                                           FontWeight="{Binding Path=selected,
+                                                                Converter={StaticResource bool2bold},
+                                                                ConverterParameter={StaticResource true}}"
+                                           Foreground="{Binding Path=self,Mode=OneWay, 
+                                                                Converter={StaticResource bak_src_to_color}}"/>
+
+                            <StackPanel Margin="10"
+                                                Grid.Row="0" Grid.Column="2"
+                                                Height="Auto" VerticalAlignment="Center">
+                                <RadioButton Loaded="RadioButtonLoaded"
+                                                     Content="Zálohovat"
+                                                     Checked="BackupChecked"
+                                                     IsChecked="{Binding Path=IsEnabled, Mode=OneWay}"/>
+                                <RadioButton Loaded="RadioButtonLoaded"
+                                                     Content="Nezálohovat"
+                                                     Checked="BackupUnchecked"
+                                                     IsChecked="{Binding Path=IsDisabled, Mode=OneWay}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+       
+        <!--</ScrollViewer>-->
+        <!--#endregion-->
+        </StackPanel>
+
+        <!--#region NASTAVENÍ ZÁLOH-->
+
+        <StackPanel Style="{StaticResource Block}">
+
+            <Label Style="{StaticResource Header}" Content="NASTAVENÍ ZÁLOH" />
+
+            <Grid Margin="0,0,0,15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Grid.Row="0">
+                    <Label FontSize="18" FontWeight="Bold" Margin="5" Content="LOKÁLNÍ ZÁLOHY" />
+                    <local:LabelTextBox x:Name="txt_localBackupCount" LabelWidth="150" LabelText="MAX POČET ZÁLOH:"
+                                            Text="{Binding Path=LocalBackups.MaxBackups, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <Rectangle Grid.Column="1" Grid.Row="0" 
+                               VerticalAlignment="Stretch" HorizontalAlignment="Center"
+                               Width="5"
+                               Margin="10"
+                               Fill="{StaticResource Gray1}" />
+
+                <StackPanel Grid.Column="2" Grid.Row="0">
+                    <Label FontSize="18" FontWeight="Bold" Margin="5" Content="ZÁLOHY NA SERVERU" />
+                    <local:LabelTextBox x:Name="txt_remoteBackupsCount" LabelWidth="150" LabelText="MAX POČET ZÁLOH:"
+                                            Text="{Binding Path=RemoteBackups.MaxBackups, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </Grid>
+            <!--#endregion-->
+
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,86 @@
+﻿<Page x:Class="smart_modul_BACKUP.RulePage" x:Name="page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:smart_modul_BACKUP"
+      xmlns:smb="clr-namespace:SmartModulBackupClasses;assembly=SmartModulBackupClasses"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="RulePage"
+      KeepAlive="True">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        
+        <ScrollViewer IsEnabled="True" Grid.Row="1" Grid.Column="0">
+            <StackPanel Orientation="Vertical" Margin="0,0,0,15">
+                <ItemsControl ItemsSource="{Binding}" x:Name="RuleList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type smb:BackupRule}">
+                            <Border Style="{StaticResource Top}" Margin="10,10,0,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Background="{x:Null}" BorderBrush="{x:Null}" Width="100" Height="100">
+                                        <local:ToggleOnOff VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   Foreground="White" Width="30" Height="60" FontSize="8" ToggleMargin="3"
+                                                   IsToggledOn="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                   AnimationDuration="0:0:0.1" />
+                                    </Border>
+                                    <Label Foreground="White" Content="{Binding Path=Name}" FontSize="30" Grid.Column="1" 
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" />
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                        <!--<StackPanel.Resources>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Width" Value="40" />
+                                            <Setter Property="Height" Value="40" />
+                                            <Setter Property="Margin" Value="0" />
+                                        </Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TransparentButton}">
+                                            <Setter Property="Padding" Value="10" />
+                                            <Setter Property="Margin" Value="15,15,0,15" />
+                                        </Style>
+                                    </StackPanel.Resources>-->
+
+
+                                        <Button Click="singleBackup" ToolTip="JEDNORÁZOVÁ ZÁLOHA">
+                                            <Image Source="{StaticResource backup}" />
+                                        </Button>
+                                        <Button Click="ruleClick" ToolTip="UPRAVIT" >
+                                            <Image Source="{StaticResource edit}" />
+                                        </Button>
+                                        <Button Click="deleteRule" ToolTip="ODSTRANIT" Margin="15">
+                                            <Image Source="{StaticResource delete}" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Border Margin="10">
+                    <Button Style="{StaticResource TransparentButton}" Padding="10" Click="btn_click_addRule"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{StaticResource plus}" Width="30" Height="30" Margin="10" 
+                                   VerticalAlignment="Center" />
+                            <Label FontSize="24" FontWeight="Bold" Content="PŘIDAT PRAVIDLO" 
+                                   VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

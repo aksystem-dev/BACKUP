@@ -1,0 +1,11 @@
+C:\Users\marti\Documents\C#\SmartModulBackupClasses\bin\Debug\SmartModulBackupClasses.dll
+C:\Users\marti\Documents\C#\SmartModulBackupClasses\bin\Debug\SmartModulBackupClasses.pdb
+C:\Users\marti\Documents\C#\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.csprojAssemblyReference.cache
+C:\Users\marti\Documents\C#\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.dll
+C:\Users\marti\Documents\C#\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.pdb
+C:\Users\marti\Documents\smart modul BACKUP\build (debug)\SmartModulBackupClasses.dll
+C:\Users\marti\Documents\smart modul BACKUP\build (debug)\SmartModulBackupClasses.pdb
+C:\Users\marti\Documents\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.dll
+C:\Users\marti\Documents\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.pdb
+C:\Users\marti\Documents\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.csprojAssemblyReference.cache
+C:\Users\marti\Documents\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.csproj.CopyComplete

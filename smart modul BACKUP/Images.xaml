@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:smart_modul_BACKUP">
+    <BitmapImage x:Key="edit" UriSource="/Img/001-pencil-edit-button.png" />
+    <BitmapImage x:Key="delete" UriSource="/Img/003-delete.png" />
+    <BitmapImage x:Key="backup" UriSource="/Img/file-upload.png" />
+    <BitmapImage x:Key="back" UriSource="/Img/004-left-arrow.png" />
+    <BitmapImage x:Key="restore" UriSource="/Img/restore.png" />
+
+    <BitmapImage x:Key="plus" UriSource="/Img/plus_dark.png" />
+    <BitmapImage x:Key="ok" UriSource="/Img/ok.png" />
+    <BitmapImage x:Key="fail" UriSource="/Img/fail.png" />
+    <BitmapImage x:Key="warn" UriSource="/Img/warning.png" />
+</ResourceDictionary>

@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="smart_modul_BACKUP.ToggleOnOff" x:Name="root" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="smart_modul_BACKUP"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="LightGray" 
+             MouseUp="clicked">
+    <Border CornerRadius="{Binding ElementName=root, Path=CornerRadius}"
+            x:Name="border" IsMouseDirectlyOverChanged="border_mouseOverChanged">
+        <Grid Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="Label" >
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                </Style>
+            </Grid.Resources>
+
+            <Border CornerRadius="{Binding ElementName=root, Path=CornerRadius}" Background="{x:Null}" Panel.ZIndex="10"
+                    x:Name="borderInner" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+
+            <Ellipse x:Name="Toggle" Stroke="{x:Null}" Panel.ZIndex="5"
+                     Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                     VerticalAlignment="Center" HorizontalAlignment="Center"
+                     Fill="{Binding ElementName=root, Path=CurrentToggleColor}"
+                     Width="{Binding ElementName=root, Path=ToggleDiameter}"
+                     Height="{Binding ElementName=root, Path=ToggleDiameter}" RenderTransformOrigin="0.5,0.5" >
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="{Binding ElementName=root, Path=ToggleXTranslate}"
+                                            Y="{Binding ElementName=root, Path=ToggleYTranslate}" />
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+
+            <Label Content="ON" Panel.ZIndex="7"
+                   Foreground="{Binding ElementName=root, Path=Foreground}"
+                   Grid.Column="{Binding ElementName=root, Path=OnCol}"
+                   Grid.Row="{Binding ElementName=root, Path=OnRow}"
+                   Grid.ColumnSpan="{Binding ElementName=root, Path=ColSpan}"
+                   Grid.RowSpan="{Binding ElementName=root,Path=RowSpan}" />
+            <Label Content="OFF" Panel.ZIndex="7"
+                   Foreground="{Binding ElementName=root, Path=Foreground}"
+                   Grid.Column="{Binding ElementName=root, Path=OffCol}"
+                   Grid.Row="{Binding ElementName=root, Path=OffRow}"
+                   Grid.ColumnSpan="{Binding ElementName=root, Path=ColSpan}"
+                   Grid.RowSpan="{Binding ElementName=root,Path=RowSpan}"  />
+
+        </Grid>
+    </Border>
+</UserControl>

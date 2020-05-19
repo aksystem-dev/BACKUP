@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:smart_modul_BACKUP">
+
+    <Color x:Key="blue-2">#0c1145</Color>
+    <Color x:Key="blue-1">#181f66</Color>
+    <Color x:Key="blue0">#252c7a</Color>
+    <Color x:Key="blue1">#5259ab</Color>
+    <Color x:Key="blue2">#9197d9</Color>
+    <Color x:Key="background">#ffffff</Color>
+    <Color x:Key="gray-1">#808080</Color>
+    <Color x:Key="gray0">#a6a6a6</Color>
+    <Color x:Key="gray1">#c2c2c2</Color>
+    <Color x:Key="gray2">#dedede</Color>
+    <Color x:Key="gray3">#ededed</Color>
+
+    <Color x:Key="unselected">#da2c35</Color>
+    <Color x:Key="enabledBackup">#9bc225</Color>
+    <Color x:Key="disabledBackup">#ffa310</Color>
+
+    <SolidColorBrush x:Key="Blue-2" Color="{StaticResource blue-2}" />
+    <SolidColorBrush x:Key="Blue-1" Color="{StaticResource blue-1}" />
+    <SolidColorBrush x:Key="Blue0" Color="{StaticResource blue0}" />
+    <SolidColorBrush x:Key="Blue1" Color="{StaticResource blue1}" />
+    <SolidColorBrush x:Key="Blue2" Color="{StaticResource blue2}" />
+    <SolidColorBrush x:Key="Background" Color="{StaticResource background}" />
+    <SolidColorBrush x:Key="Gray-1" Color="{StaticResource gray-1}" />
+    <SolidColorBrush x:Key="Gray0" Color="{StaticResource gray0}" />
+    <SolidColorBrush x:Key="Gray1" Color="{StaticResource gray1}" />
+    <SolidColorBrush x:Key="Gray2" Color="{StaticResource gray2}" />
+    <SolidColorBrush x:Key="Gray3" Color="{StaticResource gray3}" />
+
+    <SolidColorBrush x:Key="Unselected" Color="{StaticResource unselected}" />
+    <SolidColorBrush x:Key="EnabledBackup" Color="{StaticResource enabledBackup}" />
+    <SolidColorBrush x:Key="DisabledBackup" Color="{StaticResource disabledBackup}" />
+
+</ResourceDictionary>

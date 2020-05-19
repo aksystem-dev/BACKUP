@@ -1,0 +1,32 @@
+﻿<Window x:Class="smart_modul_BACKUP.InputDialog" x:Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:smart_modul_BACKUP"
+        mc:Ignorable="d"
+        Background="{StaticResource Blue1}"
+        Title="{Binding ElementName=window, Path=PromptText}" SizeToContent="Height" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+               FontSize="20" FontWeight="Bold"
+               Content="{Binding ElementName=window, Path=PromptText}" />
+
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                 Text="{Binding ElementName=window, Path=UserInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Button Content="OK" Grid.Column="0" Grid.Row="2" x:Name="btn_ok" />
+        <Button Content="Zrušit" Grid.Column="1" Grid.Row="2" x:Name="btn_cancel" />
+    </Grid>
+</Window>

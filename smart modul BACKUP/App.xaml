@@ -1,0 +1,47 @@
+﻿<Application x:Class="smart_modul_BACKUP.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:smart_modul_BACKUP"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             StartupUri="MainWindow.xaml"
+             Startup="OnAppStart" Exit="OnAppExit">
+    
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Colors.xaml" />
+                <ResourceDictionary Source="Styles.xaml" />
+                <ResourceDictionary Source="Images.xaml" />
+                <ResourceDictionary>
+
+                    <local:TrueBoldConverter x:Key="bool2bold" />
+                    <s:Boolean x:Key="true">True</s:Boolean>
+
+                    <AlternationConverter x:Key="alternator">
+                        <StaticResource ResourceKey="Gray3" />
+                        <StaticResource ResourceKey="Background" />
+                    </AlternationConverter>
+
+                    <local:NotConverter x:Key="Not" />
+
+                    <local:BackupSourceColorConverter x:Key="bak_src_to_color"
+                                          UnselectedBrush="{StaticResource Unselected}"
+                                          EnabledBrush="{StaticResource EnabledBackup}"
+                                          DisabledBrush="{StaticResource DisabledBackup}" />
+
+                    <local:EnumConverter x:Key="successImg">
+                        <local:EnumConverter.Values>
+                            <x:Array Type="{x:Type BitmapImage}">
+                                <StaticResource ResourceKey="fail" />
+                                <StaticResource ResourceKey="warn" />
+                                <StaticResource ResourceKey="ok" />
+                            </x:Array>
+                        </local:EnumConverter.Values>
+                    </local:EnumConverter>
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+    
+</Application>

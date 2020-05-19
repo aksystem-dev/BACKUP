@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8081/?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="Restore">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="backupID" type="xs:int" />
+      <xs:element minOccurs="0" name="location" type="tns:BackupLocation" />
+      <xs:element minOccurs="0" name="sources" nillable="true" type="tns:ArrayOfSavedSource" />
+      <xs:element minOccurs="0" name="zip_path" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Restore" nillable="true" type="tns:Restore" />
+  <xs:simpleType name="BackupLocation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Local" />
+      <xs:enumeration value="SFTP" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BackupLocation" nillable="true" type="tns:BackupLocation" />
+  <xs:complexType name="ArrayOfSavedSource">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SavedSource" nillable="true" type="tns:SavedSource" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSavedSource" nillable="true" type="tns:ArrayOfSavedSource" />
+  <xs:complexType name="SavedSource">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="filename" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sourcepath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="type" type="tns:BackupSourceType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SavedSource" nillable="true" type="tns:SavedSource" />
+  <xs:simpleType name="BackupSourceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Database" />
+      <xs:enumeration value="Directory" />
+      <xs:enumeration value="File" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BackupSourceType" nillable="true" type="tns:BackupSourceType" />
+  <xs:complexType name="RestoreResponse">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SuccessfulRestoreSourceIndexes" nillable="true" type="q1:ArrayOfint" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="errors" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element minOccurs="0" name="info" nillable="true" type="tns:Restore" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RestoreResponse" nillable="true" type="tns:RestoreResponse" />
+</xs:schema>

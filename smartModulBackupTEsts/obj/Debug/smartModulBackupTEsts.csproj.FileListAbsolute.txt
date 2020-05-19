@@ -1,0 +1,11 @@
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\smartModulBackupTEsts.exe.config
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\smartModulBackupTEsts.exe
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\smartModulBackupTEsts.pdb
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\SmartModulBackupClasses.dll
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\SmartModulBackupClasses.pdb
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.csprojAssemblyReference.cache
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.csproj.CopyComplete
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.exe
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.pdb
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\Renci.SshNet.dll
+C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\Renci.SshNet.xml

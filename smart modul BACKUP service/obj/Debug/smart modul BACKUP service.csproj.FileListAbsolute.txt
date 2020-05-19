@@ -1,0 +1,33 @@
+C:\Users\marti\Documents\C#\smart modul BACKUP service\obj\Debug\smart_modul_BACKUP_service.SmartModulBackupService.resources
+C:\Users\marti\Documents\C#\smart modul BACKUP service\obj\Debug\smart modul BACKUP service.csproj.GenerateResource.cache
+C:\Users\marti\Documents\C#\smart modul BACKUP service\obj\Debug\smart_modul_BACKUP_service.ProjectInstaller.resources
+C:\Users\marti\Documents\C#\smart modul BACKUP service\bin\Debug\smartModulBACKUP_service.exe.config
+C:\Users\marti\Documents\C#\smart modul BACKUP service\bin\Debug\smartModulBACKUP_service.exe
+C:\Users\marti\Documents\C#\smart modul BACKUP service\bin\Debug\smartModulBACKUP_service.pdb
+C:\Users\marti\Documents\C#\smart modul BACKUP service\obj\Debug\smartModulBACKUP_service.exe
+C:\Users\marti\Documents\C#\smart modul BACKUP service\obj\Debug\smartModulBACKUP_service.pdb
+C:\Users\marti\Documents\C#\smart modul BACKUP service\obj\Debug\smart_modul_BACKUP_service.Properties.Resources.resources
+C:\Users\marti\Documents\C#\smart modul BACKUP service\bin\Debug\Renci.SshNet.dll
+C:\Users\marti\Documents\C#\smart modul BACKUP service\bin\Debug\Renci.SshNet.xml
+C:\Users\marti\Documents\C#\smart modul BACKUP service\obj\Debug\smart modul BACKUP service.csproj.CopyComplete
+C:\Users\marti\Documents\C#\smart modul BACKUP service\obj\Debug\smart modul BACKUP service.csprojAssemblyReference.cache
+C:\Users\marti\Documents\C#\smart modul BACKUP service\bin\Debug\SmartModulBackupClasses.dll
+C:\Users\marti\Documents\C#\smart modul BACKUP service\bin\Debug\SmartModulBackupClasses.pdb
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\bin\Debug\smartModulBACKUP_service.exe.config
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\bin\Debug\smartModulBACKUP_service.exe
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\bin\Debug\smartModulBACKUP_service.pdb
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\bin\Debug\Renci.SshNet.dll
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\bin\Debug\SmartModulBackupClasses.dll
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\bin\Debug\SmartModulBackupClasses.pdb
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\bin\Debug\Renci.SshNet.xml
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\obj\Debug\smart modul BACKUP service.csprojAssemblyReference.cache
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\obj\Debug\smart_modul_BACKUP_service.ProjectInstaller.resources
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\obj\Debug\smart_modul_BACKUP_service.Properties.Resources.resources
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\obj\Debug\smart_modul_BACKUP_service.SmartModulBackupService.resources
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\obj\Debug\smart modul BACKUP service.csproj.GenerateResource.cache
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\obj\Debug\smart modul BACKUP service.csproj.CopyComplete
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\obj\Debug\smartModulBACKUP_service.exe
+C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP service\obj\Debug\smartModulBACKUP_service.pdb
+C:\Users\marti\Documents\smart modul BACKUP\build (debug)\smartModulBACKUP_service.exe.config
+C:\Users\marti\Documents\smart modul BACKUP\build (debug)\smartModulBACKUP_service.exe
+C:\Users\marti\Documents\smart modul BACKUP\build (debug)\smartModulBACKUP_service.pdb

@@ -1,0 +1,44 @@
+﻿<Page x:Class="smart_modul_BACKUP.SingleRulePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:smart_modul_BACKUP"
+      xmlns:smb="clr-namespace:SmartModulBackupClasses;assembly=SmartModulBackupClasses"
+      mc:Ignorable="d" d:DesignWidth="800"
+      Title="SingleRulePage">
+
+    <!--<Grid>
+        
+    </Grid>-->
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <Border Style="{StaticResource Top}" Grid.Row="0">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" DockPanel.Dock="Left">
+                    <Button Click="btn_click_back" ToolTip="ZPĚT">
+                        <Image Source="{StaticResource back}" />
+                    </Button>
+                    <Label Content="{Binding Path=Name}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right" Margin="0,0,15,0">
+                    <Button Click="btn_click_backup" ToolTip="JEDNORÁZOVÁ ZÁLOHA">
+                        <Image Source="{StaticResource backup}" />
+                    </Button>
+                    <Button Click="btn_click_delete">
+                        <Image Source="{StaticResource delete}" ToolTip="ODSTRANIT PRAVIDLO" />
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        
+        <ScrollViewer Grid.Row="1">
+            <local:RuleControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+        </ScrollViewer>
+    </Grid>
+</Page>

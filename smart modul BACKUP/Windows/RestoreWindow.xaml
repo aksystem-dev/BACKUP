@@ -1,0 +1,151 @@
+﻿<Window x:Class="smart_modul_BACKUP.RestoreWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:smart_modul_BACKUP"
+        mc:Ignorable="d"
+        DataContext="{Binding Source={RelativeSource Mode=Self}}"
+        d:DataContext="{d:DesignInstance Type={x:Type local:RestoreWindow}}"
+        Title="RestoreWindow" Height="450" Width="800"
+        Background="{StaticResource Blue2}"
+        x:Name="win">
+
+    <DockPanel LastChildFill="True">
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="OK" Click="ok" />
+            <Button Grid.Column="1" Content="STORNO" Click="cancel" />
+        </Grid>
+        
+        
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <GroupBox Header="UMÍSTĚNÍ ZÁLOHY" Padding="5" Margin="5" Grid.Column="0">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <RadioButton IsEnabled="True" GroupName="A" x:Name="rbt_local" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                     Content="Lokální" Grid.Column="0"/>
+                        <local:PathTextbox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            IsEnabled="{Binding ElementName=rbt_local, Path=IsChecked}"
+                            Text="{Binding ElementName=win, Path=localPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                    <RadioButton IsEnabled="{Binding ElementName=win, Path=backupInfo.AvailableRemotely}" GroupName="A" x:Name="rbt_remote"
+                                 Content="Na serveru" />
+                </StackPanel>
+            </GroupBox>
+
+            <StackPanel Orientation="Vertical" Grid.Column="1">
+
+                <GroupBox Header="DATABÁZE K OBNOVĚ" Padding="5" Margin="5" Grid.Column="1">
+                    <ItemsControl ItemsSource="{Binding Path=backupSourcesDatabases, ElementName=win}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type local:SavedSourceSelected}">
+                                <Grid Background="{StaticResource Gray2}" Margin="5,0,5,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox Content="" Grid.Column="0" Grid.Row="0" IsChecked="{Binding Path=Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                              VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                    <Label Grid.Column="1" Grid.Row="0" Content="{Binding Path=Value.sourcename}" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </GroupBox>
+
+                <GroupBox Header="SLOŽKY K OBNOVĚ" Padding="5" Margin="5" Grid.Column="1">
+                    <ItemsControl ItemsSource="{Binding Path=backupSourcesDirectories, ElementName=win}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type local:SavedSourceSelected}">
+                                <Grid Background="{StaticResource Gray2}" Margin="5,0,5,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <CheckBox Content="" Grid.Column="0" Grid.Row="0" IsChecked="{Binding Path=Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                              VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                    <Label Grid.Column="1" Grid.Row="0" Content="{Binding Path=Value.sourcename}" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
+
+                                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Grid.Column="0" Content="KAM OBNOVIT: " 
+                                               VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                        <local:PathTextbox Grid.Column="1" PathDialogType="FolderBrowser" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                                           Text="{Binding Path=Value.sourcepath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </GroupBox>
+
+                <GroupBox Header="SOUBORY K OBNOVĚ" Padding="5" Margin="5" Grid.Column="1">
+                    <ItemsControl ItemsSource="{Binding Path=backupSourcesFiles, ElementName=win}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type local:SavedSourceSelected}">
+                                <Grid Background="{StaticResource Gray2}" Margin="5,0,5,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <CheckBox Content="" Grid.Column="0" Grid.Row="0" IsChecked="{Binding Path=Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                              VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                    <Label Grid.Column="1" Grid.Row="0" Content="{Binding Path=Value.sourcename}" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
+
+                                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Grid.Column="0" Content="KAM OBNOVIT: " HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                        <local:PathTextbox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                                           Text="{Binding Path=Value.sourcepath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </GroupBox>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</Window>

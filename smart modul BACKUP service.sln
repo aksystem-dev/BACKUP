@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "smart modul BACKUP", "smart modul BACKUP\smart modul BACKUP.csproj", "{927F3766-64E5-4996-9343-6D9C81FEF91D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "smart modul BACKUP service", "smart modul BACKUP service\smart modul BACKUP service.csproj", "{B831CDA9-1748-4382-8847-8A60A604A72C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartModulBackupClasses", "SmartModulBackupClasses\SmartModulBackupClasses.csproj", "{0C04B084-ECDA-46E6-BC1C-3494F7198665}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "smartModulBackupTEsts", "smartModulBackupTEsts\smartModulBackupTEsts.csproj", "{552206EB-5A54-4A19-B7C9-9B535EAB9A3E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{927F3766-64E5-4996-9343-6D9C81FEF91D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{927F3766-64E5-4996-9343-6D9C81FEF91D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{927F3766-64E5-4996-9343-6D9C81FEF91D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{927F3766-64E5-4996-9343-6D9C81FEF91D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B831CDA9-1748-4382-8847-8A60A604A72C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B831CDA9-1748-4382-8847-8A60A604A72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B831CDA9-1748-4382-8847-8A60A604A72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B831CDA9-1748-4382-8847-8A60A604A72C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C04B084-ECDA-46E6-BC1C-3494F7198665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C04B084-ECDA-46E6-BC1C-3494F7198665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C04B084-ECDA-46E6-BC1C-3494F7198665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C04B084-ECDA-46E6-BC1C-3494F7198665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{552206EB-5A54-4A19-B7C9-9B535EAB9A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{552206EB-5A54-4A19-B7C9-9B535EAB9A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{552206EB-5A54-4A19-B7C9-9B535EAB9A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{552206EB-5A54-4A19-B7C9-9B535EAB9A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF7334AE-7968-471F-AE5D-96F958AF9E0D}
+	EndGlobalSection
+EndGlobal
