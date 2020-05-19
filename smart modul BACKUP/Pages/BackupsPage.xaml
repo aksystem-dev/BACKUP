@@ -64,7 +64,7 @@
                     </Button>-->
                     <Label Content="SEZNAM ZÁLOH" />
                 </StackPanel>
-                
+
                 <Grid HorizontalAlignment="Right" DockPanel.Dock="Right" Margin="15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -92,7 +92,7 @@
                             <Setter Property="Width" Value="150" />
                         </Style>
                     </Grid.Resources>
-                    
+
 
                     <CheckBox Grid.Row="0" Grid.Column="0" Content="URČITÉ DATUM: "
                               IsChecked="{Binding ElementName=page, Path=CertainDateEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -116,7 +116,7 @@
             </DockPanel>
         </Border>
 
-        <ScrollViewer x:Name="scroll_viewer" Grid.Row="1" IsDeferredScrollingEnabled="False">
+        <ScrollViewer x:Name="scroll_viewer" Grid.Row="1">
             <ItemsControl ItemsSource="{Binding Source={StaticResource savedBackupsSource}}" Margin="0,0,0,15">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type smb:Backup}">
@@ -158,38 +158,40 @@
                                     <Label Content="{Binding Path=Size, Converter={StaticResource byteSize}}" ContentStringFormat="Velikost: {0}" />
                                 </StackPanel>
                             </Grid>
-                            
-                            <DataGrid Margin="10" ItemsSource="{Binding Path=Sources}" PreviewMouseWheel="mousewheel">
-                                <DataGrid.Columns>
-                                    <DataGridTemplateColumn Header="" Width="Auto">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate DataType="{x:Type smb:SavedSource}">
-                                                <Image Margin="8" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                       Source="{Binding Path=Success, Converter={StaticResource successImg}}"
-                                                       ToolTip="{Binding Path=Title}" />
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="TYP" Binding="{Binding Path=type}" Width="*">
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="Padding" Value="6" />
-                                                <Setter Property="VerticalAlignment" Value="Center" />
-                                                <Setter Property="HorizontalAlignment" Value="Left" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="ZDROJ" Binding="{Binding Path=sourcepath}" Width="3*">
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="Padding" Value="6" />
-                                                <Setter Property="VerticalAlignment" Value="Center" />
-                                                <Setter Property="HorizontalAlignment" Value="Left" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
+
+                            <Expander Header="SEZNAM ZDROJŮ" IsExpanded="False" Margin="10,0,10,10">
+                                <DataGrid Margin="0,10,0,0" ItemsSource="{Binding Path=Sources}" PreviewMouseWheel="mousewheel">
+                                    <DataGrid.Columns>
+                                        <DataGridTemplateColumn Header="" Width="Auto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type smb:SavedSource}">
+                                                    <Image Margin="8" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                           Source="{Binding Path=Success, Converter={StaticResource successImg}}"
+                                                           ToolTip="{Binding Path=Title}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTextColumn Header="TYP" Binding="{Binding Path=type, Converter={StaticResource sourceTypeName}}" Width="Auto">
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Padding" Value="6" />
+                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Header="ZDROJ" Binding="{Binding Path=sourcepath}" Width="3*">
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Padding" Value="6" />
+                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Expander>
                         </StackPanel>
 
                         <!--<Border Background="{StaticResource Gray2}" Margin="10" Padding="10">
