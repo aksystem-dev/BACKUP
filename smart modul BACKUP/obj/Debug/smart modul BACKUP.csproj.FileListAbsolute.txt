@@ -112,3 +112,55 @@ C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP\obj\Debug\Control
 C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP\obj\Debug\Images.baml
 C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\RestorePage.g.cs
 C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\RestorePage.baml
+D:\Projects\smart modul BACKUP\build (debug)\smart modul BACKUP.exe.config
+D:\Projects\smart modul BACKUP\build (debug)\smart modul BACKUP.exe
+D:\Projects\smart modul BACKUP\build (debug)\smart modul BACKUP.pdb
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.csprojAssemblyReference.cache
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\ToggleOnOff.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\LabelAnything.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\PathTextbox.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\ToggleOnOff.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\BackupsPage.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\ConfigPage.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\LabelPasswordBox.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\LabelTextBox.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\MainWindow.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\RuleControl.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\DbsPage.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\HomePage.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\RestorePage.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\RulePage.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\SingleRulePage.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\InputDialog.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\RestoreWindow.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\YesNoDialog.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\App.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP_MarkupCompile.cache
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP_MarkupCompile.lref
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\App.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Colors.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\LabelAnything.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\PathTextbox.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Images.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\BackupsPage.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\ConfigPage.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\LabelPasswordBox.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\LabelTextBox.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\MainWindow.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\RuleControl.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\DbsPage.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\HomePage.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\RestorePage.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\RulePage.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\SingleRulePage.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Styles.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\InputDialog.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\RestoreWindow.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\YesNoDialog.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.g.resources
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart_modul_BACKUP.Properties.Resources.resources
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.csproj.GenerateResource.cache
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.csproj.CopyComplete
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.exe
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.pdb

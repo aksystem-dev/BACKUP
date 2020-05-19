@@ -26,7 +26,7 @@ namespace smart_modul_BACKUP
             {
                 Title = "Vyberte exe",
                 Filter = ".exe soubory | *.exe",
-                InitialDirectory = Directory.GetCurrentDirectory()
+                InitialDirectory = AppDomain.CurrentDomain.BaseDirectory
             } : null;
 
             while (true)

@@ -58,3 +58,16 @@ Zasažené parametry:
 Odebírání zdroje EventLog smart modul BACKUP service
 Odebírání služby smart modul BACKUP service ze systému...
 Služba smart modul BACKUP service byla úspěšně odebrána ze systému.
+Instalace sestavení D:\Projects\smart modul BACKUP\build (debug)\smartModulBACKUP_service.exe
+Zasažené parametry:
+   logtoconsole = 
+   assemblypath = D:\Projects\smart modul BACKUP\build (debug)\smartModulBACKUP_service.exe
+   logfile = D:\Projects\smart modul BACKUP\build (debug)\smartModulBACKUP_service.InstallLog
+Instalace služby smart modul BACKUP service...
+Služba smart modul BACKUP service byla úspěšně nainstalována.
+Vytváření zdroje EventLog smart modul BACKUP service v protokolu Application...
+Potvrzování sestavení D:\Projects\smart modul BACKUP\build (debug)\smartModulBACKUP_service.exe
+Zasažené parametry:
+   logtoconsole = 
+   assemblypath = D:\Projects\smart modul BACKUP\build (debug)\smartModulBACKUP_service.exe
+   logfile = D:\Projects\smart modul BACKUP\build (debug)\smartModulBACKUP_service.InstallLog
