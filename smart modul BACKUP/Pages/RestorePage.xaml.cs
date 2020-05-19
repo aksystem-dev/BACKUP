@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace smart_modul_BACKUP
 {
@@ -115,6 +116,14 @@ namespace smart_modul_BACKUP
         private void dg_cancelSelection(object sender, SelectionChangedEventArgs e)
         {
             //(sender as DataGrid).UnselectAll();
+        }
+
+        private void mousewheel(object sender, MouseWheelEventArgs e)
+        {
+            var args = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+            args.RoutedEvent = ScrollViewer.MouseWheelEvent;
+            scroll_viewer.RaiseEvent(args);
+            e.Handled = true;
         }
     }
 }

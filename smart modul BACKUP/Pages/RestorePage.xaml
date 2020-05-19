@@ -57,7 +57,7 @@
             </DockPanel>
         </Border>
 
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer Grid.Row="1" x:Name="scroll_viewer">
             <StackPanel Margin="0,0,0,15">
                 <StackPanel Style="{StaticResource Block}">
                     <Label Style="{StaticResource Header}" Content="UMÍSTĚNÍ ZÁLOHY K OBNOVĚ" Margin="0" />
@@ -89,7 +89,7 @@
 
                     <StackPanel x:Name="panel_foldersToRestore" Margin="10,0,10,10">
                         <Label Style="{StaticResource restoreSourceHeader}" Content="SLOŽKY K OBNOVĚ" />
-                        <DataGrid ItemsSource="{Binding Path=Directories}" SelectionChanged="dg_cancelSelection">
+                        <DataGrid ItemsSource="{Binding Path=Directories}" SelectionChanged="dg_cancelSelection" PreviewMouseWheel="mousewheel">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -143,7 +143,7 @@
 
                     <StackPanel x:Name="panel_filesToRestore" Margin="10,0,10,10">
                         <Label Style="{StaticResource restoreSourceHeader}" Content="SOUBORY K OBNOVĚ" />
-                        <DataGrid ItemsSource="{Binding Path=Files}" SelectionChanged="dg_cancelSelection">
+                        <DataGrid ItemsSource="{Binding Path=Files}" SelectionChanged="dg_cancelSelection" PreviewMouseWheel="mousewheel">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -197,7 +197,7 @@
 
                     <StackPanel x:Name="panel_dbsToRestore" Margin="10,0,10,10">
                         <Label Style="{StaticResource restoreSourceHeader}" Content="DATABÁZE K OBNOVĚ" />
-                        <DataGrid ItemsSource="{Binding Path=Databases}" SelectionChanged="dg_cancelSelection">
+                        <DataGrid ItemsSource="{Binding Path=Databases}" SelectionChanged="dg_cancelSelection" PreviewMouseWheel="mousewheel">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
