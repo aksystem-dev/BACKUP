@@ -145,6 +145,16 @@
                         <Label Style="{StaticResource restoreSourceHeader}" Content="SOUBORY K OBNOVĚ" />
                         <DataGrid ItemsSource="{Binding Path=Files}" SelectionChanged="dg_cancelSelection">
                             <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type local:SavedSourceSelected}">
+                                            <Image Margin="8" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Source="{Binding Path=Value.Success, Converter={StaticResource successImg}}"
+                                                       ToolTip="{Binding Path=Value.Title}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
                                 <DataGridTemplateColumn Width="Auto" Header="OBNOVIT?">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate DataType="{x:Type local:SavedSourceSelected}">
@@ -189,6 +199,16 @@
                         <Label Style="{StaticResource restoreSourceHeader}" Content="DATABÁZE K OBNOVĚ" />
                         <DataGrid ItemsSource="{Binding Path=Databases}" SelectionChanged="dg_cancelSelection">
                             <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type local:SavedSourceSelected}">
+                                            <Image Margin="8" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Source="{Binding Path=Value.Success, Converter={StaticResource successImg}}"
+                                                       ToolTip="{Binding Path=Value.Title}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
                                 <DataGridTemplateColumn Width="Auto" Header="OBNOVIT?">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate DataType="{x:Type local:SavedSourceSelected}">
