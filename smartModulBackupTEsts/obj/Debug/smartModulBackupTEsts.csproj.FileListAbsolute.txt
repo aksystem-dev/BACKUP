@@ -9,3 +9,14 @@ C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smar
 C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.pdb
 C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\Renci.SshNet.dll
 C:\Users\marti\Documents\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\Renci.SshNet.xml
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\smartModulBackupTEsts.exe.config
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\smartModulBackupTEsts.exe
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\smartModulBackupTEsts.pdb
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\SmartModulBackupClasses.dll
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\Renci.SshNet.dll
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\SmartModulBackupClasses.pdb
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\Renci.SshNet.xml
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.csprojAssemblyReference.cache
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.csproj.CopyComplete
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.exe
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.pdb

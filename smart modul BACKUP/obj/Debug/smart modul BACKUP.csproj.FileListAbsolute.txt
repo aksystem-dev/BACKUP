@@ -164,3 +164,5 @@ D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.c
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.csproj.CopyComplete
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.exe
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.pdb
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\ProgressBarView.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\ProgressBarView.baml

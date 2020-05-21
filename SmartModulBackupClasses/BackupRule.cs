@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
@@ -14,6 +15,16 @@ namespace SmartModulBackupClasses
 {
     public class BackupRule
     {
+        /// <summary>
+        /// Sem si můžeme uložit nějaká pomocná data.
+        /// </summary>
+        [XmlIgnore]
+        public object TAG { get; set; }
+
+        [XmlIgnore]
+        public ObservableCollection<BackupInProgress> InProgress { get; set; }
+            = new ObservableCollection<BackupInProgress>();
+
         [XmlIgnore]
         public string path;
 

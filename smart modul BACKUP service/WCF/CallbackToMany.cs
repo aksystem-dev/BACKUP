@@ -26,19 +26,19 @@ namespace smart_modul_BACKUP_service.WCF
                 }
                 catch (Exception e)
                 {
-                    Logger.Error($"Došlo k chybě při komunikaci s GUI {e.GetType().Name}\n\n{e.Message}\n\nOdpojuji se...");
+                    Logger.Error($"Došlo k chybě při komunikaci s GUI {e.GetType().Name}\n\n{e.Message}");
                     callbacks.Remove(cb);
                 }
             }
         }
 
-        public void BackupEnded(string ruleName, bool success) => ForEachCallback(f => f.BackupEnded(ruleName, success));
-        public void BackupStarted(string ruleName) => ForEachCallback(f => f.BackupStarted(ruleName));
+
         public void ShowError(string error) => ForEachCallback(f => f.ShowError(error));
         public void ShowMsg(string msg) => ForEachCallback(f => f.ShowMsg(msg));
         public void TestConnection() => ForEachCallback(f => f.TestConnection());
-        public void RestoreComplete(RestoreResponse response) => ForEachCallback(f => f.RestoreComplete(response));
         public void Goodbye() => ForEachCallback(f => f.Goodbye());
+        //public void SetProgress(int a, string b, float c) => ForEachCallback(f => f.SetProgress(a, b, c));
+        //public void RemoveProgressBar(int bar_id) => ForEachCallback(f => f.RemoveProgressBar(bar_id));
 
         public bool AddCallback(ISmartModulBackupInterfaceCallback callback)
         {
@@ -58,6 +58,13 @@ namespace smart_modul_BACKUP_service.WCF
             return true;
         }
 
-
+        public void StartRestore(RestoreInProgress progress) => ForEachCallback(f => f.StartRestore(progress));
+        public void StartBackup(BackupInProgress progress) => ForEachCallback(f => f.StartBackup(progress));
+        public void UpdateRestore(RestoreInProgress progress) => ForEachCallback(f => f.UpdateRestore(progress));
+        public void UpdateBackup(BackupInProgress progress) => ForEachCallback(f => f.UpdateBackup(progress));
+        public void CompleteRestore(RestoreInProgress progress, RestoreResponse response) 
+            => ForEachCallback(f => f.CompleteRestore(progress, response));
+        public void CompleteBackup(BackupInProgress progress, int BackupID)
+            => ForEachCallback(f => f.CompleteBackup(progress, BackupID));
     }
 }

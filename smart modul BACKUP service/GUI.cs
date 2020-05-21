@@ -57,12 +57,6 @@ namespace smart_modul_BACKUP_service
         public void ShowError(string error)
             => TryCallback(() => wcf_interface.Callback.ShowError(error));
 
-        public void BackupStarted(string backupId)
-            => TryCallback(() => wcf_interface.Callback.BackupStarted(backupId));
-
-        public void BackupEnded(string ruleName, bool success)
-            => TryCallback(() => wcf_interface.Callback.BackupEnded(ruleName, success));
-
         public void TestConnection()
             => TryCallback(() => wcf_interface.Callback.TestConnection());
     }

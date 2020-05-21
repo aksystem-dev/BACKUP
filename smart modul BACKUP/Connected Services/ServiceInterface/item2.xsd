@@ -34,7 +34,45 @@
   <xs:element name="DoSingleBackupResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="DoSingleBackupResult" type="xs:boolean" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="DoSingleBackupResult" nillable="true" type="q2:BackupInProgress" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Restore">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="restoreInfo" nillable="true" type="q3:Restore" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RestoreResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="RestoreResult" nillable="true" type="q4:RestoreInProgress" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBackupsInProgress">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBackupsInProgressResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="GetBackupsInProgressResult" nillable="true" type="q5:ArrayOfBackupInProgress" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRestoresInProgress">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRestoresInProgressResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="GetRestoresInProgressResult" nillable="true" type="q6:ArrayOfRestoreInProgress" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -64,45 +102,6 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="ImStillHereResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Restore">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="restoreInfo" nillable="true" type="q2:Restore" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RestoreResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="RestoreResult" nillable="true" type="q3:RestoreResponse" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="BackupStarted">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="ruleName" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="BackupStartedResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="BackupEnded">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="ruleName" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="success" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="BackupEndedResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -141,24 +140,86 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="RestoreComplete">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="response" nillable="true" type="q4:RestoreResponse" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RestoreCompleteResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="Goodbye">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GoodbyeResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartRestore">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="progress" nillable="true" type="q7:RestoreInProgress" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartRestoreResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartBackup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="progress" nillable="true" type="q8:BackupInProgress" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartBackupResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateRestore">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="progress" nillable="true" type="q9:RestoreInProgress" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateRestoreResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateBackup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="progress" nillable="true" type="q10:BackupInProgress" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateBackupResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CompleteRestore">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="progress" nillable="true" type="q11:RestoreInProgress" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="response" nillable="true" type="q12:RestoreResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CompleteRestoreResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CompleteBackup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" minOccurs="0" name="progress" nillable="true" type="q13:BackupInProgress" />
+        <xs:element minOccurs="0" name="BackupID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CompleteBackupResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

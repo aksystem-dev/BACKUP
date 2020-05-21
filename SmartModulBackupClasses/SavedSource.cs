@@ -26,14 +26,14 @@ namespace SmartModulBackupClasses
         /// </summary>
         public string sourcepath { get; set; }
 
-        public BackupSuccessLevel Success { get; set; } = BackupSuccessLevel.EverythingWorked;
+        public SuccessLevel Success { get; set; } = SuccessLevel.EverythingWorked;
 
         public string Error { get; set; } = null;
 
         public string ErrorDetail { get; set; } = null;
 
         [XmlIgnore]
-        public string Title => Success == BackupSuccessLevel.EverythingWorked ? "Vše v pořádku" : Error;
+        public string Title => Success == SuccessLevel.EverythingWorked ? "Vše v pořádku" : Error;
 
         /// <summary>
         /// Typ zálohy (databáze/adresář/soubor)

@@ -29,23 +29,6 @@ namespace smart_modul_BACKUP_service.WCF
         }
 
         /// <summary>
-        /// Metoda pro GUI, která donutí službu udělat jednu zálohu daného pravidla
-        /// </summary>
-        /// <param name="ruleId"></param>
-        /// <returns></returns>
-        public bool DoSingleBackup(int ruleId)
-        {
-            BackupRule rule = serviceRef.rules.FirstOrDefault(f => f.LocalID == ruleId);
-
-            if (rule == null)
-                return false;
-
-            serviceRef.timeline.ExecuteAndAddToList(rule.GetBackupTaskRightNow());
-
-            return true;
-        }
-
-        /// <summary>
         /// Vrátí všechny pravidla, která jsou momentálně vyhodnocována (WIP)
         /// </summary>
         /// <returns></returns>
@@ -94,11 +77,35 @@ namespace smart_modul_BACKUP_service.WCF
             Logger.Log("Test připojení klienta úspěšný: klient je pořád připojený.");
         }
 
-        public RestoreResponse Restore(Restore restoreInfo)
+        public BackupInProgress DoSingleBackup(int ruleId)
         {
-            var response = serviceRef.restorer.Restore(restoreInfo);
-            return response;
+            BackupRule rule = serviceRef.rules.FirstOrDefault(f => f.LocalID == ruleId);
+
+            if (rule == null)
+                return null;
+
+            return rule.GetBackupTaskRightNow().Execute(serviceRef.backuper);
         }
 
+        public RestoreInProgress Restore(Restore restoreInfo)
+        {
+            var rip = Utils.InProgress.NewRestore();
+            Task.Run(() =>
+            {
+                serviceRef.restorer.Restore(restoreInfo, rip);
+                Utils.InProgress.RemoveRestore(rip);
+            });
+            return rip;
+        }
+
+        public BackupInProgress[] GetBackupsInProgress()
+        {
+            return Utils.InProgress.Backups;
+        }
+
+        public RestoreInProgress[] GetRestoresInProgress()
+        {
+            return Utils.InProgress.Restores;
+        }
     }
 }

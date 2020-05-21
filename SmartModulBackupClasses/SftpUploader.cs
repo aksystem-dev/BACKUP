@@ -62,7 +62,7 @@ namespace SmartModulBackupClasses
             //Logger.Log($"Kopíruji lokální soubor {localSource} přes SFTP na {remoteDestination}");
 
             using (var stream = File.OpenRead(localSource))
-                client.UploadFile(stream, remoteDestination.FixPathForSFTP());
+                client.UploadFile(stream, remoteDestination.FixPathForSFTP(), true);
         }
 
         public void Delete(string remoteFile)

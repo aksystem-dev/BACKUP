@@ -718,13 +718,6 @@ namespace smart_modul_BACKUP
 
         #endregion
 
-        private void DoSingleBackup(object sender, RoutedEventArgs e)
-        {
-            if (LoadedStatic.service.State == ServiceConnectionState.Connected)
-                LoadedStatic.service.DoSingleBackup(Rule);
-            else
-                MessageBox.Show("Služba není připojena, nelze provést jednorázovou zálohu.");
-        }
 
         private void _dbReload(object sender, RoutedEventArgs e)
         {

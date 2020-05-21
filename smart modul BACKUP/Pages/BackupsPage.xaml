@@ -119,6 +119,7 @@
         <ScrollViewer x:Name="scroll_viewer" Grid.Row="1">
             <ItemsControl ItemsSource="{Binding Source={StaticResource savedBackupsSource}}" Margin="0,0,0,15">
                 <ItemsControl.ItemTemplate>
+                    
                     <DataTemplate DataType="{x:Type smb:Backup}">
                         <StackPanel Style="{StaticResource Block}">
                             <Border Style="{StaticResource Top}" Background="{StaticResource Blue0}">
@@ -135,6 +136,13 @@
                                     </Button>
                                 </DockPanel>
                             </Border>
+                            <ItemsControl ItemsSource="{Binding Path=InProgress}" DockPanel.Dock="Bottom" >
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type smb:RestoreInProgress}">
+                                        <local:ProgressBarView Model="{Binding}" Margin="10" Text="PROBÍHAJÍCÍ OBNOVA" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />

@@ -23,16 +23,19 @@ namespace smart_modul_BACKUP_service
         /// <summary>
         /// Spustí toto pravidlo na novém vlákně.
         /// </summary>
-        public async Task Execute(Backuper backuper)
+        public BackupInProgress Execute(Backuper backuper)
         {
-            Running = true;
-            await Task.Run(() =>
+            var progress = Utils.InProgress.NewBackup();
+            progress.TAG = this;
+            Task.Run(() =>
             {
-                //backuper.ExecuteRuleIndividualZips(Rule, true);
-                backuper.ExecuteRuleSingleZip(Rule, true);
+                Running = true;
+                backuper.ExecuteRuleSingleZip(Rule, true, progress);
+                Running = false;
+                Utils.InProgress.RemoveBackup(progress);
+                Finished?.Invoke();
             });
-            Running = false;
-            Finished?.Invoke();
+            return progress;
         }
     }
 }

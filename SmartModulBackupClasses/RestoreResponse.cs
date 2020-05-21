@@ -16,11 +16,9 @@ namespace SmartModulBackupClasses
         public RestoreResponse(Restore info) => this.info = info;
 
         [DataMember]
-        public List<int> SuccessfulRestoreSourceIndexes = new List<int>();
+        public List<Error> errors = new List<Error>();
 
         [DataMember]
-        public List<string> errors = new List<string>();
-
-        public bool Success => !errors.Any();
+        public SuccessLevel Success;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Renci.SshNet;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,16 @@ namespace SmartModulBackupClasses
     /// </summary>
     public class Backup : IHaveID, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Sem si můžeme uložit nějaká pomocná data.
+        /// </summary>
+        [XmlIgnore]
+        public object TAG { get; set; }
+
+        [XmlIgnore]
+        public ObservableCollection<RestoreInProgress> InProgress { get; set; }
+            = new ObservableCollection<RestoreInProgress>();
+
         public Backup()
         {
             
@@ -106,12 +117,12 @@ namespace SmartModulBackupClasses
         public bool Success { get; set; }
 
         [XmlIgnore]
-        public BackupSuccessLevel SuccessLevel
+        public SuccessLevel SuccessLevel
         {
             get
             {
-                if (Success) return Sources.All(f => f.Success == BackupSuccessLevel.EverythingWorked) ? BackupSuccessLevel.EverythingWorked : BackupSuccessLevel.SomeErrors;
-                return Sources.Any() ? BackupSuccessLevel.SomeErrors : BackupSuccessLevel.TotalFailure;
+                if (Success) return Sources.All(f => f.Success == SuccessLevel.EverythingWorked) ? SuccessLevel.EverythingWorked : SuccessLevel.SomeErrors;
+                return Sources.Any() ? SuccessLevel.SomeErrors : SuccessLevel.TotalFailure;
             }
         }
 
@@ -162,5 +173,5 @@ namespace SmartModulBackupClasses
         }
     }
 
-    public enum BackupSuccessLevel { TotalFailure, SomeErrors, EverythingWorked }
+    public enum SuccessLevel { TotalFailure, SomeErrors, EverythingWorked }
 }

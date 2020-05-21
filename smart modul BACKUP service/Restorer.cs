@@ -17,11 +17,14 @@ namespace smart_modul_BACKUP_service
     {
         public string TempDir;
 
-        public RestoreResponse Restore(Restore restoreInfo)
+        public RestoreResponse Restore(Restore restoreInfo, RestoreInProgress progress)
         {
             Logger.Log("Obnova započata");
+            progress.Update("STARTUJI OBNOVU", 0);
+            Utils.GUIS.StartRestore(progress);
+            progress.AfterUpdateCalled += () => Utils.GUIS.UpdateRestore(progress);
 
-            var R = new RestoreResponse(restoreInfo);
+            var R = new RestoreResponse(restoreInfo) { Success = SuccessLevel.EverythingWorked };
 
             #region LOCATE / DOWNLOAD ZIP FILE
 
@@ -35,6 +38,8 @@ namespace smart_modul_BACKUP_service
             {
                 if (restoreInfo.location == BackupLocation.SFTP)
                 {
+                    progress.Update("PŘIPOJUJI SE PŘES SFTP", 0.1f);
+
                     try
                     {
                         sftp = Utils.SftpFactory.GetInstance();
@@ -44,9 +49,12 @@ namespace smart_modul_BACKUP_service
                     {
                         string msg = $"Došlo k chybě při připojování k sftp ({e.GetType().Name})\n\n{e.Message}";
                         Logger.Error(msg);
-                        R.errors.Add(msg);
+                        R.errors.Add(new Error(msg));
+                        R.Success = SuccessLevel.TotalFailure;
                         return R;
                     }
+
+                    progress.Update("STAHUJI ZÁLOHU", 0.2f);
                 }
 
                 zip_path = GetZip(restoreInfo, temp_instance_dir, sftp, R);
@@ -65,6 +73,7 @@ namespace smart_modul_BACKUP_service
                         Logger.Error($"Nepodařilo se odpojit sftp... {ex.GetType().Name}\n\n{ex.Message}");
                     }
 
+                R.Success = SuccessLevel.TotalFailure;
                 return R;
             }
 
@@ -75,6 +84,7 @@ namespace smart_modul_BACKUP_service
             string unzipped_dir = Path.Combine(temp_instance_dir, "unzipped");
             try
             {
+                progress.Update("EXTRAHUJI ZIP", 0.27f);
                 Logger.Log($"Obnova: extrahuju {zip_path} do {unzipped_dir}");
                 ZipFile.ExtractToDirectory(zip_path, unzipped_dir);
             }
@@ -82,7 +92,8 @@ namespace smart_modul_BACKUP_service
             {
                 string msg = $"Došlo k chybě při extrahování zip archivu z {zip_path} do {unzipped_dir} - {e.GetType().Name}: {e.Message}";
                 Logger.Error(msg);
-                R.errors.Add(msg);
+                R.errors.Add(new Error(msg));
+                R.Success = SuccessLevel.TotalFailure;
                 return R;
             }
 
@@ -96,6 +107,8 @@ namespace smart_modul_BACKUP_service
             {
                 if (restoreInfo.sources.Any(f => f.type == BackupSourceType.Database))
                 {
+                    progress.Update("PŘIPOJUJI SE K SQL SERVERU", 0.5f);
+
                     //pokud je mezi zdroji alespoň jedna databáze, vytvoříme SQL připojení
                     sql = Utils.SqlFactory.GetInstance();
                     sql.Open();
@@ -105,19 +118,26 @@ namespace smart_modul_BACKUP_service
             {
                 string msg = $"Došlo k chybě k připojivání přes SQL ({e.GetType().Name}): {e.Message}";
                 Logger.Error(msg);
-                R.errors.Add(msg);
+                R.Success = SuccessLevel.SomeErrors;
+                R.errors.Add(new Error(msg));
             }
 
             #endregion
 
             int index = 0;
+            float prog_start = 0.55f;
+            float prog_end = 0.85f;
+            float max_ind = restoreInfo.sources.Length - 1;
+
             foreach (var source in restoreInfo.sources)
             {
+                progress.Update($"OBNOVUJI ZDROJ {source.sourcename}", SMB_Utils.Lerp(prog_start, prog_end, max_ind == 0 ? 0 : index / max_ind));
+
                 #region RESTORE SOURCE
 
                 string unzipped_path = Path.Combine(unzipped_dir, source.filename);
 
-                bool was_success = false;
+                SuccessLevel success = SuccessLevel.EverythingWorked;
 
                 switch (source.type)
                 {
@@ -125,13 +145,13 @@ namespace smart_modul_BACKUP_service
                         try
                         {
                             sql.Restore(source.sourcepath, unzipped_path);
-                            was_success = true;
                         }
                         catch (Exception e)
                         {
                             string msg = $"Problém s obnovením SQL databáze {source.sourcepath} ({e.GetType().Name}): {e.Message}";
                             Logger.Error(msg);
-                            R.errors.Add(msg);
+                            R.errors.Add(new Error(msg));
+                            success = SuccessLevel.TotalFailure;
                         }
                         break;
                     case BackupSourceType.Directory:
@@ -142,14 +162,15 @@ namespace smart_modul_BACKUP_service
                             //    Directory.Delete(source.sourcepath, true);
                             //    Directory.CreateDirectory(source.sourcepath);
                             //}
-                            FolderCopier.CopyFolderContents(unzipped_path, source.sourcepath);
-                            was_success = true;
+                            if (!FileUtils.CopyFolderContents(unzipped_path, source.sourcepath))
+                                success = SuccessLevel.SomeErrors;
                         }
                         catch (Exception e)
                         {
                             string msg = $"Problém s obnovením adresáře {source.sourcepath} ({e.GetType().Name}): {e.Message}";
                             Logger.Error(msg);
-                            R.errors.Add(msg);
+                            R.errors.Add(new Error(msg));
+                            success = SuccessLevel.TotalFailure;
                         }
                         break;
                     case BackupSourceType.File:
@@ -157,23 +178,23 @@ namespace smart_modul_BACKUP_service
                         {
                             Directory.CreateDirectory(source.sourcepath.PathMoveUp());
                             File.Copy(unzipped_path, source.sourcepath, true);
-                            was_success = true;
                         }
                         catch (Exception e)
                         {
                             string msg = $"Problém s obnovením souboru {source.sourcepath} ({e.GetType().Name}): {e.Message}";
                             Logger.Error(msg);
-                            R.errors.Add(msg);
+                            R.errors.Add(new Error(msg));
+                            success = SuccessLevel.TotalFailure;
                         }
 
                         break;
                 }
 
-                if (was_success)
-                {
+                if (success == SuccessLevel.EverythingWorked)
                     Logger.Success($"Zdroj {source.sourcepath} (typ {source.type}) úspěšně obnoven");
-                    R.SuccessfulRestoreSourceIndexes.Add(index);
-                }
+                else
+                    Logger.Success($"Během obnovy zdroje {source.sourcepath} (typ {source.type}) došlo k chybám");
+                source.Success = success;
 
                 #endregion
 
@@ -182,7 +203,9 @@ namespace smart_modul_BACKUP_service
 
             try
             {
+                progress.Update("ODPOJUJI SE OD SQL SERVERU", 0.9f);
                 sql?.Close();
+                progress.Update("ODPOJUJI SE OD SFTP SERVERU", 0.92f);
                 sftp?.Disconnect();
             }
             catch (Exception e)
@@ -192,6 +215,7 @@ namespace smart_modul_BACKUP_service
 
             try
             {
+                progress.Update("ODSTRAŇUJI DOČASNOU SLOŽKU", 0.95f);
                 Logger.Log("Odstraňuji dočasnou složku...");
                 Directory.Delete(temp_instance_dir, true);
             }
@@ -200,10 +224,21 @@ namespace smart_modul_BACKUP_service
                 Logger.Error($"Problém při odstraňování dočasné složky ({e.GetType().Name})\n\n{e.Message}");
             }
 
-            if (R.Success)
+            if (R.info.sources.Any(f => f.Success != SuccessLevel.EverythingWorked))
+                R.Success = SuccessLevel.SomeErrors;
+
+            if (R.Success == SuccessLevel.EverythingWorked)
+            {
                 Logger.Success($"Úspěšně dokončena obnova.");
+                progress.Update("OBNOVA ÚSPŠNĚ DOKONČENA", 1);
+            }
             else
+            {
                 Logger.Warn($"Obnova dokončena, ale došlo k chybám.");
+                progress.Update("OBNOVA DOKONČENA, ALE DOŠLO K CHYBÁM", 1);
+            }
+
+            Utils.GUIS.CompleteRestore(progress, R);
 
             return R;
         }
@@ -227,7 +262,7 @@ namespace smart_modul_BACKUP_service
                 {
                     string msg = $"Lokální zip soubor nebyl nalezen (měl být na adrese {r.zip_path}, ale zdá se, že není)";
                     Logger.Error(msg);
-                    response?.errors.Add(msg);
+                    response?.errors.Add(new Error(msg));
                     throw new Exception();
                 }
 
@@ -259,14 +294,14 @@ namespace smart_modul_BACKUP_service
                 {
                     string msg = $"Soubor {r.zip_path.FixPathForSFTP()} nebyl nalezen na serveru";
                     Logger.Error(msg);
-                    response?.errors.Add(msg);
+                    response?.errors.Add(new Error(msg));
                     throw e;
                 }
                 catch (Exception e)
                 {
                     string msg = $"Při stahování zipu došlo k výjimce {e.GetType().Name}: {e.Message}";
                     Logger.Error(msg);
-                    response?.errors.Add(msg);
+                    response?.errors.Add(new Error(msg));
                     throw e;
                 }
 

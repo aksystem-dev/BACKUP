@@ -35,5 +35,7 @@ namespace smart_modul_BACKUP_service
             await Task.Delay(delay);
             action();
         }
+
+        public static ProgressManager InProgress = new ProgressManager();
     }
 }

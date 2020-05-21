@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartModulBackupClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,8 +17,8 @@ namespace smart_modul_BACKUP_service
 
         public bool Running { get; private set; } = false;
 
-        private List<BackupTask> _ongoingBackups = new List<BackupTask>();
-        public BackupTask[] OngoingBackups => _ongoingBackups.ToArray();
+        private static List<BackupTask> _ongoingBackups = new List<BackupTask>();
+        public static BackupTask[] OngoingBackups => _ongoingBackups.ToArray();
 
         private CancellationTokenSource _tokenSource;
 
@@ -89,7 +90,7 @@ namespace smart_modul_BACKUP_service
                     if (backup.ScheduledStart <= DateTime.Now)
                     {
                         Logger.Log($"BackupTimeline: pravidlo {backup.Rule.Name} mělo být spuštěno již v {backup.ScheduledStart}. Jdu na to hned.");
-                        ExecuteAndAddToList(backup);
+                        backup.Execute(Backuper);
                     }
                     //jinak (pokud je třeba ho vyhodnotit někday v budoucnu)
                     else
@@ -104,7 +105,7 @@ namespace smart_modul_BACKUP_service
                             break;
 
                         //jinak pokračujeme spuštěním daného pravidla:
-                        ExecuteAndAddToList(backup);
+                        backup.Execute(Backuper);
                     }
                 }
                 catch (Exception e) when
@@ -130,22 +131,22 @@ namespace smart_modul_BACKUP_service
             Running = false;
         }
 
-        /// <summary>
-        /// Spustí daný BackupTask a přidá ho do seznamu
-        /// </summary>
-        /// <param name="task"></param>
-        public void ExecuteAndAddToList(BackupTask task)
-        {
-            //přidat ho do seznamu
-            _ongoingBackups.Add(task);
+        ///// <summary>
+        ///// Spustí daný BackupTask a přidá ho do seznamu
+        ///// </summary>
+        ///// <param name="task"></param>
+        //public Task ExecuteAndAddToList(BackupTask task, BackupInProgress progress = null)
+        //{
+        //    //přidat ho do seznamu
+        //    _ongoingBackups.Add(task);
 
-            //spustit backup task
-            task.Execute(Backuper)
-                .ContinueWith((t) => //až bude hotov,
-            {
-                lock (_ongoingBackups)
-                    _ongoingBackups.Remove(task); //odstraníme ho ze seznamu
-            });
-        }
+        //    //spustit backup task
+        //    return task.Execute(Backuper, progressbar)
+        //        .ContinueWith((t) => //až bude hotov,
+        //    {
+        //        lock (_ongoingBackups)
+        //            _ongoingBackups.Remove(task); //odstraníme ho ze seznamu
+        //    });
+        //}
     }
 }

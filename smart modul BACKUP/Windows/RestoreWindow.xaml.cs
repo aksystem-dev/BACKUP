@@ -75,7 +75,7 @@ namespace smart_modul_BACKUP
             };
 
             //LoadedStatic.service.client.Restore(restoreInfo);
-            LoadedStatic.service.Restore(restoreInfo);
+            LoadedStatic.service.StartRestore(restoreInfo);
             Close();
         }
 

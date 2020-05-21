@@ -200,9 +200,9 @@ namespace smart_modul_BACKUP
                 {
                     client.Reload();
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    GuiLog.Log($"výj. v ServiceState.cs: {ex.GetType().Name}: \n{ex.Message}");
                 }
         }
 
@@ -210,43 +210,44 @@ namespace smart_modul_BACKUP
         /// Řekne službě, aby provedla obnovu zálohy.
         /// </summary>
         /// <param name="restore"></param>
-        public async void Restore(Restore restore)
+        public RestoreInProgress StartRestore(Restore restore)
         {
-            //přidat objekt obnovy do seznamu a informovat o změně
-            _restoresInProgress.Add(restore);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RestoresInProgress)));
+            ////přidat objekt obnovy do seznamu a informovat o změně
+            //_restoresInProgress.Add(restore);
+            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RestoresInProgress)));
 
             //počkat, až služba provede obnovu
-            var response = await client.RestoreAsync(restore);
-
-            //odstranit objekt obnovy ze seznamu a informovat o změně
-            _restoresInProgress.Remove(restore);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RestoresInProgress)));
-
-            //informovat uživatele o hotové obnově
-            RestoreCompleteBubble(response);
+            return client.Restore(restore);
         }
 
-        public void RestoreCompleteBubble(RestoreResponse response)
-        {
-            if (response.Success)
-                LoadedStatic.notifyIcon?.ShowBalloonTip(2000, "Data úspěšně obnovena", "Obnova dokončena", 
-                    System.Windows.Forms.ToolTipIcon.Info);
-            else if (response.SuccessfulRestoreSourceIndexes.Any())
-                LoadedStatic.notifyIcon?.ShowBalloonTip(2000, "Obnova dokončena, ale došlo k chybám", "Obnova dokončena",
-                    System.Windows.Forms.ToolTipIcon.Info);
-            else
-                LoadedStatic.notifyIcon?.ShowBalloonTip(2000, "Obnova dat se nezdařila", "Obnova selhala",
-                    System.Windows.Forms.ToolTipIcon.Info);
-        }
+        //public void CompleteRestore(RestoreResponse response)
+        //{
+        //    //odstranit objekt obnovy ze seznamu a informovat o změně
+        //    _restoresInProgress.RemoveAll(f => f.ID == response.info.ID);
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RestoresInProgress)));
 
-        public void DoSingleBackup(BackupRule rule)
+        //    //zobrazit bublinu
+        //    if (response.Success)
+        //        LoadedStatic.notifyIcon?.ShowBalloonTip(2000, "Data úspěšně obnovena", "Obnova dokončena", 
+        //            System.Windows.Forms.ToolTipIcon.Info);
+        //    else if (response.SuccessfulRestoreSourceIndexes.Any())
+        //        LoadedStatic.notifyIcon?.ShowBalloonTip(2000, "Obnova dokončena, ale došlo k chybám", "Obnova dokončena",
+        //            System.Windows.Forms.ToolTipIcon.Warning);
+        //    else
+        //        LoadedStatic.notifyIcon?.ShowBalloonTip(2000, "Obnova dat se nezdařila", "Obnova selhala",
+        //            System.Windows.Forms.ToolTipIcon.Error);
+        //}
+
+        public BackupInProgress DoSingleBackup(BackupRule rule)
         {
             LoadedStatic.SaveConfig();
             rule.SaveSelf();
             client.Reload();
-            client.DoSingleBackup(rule.LocalID);
+            return client.DoSingleBackup(rule.LocalID);
         }
+
+        public BackupInProgress[] GetBackupsInProgress() => client.GetBackupsInProgress();
+        public RestoreInProgress[] GetRestoresInProgresses() => client.GetRestoresInProgress();
     }
 
     public enum ServiceConnectionState

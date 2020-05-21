@@ -29,5 +29,16 @@ namespace SmartModulBackupClasses
 
             return str.ToString();
         }
+
+        public static float Lerp(float from, float to, float coeff, bool clamp = true)
+        {
+            if (clamp)
+            {
+                if (coeff > 1) coeff = 1;
+                else if (coeff < 0) coeff = 0;
+            }
+
+            return from + (to - from) * coeff;
+        }
     }
 }

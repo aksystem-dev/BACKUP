@@ -19,7 +19,16 @@ namespace smart_modul_BACKUP_service.WCF
         int[] GetRunningBackups();
 
         [OperationContract]
-        bool DoSingleBackup(int rule);
+        BackupInProgress DoSingleBackup(int rule);
+
+        [OperationContract]
+        RestoreInProgress Restore(Restore restoreInfo);
+
+        [OperationContract]
+        BackupInProgress[] GetBackupsInProgress();
+
+        [OperationContract]
+        RestoreInProgress[] GetRestoresInProgress();
 
         [OperationContract]
         void Connect();
@@ -29,8 +38,5 @@ namespace smart_modul_BACKUP_service.WCF
 
         [OperationContract]
         void ImStillHere();
-
-        [OperationContract]
-        RestoreResponse Restore(Restore restoreInfo);
     }
 }

@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:8081/?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="BackupInProgress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CurrentTask" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfError" />
+      <xs:element minOccurs="0" name="Progress" type="xs:float" />
+      <xs:element minOccurs="0" name="ProgressId" type="xs:int" />
+      <xs:element minOccurs="0" name="RuleId" type="xs:int" />
+      <xs:element minOccurs="0" name="RuleName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BackupInProgress" nillable="true" type="tns:BackupInProgress" />
+  <xs:complexType name="ArrayOfError">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Error" nillable="true" type="tns:Error" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfError" nillable="true" type="tns:ArrayOfError" />
+  <xs:complexType name="Error">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorDetail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorHeader" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Error" nillable="true" type="tns:Error" />
   <xs:complexType name="Restore">
     <xs:sequence>
       <xs:element minOccurs="0" name="ID" type="xs:int" />
@@ -26,12 +50,23 @@
   <xs:element name="ArrayOfSavedSource" nillable="true" type="tns:ArrayOfSavedSource" />
   <xs:complexType name="SavedSource">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Error" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorDetail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Success" type="tns:BackupSuccessLevel" />
       <xs:element minOccurs="0" name="filename" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="sourcepath" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="type" type="tns:BackupSourceType" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SavedSource" nillable="true" type="tns:SavedSource" />
+  <xs:simpleType name="BackupSuccessLevel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TotalFailure" />
+      <xs:enumeration value="SomeErrors" />
+      <xs:enumeration value="EverythingWorked" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BackupSuccessLevel" nillable="true" type="tns:BackupSuccessLevel" />
   <xs:simpleType name="BackupSourceType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Database" />
@@ -40,6 +75,27 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="BackupSourceType" nillable="true" type="tns:BackupSourceType" />
+  <xs:complexType name="RestoreInProgress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CurrentTask" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfError" />
+      <xs:element minOccurs="0" name="Progress" type="xs:float" />
+      <xs:element minOccurs="0" name="ProgressId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RestoreInProgress" nillable="true" type="tns:RestoreInProgress" />
+  <xs:complexType name="ArrayOfBackupInProgress">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BackupInProgress" nillable="true" type="tns:BackupInProgress" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBackupInProgress" nillable="true" type="tns:ArrayOfBackupInProgress" />
+  <xs:complexType name="ArrayOfRestoreInProgress">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RestoreInProgress" nillable="true" type="tns:RestoreInProgress" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRestoreInProgress" nillable="true" type="tns:ArrayOfRestoreInProgress" />
   <xs:complexType name="RestoreResponse">
     <xs:sequence>
       <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SuccessfulRestoreSourceIndexes" nillable="true" type="q1:ArrayOfint" />

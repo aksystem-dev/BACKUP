@@ -11,12 +11,6 @@ namespace smart_modul_BACKUP_service.WCF
     public interface ISmartModulBackupInterfaceCallback
     {
         [OperationContract]
-        void BackupStarted(string ruleName);
-
-        [OperationContract]
-        void BackupEnded(string ruleName, bool success);
-
-        [OperationContract]
         void ShowError(string error);
 
         [OperationContract]
@@ -25,13 +19,23 @@ namespace smart_modul_BACKUP_service.WCF
         [OperationContract]
         void ShowMsg(string msg);
 
-        [OperationContract]
-        void RestoreComplete(RestoreResponse response);
-
         /// <summary>
         /// Když se služba ukončuje
         /// </summary>
         [OperationContract]
         void Goodbye();
+
+        [OperationContract]
+        void StartRestore(RestoreInProgress progress);
+        [OperationContract]
+        void StartBackup(BackupInProgress progress);
+        [OperationContract]
+        void UpdateRestore(RestoreInProgress progress);
+        [OperationContract]
+        void UpdateBackup(BackupInProgress progress);
+        [OperationContract]
+        void CompleteRestore(RestoreInProgress progress, RestoreResponse response);
+        [OperationContract]
+        void CompleteBackup(BackupInProgress progress, int BackupID);
     }
 }

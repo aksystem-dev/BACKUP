@@ -55,6 +55,24 @@
   <wsdl:message name="ISmartModulBackupInterface_DoSingleBackup_OutputMessage">
     <wsdl:part name="parameters" element="tns:DoSingleBackupResponse" />
   </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_Restore_InputMessage">
+    <wsdl:part name="parameters" element="tns:Restore" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_Restore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RestoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_GetBackupsInProgress_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBackupsInProgress" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_GetBackupsInProgress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBackupsInProgressResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_GetRestoresInProgress_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestoresInProgress" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_GetRestoresInProgress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestoresInProgressResponse" />
+  </wsdl:message>
   <wsdl:message name="ISmartModulBackupInterface_Connect_InputMessage">
     <wsdl:part name="parameters" element="tns:Connect" />
   </wsdl:message>
@@ -72,24 +90,6 @@
   </wsdl:message>
   <wsdl:message name="ISmartModulBackupInterface_ImStillHere_OutputMessage">
     <wsdl:part name="parameters" element="tns:ImStillHereResponse" />
-  </wsdl:message>
-  <wsdl:message name="ISmartModulBackupInterface_Restore_InputMessage">
-    <wsdl:part name="parameters" element="tns:Restore" />
-  </wsdl:message>
-  <wsdl:message name="ISmartModulBackupInterface_Restore_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RestoreResponse" />
-  </wsdl:message>
-  <wsdl:message name="ISmartModulBackupInterface_BackupStarted_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:BackupStarted" />
-  </wsdl:message>
-  <wsdl:message name="ISmartModulBackupInterface_BackupStarted_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:BackupStartedResponse" />
-  </wsdl:message>
-  <wsdl:message name="ISmartModulBackupInterface_BackupEnded_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:BackupEnded" />
-  </wsdl:message>
-  <wsdl:message name="ISmartModulBackupInterface_BackupEnded_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:BackupEndedResponse" />
   </wsdl:message>
   <wsdl:message name="ISmartModulBackupInterface_ShowError_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ShowError" />
@@ -109,17 +109,47 @@
   <wsdl:message name="ISmartModulBackupInterface_ShowMsg_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ShowMsgResponse" />
   </wsdl:message>
-  <wsdl:message name="ISmartModulBackupInterface_RestoreComplete_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:RestoreComplete" />
-  </wsdl:message>
-  <wsdl:message name="ISmartModulBackupInterface_RestoreComplete_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:RestoreCompleteResponse" />
-  </wsdl:message>
   <wsdl:message name="ISmartModulBackupInterface_Goodbye_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:Goodbye" />
   </wsdl:message>
   <wsdl:message name="ISmartModulBackupInterface_Goodbye_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GoodbyeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_StartRestore_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StartRestore" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_StartRestore_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StartRestoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_StartBackup_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StartBackup" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_StartBackup_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StartBackupResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_UpdateRestore_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRestore" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_UpdateRestore_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRestoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_UpdateBackup_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBackup" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_UpdateBackup_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBackupResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_CompleteRestore_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CompleteRestore" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_CompleteRestore_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CompleteRestoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_CompleteBackup_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CompleteBackup" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_CompleteBackup_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CompleteBackupResponse" />
   </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="ISmartModulBackupInterface">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Reload">
@@ -134,6 +164,18 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/DoSingleBackup" message="tns:ISmartModulBackupInterface_DoSingleBackup_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/DoSingleBackupResponse" message="tns:ISmartModulBackupInterface_DoSingleBackup_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Restore">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/Restore" message="tns:ISmartModulBackupInterface_Restore_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/RestoreResponse" message="tns:ISmartModulBackupInterface_Restore_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetBackupsInProgress">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/GetBackupsInProgress" message="tns:ISmartModulBackupInterface_GetBackupsInProgress_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/GetBackupsInProgressResponse" message="tns:ISmartModulBackupInterface_GetBackupsInProgress_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetRestoresInProgress">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/GetRestoresInProgress" message="tns:ISmartModulBackupInterface_GetRestoresInProgress_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/GetRestoresInProgressResponse" message="tns:ISmartModulBackupInterface_GetRestoresInProgress_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Connect">
       <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/Connect" message="tns:ISmartModulBackupInterface_Connect_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ConnectResponse" message="tns:ISmartModulBackupInterface_Connect_OutputMessage" />
@@ -145,18 +187,6 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ImStillHere">
       <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ImStillHere" message="tns:ISmartModulBackupInterface_ImStillHere_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ImStillHereResponse" message="tns:ISmartModulBackupInterface_ImStillHere_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Restore">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/Restore" message="tns:ISmartModulBackupInterface_Restore_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/RestoreResponse" message="tns:ISmartModulBackupInterface_Restore_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="BackupStarted">
-      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/BackupStarted" message="tns:ISmartModulBackupInterface_BackupStarted_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/BackupStartedResponse" message="tns:ISmartModulBackupInterface_BackupStarted_InputCallbackMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="BackupEnded">
-      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/BackupEnded" message="tns:ISmartModulBackupInterface_BackupEnded_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/BackupEndedResponse" message="tns:ISmartModulBackupInterface_BackupEnded_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ShowError">
       <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ShowError" message="tns:ISmartModulBackupInterface_ShowError_OutputCallbackMessage" />
@@ -170,13 +200,33 @@
       <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ShowMsg" message="tns:ISmartModulBackupInterface_ShowMsg_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ShowMsgResponse" message="tns:ISmartModulBackupInterface_ShowMsg_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RestoreComplete">
-      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/RestoreComplete" message="tns:ISmartModulBackupInterface_RestoreComplete_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/RestoreCompleteResponse" message="tns:ISmartModulBackupInterface_RestoreComplete_InputCallbackMessage" />
-    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Goodbye">
       <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/Goodbye" message="tns:ISmartModulBackupInterface_Goodbye_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/GoodbyeResponse" message="tns:ISmartModulBackupInterface_Goodbye_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="StartRestore">
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/StartRestore" message="tns:ISmartModulBackupInterface_StartRestore_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/StartRestoreResponse" message="tns:ISmartModulBackupInterface_StartRestore_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="StartBackup">
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/StartBackup" message="tns:ISmartModulBackupInterface_StartBackup_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/StartBackupResponse" message="tns:ISmartModulBackupInterface_StartBackup_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateRestore">
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/UpdateRestore" message="tns:ISmartModulBackupInterface_UpdateRestore_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/UpdateRestoreResponse" message="tns:ISmartModulBackupInterface_UpdateRestore_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateBackup">
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/UpdateBackup" message="tns:ISmartModulBackupInterface_UpdateBackup_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/UpdateBackupResponse" message="tns:ISmartModulBackupInterface_UpdateBackup_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CompleteRestore">
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/CompleteRestore" message="tns:ISmartModulBackupInterface_CompleteRestore_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/CompleteRestoreResponse" message="tns:ISmartModulBackupInterface_CompleteRestore_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CompleteBackup">
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/CompleteBackup" message="tns:ISmartModulBackupInterface_CompleteBackup_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/CompleteBackupResponse" message="tns:ISmartModulBackupInterface_CompleteBackup_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetNamedPipeBinding_ISmartModulBackupInterface" type="tns:ISmartModulBackupInterface">
@@ -202,6 +252,33 @@
     </wsdl:operation>
     <wsdl:operation name="DoSingleBackup">
       <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/DoSingleBackup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Restore">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/Restore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBackupsInProgress">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/GetBackupsInProgress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRestoresInProgress">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/GetRestoresInProgress" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -236,33 +313,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Restore">
-      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/Restore" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="BackupStarted">
-      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/BackupStarted" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="BackupEnded">
-      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/BackupEnded" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="ShowError">
       <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/ShowError" style="document" />
       <wsdl:input>
@@ -290,8 +340,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RestoreComplete">
-      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/RestoreComplete" style="document" />
+    <wsdl:operation name="Goodbye">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/Goodbye" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -299,8 +349,53 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Goodbye">
-      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/Goodbye" style="document" />
+    <wsdl:operation name="StartRestore">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/StartRestore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartBackup">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/StartBackup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRestore">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/UpdateRestore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBackup">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/UpdateBackup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CompleteRestore">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/CompleteRestore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CompleteBackup">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/CompleteBackup" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

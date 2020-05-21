@@ -89,7 +89,19 @@ namespace smart_modul_BACKUP
         public static void DoSingleBackup(BackupRule Rule)
         {
             if (LoadedStatic.service.State == ServiceConnectionState.Connected)
-                LoadedStatic.service.DoSingleBackup(Rule);
+            {
+                var progress = LoadedStatic.service.DoSingleBackup(Rule);
+                progress = LoadedStatic.InProgress.SetBackup(progress);
+                Rule.InProgress.Add(progress);
+                progress.Completed += async (obj, args) =>
+                {
+                    await Task.Delay(2000);
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        Rule.InProgress.Remove(progress);
+                    });
+                };
+            }
             else
                 MessageBox.Show("Služba není připojena, nelze provést jednorázovou zálohu.");
         }

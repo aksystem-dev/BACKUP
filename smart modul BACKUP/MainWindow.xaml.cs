@@ -50,6 +50,7 @@ namespace smart_modul_BACKUP
 
                 SMB_Log.OnLog += SMB_Log_OnLog;
                 GuiLog.Clear();
+                GuiLog.FileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "guilog.txt");
                 GuiLog.Log("\n===========\nGUI started\n===========\n");
 
                 Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;

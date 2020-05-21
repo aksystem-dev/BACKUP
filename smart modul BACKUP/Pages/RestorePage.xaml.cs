@@ -1,6 +1,7 @@
 ﻿using SmartModulBackupClasses;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -67,12 +68,13 @@ namespace smart_modul_BACKUP
         }
 
         private SavedSourceSelected _src(SavedSource src)
-            => new SavedSourceSelected(src) { Selected = src.Success == BackupSuccessLevel.EverythingWorked };
+            => new SavedSourceSelected(src) { Selected = src.Success == SuccessLevel.EverythingWorked };
 
         public Restore GetRestoreObject()
         {
             var restore = new Restore()
             {
+                ID = LoadedStatic.service.RestoresInProgress.Any() ? LoadedStatic.service.RestoresInProgress.Max(f => f.ID) + 1 : 0,
                 backupID = Backup.ID,
                 location = rbt_local.IsChecked == true ? BackupLocation.Local : BackupLocation.SFTP,
                 zip_path = rbt_local.IsChecked == true ? localPath : Backup.RemotePath
@@ -103,7 +105,17 @@ namespace smart_modul_BACKUP
 
         private void btn_click_restore(object sender, RoutedEventArgs e)
         {
-            LoadedStatic.service.Restore(GetRestoreObject());
+            var progress = LoadedStatic.service.StartRestore(GetRestoreObject());
+            progress = LoadedStatic.InProgress.SetRestore(progress);
+            Backup.InProgress.Add(progress);
+
+            progress.Completed += async (obj, args) =>
+            {
+                await Task.Delay(2000);
+                App.Current.Dispatcher.Invoke(() =>
+                    Backup.InProgress.Remove(progress));
+            };
+
             MainWindow.main.Back();
             
         }

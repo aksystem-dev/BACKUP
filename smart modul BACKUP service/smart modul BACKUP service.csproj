@@ -66,9 +66,11 @@
     <Compile Include="BackupTask.cs" />
     <Compile Include="BackupTimeline.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="FolderCopier.cs" />
+    <Compile Include="FileUtils.cs" />
     <Compile Include="GUI.cs" />
+    <Compile Include="GuiProgressBar.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="ProgressManager.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>

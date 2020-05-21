@@ -9,3 +9,9 @@ C:\Users\marti\Documents\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\Sm
 C:\Users\marti\Documents\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.pdb
 C:\Users\marti\Documents\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.csprojAssemblyReference.cache
 C:\Users\marti\Documents\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.csproj.CopyComplete
+D:\Projects\smart modul BACKUP\build (debug)\SmartModulBackupClasses.dll
+D:\Projects\smart modul BACKUP\build (debug)\SmartModulBackupClasses.pdb
+D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.csprojAssemblyReference.cache
+D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.csproj.CopyComplete
+D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.dll
+D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.pdb

@@ -28,6 +28,7 @@ namespace smart_modul_BACKUP
         public static XmlInfoLoaderSftpMirror<Backup> SavedBackupsLoader;// = new XmlInfoLoaderSftpMirror<Backup>("saved_backups.xml");
         public static ObservableCollection<Backup> SavedBackups { get; set; } = new ObservableCollection<Backup>();
         public static ServiceState service { get; set; } = new ServiceState();
+        public static InProgress InProgress { get; set; } = new InProgress();
         public static NotifyIcon notifyIcon;
         public static SftpUploaderFactory sftpFactory;
 
@@ -37,6 +38,9 @@ namespace smart_modul_BACKUP
 
         public static event Action beforeSave;
         public static event Action afterSave;
+
+        public static void MSG(string msg, string title = "Info", ToolTipIcon icon = ToolTipIcon.Info)
+            => notifyIcon?.ShowBalloonTip(2000, title, msg, icon);
 
         public static bool Loaded { get; private set; }
 
@@ -83,15 +87,8 @@ namespace smart_modul_BACKUP
                         {
                             var rule = BackupRule.LoadFromXml(rulepath, true);
 
-                            //if (_rules.Any(f => f.Name == rule.Name))
-                            //    Logger.Warn($"Pravidlo s názvem {rule.Name} se mezi pravidly vyskytlo vícekrát. Beru pouze první výskyt");
+                            //rule.TAG = new ProgBarsTag();
 
-                            //zajistit, aby mělo pravidlo unikátní id
-                            //pokud vše funguje jak má (GUI), rule.Id++ by se nikdy volat nemělo
-                            while (rules.Any(f => f.LocalID == rule.LocalID))
-                                rule.LocalID++;
-
-                            //rule.Fix();
                             rules.Add(rule);
                         }
                     }
@@ -205,7 +202,11 @@ namespace smart_modul_BACKUP
 
             SavedBackupsLoader.LoadInfos();
             SavedBackups.Clear();
-            SavedBackupsLoader.GetInfos().ForEach(f => SavedBackups.Add(f));
+            SavedBackupsLoader.GetInfos().ForEach(f =>
+            {
+                //f.TAG = new ProgBarsTag();
+                SavedBackups.Add(f);
+            });
         }
     }
 }

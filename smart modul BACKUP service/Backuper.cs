@@ -158,11 +158,17 @@ namespace smart_modul_BACKUP_service
         /// </summary>
         /// <param name="rule">Pravidlo k vyhodnocení.</param>
         /// <returns>Zdali bylo vyhodnocování úspěšné.</returns>
-        public Backup ExecuteRuleSingleZip(BackupRule rule, bool cleanupAfterwards)
+        public Backup ExecuteRuleSingleZip(BackupRule rule, bool cleanupAfterwards, BackupInProgress progress)
         {
             #region INIT
 
-            Utils.GUIS.BackupStarted(rule.Name);
+            progress.RuleId = rule.LocalID;
+            progress.RuleName = rule.Name;
+            progress.Update("INICIALIZUJI ZÁLOHU", 0);
+
+            Utils.GUIS.StartBackup(progress);
+            progress.AfterUpdateCalled += () => Utils.GUIS.UpdateBackup(progress);
+
             Logger.Log($"Pravidlo {rule.Name} (id {rule.LocalID}) spuštěno");
 
             //objekt s informacemi o této záloze, který posléze uložíme do souboru
@@ -193,11 +199,13 @@ namespace smart_modul_BACKUP_service
             #endregion
 
             #region CONNECT SFTP
+
             //pokud toto pravidlo dělá zálohy přes Sftp (nebo v minulosti dělalo, čili existuje sftp záloha), připojit se přes Sftp
             SftpUploader Sftp = null;
             if ((rule.RemoteBackups.enabled && rule.RemoteBackups.MaxBackups > 0) ||
-                Utils.SavedBackups.GetInfos().Any(f=>f.RefRule == rule.LocalID && f.AvailableRemotely))
+                Utils.SavedBackups.GetInfos().Any(f => f.RefRule == rule.LocalID && f.AvailableRemotely))
             {
+                progress.Update("PŘIPOJUJI SE K SFTP", 0.05f);
                 Logger.Log("Připojuji se k SFTP");
                 try
                 {
@@ -227,6 +235,7 @@ namespace smart_modul_BACKUP_service
             SqlBackuper SqlBackuper = null;
             if (rule.Sources.Databases.Any())
             {
+                progress.Update("PŘIPOJUJI SE K SQL SERVERU", 0.1f);
                 Logger.Log("Připojuji se přes SQL");
                 try
                 {
@@ -258,6 +267,7 @@ namespace smart_modul_BACKUP_service
 
             if (Utils.Config.UseShadowCopy)
             {
+                progress.Update("VYTVÁŘÍM SHADOW COPY", 0.2f);
                 Logger.Log("Vytvářím Shadow Copy");
 
                 foreach (var src in rule.Sources.Directories)
@@ -290,56 +300,25 @@ namespace smart_modul_BACKUP_service
             string dir_to_zip = Path.Combine(temp_instance_dir, "dir");
             Directory.CreateDirectory(dir_to_zip);
 
+            var all_sources = rule.Sources.All.Where(f => f.enabled);
+
+            float prog_start = 0.3f;
+            float prog_end = 0.6f;
+            int ind = 0;
+            float max_ind = all_sources.Count();
+
             //Projdeme všechny povolené zdroje pravidla
-            foreach (var source in rule.Sources.All.Where(f => f.enabled))
+            foreach (var source in all_sources)
             {
-                #region CREATE TEMP ZIP FILE BACKUP
+                #region BACKUP SOURCE
 
-                //string temp_filename = source.id;// + "_" + DateTime.Now.ToString("dd-MM-yyyy");
-
-                //nejprve vytvoříme jednu zálohu daného zdroje
-                //string temp_file_path;
-
-                //try
-                //{
-                //    Logger.Log($"Vytvářím zálohu zdroje {source.id}");
-
-                //    //vytvořit zálohu zdroje
-                //    temp_file_path = _backupSource(source, SqlBackuper, shadowCopies, dir_to_zip);
-
-                //    //pokud se záloha nevytvořila, temp_zip_path bude null, a potom se chceme na tento zdroj vykašlat a hupnout dál
-                //    if (temp_file_path == null)
-                //        continue;
-
-                //    //přidat info o zdroji
-                //    B.Sources.Add(new SavedSource()
-                //    {
-                //        filename = Path.GetFileName(temp_file_path),
-                //        sourcepath = source.path,
-                //        type = source.type
-                //    });
-
-                //}
-                //catch (Exception e)
-                //{
-                //    //pokud se nepodaří vytvořit zip, vyplivnem chybu a dáme se na další zdroj
-                //    Logger.Error($"Nepodařilo se zazálohovat zdroj {source.path} pravidla {rule.Name}. Došlo k chybě {e.GetType().Name}.\n\n{e.Message}");
-
-                //    B.Errors.Add(new BackupError(
-                //        $"Nepodařilo se zazálohovat zdroj {source.path} pravidla {rule.Name}. Došlo k chybě {e.GetType().Name}.\n\n{e.Message}",
-                //        BackupErrorType.IOError, source.id
-                //        ));
-
-                //    B.Success = false;
-                //    continue;
-                //}
-
+                progress.Update($"VYTVÁŘÍM ZÁLOHU ZDROJE {source.id}", SMB_Utils.Lerp(prog_start, prog_end, ind / max_ind));
                 Logger.Log($"Vytvářím zálohu zdroje {source.id}");
 
                 string temp_fpath = null;
                 string error = null;
                 string error_detail = null;
-                var src_success = BackupSuccessLevel.SomeErrors;
+                var src_success = SuccessLevel.SomeErrors;
 
                 try
                 {
@@ -351,7 +330,7 @@ namespace smart_modul_BACKUP_service
                     //pokud dojde k výjimce, zpráva z výjimky se uloží jako chyba
                     error = "Došlo k neošetřené výjimce";
                     error_detail = $"Výjimka {e.GetType().Name}:\n{e.Message}";
-                    src_success = BackupSuccessLevel.TotalFailure;
+                    src_success = SuccessLevel.TotalFailure;
                 }
                 finally
                 {
@@ -374,12 +353,16 @@ namespace smart_modul_BACKUP_service
 
                 #endregion
 
+                ind++;
             }
 
             #region ZIP FOLDER
 
             //kam uložíme dočasný zip
             string temp_zip_path = Path.Combine(temp_instance_dir, "temp.zip");
+
+            progress.Update("ZIPUJI ZÁLOHU", 0.6f);
+            Logger.Log("Zipuji zálohu");
 
             try
             {
@@ -409,6 +392,8 @@ namespace smart_modul_BACKUP_service
 
             if (rule.RemoteBackups.enabled && Sftp != null)
             {
+                progress.Update("NAHRÁVÁM NA SERVER", 0.7f);
+
                 //zde se už jedná o konkrétní zálohu.
 
                 //vytvořit cestu k cíli na sftp serveru
@@ -441,6 +426,8 @@ namespace smart_modul_BACKUP_service
 
             if (rule.LocalBackups.enabled)
             {
+                progress.Update("PŘESOUVÁM DO CÍLOVÉ SLOŽKY", 0.8f);
+
                 //budeme vytvářet lokální zálohy a ty zálohy budou lokální, tedy uložené lokálně, aby bylo jasno.
 
                 string zip_folder = Path.Combine(Utils.Config.LocalBackupDirectory, rule.Name);
@@ -477,6 +464,8 @@ namespace smart_modul_BACKUP_service
 
             B.EndDateTime = DateTime.Now;
 
+            progress.Update("UKLÁDÁM INFO O ZÁLOZE", 0.82f);
+
             try
             {
                 Utils.SavedBackups.RemoveInfos(f => !f.AvailableLocally && !f.AvailableRemotely);
@@ -499,6 +488,7 @@ namespace smart_modul_BACKUP_service
             if (cleanupAfterwards)
                 try
                 {
+                    progress.Update("ODSTRAŇUJI STARÉ ZÁLOHY", 0.84f);
                     BackupCleanUpByRule(Sftp, rule, B.Errors, false);
                 }
                 catch (Exception e)
@@ -515,6 +505,7 @@ namespace smart_modul_BACKUP_service
             //Pokud jsme připojeni přes SFTP, odpojíme se
             if (Sftp != null)
             {
+                progress.Update("ODPOJUJI SE OD SFTP SERVERU", 0.87f);
                 try
                 {
                     Sftp.Disconnect();
@@ -534,6 +525,7 @@ namespace smart_modul_BACKUP_service
             //Pokud jsme připojeni přes SQL, odpojíme se
             if (SqlBackuper != null)
             {
+                progress.Update("ODPOJUJI SE OD SQL SERVERU", 0.9f);
                 try
                 {
                     SqlBackuper.Close();
@@ -549,6 +541,9 @@ namespace smart_modul_BACKUP_service
             #endregion
 
             #region CLEAN UP SHADOW COPIES
+
+            if (shadowCopies.Any())
+                progress.Update("MAŽU STÍNOVÉ KOPIE", 0.93f);
 
             //Také musíme porychtovat VssBackupery
 
@@ -567,26 +562,27 @@ namespace smart_modul_BACKUP_service
             #region DELETE TEMP FOLDER
 
             //nakonec odstranit dočasnou složku
-            try
-            {
-                Directory.Delete(temp_instance_dir, true);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Problém s odstraňováním dočasné složky ({ex.GetType().Name}):\n\n{ex.Message}");
-            }
+            Logger.Log("Odstraňuji dočasnou složku");
+            progress.Update("ODSTRAŇUJI DOČASNOU SLOŽKU", 0.96f);
+            FileUtils.DeleteFolder(temp_instance_dir, log: true);
 
             #endregion
 
             #region LOG SUCCESS
 
             if (B.Success)
+            {
                 Logger.Success($"Pravidlo {rule.Name} úspěšně uplatněno.");
+                progress.Update($"PRAVIDLO {rule.Name} ÚSPĚŠNĚ UPLATNĚNO", 1);
+            }
             else
+            {
                 Logger.Failure($"Pravidlo {rule.Name} uplatněno, ale došlo k chybám.");
+                progress.Update($"PRAVIDLO {rule.Name} UPLATNĚNO, ALE DOŠLO K CHYBÁM", 1);
+            }
 
             //informovat gui o záloze
-            Utils.GUIS.BackupEnded(rule.Name, B.Success);
+            Utils.GUIS.CompleteBackup(progress, B.ID);
 
             #endregion
 
@@ -601,7 +597,7 @@ namespace smart_modul_BACKUP_service
         /// <param name="shadowCopies">Seznam ShadowCopies k použití</param>
         /// <param name="dir">Cílový adresář</param>
         /// <returns></returns>
-        private string _backupSource(BackupSource source, SqlBackuper sqlBackuper, Dictionary<string, VssBackuper> shadowCopies, string dir, out string error, out string error_detail, out BackupSuccessLevel success)
+        private string _backupSource(BackupSource source, SqlBackuper sqlBackuper, Dictionary<string, VssBackuper> shadowCopies, string dir, out string error, out string error_detail, out SuccessLevel success)
         {
             Logger.Log($"_backupSourceFile called for {source.type} {source.id}");
             Directory.CreateDirectory(dir);
@@ -615,7 +611,7 @@ namespace smart_modul_BACKUP_service
                 {
                     error = "Nelze zálohovat databázi, neboť se nepodařilo připojit k SQL serveru.";
                     error_detail = null;
-                    success = BackupSuccessLevel.TotalFailure;
+                    success = SuccessLevel.TotalFailure;
                     return null;
                 }
 
@@ -627,7 +623,7 @@ namespace smart_modul_BACKUP_service
 
                 error = null;
                 error_detail = null;
-                success = BackupSuccessLevel.EverythingWorked;
+                success = SuccessLevel.EverythingWorked;
                 return bak_path;
             }
             else if (source.type == BackupSourceType.Directory)
@@ -641,20 +637,20 @@ namespace smart_modul_BACKUP_service
 
                 List<string> failed_paths = new List<string>();
 
-                bool copied_all = FolderCopier.CopyFolderContents(
+                bool copied_all = FileUtils.CopyFolderContents(
                     //pokud máme pro tento volume Shadow Copy, budeme zipovat Shadow Copy; jinak normálně ten soubor
                     shadowCopies.ContainsKey(root) ? shadowCopies[root].GetShadowPath(source.path) : source.path,
                     dir_path, failed_paths);
 
                 if (copied_all)
                 {
-                    success = BackupSuccessLevel.EverythingWorked;
+                    success = SuccessLevel.EverythingWorked;
                     error = null;
                     error_detail = null;
                 }
                 else
                 {
-                    success = BackupSuccessLevel.SomeErrors;
+                    success = SuccessLevel.SomeErrors;
                     error = "Nepodařilo se zkopírovat některé soubory.";
                     error_detail = String.Join("\n", failed_paths);
                 }
@@ -677,14 +673,14 @@ namespace smart_modul_BACKUP_service
                         shadowCopies.ContainsKey(root) ? shadowCopies[root].GetShadowPath(source.path) : source.path,
                         file_path, true);
 
-                    success = BackupSuccessLevel.EverythingWorked;
+                    success = SuccessLevel.EverythingWorked;
                     error = null;
                     error_detail = null;
                     return file_path;
                 }
                 catch (Exception e)
                 {
-                    success = BackupSuccessLevel.TotalFailure;
+                    success = SuccessLevel.TotalFailure;
                     error = e.Message;
                     error_detail = $"Výjimka {e.GetType().Name}:\n{e.Message}";
                     return null;
@@ -692,7 +688,7 @@ namespace smart_modul_BACKUP_service
             }
             else
             {
-                success = BackupSuccessLevel.TotalFailure;
+                success = SuccessLevel.TotalFailure;
                 error = $"Neznám typ zdroje {source.type}";
                 error_detail = null;
                 return null;

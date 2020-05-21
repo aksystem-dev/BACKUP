@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP\obj\Debug\
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\
 smart_modul_BACKUP
 none
 false
 DEBUG;TRACE
-C:\Users\marti\Documents\smart modul BACKUP\smart modul BACKUP\App.xaml
-201902147135
+D:\Projects\smart modul BACKUP\smart modul BACKUP\App.xaml
+21529612679
 
-46251490085
-21-1428136678
-Colors.xaml;Controls\LabelAnything.xaml;Controls\PathTextbox.xaml;Controls\ToggleOnOff.xaml;Images.xaml;Pages\BackupsPage.xaml;Pages\ConfigPage.xaml;Controls\LabelPasswordBox.xaml;Controls\LabelTextBox.xaml;MainWindow.xaml;Controls\RuleControl.xaml;Pages\DbsPage.xaml;Pages\HomePage.xaml;Pages\RestorePage.xaml;Pages\RulePage.xaml;Pages\SingleRulePage.xaml;Styles.xaml;Windows\InputDialog.xaml;Windows\RestoreWindow.xaml;Windows\YesNoDialog.xaml;
+52-1730477838
+21-905578482
+Colors.xaml;Controls\LabelAnything.xaml;Controls\PathTextbox.xaml;Controls\ProgressBarView.xaml;Controls\ToggleOnOff.xaml;Images.xaml;Pages\BackupsPage.xaml;Pages\ConfigPage.xaml;Controls\LabelPasswordBox.xaml;Controls\LabelTextBox.xaml;MainWindow.xaml;Controls\RuleControl.xaml;Pages\DbsPage.xaml;Pages\HomePage.xaml;Pages\RestorePage.xaml;Pages\RulePage.xaml;Pages\SingleRulePage.xaml;Styles.xaml;Windows\InputDialog.xaml;Windows\RestoreWindow.xaml;Windows\YesNoDialog.xaml;
 
 False
 

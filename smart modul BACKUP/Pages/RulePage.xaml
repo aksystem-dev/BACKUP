@@ -25,47 +25,56 @@
                 <ItemsControl ItemsSource="{Binding}" x:Name="RuleList">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type smb:BackupRule}">
-                            <Border Style="{StaticResource Top}" Margin="10,10,0,10">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Border Background="{x:Null}" BorderBrush="{x:Null}" Width="100" Height="100">
-                                        <local:ToggleOnOff VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                   Foreground="White" Width="30" Height="60" FontSize="8" ToggleMargin="3"
-                                                   IsToggledOn="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                   AnimationDuration="0:0:0.1" />
-                                    </Border>
-                                    <Label Foreground="White" Content="{Binding Path=Name}" FontSize="30" Grid.Column="1" 
-                                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" />
-                                    <StackPanel Orientation="Horizontal" Grid.Column="2">
-                                        <!--<StackPanel.Resources>
-                                        <Style TargetType="Image">
-                                            <Setter Property="Width" Value="40" />
-                                            <Setter Property="Height" Value="40" />
-                                            <Setter Property="Margin" Value="0" />
-                                        </Style>
-                                        <Style TargetType="Button" BasedOn="{StaticResource TransparentButton}">
-                                            <Setter Property="Padding" Value="10" />
-                                            <Setter Property="Margin" Value="15,15,0,15" />
-                                        </Style>
-                                    </StackPanel.Resources>-->
+                            <StackPanel Margin="10,10,0,10" Background="{StaticResource Gray3}">
+                                <Border Style="{StaticResource Top}" >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Background="{x:Null}" BorderBrush="{x:Null}" Width="100" Height="100">
+                                            <local:ToggleOnOff VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       Foreground="White" Width="30" Height="60" FontSize="8" ToggleMargin="3"
+                                                       IsToggledOn="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                       AnimationDuration="0:0:0.1" />
+                                        </Border>
+                                        <Label Foreground="White" Content="{Binding Path=Name}" FontSize="30" Grid.Column="1" 
+                                       HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" />
+                                        <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                            <!--<StackPanel.Resources>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Width" Value="40" />
+                                                <Setter Property="Height" Value="40" />
+                                                <Setter Property="Margin" Value="0" />
+                                            </Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource TransparentButton}">
+                                                <Setter Property="Padding" Value="10" />
+                                                <Setter Property="Margin" Value="15,15,0,15" />
+                                            </Style>
+                                        </StackPanel.Resources>-->
 
 
-                                        <Button Click="singleBackup" ToolTip="JEDNORÁZOVÁ ZÁLOHA">
-                                            <Image Source="{StaticResource backup}" />
-                                        </Button>
-                                        <Button Click="ruleClick" ToolTip="UPRAVIT" >
-                                            <Image Source="{StaticResource edit}" />
-                                        </Button>
-                                        <Button Click="deleteRule" ToolTip="ODSTRANIT" Margin="15">
-                                            <Image Source="{StaticResource delete}" />
-                                        </Button>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
+                                            <Button Click="singleBackup" ToolTip="JEDNORÁZOVÁ ZÁLOHA">
+                                                <Image Source="{StaticResource backup}" />
+                                            </Button>
+                                            <Button Click="ruleClick" ToolTip="UPRAVIT" >
+                                                <Image Source="{StaticResource edit}" />
+                                            </Button>
+                                            <Button Click="deleteRule" ToolTip="ODSTRANIT" Margin="15">
+                                                <Image Source="{StaticResource delete}" />
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                <ItemsControl ItemsSource="{Binding Path=InProgress}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type smb:ProgressMonitor}">
+                                            <local:ProgressBarView Model="{Binding}" Text="PROBÍHÁ ZÁLOHA" Margin="5" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

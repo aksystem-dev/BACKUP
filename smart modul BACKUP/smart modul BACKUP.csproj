@@ -98,6 +98,9 @@
     <Compile Include="Controls\PathTextbox.xaml.cs">
       <DependentUpon>PathTextbox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ProgressBarView.xaml.cs">
+      <DependentUpon>ProgressBarView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ToggleOnOff.xaml.cs">
       <DependentUpon>ToggleOnOff.xaml</DependentUpon>
     </Compile>
@@ -110,10 +113,14 @@
     <Compile Include="Converters\TrueBoldConverter.cs" />
     <Compile Include="GuiLog.cs" />
     <Compile Include="Handy.cs" />
+    <Compile Include="InProgress.cs" />
     <Compile Include="Models\AvailableDatabase.cs" />
+    <Compile Include="Models\ProgBarsTag.cs" />
     <Compile Include="Models\BackupSourceModel.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="LoadedStatic.cs" />
+    <Compile Include="Models\ProgressBarCollection.cs" />
+    <Compile Include="Models\ProgressBarModel.cs" />
     <Compile Include="Models\ServiceState.cs" />
     <Compile Include="MyExtensions.cs" />
     <Compile Include="OneGuiPerUser.cs" />
@@ -149,6 +156,7 @@
     <Compile Include="Pages\SingleRulePage.xaml.cs">
       <DependentUpon>SingleRulePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProgressBarSmoother.cs" />
     <Compile Include="RuleIdController.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="WCF\SmartModulBackupCallbackHandler.cs" />
@@ -171,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PathTextbox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProgressBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -284,6 +296,8 @@
     </None>
     <None Include="Connected Services\ServiceInterface\SmartModulBackupInterface.wsdl" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\SmartModulBackupClasses.BackupInProgress.datasource" />
+    <None Include="Properties\DataSources\SmartModulBackupClasses.RestoreInProgress.datasource" />
     <None Include="Properties\DataSources\SmartModulBackupClasses.RestoreResponse.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
