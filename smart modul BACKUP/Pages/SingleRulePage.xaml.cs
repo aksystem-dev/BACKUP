@@ -1,18 +1,13 @@
 ﻿using SmartModulBackupClasses;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace smart_modul_BACKUP
 {
@@ -21,11 +16,22 @@ namespace smart_modul_BACKUP
     /// </summary>
     public partial class SingleRulePage : Page
     {
-        public SingleRulePage(BackupRule rule)
+        private readonly bool add;
+
+        BackupRuleLoader rules => Manager.Get<BackupRuleLoader>();
+
+        BackupRule rule => DataContext as BackupRule;
+        public SingleRulePage(BackupRule rule, bool add = false)
         {
+            this.add = add;
             DataContext = rule;
+            
+            if(add)
+                rule.Name = $"Pravidlo {rules.ID + 1}";
 
             InitializeComponent();
+
+            txt_rulename.IsEnabled = add;
         }
 
         private void btn_click_back(object sender, RoutedEventArgs e)
@@ -42,6 +48,7 @@ namespace smart_modul_BACKUP
 
             try
             {
+                rules.Update(rule);
                 Utils.DoSingleBackup(Rule);
             }
             catch (Exception ex)
@@ -61,6 +68,19 @@ namespace smart_modul_BACKUP
             Utils.DeleteRule(Rule);
 
             MainWindow.main.ShowPage(MainWindow.main.rulePage);
+        }
+
+        private void page_unloaded(object sender, RoutedEventArgs e)
+        {
+            if (add)
+            {
+                rule.path = Path.Combine(Const.RULES_FOLDER, rule.Name + ".xml");
+                rules.Add(rule);
+            }
+            else
+            {
+                rules.Update(rule);
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using smart_modul_BACKUP;
+using smart_modul_BACKUP.Managers;
 using SmartModulBackupClasses;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,12 +20,14 @@ namespace smart_modul_BACKUP
     /// </summary>
     public partial class RulePage : Page
     {
+         BackupRuleLoader rules => Manager.Get<BackupRuleLoader>();
+
         public RulePage()
         {
             InitializeComponent();
 
-            LoadedStatic.LoadAvailableDatabases();
-            DataContext = LoadedStatic.rules;
+            Manager.Get<AvailableDbLoader>().Load();
+            DataContext = rules;
 
             //při kliknutí na + přidáme pravidlo
             //btn_addRule.Click += (_, __) => AddRule();
@@ -31,24 +35,13 @@ namespace smart_modul_BACKUP
 
         private void AddRule()
         {
-            var dialog = new InputDialog()
+            //přidat pravidlo se zadaným jménem
+            var newrule = new BackupRule()
             {
-                PromptText = "NÁZEV PRAVIDLA"
+                Enabled = true
             };
 
-            //zobrazíme dialog; pokud uživatel zmáčknul "cancel", vykašlem se na to
-            if (dialog.ShowDialog() != true)
-                return;
-
-            //přidat pravidlo se zadaným jménem
-            LoadedStatic.rules.Add(new BackupRule()
-            {
-                Enabled = true,
-                Name = dialog.UserInput,
-                path = $"Rules/{dialog.UserInput}.xml"
-            });
-
-            //id pravidla by měl nastavit RuleIdController, který MainWindow pověsil na CollectionChanged událost LoadedStatic.rules
+            MainWindow.main.ShowPage(new SingleRulePage(newrule, true));
         }
 
         private void singleBackup(object sender, RoutedEventArgs e)

@@ -17,6 +17,9 @@ namespace smart_modul_BACKUP
     /// </summary>
     public partial class RestorePage : Page
     {
+        ServiceState service => Manager.Get<ServiceState>();
+        InProgress inProgress => Manager.Get<InProgress>();
+
         public Backup Backup { get; private set; }
 
         public List<SavedSourceSelected> Directories { get; private set; } = new List<SavedSourceSelected>();
@@ -74,8 +77,8 @@ namespace smart_modul_BACKUP
         {
             var restore = new Restore()
             {
-                ID = LoadedStatic.service.RestoresInProgress.Any() ? LoadedStatic.service.RestoresInProgress.Max(f => f.ID) + 1 : 0,
-                backupID = Backup.ID,
+                ID = service.RestoresInProgress.Any() ? service.RestoresInProgress.Max(f => f.ID) + 1 : 0,
+                backupID = Backup.LocalID,
                 location = rbt_local.IsChecked == true ? BackupLocation.Local : BackupLocation.SFTP,
                 zip_path = rbt_local.IsChecked == true ? localPath : Backup.RemotePath
             };
@@ -105,8 +108,8 @@ namespace smart_modul_BACKUP
 
         private void btn_click_restore(object sender, RoutedEventArgs e)
         {
-            var progress = LoadedStatic.service.StartRestore(GetRestoreObject());
-            progress = LoadedStatic.InProgress.SetRestore(progress);
+            var progress = service.StartRestore(GetRestoreObject());
+            progress = inProgress.SetRestore(progress);
             Backup.InProgress.Add(progress);
 
             progress.Completed += async (obj, args) =>

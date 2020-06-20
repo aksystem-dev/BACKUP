@@ -1,4 +1,5 @@
 ﻿using SmartModulBackupClasses;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,6 +34,9 @@ namespace smart_modul_BACKUP
         private DateTime _minDate = DateTime.Now.Date;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public BackupInfoManager BkMan { get; set; }
+
         private void change(params string[] property) => property.ForEach(f => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(f)));
 
         public bool CertainDateEnabled
@@ -105,6 +109,17 @@ namespace smart_modul_BACKUP
         {
             InitializeComponent();
             cvs = Resources["savedBackupsSource"] as CollectionViewSource;
+            BkMan = Manager.Get<BackupInfoManager>();
+
+            if (BkMan != null)
+                cvs.Source = BkMan.Backups;
+
+            BkMan.PropertyChanged += BkMan_PropertyChanged;
+        }
+
+        private void BkMan_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            cvs.Source = BkMan.Backups;
         }
 
         private bool _backup_certainPassed(Backup b) => !CertainDateEnabled || b.EndDateTime.Date == CertainDate || b.StartDateTime.Date == CertainDate;
@@ -126,33 +141,7 @@ namespace smart_modul_BACKUP
 
         private async void page_loaded(object sender, RoutedEventArgs e)
         {
-            var sftp = LoadedStatic.sftpFactory.GetInstance();
-
-            LoadedStatic.SavedBackups.ForEach(f => f.CheckLocalAvailibility());
-
-
-            bool connected = await sftp.TryConnectAsync(500);
-            if (!connected)
-            {
-                sftp.client.Dispose();
-                sftp = null;
-
-                return;
-            }
-
-            LoadedStatic.SavedBackups.ForEach(f =>
-            {
-                if (f.AvailableRemotely)
-                {
-                    if (!f.CheckRemoteAvailability(sftp.client))
-                    {
-                        GuiLog.Log($"Čuměl jsem na server na umístění {f.RemotePath}, nic jsem tam nenašel");
-                    }
-                }
-            });
-
-            sftp.Disconnect();
-            sftp.client.Dispose();
+            await BkMan.LoadAsync();
         }
 
         private void mousewheel(object sender, MouseWheelEventArgs e)

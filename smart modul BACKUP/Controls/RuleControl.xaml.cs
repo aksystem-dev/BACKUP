@@ -11,6 +11,8 @@ using System.IO;
 using SmartModulBackupClasses;
 using System.Collections.Generic;
 using System.Globalization;
+using smart_modul_BACKUP.Managers;
+using SmartModulBackupClasses.Managers;
 
 namespace smart_modul_BACKUP
 {
@@ -138,7 +140,7 @@ namespace smart_modul_BACKUP
         {
             //načíst databáze, které pravidlo nezná
             //procházíme všechny db
-            foreach (var db in LoadedStatic.availableDatabases)
+            foreach (var db in Manager.Get<AvailableDbLoader>().availableDatabases)
             {
                 //pokud je tato databáze už načtená, načteme ještě název firmy
                 var already_laoded = databases.Where(f => f.DbInfo.name.ToLower() == db.name.ToLower());
@@ -283,7 +285,7 @@ namespace smart_modul_BACKUP
             if (result == true)
             {
                 File.Delete(Rule.path);
-                LoadedStatic.rules.Remove(Rule);
+                Manager.Get<BackupRuleLoader>().Delete(Rule.LocalID);
             }
         }
 
@@ -722,7 +724,7 @@ namespace smart_modul_BACKUP
         private void _dbReload(object sender, RoutedEventArgs e)
         {
             //znovu načíst názvy db ze serveru
-            LoadedStatic.LoadAvailableDatabases();
+            Manager.Get<AvailableDbLoader>().Load();
 
             //odstranit všechny databáze ze seznamu, které nebyly přidány do pravidla
             foreach (var i in databases.ToArray())

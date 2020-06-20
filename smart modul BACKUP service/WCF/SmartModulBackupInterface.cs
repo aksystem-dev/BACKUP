@@ -1,4 +1,5 @@
 ﻿using SmartModulBackupClasses;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,12 +80,12 @@ namespace smart_modul_BACKUP_service.WCF
 
         public BackupInProgress DoSingleBackup(int ruleId)
         {
-            BackupRule rule = serviceRef.rules.FirstOrDefault(f => f.LocalID == ruleId);
+            BackupRule rule = Manager.Get<BackupRuleLoader>().Get(ruleId);
 
             if (rule == null)
                 return null;
 
-            return rule.GetBackupTaskRightNow().Execute(serviceRef.backuper);
+            return rule.GetBackupTaskRightNow().Execute();
         }
 
         public RestoreInProgress Restore(Restore restoreInfo)
@@ -92,7 +93,7 @@ namespace smart_modul_BACKUP_service.WCF
             var rip = Utils.InProgress.NewRestore();
             Task.Run(() =>
             {
-                serviceRef.restorer.Restore(restoreInfo, rip);
+                Manager.Get<Restorer>().Restore(restoreInfo, rip);
                 Utils.InProgress.RemoveRestore(rip);
             });
             return rip;

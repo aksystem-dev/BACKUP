@@ -86,6 +86,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Bubble.cs" />
     <Compile Include="Connected Services\ServiceInterface\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,11 +110,13 @@
     <Compile Include="Converters\ChooseConverter.cs" />
     <Compile Include="Converters\EnumConverter.cs" />
     <Compile Include="Converters\NotConverter.cs" />
+    <Compile Include="Converters\NotNullConverter.cs" />
     <Compile Include="Converters\ServiceStatusConverter.cs" />
     <Compile Include="Converters\TrueBoldConverter.cs" />
     <Compile Include="GuiLog.cs" />
     <Compile Include="Handy.cs" />
     <Compile Include="InProgress.cs" />
+    <Compile Include="Managers\AvailableDbLoader.cs" />
     <Compile Include="Models\AvailableDatabase.cs" />
     <Compile Include="Models\ProgBarsTag.cs" />
     <Compile Include="Models\BackupSourceModel.cs" />
@@ -162,6 +165,9 @@
     <Compile Include="WCF\SmartModulBackupCallbackHandler.cs" />
     <Compile Include="Windows\InputDialog.xaml.cs">
       <DependentUpon>InputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\RestoreWindow.xaml.cs">
       <DependentUpon>RestoreWindow.xaml</DependentUpon>
@@ -251,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\InputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

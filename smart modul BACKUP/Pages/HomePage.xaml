@@ -8,8 +8,11 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="HomePage" KeepAlive="True">
 
-    <DockPanel>
-        <Label VerticalAlignment="Center" HorizontalAlignment="Center"
-               FontSize="50" Content="WIP" />
-    </DockPanel>
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="pan_notLoggedIn">
+            <Label Content="NEJSTE PŘIHLÁŠEN." FontSize="30" HorizontalAlignment="Center" />
+            <Label Content="PRO AKTIVACI PLÁNU SE PROSÍM PŘIHLAŠTE." FontSize="20" HorizontalAlignment="Center" />
+            <Button Content="PŘIHLÁSIT" Click="click_login" HorizontalAlignment="Center" />
+        </StackPanel>
+    </Grid>
 </Page>

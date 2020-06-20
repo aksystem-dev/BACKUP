@@ -81,7 +81,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="Button">
+    <Style TargetType="Button" x:Key="defaultBtn">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Background" Value="{StaticResource Gray1}" />
         <Setter Property="Padding" Value="2" />
@@ -111,6 +111,8 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style TargetType="Button" BasedOn="{StaticResource defaultBtn}" />
 
     <Style TargetType="PasswordBox">
         <Setter Property="OverridesDefaultStyle" Value="True" />

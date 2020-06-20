@@ -13,6 +13,7 @@ namespace smart_modul_BACKUP
     /// </summary>
     public class InProgress : INotifyPropertyChanged
     {
+        private ServiceState service => Manager.Get<ServiceState>();
         private List<BackupInProgress> _backups = new List<BackupInProgress>();
         private List<RestoreInProgress> _restores = new List<RestoreInProgress>();
 
@@ -102,7 +103,7 @@ namespace smart_modul_BACKUP
             List<BackupInProgress> forgotten = _backups.ToList();
 
             //pro každou zálohu, kterou služba vrátí, jí updatujeme, a odstraníme ze seznamu forgotten
-            foreach (var bak in LoadedStatic.service.GetBackupsInProgress())
+            foreach (var bak in service.GetBackupsInProgress())
                 forgotten.Remove(SetBackup(bak));
 
             //odstranit všechny zapomenuté zálohy
@@ -122,7 +123,7 @@ namespace smart_modul_BACKUP
             List<RestoreInProgress> forgotten = _restores.ToList();
 
             //pro každou zálohu, kterou služba vrátí, jí updatujeme, a odstraníme ze seznamu forgotten
-            foreach (var res in LoadedStatic.service.GetRestoresInProgresses())
+            foreach (var res in service.GetRestoresInProgresses())
                 forgotten.Remove(SetRestore(res));
 
             //odstranit všechny zapomenuté zálohy

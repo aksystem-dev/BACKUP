@@ -24,6 +24,8 @@
 
                     <local:NotConverter x:Key="Not" />
 
+                    <local:ChooseConverter x:Key="yesNoConv" TrueText="Ano" FalseText="Ne" />
+
                     <local:BackupSourceColorConverter x:Key="bak_src_to_color"
                                           UnselectedBrush="{StaticResource Unselected}"
                                           EnabledBrush="{StaticResource EnabledBackup}"
@@ -38,6 +40,8 @@
                             </x:Array>
                         </local:EnumConverter.Values>
                     </local:EnumConverter>
+
+                    <local:NotNullConverter x:Key="notNull" />
 
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>

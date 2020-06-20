@@ -26,7 +26,7 @@ namespace SmartModulBackupClasses
             = new ObservableCollection<BackupInProgress>();
 
         [XmlIgnore]
-        public string path;
+        public string path = null;
 
         public int LocalID { get; set; }
         public string Name { get; set; } = "Pravidlo";
@@ -38,7 +38,20 @@ namespace SmartModulBackupClasses
         [XmlAttribute]
         public bool Enabled { get; set; } = true;
 
+        /// <summary>
+        /// Jestli bylo pravidlo nahráno na server.
+        /// </summary>
+        [XmlAttribute]
+        public bool Uploaded { get; set; } = false;
+
+        /// <summary>
+        /// Jestli bylo pravidlo staženo na klienta.
+        /// </summary>
+        [XmlAttribute]
+        public bool Downloaded { get; set; } = false;
+
         public DateTime LastExecution { get; set; } = DateTime.MinValue;
+        public DateTime LastEdit { get; set; }
 
         public void SaveSelf()
         {
@@ -72,6 +85,20 @@ namespace SmartModulBackupClasses
 
             //vrátit pravidlo
             return rule;
+        }
+
+        public static BackupRule LoadFromXmlStr(string xml)
+        {
+            var deser = new XmlSerializer(typeof(BackupRule));
+            return deser.Deserialize(new StringReader(xml)) as BackupRule;
+        }
+
+        public string ToXmlString()
+        {
+            var ser = new XmlSerializer(typeof(BackupRule));
+            var writer = new StringWriter();
+            ser.Serialize(writer, this);
+            return writer.ToString();
         }
     }
 }

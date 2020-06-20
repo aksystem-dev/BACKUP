@@ -240,7 +240,6 @@ namespace smart_modul_BACKUP
 
         public BackupInProgress DoSingleBackup(BackupRule rule)
         {
-            LoadedStatic.SaveConfig();
             rule.SaveSelf();
             client.Reload();
             return client.DoSingleBackup(rule.LocalID);

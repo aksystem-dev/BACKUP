@@ -1,6 +1,7 @@
 ﻿using smart_modul_BACKUP.ServiceInterface;
 
 using SmartModulBackupClasses;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,9 @@ namespace smart_modul_BACKUP.WCF
         public event Action OnServiceDisconnected;
         public SmartModulBackupInterfaceClient client;
 
+        private InProgress inProgress => Manager.Get<InProgress>();
+        private BackupInfoManager backups => Manager.Get<BackupInfoManager>();
+
         public void TestConnection()
         {
             try
@@ -35,7 +39,7 @@ namespace smart_modul_BACKUP.WCF
 
         public void ShowError(string error)
         {
-            LoadedStatic.notifyIcon?.ShowBalloonTip(2000, "Chyba", error, ToolTipIcon.Error);
+            Manager.Get<NotifyIcon>()?.ShowBalloonTip(2000, "Chyba", error, ToolTipIcon.Error);
         }
 
         public void ShowMsg(string msg)
@@ -54,12 +58,12 @@ namespace smart_modul_BACKUP.WCF
             {
                 if (progress == null)
                 {
-                    LoadedStatic.MSG("???");
+                    Bubble.Show("???");
                     return;
                 }
 
-                LoadedStatic.InProgress.SetRestore(progress);
-                LoadedStatic.MSG("Obnova započata");
+                inProgress.SetRestore(progress);
+                Bubble.Show("Obnova započata");
             }
             catch (Exception ex)
             {
@@ -72,12 +76,12 @@ namespace smart_modul_BACKUP.WCF
             {
                 if (progress == null)
                 {
-                    LoadedStatic.MSG("???");
+                    Bubble.Show("???");
                     return;
                 }
 
-                LoadedStatic.InProgress.SetBackup(progress);
-                LoadedStatic.MSG($"Záloha dle pravidla {progress.RuleName} započata");
+                inProgress.SetBackup(progress);
+                Bubble.Show($"Záloha dle pravidla {progress.RuleName} započata");
             }
             catch (Exception ex)
             {
@@ -91,11 +95,11 @@ namespace smart_modul_BACKUP.WCF
             {
                 if (progress == null)
                 {
-                    LoadedStatic.MSG("???");
+                    Bubble.Show("???");
                     return;
                 }
 
-                LoadedStatic.InProgress.SetRestore(progress);
+                inProgress.SetRestore(progress);
             }
             catch (Exception ex)
             {
@@ -109,11 +113,11 @@ namespace smart_modul_BACKUP.WCF
             {
                 if (progress == null)
                 {
-                    LoadedStatic.MSG("???");
+                    Bubble.Show("???");
                     return;
                 }
 
-                LoadedStatic.InProgress.SetBackup(progress);
+                inProgress.SetBackup(progress);
             }
             catch(Exception ex)
             {
@@ -127,27 +131,28 @@ namespace smart_modul_BACKUP.WCF
             {
                 if (restore == null)
                 {
-                    LoadedStatic.MSG("???");
+                    Bubble.Show("???");
                     return;
                 }
 
                 App.Current.Dispatcher.Invoke(() =>
                 {
-                    LoadedStatic.InProgress.GetRestore(restore.ProgressId).Complete();
-                    LoadedStatic.InProgress.RemoveRestore(restore.ProgressId);
-                    LoadedStatic.LoadSavedBackups();
+                    inProgress.GetRestore(restore.ProgressId).Complete();
+                    inProgress.RemoveRestore(restore.ProgressId);
+                    //LoadedStatic.LoadSavedBackups();
+                    // SEM SE VRÁTIT!
                 });
 
                 switch (response.Success)
                 {
                     case SuccessLevel.EverythingWorked:
-                        LoadedStatic.MSG($"Obnova proběhla úspěšně");
+                        Bubble.Show($"Obnova proběhla úspěšně");
                         break;
                     case SuccessLevel.SomeErrors:
-                        LoadedStatic.MSG($"Obnova byla dokončena s chybami.", icon: ToolTipIcon.Warning);
+                        Bubble.Show($"Obnova byla dokončena s chybami.", icon: ToolTipIcon.Warning);
                         break;
                     case SuccessLevel.TotalFailure:
-                        LoadedStatic.MSG($"Obnova se nepovedla.", icon: ToolTipIcon.Error);
+                        Bubble.Show($"Obnova se nepovedla.", icon: ToolTipIcon.Error);
                         break;
                 }
             }
@@ -163,32 +168,32 @@ namespace smart_modul_BACKUP.WCF
             {
                 if (backup == null)
                 {
-                    LoadedStatic.MSG("???");
+                    Bubble.Show("???");
                     return;
                 }
 
                 App.Current.Dispatcher.Invoke(() =>
                 {
-                    LoadedStatic.InProgress.GetBackup(backup.ProgressId).Complete();
-                    LoadedStatic.InProgress.RemoveBackup(backup.ProgressId);
-                    LoadedStatic.LoadSavedBackups();
+                    inProgress.GetBackup(backup.ProgressId).Complete();
+                    inProgress.RemoveBackup(backup.ProgressId);
+                    backups.Load();
                 });
 
-                var bak = LoadedStatic.SavedBackups.FirstOrDefault(f => f.ID == BackupID);
+                var bak = backups.Backups.FirstOrDefault(f => f.LocalID == BackupID);
                 if (bak == null)
-                    LoadedStatic.MSG("Záloha prý proběhla, ale nebylo o ní nalezeno info.", icon: ToolTipIcon.Error);
+                    Bubble.Show("Záloha prý proběhla, ale nebylo o ní nalezeno info.", icon: ToolTipIcon.Error);
                 else
                 {
                     switch (bak.SuccessLevel)
                     {
                         case SuccessLevel.EverythingWorked:
-                            LoadedStatic.MSG($"Záloha pravidla {bak.RefRuleName} proběhla úspěšně");
+                            Bubble.Show($"Záloha pravidla {bak.RefRuleName} proběhla úspěšně");
                             break;
                         case SuccessLevel.SomeErrors:
-                            LoadedStatic.MSG($"Záloha pravidla {bak.RefRuleName} dokončena s chybami.", icon: ToolTipIcon.Warning);
+                            Bubble.Show($"Záloha pravidla {bak.RefRuleName} dokončena s chybami.", icon: ToolTipIcon.Warning);
                             break;
                         case SuccessLevel.TotalFailure:
-                            LoadedStatic.MSG($"Záloha pravidla {bak.RefRuleName} se nepovedla.", icon: ToolTipIcon.Error);
+                            Bubble.Show($"Záloha pravidla {bak.RefRuleName} se nepovedla.", icon: ToolTipIcon.Error);
                             break;
                     }
                 }

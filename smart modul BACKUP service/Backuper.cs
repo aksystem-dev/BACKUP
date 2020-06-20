@@ -1,4 +1,5 @@
 ﻿using SmartModulBackupClasses;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -25,6 +26,9 @@ namespace smart_modul_BACKUP_service
         {
         }
 
+        BackupInfoManager backups => Manager.Get<BackupInfoManager>();
+        //Config cfg => Manager.Get<ConfigManager>().Config;
+
         /// <summary>
         /// Odstraní všechny prošlé zálohy daného pravidla.
         /// </summary>
@@ -32,7 +36,7 @@ namespace smart_modul_BACKUP_service
         /// <param name="infos"></param>
         public void BackupCleanUpByRule(SftpUploader Sftp, BackupRule rule, List<BackupError> errors = null, bool saveAtEnd = true)
         {
-            var infos = Utils.SavedBackups.GetInfos().Where(f => f.RefRule == rule.LocalID);
+            var infos = backups.LocalBackups.Where(f => f.RefRule == rule.LocalID);
 
             //odstranění přebytečných lokálních záloh
             var local = infos.Where(f => f.AvailableLocally).ToArray();
@@ -53,7 +57,7 @@ namespace smart_modul_BACKUP_service
                     catch (Exception e)
                     {
                         string msg = $"Problém s odstraňováním staré lokální zálohy pravidla {current.RefRuleName} umístěné na adrese {current.LocalPath}\n\n{e.Message}";
-                        Logger.Error(msg);
+                        Logger.Ex(e);
                         errors?.Add(new BackupError(msg, BackupErrorType.IOError));
                     }
                 }
@@ -82,7 +86,7 @@ namespace smart_modul_BACKUP_service
                     catch (Exception e)
                     {
                         string msg = $"Problém s odstraňováním staré remote zálohy pravidla {current.RefRuleName} umístěné na adrese {current.RemotePath}\n\n{e.Message}";
-                        Logger.Error(msg);
+                        Logger.Ex(e);
                         errors?.Add(new BackupError(msg, BackupErrorType.SftpError));
                     }
                 }
@@ -90,8 +94,8 @@ namespace smart_modul_BACKUP_service
 
             if (saveAtEnd)
             {
-                Utils.SavedBackups.RemoveInfos(f => !f.AvailableLocally && !f.AvailableRemotely);
-                Utils.SavedBackups.SaveInfos();
+                //Utils.SavedBackups.RemoveInfos(f => !f.AvailableLocally && !f.AvailableRemotely);
+                //backups.sa
             }
         }
 
@@ -160,6 +164,8 @@ namespace smart_modul_BACKUP_service
         /// <returns>Zdali bylo vyhodnocování úspěšné.</returns>
         public Backup ExecuteRuleSingleZip(BackupRule rule, bool cleanupAfterwards, BackupInProgress progress)
         {
+            var cfg = Manager.Get<ConfigManager>().Config;
+
             #region INIT
 
             progress.RuleId = rule.LocalID;
@@ -176,15 +182,14 @@ namespace smart_modul_BACKUP_service
             {
                 RefRule = rule.LocalID,
                 RefRuleName = rule.Name,
-                ID = Utils.SavedBackups.ReserveId(),
                 Errors = new List<BackupError>(),
                 Sources = new List<SavedSource>(),
                 Success = true,
                 StartDateTime = DateTime.Now,
-                ComputerId = SMB_Utils.GetComputerId()
+                ComputerId = SMB_Utils.GetComputerId(),
+                Saved = false
             };
-
-            Utils.SavedBackups.AddInfo(B);
+            backups.AddQuietly(B);
 
             //ujistit se, že TempDir existuje
             Directory.CreateDirectory(TempDir);
@@ -203,18 +208,19 @@ namespace smart_modul_BACKUP_service
             //pokud toto pravidlo dělá zálohy přes Sftp (nebo v minulosti dělalo, čili existuje sftp záloha), připojit se přes Sftp
             SftpUploader Sftp = null;
             if ((rule.RemoteBackups.enabled && rule.RemoteBackups.MaxBackups > 0) ||
-                Utils.SavedBackups.GetInfos().Any(f => f.RefRule == rule.LocalID && f.AvailableRemotely))
+                backups.LocalBackups.Any(f => f.RefRule == rule.LocalID && f.AvailableRemotely))
             {
                 progress.Update("PŘIPOJUJI SE K SFTP", 0.05f);
                 Logger.Log("Připojuji se k SFTP");
                 try
                 {
-                    Sftp = Utils.SftpFactory.GetInstance();
+                    Sftp = Manager.Get<SftpUploader>();
                     Sftp.Connect();
+                    Logger.Log("Úspěšně připojeno k SFTP serveru");
                 }
                 catch (Exception e)
                 {
-                    Logger.Error($"Nepodařilo se připojit k SFTP (chyba {e.GetType().Name})\n\n{e.Message}");
+                    Logger.Ex(e);
                     Utils.GUIS.ShowError("Službě smart modul BACKUP se nepodařilo připojit ke vzdálenému úložišti.");
 
                     B.Errors.Add(new BackupError(
@@ -239,13 +245,13 @@ namespace smart_modul_BACKUP_service
                 Logger.Log("Připojuji se přes SQL");
                 try
                 {
-                    SqlBackuper = Utils.SqlFactory.GetInstance();
+                    SqlBackuper = Manager.Get<SqlBackuper>();
                     SqlBackuper.Open();
                     Logger.Log("Úspěšně připojeno k SQL serveru");
                 }
                 catch (Exception e)
                 {
-                    Logger.Error($"Nepodařilo se připojit přes SQL (chyba {e.GetType().Name} \n\n{e.Message}");
+                    Logger.Ex(e);
                     Utils.GUIS.ShowError("Službě smart modul BACKUP se nepodařilo připojit k SQL serveru.");
 
                     B.Errors.Add(new BackupError(
@@ -265,7 +271,7 @@ namespace smart_modul_BACKUP_service
             //pokud je povoleno shadow copy, vytvoříme pro každý kořen objekt VssBackuper, který zazálohuje daný volume
             Dictionary<string, VssBackuper> shadowCopies = new Dictionary<string, VssBackuper>();
 
-            if (Utils.Config.UseShadowCopy)
+            if (cfg.UseShadowCopy)
             {
                 progress.Update("VYTVÁŘÍM SHADOW COPY", 0.2f);
                 Logger.Log("Vytvářím Shadow Copy");
@@ -287,7 +293,7 @@ namespace smart_modul_BACKUP_service
                         }
                         catch (Exception ex)
                         {
-                            Logger.Log(ex.Message);
+                            Logger.Ex(ex);
                         }
                     }
                 }
@@ -372,7 +378,7 @@ namespace smart_modul_BACKUP_service
             catch (Exception e)
             {
                 string errmsg = $"Nepodařilo se zazipovati zálohu pravidla {rule.Name}\n\n{e.GetType().Name}\n\n{e.Message}";
-                Logger.Error(errmsg);
+                Logger.Ex(e);
 
                 B.Errors.Add(new BackupError(errmsg, BackupErrorType.IOError));
 
@@ -386,7 +392,7 @@ namespace smart_modul_BACKUP_service
             #endregion
 
             //název zip souboru zálohy
-            string zip_fname = rule.Name + "_" + B.ID.ToString() + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".zip";
+            string zip_fname = rule.Name + "_" + B.LocalID.ToString() + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".zip";
 
             #region UPLOAD TO SFTP
 
@@ -397,7 +403,7 @@ namespace smart_modul_BACKUP_service
                 //zde se už jedná o konkrétní zálohu.
 
                 //vytvořit cestu k cíli na sftp serveru
-                string remote_path = Path.Combine(Utils.Config.RemoteBackupDirectory, rule.Name, zip_fname);
+                string remote_path = Path.Combine(SMB_Utils.GetRemoteBackupPath(), rule.Name, zip_fname);
 
                 try
                 {
@@ -410,7 +416,7 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     B.Success = false;
-                    Logger.Error($"Problém s nahráváním zálohy přes SFTP na server. (chyba {e.GetType().Name}\n\n {e.Message}");
+                    Logger.Ex(e);
 
                     B.Errors.Add(new BackupError(
                         $"Problém s nahráváním souboru přes SFTP na server. (chyba {e.GetType().Name}\n\n {e.Message}",
@@ -430,7 +436,7 @@ namespace smart_modul_BACKUP_service
 
                 //budeme vytvářet lokální zálohy a ty zálohy budou lokální, tedy uložené lokálně, aby bylo jasno.
 
-                string zip_folder = Path.Combine(Utils.Config.LocalBackupDirectory, rule.Name);
+                string zip_folder = Path.Combine(cfg.LocalBackupDirectory, rule.Name);
                 Directory.CreateDirectory(zip_folder);
 
                 //zjistit id zálohy a cestu, kam chceme zálohu uložit
@@ -447,7 +453,7 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     string errmsg = $"Chyba při zálohování dle pravidla {rule.Name}: asi se nepodařilo zkopírovat {temp_zip_path} do {zip_path}\n\n{e.GetType().Name}\n\n{e.Message}";
-                    Logger.Error(errmsg);
+                    Logger.Ex(e);
 
                     B.Errors.Add(new BackupError(errmsg, BackupErrorType.IOError));
 
@@ -468,14 +474,15 @@ namespace smart_modul_BACKUP_service
 
             try
             {
-                Utils.SavedBackups.RemoveInfos(f => !f.AvailableLocally && !f.AvailableRemotely);
-                Utils.SavedBackups.SaveInfos();
+                //Utils.SavedBackups.RemoveInfos(f => !f.AvailableLocally && !f.AvailableRemotely);
+                B.Saved = true;
+                backups.Add(B);
                 Logger.Log("Info o záloze uloženo");
             }
             catch (Exception e)
             {
                 string errmsg = $"Nepodařilo se uložit informace o záloze {rule.Name}\n\n{e.GetType().Name}\n\n{e.Message}";
-                Logger.Error(errmsg);
+                Logger.Ex(e);
                 B.Errors.Add(new BackupError(errmsg, BackupErrorType.IOError));
                 B.Success = false;
             }
@@ -494,7 +501,7 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     string msg = $"Problém s odstraňováním starých záloh ({rule.Name})\n\n{e.Message}";
-                    Logger.Error(msg);
+                    Logger.Ex(e);
                     B.Errors.Add(new BackupError(msg, BackupErrorType.DefaultError));
                 }
 
@@ -513,7 +520,7 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (Exception e)
                 {
-                    Logger.Error($"Problém s odpojování od SFTP serveru (chyba {e.GetType().Name})\n\n{e.Message}");
+                    Logger.Ex(e);
                     B.Success = false;
                 }
             }
@@ -533,7 +540,7 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (Exception e)
                 {
-                    Logger.Error($"Problém s odpojování od SFTP serveru (chyba {e.GetType().Name})\n\n{e.Message}");
+                    Logger.Ex(e);
                     B.Success = false;
                 }
             }
@@ -554,7 +561,7 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error($"Problém s odstraňováním Shadow Copy: {ex.Message}");
+                    Logger.Ex(ex);
                 }
 
             #endregion
@@ -582,7 +589,7 @@ namespace smart_modul_BACKUP_service
             }
 
             //informovat gui o záloze
-            Utils.GUIS.CompleteBackup(progress, B.ID);
+            Utils.GUIS.CompleteBackup(progress, B.LocalID);
 
             #endregion
 

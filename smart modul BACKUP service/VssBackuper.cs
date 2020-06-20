@@ -61,7 +61,8 @@ namespace smart_modul_BACKUP_service
 
                 if (!backup.IsVolumeSupported(Root))
                 {
-                    Logger.Error($"Svazek {Root} není podporován Shadow Copy.");
+                    Logger.Error($"Nelze udělat shadow copy {Root}");
+
 
                     errors?.Add(new BackupError(
                         $"Svazek {Root} není podporován Shadow Copy.",
@@ -85,7 +86,8 @@ namespace smart_modul_BACKUP_service
             }
             catch (Exception e)
             {
-                Logger.Error($"Problém s Shadow Copy: {e.GetType().Name}\n\n{e.Message}");
+                Logger.Ex(e);
+
 
                 errors?.Add(new BackupError(
                     $"Problém s Shadow Copy: {e.GetType().Name}\n\n{e.Message}",
@@ -101,7 +103,8 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (Exception ee)
                 {
-                    Logger.Error($"Nepodařilo se ani zrušit zálohu... {ee.GetType().Name}\n\n{e.Message}");
+                    Logger.Ex(e);
+
 
                     errors?.Add(new BackupError(
                         $"Nepodařilo se ani zrušit zálohu... {ee.GetType().Name}\n\n{e.Message}",

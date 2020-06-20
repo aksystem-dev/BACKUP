@@ -18,7 +18,6 @@
                                TrueText="ano" />
         <CollectionViewSource x:Key="savedBackupsSource"
                               x:Name="savedBackupsSource"
-                              Source="{x:Static local:LoadedStatic.SavedBackups}" 
                               Filter="savedBackupsFilter">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="EndDateTime" Direction="Descending" />

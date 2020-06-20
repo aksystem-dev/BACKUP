@@ -30,7 +30,8 @@ namespace smart_modul_BACKUP_service
         //        }
         //        catch (Exception e)
         //        {
-        //            Logger.Error($"Nepodařilo se připojit k SQL serveru \n {e.Message}");
+        //            Logger.Ex(e);
+
         //            return false;
         //        }
         //    else
@@ -52,7 +53,8 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (Exception e)
                 {
-                    Logger.Error($"Nepodařilo se odpojit od SQL serveru \n {e.Message}");
+                    Logger.Ex(e);
+
                     return false;
                 }
             else

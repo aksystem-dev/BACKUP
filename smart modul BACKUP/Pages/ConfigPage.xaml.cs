@@ -1,4 +1,6 @@
 ﻿using Renci.SshNet;
+using SmartModulBackupClasses;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -16,10 +18,13 @@ namespace smart_modul_BACKUP
     /// </summary>
     public partial class ConfigPage : Page
     {
+        ConfigManager cfg_man;
         public ConfigPage()
         {
+            cfg_man = Manager.Get<ConfigManager>();
+
             InitializeComponent();
-            DataContext = LoadedStatic.config;
+            DataContext = cfg_man.Config;
             LoadConfigToPasswords();
             Loaded += ConfigPage_Loaded;
         }
@@ -31,23 +36,25 @@ namespace smart_modul_BACKUP
 
         public void LoadConfigToPasswords()
         {
-            PasswordSFTP.SetPassword(LoadedStatic.config.SFTP.Password);
-            PasswordSQL.SetPassword(LoadedStatic.config.Connection.Password);
+            PasswordSFTP.SetPassword(cfg_man.Config.SFTP.Password.Value);
+            PasswordSQL.SetPassword(cfg_man.Config.Connection.Password.Value);
         }
 
         public void UpdateConfig()
         {
-            LoadedStatic.config.SFTP.Password = PasswordSFTP.GetPassword();
-            LoadedStatic.config.Connection.Password = PasswordSQL.GetPassword();
+            cfg_man.Config.SFTP.Password.Value = PasswordSFTP.GetPassword();
+            cfg_man.Config.Connection.Password.Value = PasswordSQL.GetPassword();
         }
 
-        private void TestSQL(object sender, RoutedEventArgs e)
+        private async void TestSQL(object sender, RoutedEventArgs e)
         {
             UpdateConfig();
 
-            Task.Run(() =>
+            btn_testsql.IsEnabled = false;
+
+            await Task.Run(() =>
             {
-                SqlConnection conn = new SqlConnection(LoadedStatic.config.Connection.GetConnectionString(1));
+                SqlConnection conn = new SqlConnection(cfg_man.Config.Connection.GetConnectionString(1));
                 try
                 {
                     conn.Open();
@@ -59,17 +66,21 @@ namespace smart_modul_BACKUP
                     MessageBox.Show("Připojení se nezdařilo", "Test SQL připojení", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             });
+
+            btn_testsql.IsEnabled = true;
         }
 
-        private void TestSFTP(object sender, RoutedEventArgs args)
+        private async void TestSFTP(object sender, RoutedEventArgs args)
         {
             UpdateConfig();
             
-            var c = LoadedStatic.config.SFTP;
+            var c = cfg_man.Config.SFTP;
 
-            Task.Run(() =>
+            btn_testsftp.IsEnabled = false;
+
+            await Task.Run(() =>
             {
-                var client = new SftpClient(c.Adress, c.Port, c.Username, c.Password);
+                var client = new SftpClient(c.Host, c.Port, c.Username, c.Password.Value);
 
                 try
                 {
@@ -82,6 +93,15 @@ namespace smart_modul_BACKUP
                     MessageBox.Show($"Připojení se nezdařilo ({e.GetType().Name})\n\n{e.Message}", "Test SFTP připojení", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             });
+
+            btn_testsftp.IsEnabled = true;
+        }
+
+        private void page_unloaded(object sender, RoutedEventArgs e)
+        {
+            UpdateConfig();
+            if (cfg_man.Config.UnsavedChanges)
+                cfg_man.Save();
         }
     }
 }

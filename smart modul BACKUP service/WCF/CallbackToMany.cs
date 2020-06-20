@@ -26,7 +26,7 @@ namespace smart_modul_BACKUP_service.WCF
                 }
                 catch (Exception e)
                 {
-                    Logger.Error($"Došlo k chybě při komunikaci s GUI {e.GetType().Name}\n\n{e.Message}");
+                    Logger.Ex(e);
                     callbacks.Remove(cb);
                 }
             }

@@ -13,8 +13,6 @@ namespace smart_modul_BACKUP_service
     /// </summary>
     public class BackupTimeline
     {
-        public Backuper Backuper;
-
         public bool Running { get; private set; } = false;
 
         private static List<BackupTask> _ongoingBackups = new List<BackupTask>();
@@ -22,10 +20,7 @@ namespace smart_modul_BACKUP_service
 
         private CancellationTokenSource _tokenSource;
 
-        public BackupTimeline(Backuper backuper)
-        {
-            Backuper = backuper;
-        }
+        public BackupTimeline() { }
 
         /// <summary>
         /// Ukončí vyhodnocování dalších pravidel.
@@ -90,7 +85,7 @@ namespace smart_modul_BACKUP_service
                     if (backup.ScheduledStart <= DateTime.Now)
                     {
                         Logger.Log($"BackupTimeline: pravidlo {backup.Rule.Name} mělo být spuštěno již v {backup.ScheduledStart}. Jdu na to hned.");
-                        backup.Execute(Backuper);
+                        backup.Execute();
                     }
                     //jinak (pokud je třeba ho vyhodnotit někday v budoucnu)
                     else
@@ -105,7 +100,7 @@ namespace smart_modul_BACKUP_service
                             break;
 
                         //jinak pokračujeme spuštěním daného pravidla:
-                        backup.Execute(Backuper);
+                        backup.Execute();
                     }
                 }
                 catch (Exception e) when
@@ -123,7 +118,7 @@ namespace smart_modul_BACKUP_service
                 {
                     //jinak se pravděpodobně jedná jen o problém s jedním konkrétním pravidlem, vypíšeme to tedy
                     //a pokračujem
-                    Logger.Error($"Nějaký problém v BackupTimeline s pravidlem {backup.Rule.Name}: {e.GetType().Name} \n\n {e.Message}");
+                    Logger.Ex(e);
                 }
             }
 

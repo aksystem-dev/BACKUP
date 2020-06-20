@@ -29,9 +29,9 @@ namespace smart_modul_BACKUP_service
                 try
                 {
                     File.Copy(p, target, true);
-                    File.SetLastWriteTime(target, DateTime.Now);
+                    //File.SetLastWriteTime(target, DateTime.Now);
                 }
-                catch
+                catch (Exception ex)
                 {
                     errorPaths?.Add(Path.GetFullPath(p));
                     alles_gute = false;
@@ -45,9 +45,9 @@ namespace smart_modul_BACKUP_service
                 {
                     Directory.CreateDirectory(target);
                     CopyFolderContents(p, target);
-                    Directory.SetLastWriteTime(target, DateTime.Now);
+                    //Directory.SetLastWriteTime(target, DateTime.Now);
                 }
-                catch
+                catch (Exception ex)
                 {
                     errorPaths?.Add(Path.GetFullPath(p));
                     alles_gute = false;
@@ -84,7 +84,8 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     if (log)
-                        Logger.Error($"Problém s odstraňováním souboru {file} ({e.GetType().Name}):\n{e.Message}");
+                        Logger.Ex(e);
+
 
                     if (exception_behavior == ItemExceptionBehavior.StopOnException)
                         return false;
@@ -108,8 +109,7 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     if (log)
-                        Logger.Error($"Problém s odstraňováním složky {folder} ({e.GetType().Name}):\n{e.Message}");
-
+                        Logger.Ex(e);
                     if (exception_behavior == ItemExceptionBehavior.StopOnException)
                         return false;
                     else if (exception_behavior == ItemExceptionBehavior.ThrowException)
@@ -130,7 +130,8 @@ namespace smart_modul_BACKUP_service
             catch (Exception e)
             {
                 if (log)
-                    Logger.Error($"Problém s odstraňováním složky {path} ({e.GetType().Name}):\n{e.Message}");
+                    Logger.Ex(e);
+
 
                 if (exception_behavior == ItemExceptionBehavior.StopOnException)
                     return false;

@@ -17,14 +17,14 @@ namespace smart_modul_BACKUP_service
         /// <summary>
         /// Vytváří instance SftpUploader s předdefinovanou konfigurací.
         /// </summary>
-        public static SftpUploaderFactory SftpFactory;
+        //public static SftpUploaderFactory SftpFactory;
 
         /// <summary>
         /// Vytváří instance SqlBackuper s předdefinovanou konfigurací.
         /// </summary>
-        public static SqlBackuperFactory SqlFactory;
-        public static XmlInfoLoaderSftpMirror<Backup> SavedBackups;
-        public static Config Config { get; set; }
+        //public static SqlBackuperFactory SqlFactory;
+        //public static XmlInfoLoaderSftpMirror<Backup> SavedBackups;
+        //public static Config Config { get; set; }
         //public static GUI gui;
         public static ISmartModulBackupInterfaceCallback GUIS;
 

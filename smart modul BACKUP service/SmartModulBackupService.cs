@@ -15,22 +15,16 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Runtime.InteropServices;
 using Alphaleonis.Win32.Vss;
+using SmartModulBackupClasses.Managers;
+using SmartModulBackupClasses.WebApi;
 
 namespace smart_modul_BACKUP_service
 {
     public partial class SmartModulBackupService : ServiceBase
     {
-        //[DllImport("advapi32.dll", SetLastError = true)]
-        //private static extern bool SetServiceStatus(System.IntPtr handle, ref ServiceStatus serviceStatus);
-
         static TimeSpan _scheduleInterval = new TimeSpan(0, 10, 0);
 
         private System.Timers.Timer timer;
-        //private TimeSpan timerInterval = new TimeSpan(1, 0, 0, 0);
-        public List<BackupRule> rules = new List<BackupRule>();
-
-        public Backuper backuper;
-        public Restorer restorer;
         private WCF.SmartModulBackupInterface wcf_service;
         private ServiceHost host;
 
@@ -61,7 +55,7 @@ namespace smart_modul_BACKUP_service
             switch(obj.Type)
             {
                 case LogType.Error: 
-                    Logger.Error(obj.Message); 
+                    Logger.Error(obj.Message);
                     break;
                 case LogType.Info: 
                     Logger.Log(obj.Message); 
@@ -90,28 +84,32 @@ namespace smart_modul_BACKUP_service
                 Directory.SetCurrentDirectory(cd);
                 Logger.Log($"Aktuální adresa: {cd}");
 
-                //Vytvořit Backuper
-                backuper = new Backuper()
+                Manager.SetSingleton(new ConfigManager()); //pracuje s config.xml
+                Manager.SetTransient(new SqlBackuperFactory()); //SqlBackuper využívaný na SQL zálohy
+                Manager.SetTransient(new SftpUploaderFactory()); //SftpUploader - obaluje SftpClient
+                Manager.SetSingleton(new PlanManager()); //PlanManager - umožňuje získávat info o plánu
+
+                //Vytvořit Backuper - ten se stará o samotné zálohy
+                var backuper = new Backuper()
                 {
                     TempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp_dir")
                 };
+                Manager.SetSingleton(backuper);
 
-                //Vytvořit BackupTimeline
-                timeline = new BackupTimeline(backuper);
+                //Vytvořit BackupTimeline - ta se stará o spouštění záloh ve správné časy
+                timeline = new BackupTimeline();
 
-                //Vytvořit Restorer
-                restorer = new Restorer()
+                //Vytvořit Restorer - ten se stará o obnovy (ty se nespouští automaticky, pouze přímo z GUI)
+                var restorer = new Restorer()
                 {
                     TempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp_dir_restore")
                 };
+                Manager.SetSingleton(restorer);
 
-                //načte konfiguraci, spustí časovač, naplánuje pravidla
+                Manager.SetSingleton(new BackupInfoManager());
+                Manager.SetSingleton(new BackupRuleLoader());
+
                 Reload();
-
-                //načítač info o proběhnutých zálohách - momentálně se o nich info ukládá do xml
-                Utils.SavedBackups = new XmlInfoLoaderSftpMirror<Backup>("saved_backups.xml", Utils.SftpFactory,
-                    remoteFile: Path.Combine(Utils.Config.RemoteBackupDirectory, "saved_backups.xml"));
-                Utils.SavedBackups.LoadInfos();
 
                 //spustit wcf službu pro komunikaci s uživatelským rozhraním
                 wcf_service = new WCF.SmartModulBackupInterface(this);
@@ -120,7 +118,8 @@ namespace smart_modul_BACKUP_service
                 Logger.Log($"Hostuji WCF službu; host.State = {host.State}");
 
                 host.Closed += (_, __) => Logger.Warn("WCF služba ukončena?");
-                host.Faulted += (_, __) => Logger.Error("chyba při komunikaci s gui");
+                host.Faulted += (_, __) => Logger.Error("Došlo k chybě při komunikaci s GUI");
+
 
                 //zveřejnit objekt, který umožní interakci s GUI odkudkoliv z kódu
                 Utils.GUIS = wcf_service.Callback;
@@ -131,7 +130,9 @@ namespace smart_modul_BACKUP_service
             }
             catch(Exception e)
             {
-                Logger.Error($"Problém při spouštění služby ({e.GetType().Name})\n\n{e.Message}");
+                Logger.Ex(e);
+                Logger.Warn("Ukončuji službu");
+
                 Stop();
             }
         }
@@ -163,93 +164,9 @@ namespace smart_modul_BACKUP_service
             }
             catch (Exception e)
             {
-                Logger.Error($"Chyba s časovačem:\n{e.Message}");
+                Logger.Ex(e);
+
                 Stop();
-            }
-        }
-
-        /// <summary>
-        /// Načte soubor konfigurace. Nepovede-li se to, služba se vypne.
-        /// </summary>
-        private void LoadConfig(bool stopOnFailure = true)
-        {
-            try
-            {
-                if (!File.Exists("config.xml"))
-                    NewConfig();
-                else
-                    try 
-                    {
-                        //logger.WriteEntry("current dir: " + Directory.GetCurrentDirectory());
-                        //logger.WriteEntry("full path: " + Path.GetFullPath("config.xml"));
-                        string xml = File.ReadAllText("config.xml");
-                        Logger.Log("xml contents: " + xml);
-                        Utils.Config = Config.FromXML(xml);
-                        File.WriteAllText("config.xml", Utils.Config.ToXML());
-                    }
-                    catch
-                    {
-                        NewConfig();
-                    }
-
-                Logger.Log("Konfigurace načtena");
-
-            }
-            catch (Exception e)
-            {
-                Logger.Error($"Chyba s načítáním konfigurace\n {e.GetType().Name} \n {e.Message}");
-
-                if (stopOnFailure)
-                    Stop();
-            }
-        }
-
-        /// <summary>
-        /// Načte pravidla ze souborů
-        /// </summary>
-        private void LoadRules()
-        {
-            Logger.Log("Načítám pravidla");
-
-            rules = new List<BackupRule>();
-            if (!Directory.Exists("Rules"))
-                Directory.CreateDirectory("Rules");
-            else
-            {
-                var files = Directory.GetFiles("Rules", "*.xml");
-                //načíst pravidla ze souborů
-                if (files.Length > 0)
-                    foreach (string rulepath in files)
-                    {
-                        //if (Path.GetExtension(rulepath) == ".xml")
-                        {
-                            try
-                            {
-                                var rule = BackupRule.LoadFromXml(rulepath);
-
-                                if (rules.Any(f => f.Name == rule.Name))
-                                    Logger.Warn($"Pravidlo s názvem {rule.Name} se mezi pravidly vyskytlo vícekrát. Beru pouze první výskyt");
-
-                                //zajistit, aby mělo pravidlo unikátní id
-                                //pokud vše funguje jak má (GUI), rule.Id++ by se nikdy volat nemělo
-                                while (rules.Any(f => f.LocalID == rule.LocalID))
-                                    rule.LocalID++;
-
-                                //možná jsme provedli nějaké změny (změnili id pravidla, ...), ty je třeba uložit
-                                rule.SaveSelf();
-
-                                //pravidlo přidáme na seznam, pokud je validní
-                                if (rule.Conditions.AllValid)
-                                    rules.Add(rule);
-                            }
-                            catch (Exception e)
-                            {
-                                Logger.Error($"Nepodařilo se načíst pravidlo umístěné v {rulepath}. Přeskakuji ho.\n\n{e}");
-                            }
-                        }
-                    }
-                //else
-                //    CreateSampleRule();
             }
         }
 
@@ -298,48 +215,50 @@ namespace smart_modul_BACKUP_service
             rule.SaveSelf();
         }
 
-        /// <summary>
-        /// Vytvoří soubor konfigurace.
-        /// </summary>
-        private void NewConfig()
-        {
-            Logger.Log("Vytvářím soubor konfigurace");
+        ///// <summary>
+        ///// Vytvoří soubor konfigurace.
+        ///// </summary>
+        //private void NewConfig()
+        //{
+        //    Logger.Log("Vytvářím soubor konfigurace");
 
-            Utils.Config = new Config();
+        //    Utils.Config = new Config();
 
-            Utils.Config.Connection = new DatabaseConfig();
+        //    Utils.Config.Connection = new DatabaseConfig();
 
-            File.WriteAllText("config.xml", Utils.Config.ToXML());
-        }
+        //    File.WriteAllText("config.xml", Utils.Config.ToXML());
+        //}
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = (e.ExceptionObject as Exception);
-            Logger.Error($"Došlo k výjimce \n {ex.GetType().Name} \n {ex.Message} \n\n Zásobník:\n{ex.StackTrace} ");
+            Logger.Ex(ex);
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             Logger.Log("Časovač začasoval");
 
-            //backuper.Backup(config.BackupDatabase, config.BackupPath);
-
-            LoadConfig();
-            LoadRules();
-
             timer.Interval = _scheduleInterval.TotalMilliseconds;
 
+            //zastavit časovou osu
             if (timeline.Running)
                 timeline.Stop();
 
+            //znovu načíst důležitou konfiguraci
+            Manager.Get<ConfigManager>().Load();
+            Manager.Get<BackupRuleLoader>().Load();
+
+            //naplánovat pravidla a spustit časovou osu
             var backupTasks = ScheduleRules(_scheduleInterval);
             timeline.Start(backupTasks);
 
+            //ověřit, zdali jsme stále připojeni k GUI
             Utils.GUIS.TestConnection();
         }
 
         /// <summary>
-        /// Spustí asynchronní úlohy pro pravidla v intervalu
+        /// Naplánuje pravidla podle BackupRuleLoader a vrátí seznam BackupTasků
         /// </summary>
         /// <param name="forHowLong">Pravidla jsou plánována od DateTime.Now po DateTime.Now + forHowLong</param>
         private List<BackupTask> ScheduleRules(TimeSpan forHowLong)
@@ -353,7 +272,7 @@ namespace smart_modul_BACKUP_service
 
             List<BackupTask> backupTasks = new List<BackupTask>();
 
-            foreach (var rule in rules)
+            foreach (var rule in Manager.Get<BackupRuleLoader>().Rules)
             {
                 if (!rule.Enabled)
                 {
@@ -410,18 +329,17 @@ namespace smart_modul_BACKUP_service
                 timeline.Stop();
 
             //načíst vše potřebné
+            var cfg = Manager.Get<ConfigManager>();
             if (loadConfig)
-                LoadConfig();
+            {
+                cfg.Load();
+
+                //pokud se načetla konfigurace, mohlo se změnit nastavení připojení k api; to tedy také znovu načteme
+                Manager.SetSingleton(new SmbApiClient(cfg.Config.WebCfg));
+                Manager.Get<PlanManager>().Load(); //znovu načíst info o plánu
+            }
             if (loadRules)
-                LoadRules();
-
-            //vytvořit instanci SqlBackuperFactory, kterou bude využívat Backuper
-            if (loadSql)
-                Utils.SqlFactory = new SqlBackuperFactory(Utils.Config.Connection.GetConnectionString(2));
-
-            //vytvořit instanci SftpUploaderFactory, kterou bude využívat Backuper
-            if (loadSftp)
-                Utils.SftpFactory = new SftpUploaderFactory(Utils.Config.SFTP);
+                Manager.Get<BackupRuleLoader>().Load();
 
             //naplánovat pravidla
             if (scheduleRules)

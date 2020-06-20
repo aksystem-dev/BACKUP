@@ -28,22 +28,14 @@ namespace smart_modul_BACKUP_service
         {
             foreach (var i in rule.Conditions.AvailableDateTimesInTimeSpan(start, end, exclusiveStart: true))
             {
-                var bt = new BackupTask()
-                {
-                    ScheduledStart = i,
-                    Rule = rule
-                };
+                var bt = new BackupTask(rule, i);
                 yield return bt;
             }
         }
 
         public static BackupTask GetBackupTaskRightNow(this BackupRule rule)
         {
-            return new BackupTask()
-            {
-                ScheduledStart = DateTime.Now,
-                Rule = rule
-            };
+            return new BackupTask(rule, DateTime.Now);
         }
     }
 }

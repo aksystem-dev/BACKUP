@@ -15,3 +15,4 @@ D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBacku
 D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.csproj.CopyComplete
 D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.dll
 D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.pdb
+D:\Projects\smart modul BACKUP\build (debug)\SmartModulBackupClasses.dll.config

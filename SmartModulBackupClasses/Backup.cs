@@ -17,6 +17,11 @@ namespace SmartModulBackupClasses
     public class Backup : IHaveID, INotifyPropertyChanged
     {
         /// <summary>
+        /// Jestli info o záloze již bylo uloženo.
+        /// </summary>
+        public bool Saved { get; set; }
+
+        /// <summary>
         /// Sem si můžeme uložit nějaká pomocná data.
         /// </summary>
         [XmlIgnore]
@@ -41,9 +46,23 @@ namespace SmartModulBackupClasses
         public int GetID() => ID;
 
         /// <summary>
-        /// ID zálohy
+        /// Lokální ID zálohy
         /// </summary>
-        public int ID { get; set; }
+        [Obsolete("Je tu pouze kvůli zpětné kompatibilitě; použij LocalID")]
+        public int ID { get => LocalID; set => LocalID = value; }
+
+        /// <summary>
+        /// ID nechceme serializovat, ale chceme ho deserializovat (původně se to jmenovalo ID,
+        /// ale chci to přejmenovat na LocalID, ať to dává větší smysl, neb ID má být unikátní v webové db,
+        /// zatímco LocalID má být unikátní na jednom klientovi.)
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeID() => false;
+
+        /// <summary>
+        /// Lokální ID zálohy
+        /// </summary>
+        public int LocalID { get; set; }
 
         private bool _availableLocally;
 
@@ -65,7 +84,10 @@ namespace SmartModulBackupClasses
         /// Jestli je záloha dostupná na tomto počítači (to znamená, že jsme na počítači, na kterém byla záloha vytvořena)
         /// </summary>
         [XmlIgnore]
-        public bool AvailableOnThisComputer => AvailableLocally && ComputerId == SMB_Utils.GetComputerId();
+        public bool AvailableOnThisComputer => AvailableLocally && MadeOnThisComputer;
+
+        [XmlIgnore]
+        public bool MadeOnThisComputer => ComputerId == SMB_Utils.GetComputerId();
 
         private bool _availableRemotely;
         /// <summary>
@@ -148,7 +170,7 @@ namespace SmartModulBackupClasses
         /// <returns></returns>
         public bool CheckLocalAvailibility()
         {
-            if (!AvailableLocally)
+            if (!AvailableOnThisComputer)
                 return false;
 
             AvailableLocally = File.Exists(LocalPath);
@@ -170,6 +192,23 @@ namespace SmartModulBackupClasses
                 client.Disconnect();
             return AvailableRemotely;
 
+        }
+
+        public string ToXml()
+        {
+            var serializer = new XmlSerializer(typeof(Backup));
+            using(var writer = new StringWriter())
+            {
+                serializer.Serialize(writer, this);
+                return writer.ToString();
+            }
+        }
+
+        public static Backup DeXml(string xml)
+        {
+            var serializer = new XmlSerializer(typeof(Backup));
+            using(var reader = new StringReader(xml))
+                return serializer.Deserialize(reader) as Backup;            
         }
     }
 

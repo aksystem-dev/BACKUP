@@ -166,3 +166,5 @@ D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.e
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\smart modul BACKUP.pdb
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\ProgressBarView.g.cs
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Controls\ProgressBarView.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\LoginWindow.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\LoginWindow.baml

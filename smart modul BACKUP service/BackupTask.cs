@@ -3,39 +3,74 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace smart_modul_BACKUP_service
 {
     /// <summary>
-    /// Obsahuje informaci o pravidlu a o tom, kdy se má spustit.
+    /// Obsahuje informaci o konkrétním spuštění pravidla: odkaz na pravidlo a čas, kdy se má spustit.
     /// Pro použití s BackupTimeline
     /// </summary>
     public class BackupTask
     {
-        public bool Running { get; private set; } = false;
-        public DateTime ScheduledStart;
-        public BackupRule Rule;
+        public BackupTaskState State { get; private set; } = BackupTaskState.NotStartedYet;
+        public readonly DateTime ScheduledStart;
+        public readonly BackupRule Rule;
+
+        public BackupTask(BackupRule rule, DateTime scheduledStart)
+        {
+            Rule = rule;
+            ScheduledStart = scheduledStart;
+        }
 
         //událost, která se spustí poté, co je BackupTask hotov
-        public event Action Finished;
+        public event EventHandler Finished;
+
+        //odkaz na objekt BackupInProgress, používaný pro předávání GUI info o probíhajících zálohách a obnovách
+        private BackupInProgress progress;
 
         /// <summary>
         /// Spustí toto pravidlo na novém vlákně.
         /// </summary>
-        public BackupInProgress Execute(Backuper backuper)
+        public BackupInProgress Execute()
         {
-            var progress = Utils.InProgress.NewBackup();
-            progress.TAG = this;
-            Task.Run(() =>
+            //BackupTasky jsou jednorázově použitelné; lze 
+            if (State != BackupTaskState.NotStartedYet)
+                throw new InvalidOperationException("Nelze spustip BackupTask, který již běží, nebo je již dokončil svou práci!");
+
+            State = BackupTaskState.Running; //změna stavu
+            progress = Utils.InProgress.NewBackup(); //vytvoření objektu pro komunikaci s GUI
+            progress.TAG = this; //umožnit přístup k tomuto objektu skrze BackupInProgress
+            new Thread(execution).Start(); //započít prácičku
+            return progress; //vrátit vzniklý BackupInProgress, ať s ním nějak naloží
+        }
+
+        /// <summary>
+        /// Samotný proces vyhodnocování, běží na samostatném vlákně.
+        /// </summary>
+        private void execution()
+        {
+            try
             {
-                Running = true;
-                backuper.ExecuteRuleSingleZip(Rule, true, progress);
-                Running = false;
+                Manager.Get<Backuper>().ExecuteRuleSingleZip(Rule, true, progress);
+                State = BackupTaskState.Finished;
+            }
+            catch (ThreadAbortException)
+            {
+                State = BackupTaskState.Aborted;
+            }
+            catch
+            {
+                State = BackupTaskState.Failed;
+            }
+            finally
+            {
                 Utils.InProgress.RemoveBackup(progress);
-                Finished?.Invoke();
-            });
-            return progress;
+                Finished?.Invoke(this, null);
+            }
         }
     }
+
+    public enum BackupTaskState { NotStartedYet, Running, Finished, Aborted, Failed }
 }

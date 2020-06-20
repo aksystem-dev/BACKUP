@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:smart_modul_BACKUP"
         mc:Ignorable="d" Closing="window_closing"
-        Title="smart modul BACKUP" Height="700" Width="1000" >
+        Title="smart modul BACKUP" Height="700" Width="1000"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Window.Resources>
         <local:ServiceStatusConverter x:Key="serviceRunning"
@@ -23,15 +24,21 @@
     </Window.Resources>
 
     <DockPanel>
-        <Label DockPanel.Dock="Top" FontSize="40"  Padding="20"
-               Foreground="White" Background="{StaticResource Blue-2}"
-               Content="smart modul BACKUP" />
+        <Border Background="{StaticResource Blue-2}" DockPanel.Dock="Top" Padding="20">
+            <DockPanel>
+                <Label DockPanel.Dock="Left" FontSize="40"  Margin="10"
+                       Foreground="White" Content="smart modul BACKUP" />
+                <Label DockPanel.Dock="Right" FontSize="24" Margin="10"
+                       Foreground="White" Content="{Binding Path=client.Username}"
+                       ContentStringFormat="Uživatel: {0}" />
+            </DockPanel>
+        </Border>
 
         <Border DockPanel.Dock="Bottom" Background="{StaticResource Blue-2}" Padding="10" Height="50">
             <DockPanel>
-                <Label Content="{Binding Path=(local:LoadedStatic.service).State, Converter={StaticResource serviceRunning}}" 
+                <Label Content="{Binding Path=service.State, Converter={StaticResource serviceRunning}}" 
                      Foreground="White" HorizontalAlignment="Left"/>
-                <Button HorizontalAlignment="Right" Content="{Binding Path=(local:LoadedStatic.service).State, Converter={StaticResource serviceButton}}"
+                <Button HorizontalAlignment="Right" Content="{Binding Path=service.State, Converter={StaticResource serviceButton}}"
                         Padding="3" Margin="0" Click="RetryConnection" />
             </DockPanel>
         </Border>

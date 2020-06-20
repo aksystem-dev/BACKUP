@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:smart_modul_BACKUP"
       xmlns:smb="clr-namespace:SmartModulBackupClasses;assembly=SmartModulBackupClasses"
       mc:Ignorable="d" d:DesignWidth="800"
-      Title="SingleRulePage">
+      Title="SingleRulePage"
+      Unloaded="page_unloaded">
 
     <!--<Grid>
         
@@ -24,7 +25,10 @@
                     <Button Click="btn_click_back" ToolTip="ZPĚT">
                         <Image Source="{StaticResource back}" />
                     </Button>
-                    <Label Content="{Binding Path=Name}" />
+                    <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Background="{x:Null}" Foreground="White"
+                             VerticalAlignment="Center" HorizontalAlignment="Left"
+                             FontSize="30" x:Name="txt_rulename" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right" Margin="0,0,15,0">
                     <Button Click="btn_click_backup" ToolTip="JEDNORÁZOVÁ ZÁLOHA">

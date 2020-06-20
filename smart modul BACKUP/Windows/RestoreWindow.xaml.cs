@@ -67,7 +67,7 @@ namespace smart_modul_BACKUP
         {
             restoreInfo = new Restore()
             {
-                backupID = backupInfo.ID,
+                backupID = backupInfo.LocalID,
                 location = rbt_local.IsChecked == true ? BackupLocation.Local : BackupLocation.SFTP,
                 zip_path = rbt_local.IsChecked == true ? localPath : backupInfo.RemotePath,
                 sources = Utils.MultiUnion<SavedSourceSelected>(backupSourcesDatabases, backupSourcesDirectories, backupSourcesFiles)
@@ -75,7 +75,7 @@ namespace smart_modul_BACKUP
             };
 
             //LoadedStatic.service.client.Restore(restoreInfo);
-            LoadedStatic.service.StartRestore(restoreInfo);
+            Manager.Get<ServiceState>()?.StartRestore(restoreInfo);
             Close();
         }
 

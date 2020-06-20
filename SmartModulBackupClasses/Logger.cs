@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,22 @@ namespace SmartModulBackupClasses
     public static class SMB_Log
     {
         public static event Action<LogArgs> OnLog;
+
+        public static void Log(Exception ex, int level = 0, LogType type = LogType.Error)
+        {
+            StringBuilder exStr = new StringBuilder();
+            exStr.AppendLine($"Došlo k výjimce typu {ex.GetType().Name};");
+            var trace = new StackTrace(ex, true).GetFrames().First(f => !f.GetMethod().DeclaringType.Namespace.StartsWith("System"));
+            var meth = trace.GetMethod();
+            exStr.AppendLine($"Metoda: {meth.DeclaringType.FullName + "." + meth.Name + "()"}, číslo řádku: {trace.GetFileLineNumber()}");
+            exStr.AppendLine($"Výjimčí blekot: {ex.Message}");
+            OnLog.Invoke(new LogArgs()
+            {
+                Message = exStr.ToString(),
+                Level = level,
+                Type = type
+            });
+        }
 
         public static void Log(string message, int level = 0, LogType type = LogType.Info)
             => OnLog?.Invoke(new LogArgs()

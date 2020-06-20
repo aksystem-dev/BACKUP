@@ -35,20 +35,22 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (TimeoutException e)
                 {
-                    Logger.Error($"Chyba při komunikaci s GUI ({e.GetType().Name}) \n\n {e.Message}");
+                    Logger.Ex(e);
                     Logger.Warn("Odpojuji rozhraní");
                     wcf_interface.context.Abort();
                 }
                 catch (Exception e)
                 {
-                    Logger.Error($"Chyba při komunikaci s GUI ({e.GetType().Name}) \n\n {e.Message}");
+                    Logger.Ex(e);
+
                     try
                     {
                         wcf_interface.context.Abort();
                     }
                     catch (Exception ee)
                     {
-                        Logger.Error($"...{ee.GetType().Name}\n\n{ee.Message}");
+                        Logger.Ex(e);
+
                     }
                 }
             });

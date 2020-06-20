@@ -11,26 +11,29 @@ namespace smartModulBackupTEsts
     {
         static void Main(string[] args)
         {
-            var c = new Conditions()
+            var queue = new TaskQueue();
+            for (int i = 0; i < 10; i++)
             {
-                Time = "10:00 - 23:00 / 00:10"
-            };
+                queue.Enqueue(GetTask());
+            }
 
-            Console.WriteLine(String.Join(", ", c.AvailableDateTimesInTimeSpan(
-                DateTime.Parse("18.4.2020 19:00"),
-                DateTime.Parse("18.4.2020 20:00"),
-                exclusiveStart: true,
-                exclusiveEnd: true
-                )));
+            Console.ReadKey();
+        }
 
-            Console.WriteLine(String.Join(", ", c.AvailableDateTimesInTimeSpan(
-                DateTime.Parse("18.4.2020 20:00"),
-                DateTime.Parse("18.4.2020 21:00"),
-                exclusiveStart: true,
-                exclusiveEnd: true
-                )));
-
-            Console.ReadLine();
+        static int ct = 0;
+        static Func<Task> GetTask()
+        {
+            int val = ++ct;
+            int zero = 0;
+            return new Func<Task>(() =>
+            {
+                return Task.Run(() =>
+                {
+                    Task.Delay(1000).Wait();
+                    Console.WriteLine(val.ToString() + " !");
+                    int test = 5 / zero;
+                });
+            });
         }
     }
 }

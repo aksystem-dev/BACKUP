@@ -1,4 +1,5 @@
 ﻿using SmartModulBackupClasses;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
 using System.Configuration.Install;
@@ -15,6 +16,9 @@ namespace smart_modul_BACKUP
 {
     public static class Utils
     {
+        static ServiceState service => Manager.Get<ServiceState>();
+        static InProgress inProgress => Manager.Get<InProgress>();
+
         /// <summary>
         /// Pokusí se nainstalovat službu. Pokud nedostane parametr cesta, zeptá se uživatele skrze openfiledialog.
         /// </summary>
@@ -88,10 +92,10 @@ namespace smart_modul_BACKUP
 
         public static void DoSingleBackup(BackupRule Rule)
         {
-            if (LoadedStatic.service.State == ServiceConnectionState.Connected)
+            if (service.State == ServiceConnectionState.Connected)
             {
-                var progress = LoadedStatic.service.DoSingleBackup(Rule);
-                progress = LoadedStatic.InProgress.SetBackup(progress);
+                var progress = service.DoSingleBackup(Rule);
+                progress = inProgress.SetBackup(progress);
                 Rule.InProgress.Add(progress);
                 progress.Completed += async (obj, args) =>
                 {
@@ -111,12 +115,7 @@ namespace smart_modul_BACKUP
             if (!messageBox || MessageBox.Show($"Opravdu chcete odstranit pravidlo {rule.Name}?", "Skutečně?",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                //jedná-li se o poslední pravidlo, chceme uložit jeho ID 
-                if (LoadedStatic.rules.Count == 1)
-                    File.WriteAllText("ruleid", rule.LocalID.ToString());
-
-                File.Delete(rule.path);
-                LoadedStatic.rules.Remove(rule);
+                Manager.Get<BackupRuleLoader>().Delete(rule.LocalID);
             }
         }
     }

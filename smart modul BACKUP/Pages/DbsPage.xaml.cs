@@ -1,4 +1,6 @@
-﻿using System;
+﻿using smart_modul_BACKUP.Managers;
+using SmartModulBackupClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +27,7 @@ namespace smart_modul_BACKUP
             InitializeComponent();
 
             //budou se zde zobrazovat dostupné databáze
-            DataContext = LoadedStatic.availableDatabases;
+            DataContext = Manager.Get<AvailableDbLoader>().availableDatabases;
         }
 
 

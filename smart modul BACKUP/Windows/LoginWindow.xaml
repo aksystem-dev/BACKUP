@@ -1,0 +1,106 @@
+﻿<Window x:Class="smart_modul_BACKUP.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:smart_modul_BACKUP"
+        xmlns:api="clr-namespace:SmartModulBackupClasses.WebApi;assembly=SmartModulBackupClasses"
+        mc:Ignorable="d" Loaded="win_loaded"
+        Title="LoginWindow" Height="600" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource Blue0}">
+            <Label FontSize="30" Content="AKTIVACE PROGRAMU"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Border>
+
+        <Grid Grid.Row="1" Grid.Column="0" Margin="20,20,10,20" Background="{StaticResource Gray2}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="70" />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Grid.Column="0" Background="{StaticResource Blue0}">
+                <Label FontSize="30" Content="PŘIHLÁŠENÍ"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            </Border>
+
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="10">
+                <Label Foreground="Red" x:Name="lbl_validate" Visibility="Hidden" />
+                <local:LabelTextBox LabelText="UŽIVATEL: "
+                                LabelWidth="150"
+                                FontSize="14"
+                                x:Name="txt_username" />
+                <local:LabelAnything LabelText="HESLO: " x:Name="pwd_container"
+                                 FontSize="14"
+                                 LabelWidth="150">
+                    <PasswordBox Initialized="store_pwd_obj" />
+                </local:LabelAnything>
+            </StackPanel>
+
+            <Button Content="PŘIHLÁSIT" FontSize="20" Height="50" x:Name="btn_login"
+                Grid.Row="2" Grid.Column="0" Margin="5" Click="click_login" />
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1" Margin="20,20,10,20" Background="{StaticResource Gray2}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="70" />
+            </Grid.RowDefinitions>
+
+
+            <Border Grid.Row="0" Grid.Column="1" Background="{StaticResource Blue0}">
+                <Label FontSize="30" Content="DOSTUPNÉ PLÁNY"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            </Border>
+            
+            <ListBox Grid.Row="1" Grid.Column="1" Background="White" Margin="10" BorderThickness="0"
+                     ItemsSource="{Binding Path=AvailablePlans}" x:Name="lbx_plans">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type api:PlanXml}">
+                        <Border Background="{StaticResource Gray0}" Margin="10">
+                            <StackPanel>
+                                <Label Content="{Binding Path=TarifName}" Margin="10"
+                                       FontWeight="Bold" />
+                                <Label Content="{Binding Path=Kapacita}" ContentStringFormat="Kapacita: {0}"
+                                       Margin="10" />
+                                <Label Content="{Binding Path=Enabled, Converter={StaticResource yesNoConv}}" ContentStringFormat="Aktivovatelný: {0}"
+                                       Margin="10" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button Content="AKTIVOVAT" FontSize="20" Height="50"
+                    Grid.Row="2" Grid.Column="0" Margin="5"
+                    Click="click_activate"
+                    IsEnabled="{Binding ElementName=lbx_plans, Path=SelectedItem, Converter={StaticResource notNull}}"/>
+        </Grid>
+
+        <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="PŘESKOČIT" Click="click_skip"
+                Width="200" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                Margin="0,0,0,10" Height="50" FontSize="20" />
+
+    </Grid>
+   
+</Window>
