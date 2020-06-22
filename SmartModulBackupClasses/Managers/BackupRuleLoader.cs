@@ -24,12 +24,24 @@ namespace SmartModulBackupClasses.Managers
 
         private List<BackupRule> ruleList = new List<BackupRule>();
 
+        public Action<Action> UI_Dispatcher;
+
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<BackupRule> OnRuleUpdated;
 
         public BackupRule[] Rules => ruleList.ToArray();
 
         private void rulesChanged()
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rules)));
+        {
+            var handler = UI_Dispatcher ?? new Action<Action>(a => a());
+            handler.Invoke(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rules))));
+        }
+
+        private void invokeRuleUpdated(BackupRule updated)
+        {
+            var handler = UI_Dispatcher ?? new Action<Action>(a => a());
+            handler.Invoke(() => OnRuleUpdated?.Invoke(this, updated));
+        }
 
         /// <summary>
         /// Načte aktuální pravidla ze souborů a z webu
@@ -52,11 +64,14 @@ namespace SmartModulBackupClasses.Managers
                     {
                         if (l_rule.LastEdit >= w_rule.LastEdit) //pokud má lokální pravidlo datum změny po webové verzi, znamená to, že byly provedeny lokální změny
                         {
-                            ruleList.Add(l_rule); 
+                            ruleList.Add(l_rule);
                             apiQueue.Enqueue(() => client.UpdateRulesAsync(l_rule)); //musíme o tom informovat server
                         }
                         else
+                        {
+                            w_rule.path = l_rule.path;
                             ruleList.Add(w_rule);
+                        }
                     }
                     else
                     {
@@ -64,6 +79,7 @@ namespace SmartModulBackupClasses.Managers
                             apiQueue.Enqueue(() => client.DeleteRulesAsync(w_rule.LocalID));
                         else
                         {
+                            w_rule.path = Path.Combine(folder, w_rule.Name + ".xml");
                             ruleList.Add(w_rule);
                             apiQueue.Enqueue(() => client.ConfirmRulesAsync(w_rule.LocalID)); //přidat: nastaví Downloaded na serveru
                         }
@@ -72,11 +88,19 @@ namespace SmartModulBackupClasses.Managers
 
                 foreach (var l_rule in rulesLocal)
                 {
-                    if (ruleList.Any(f => f.LocalID == l_rule.LocalID))
+                    if (ruleList.Any(f => f.LocalID == l_rule.LocalID)) 
                         continue;
+                    //pokračujeme pouze, pokud toto pravidlo není ve výsledném seznamu pravidel
 
                     if (l_rule.Uploaded) //pokud pravidlo bylo již uploadováno, znamená to, že bylo smazáno na serveru, smažeme ho tedy i lokálně
+                    {
+                        try
+                        {
+                            File.Delete(l_rule.path);
+                        }
+                        catch { }
                         continue;
+                    }
                     else
                     {
                         ruleList.Add(l_rule);
@@ -133,11 +157,21 @@ namespace SmartModulBackupClasses.Managers
             }
         }
 
+        /// <summary>
+        /// Vrátí pravidlo podle lokálního ID.
+        /// </summary>
+        /// <param name="localID"></param>
+        /// <returns></returns>
         public BackupRule Get(int localID)
         {
             return ruleList.FirstOrDefault(f => f.LocalID == localID);
         }
 
+        /// <summary>
+        /// Přidá pravidlo, uloží do souboru, upozorní API.
+        /// </summary>
+        /// <param name="rule"></param>
+        /// <returns></returns>
         public BackupRule Add(BackupRule rule)
         {
             rule.LocalID = ++ID;
@@ -148,9 +182,15 @@ namespace SmartModulBackupClasses.Managers
             rule.SaveSelf();
 
             rulesChanged();
+            invokeRuleUpdated(rule);
             return rule;
         }
 
+        /// <summary>
+        /// Updatuje záznam pravidla v seznamu, updatuje soubor a upozorní API.
+        /// </summary>
+        /// <param name="rule"></param>
+        /// <returns></returns>
         public BackupRule Update(BackupRule rule)
         {
             var f_rule = ruleList.FirstOrDefault(f => f.LocalID == rule.LocalID);
@@ -166,6 +206,7 @@ namespace SmartModulBackupClasses.Managers
                 apiQueue.Enqueue(() => ruleUpdate(rule));
             }
 
+            invokeRuleUpdated(rule);
             return rule;
         }
 
@@ -183,6 +224,11 @@ namespace SmartModulBackupClasses.Managers
             catch { }
         }
 
+        /// <summary>
+        /// Odstraní pravidlo ze seznamu, smaže soubor a upozorní API.
+        /// </summary>
+        /// <param name="local_id"></param>
+        /// <returns></returns>
         public BackupRule Delete(int local_id)
         {
             var rule = ruleList.FirstOrDefault(f => f.LocalID == local_id);
@@ -195,6 +241,24 @@ namespace SmartModulBackupClasses.Managers
                 File.Delete(rule.path);
 
             rulesChanged();
+            return rule;
+        }
+
+        /// <summary>
+        /// Přidá / nastaví dané pravidlo u tohoto objektu. Nezabývá se komunikací s API ani soubory pravidel.
+        /// </summary>
+        /// <param name="rule"></param>
+        /// <returns></returns>
+        public BackupRule SetRule(BackupRule rule)
+        {
+            int i = ruleList.FindIndex(r => r.LocalID == rule.LocalID);
+            if (i >= 0)
+                ruleList[i] = rule;
+            else
+                ruleList.Add(rule);
+
+            rulesChanged();
+            invokeRuleUpdated(rule);
             return rule;
         }
 
@@ -245,7 +309,7 @@ namespace SmartModulBackupClasses.Managers
         {
             try
             {
-                return BackupRule.LoadFromXml(path, true);
+                return BackupRule.LoadFromXml(path);
             }
             catch
             {

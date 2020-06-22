@@ -14,6 +14,8 @@ namespace SmartModulBackupClasses
     public class Config : INotifyPropertyChanged
     {
         private bool unsavedChanges;
+
+        [XmlIgnore]
         public bool UnsavedChanges
         {
             get => unsavedChanges;
@@ -124,18 +126,18 @@ namespace SmartModulBackupClasses
                 propChanged(nameof(LocalBackupDirectory));
             }
         }
-        public string RemoteBackupDirectory
-        {
-            get => remoteBackupDirectory;
-            set
-            {
-                if (value == remoteBackupDirectory)
-                    return;
+        //public string RemoteBackupDirectory
+        //{
+        //    get => remoteBackupDirectory;
+        //    set
+        //    {
+        //        if (value == remoteBackupDirectory)
+        //            return;
 
-                remoteBackupDirectory = value;
-                propChanged(nameof(RemoteBackupDirectory));
-            }
-        }
+        //        remoteBackupDirectory = value;
+        //        propChanged(nameof(RemoteBackupDirectory));
+        //    }
+        //}
         public bool UseShadowCopy
         {
             get => useShadowCopy;

@@ -16,5 +16,5 @@ D:\Projects\smart modul BACKUP\smart modul BACKUP\App.xaml
 21-905578482
 Colors.xaml;Controls\LabelAnything.xaml;Controls\PathTextbox.xaml;Controls\ProgressBarView.xaml;Controls\ToggleOnOff.xaml;Images.xaml;Pages\BackupsPage.xaml;Pages\ConfigPage.xaml;Controls\LabelPasswordBox.xaml;Controls\LabelTextBox.xaml;MainWindow.xaml;Controls\RuleControl.xaml;Pages\DbsPage.xaml;Pages\HomePage.xaml;Pages\RestorePage.xaml;Pages\RulePage.xaml;Pages\SingleRulePage.xaml;Styles.xaml;Windows\InputDialog.xaml;Windows\LoginWindow.xaml;Windows\RestoreWindow.xaml;Windows\YesNoDialog.xaml;
 
-True
+False
 

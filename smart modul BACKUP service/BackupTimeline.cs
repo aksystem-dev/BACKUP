@@ -19,6 +19,7 @@ namespace smart_modul_BACKUP_service
         public static BackupTask[] OngoingBackups => _ongoingBackups.ToArray();
 
         private CancellationTokenSource _tokenSource;
+        private Thread _loopThread;
 
         public BackupTimeline() { }
 
@@ -32,6 +33,7 @@ namespace smart_modul_BACKUP_service
             {
                 _tokenSource.Cancel(); //říct vláknu, že je konec
                 Running = false; //říct objektu, že je konec
+                _loopThread?.Join();
             }
             else
                 throw new InvalidOperationException("BackupTimeline neběží, nelze jí tedy zastavit, z logiky věci přece.");
@@ -62,7 +64,8 @@ namespace smart_modul_BACKUP_service
                 _tokenSource = new CancellationTokenSource();
 
                 //spustit cyklus na novém vlákně
-                new Thread(Loop).Start();
+                _loopThread = new Thread(Loop);
+                _loopThread.Start();
             }
             else
                 throw new InvalidOperationException("BackupTimeline už běží! Použijte Stop() pro její zastavení, než zavoláte Start().");

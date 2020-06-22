@@ -345,6 +345,7 @@
 
                 <StackPanel Grid.Column="0" Grid.Row="0">
                     <Label FontSize="18" FontWeight="Bold" Margin="5" Content="LOKÁLNÍ ZÁLOHY" />
+                    <CheckBox IsChecked="{Binding Path=LocalBackups.enabled}" Content="POVOLENO" Margin="10" />
                     <local:LabelTextBox x:Name="txt_localBackupCount" LabelWidth="150" LabelText="MAX POČET ZÁLOH:"
                                             Text="{Binding Path=LocalBackups.MaxBackups, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
@@ -357,6 +358,7 @@
 
                 <StackPanel Grid.Column="2" Grid.Row="0">
                     <Label FontSize="18" FontWeight="Bold" Margin="5" Content="ZÁLOHY NA SERVERU" />
+                    <CheckBox IsChecked="{Binding Path=RemoteBackups.enabled}" Content="POVOLENO" Margin="10" />
                     <local:LabelTextBox x:Name="txt_remoteBackupsCount" LabelWidth="150" LabelText="MAX POČET ZÁLOH:"
                                             Text="{Binding Path=RemoteBackups.MaxBackups, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>

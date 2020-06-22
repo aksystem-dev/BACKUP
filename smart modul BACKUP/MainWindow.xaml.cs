@@ -74,7 +74,10 @@ namespace smart_modul_BACKUP
         private void Manager_OnImplementationSet(ImplementationSetEventArgs obj)
         {
             if (obj.Type == typeof(SmbApiClient) && obj.Singleton)
+            {
                 client = obj.NewImplementation as SmbApiClient;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(client)));
+            }
         }
 
         private void ShowMyself()
@@ -106,13 +109,24 @@ namespace smart_modul_BACKUP
             var page = buttons[sender as ButtonWithState];
             if (page != null)
             {
-                //pokud odcházíme z config stránky, musíme uložit hesla do config objektu
-                //   (to je tím, že nějaký debil v microsoftu se rozhodl, že pokud se z té stránky odejde, passwordboxy se vyprázdní)
-                if (frame.Content is ConfigPage cfgPage)
-                    cfgPage.UpdateConfig();
+                //pokud odnačítáme ConfigPage, musíme uložit hesla a konfiguraci
+                if (frame.Content is ConfigPage cfgpg)
+                {
+                    saveCfg();
+                }
 
                 frame.Navigate(page);
             }
+        }
+
+        /// <summary>
+        /// uložit konfig
+        /// </summary>
+        public void saveCfg()
+        {
+            configPage.UpdateConfig();
+            Manager.Get<ConfigManager>().Save();
+            _ = Manager.Get<ServiceState>().Client.ReloadConfigAsync();
         }
 
         private bool cancelClose = true;
@@ -122,7 +136,7 @@ namespace smart_modul_BACKUP
         private void window_closing(object sender, CancelEventArgs e)
         {
             //uložit konfiguraci
-            Manager.Get<ConfigManager>().Save();
+            saveCfg();
             Manager.Get<ServiceState>().Reload();
 
             if (cancelClose)

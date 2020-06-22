@@ -1,10 +1,6 @@
 ﻿using SmartModulBackupClasses;
 using SmartModulBackupClasses.Managers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses
 {
@@ -27,15 +23,18 @@ namespace SmartModulBackupClasses
             //return new SftpUploader(Config.Adress, Config.Port, Config.Username, Config.Password.Value);
             var cfg_man = Manager.Get<ConfigManager>();
             var plan_man = Manager.Get<PlanManager>();
-            if (plan_man?.Plan?.Enabled == true)
+            if (plan_man?.UseConfig == false)
             {
                 var sftp = plan_man.Sftp;
                 try
                 {
+                    SMB_Log.Log($"SftpUploaderFactory: returning SftpUploader({sftp.Host},{sftp.Port},{sftp.Username},{sftp.Password}) from web plan");
                     return new SftpUploader(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    SMB_Log.Log(ex);
+                    SMB_Log.Error($"SftpUploaderFactory: failed to get SftpUploader from web plan, returning null...");
                     return null;
                 }
             }
@@ -44,10 +43,13 @@ namespace SmartModulBackupClasses
                 var sftp = cfg_man.Config.SFTP;
                 try
                 {
+                    SMB_Log.Log($"SftpUploaderFactory: returning SftpUploader({sftp.Host},{sftp.Port},{sftp.Username},{sftp.Password.Value}) from config");
                     return new SftpUploader(sftp.Host, sftp.Port, sftp.Username, sftp.Password.Value);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    SMB_Log.Log(ex);
+                    SMB_Log.Error($"SftpUploaderFactory: failed to get SftpUploader from config, returning null...");
                     return null;
                 }
             }

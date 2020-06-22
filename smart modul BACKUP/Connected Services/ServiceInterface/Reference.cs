@@ -28,10 +28,10 @@ namespace smart_modul_BACKUP.ServiceInterface {
         System.Threading.Tasks.Task<int[]> GetRunningBackupsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/DoSingleBackup", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/DoSingleBackupResponse")]
-        SmartModulBackupClasses.BackupInProgress DoSingleBackup(int rule);
+        SmartModulBackupClasses.BackupInProgress DoSingleBackup(string ruleXml);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/DoSingleBackup", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/DoSingleBackupResponse")]
-        System.Threading.Tasks.Task<SmartModulBackupClasses.BackupInProgress> DoSingleBackupAsync(int rule);
+        System.Threading.Tasks.Task<SmartModulBackupClasses.BackupInProgress> DoSingleBackupAsync(string ruleXml);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/Restore", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/RestoreResponse")]
         SmartModulBackupClasses.RestoreInProgress Restore(SmartModulBackupClasses.Restore restoreInfo);
@@ -68,6 +68,24 @@ namespace smart_modul_BACKUP.ServiceInterface {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/ImStillHere", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/ImStillHereResponse")]
         System.Threading.Tasks.Task ImStillHereAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/UpdateApi", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/UpdateApiResponse")]
+        void UpdateApi();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/UpdateApi", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/UpdateApiResponse")]
+        System.Threading.Tasks.Task UpdateApiAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/ReloadConfig", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/ReloadConfigResponse")]
+        void ReloadConfig();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/ReloadConfig", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/ReloadConfigResponse")]
+        System.Threading.Tasks.Task ReloadConfigAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/SetRule", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/SetRuleResponse")]
+        void SetRule(string ruleXml);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/SetRule", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/SetRuleResponse")]
+        System.Threading.Tasks.Task SetRuleAsync(string ruleXml);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -148,12 +166,12 @@ namespace smart_modul_BACKUP.ServiceInterface {
             return base.Channel.GetRunningBackupsAsync();
         }
         
-        public SmartModulBackupClasses.BackupInProgress DoSingleBackup(int rule) {
-            return base.Channel.DoSingleBackup(rule);
+        public SmartModulBackupClasses.BackupInProgress DoSingleBackup(string ruleXml) {
+            return base.Channel.DoSingleBackup(ruleXml);
         }
         
-        public System.Threading.Tasks.Task<SmartModulBackupClasses.BackupInProgress> DoSingleBackupAsync(int rule) {
-            return base.Channel.DoSingleBackupAsync(rule);
+        public System.Threading.Tasks.Task<SmartModulBackupClasses.BackupInProgress> DoSingleBackupAsync(string ruleXml) {
+            return base.Channel.DoSingleBackupAsync(ruleXml);
         }
         
         public SmartModulBackupClasses.RestoreInProgress Restore(SmartModulBackupClasses.Restore restoreInfo) {
@@ -202,6 +220,30 @@ namespace smart_modul_BACKUP.ServiceInterface {
         
         public System.Threading.Tasks.Task ImStillHereAsync() {
             return base.Channel.ImStillHereAsync();
+        }
+        
+        public void UpdateApi() {
+            base.Channel.UpdateApi();
+        }
+        
+        public System.Threading.Tasks.Task UpdateApiAsync() {
+            return base.Channel.UpdateApiAsync();
+        }
+        
+        public void ReloadConfig() {
+            base.Channel.ReloadConfig();
+        }
+        
+        public System.Threading.Tasks.Task ReloadConfigAsync() {
+            return base.Channel.ReloadConfigAsync();
+        }
+        
+        public void SetRule(string ruleXml) {
+            base.Channel.SetRule(ruleXml);
+        }
+        
+        public System.Threading.Tasks.Task SetRuleAsync(string ruleXml) {
+            return base.Channel.SetRuleAsync(ruleXml);
         }
     }
 }

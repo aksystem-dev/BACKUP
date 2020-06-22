@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace SmartModulBackupClasses
 {
     public class SftpConfig : INotifyPropertyChanged
     {
         private bool unsavedChanges;
+
+        [XmlIgnore]
         public bool UnsavedChanges
         {
             get => unsavedChanges;
@@ -39,6 +42,7 @@ namespace SmartModulBackupClasses
         private string username = "";
         private int port = 22;
         private string adress = "";
+        private string directory = "";
 
         public string Host
         {
@@ -95,6 +99,19 @@ namespace SmartModulBackupClasses
 
                 password = value;
                 propChanged(nameof(Password));
+            }
+        }
+
+        public string Directory
+        {
+            get => directory;
+            set
+            {
+                if (directory == value)
+                    return;
+
+                directory = value;
+                propChanged(nameof(Directory));
             }
         }
 

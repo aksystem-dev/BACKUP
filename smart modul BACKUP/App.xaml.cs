@@ -44,6 +44,11 @@ namespace smart_modul_BACKUP
         /// </summary>
         public static bool startHidden => ARGS.Contains("-hidden");
 
+        public static void dispatch(Action a)
+        {
+            Application.Current.Dispatcher.InvokeAsync(a);
+        }
+
         //public static bool IsUserLoggedIn { get; set; } = false;
 
         private void OnAppStart(object sender, StartupEventArgs e)
@@ -94,7 +99,7 @@ namespace smart_modul_BACKUP
             if (!apiTask.Result)
                 ShowLogin(true);
             else
-                Task.Run(SetupPlanManager).Wait();
+                SMB_Utils.Sync(() => SetupPlanManager(null));
             SetupService();
             SetupRules();
             SetupBackups();
@@ -107,7 +112,9 @@ namespace smart_modul_BACKUP
 
         private static void SetupBackups()
         {
-            Manager.SetSingleton(new BackupInfoManager());
+            var man = Manager.SetSingleton(new BackupInfoManager());
+            man.PropertyChangedDispatchHandler = dispatch;
+            man.LoadAsync();
         }
 
         private static void SetupAvailableDbs()
@@ -143,7 +150,23 @@ namespace smart_modul_BACKUP
 
         private static void SetupRules()
         {
-            Manager.SetSingleton(new BackupRuleLoader()).Load();
+            var rloader = Manager.SetSingleton(new BackupRuleLoader()).Load();
+            rloader.UI_Dispatcher = dispatch;
+            rloader.OnRuleUpdated += Rloader_OnRuleUpdated;
+        }
+
+        /// <summary>
+        /// Když v GUI upravíme / přidáme pravidlo, informujem o tom službu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void Rloader_OnRuleUpdated(object sender, BackupRule e)
+        {
+            try
+            {
+                Manager.Get<ServiceState>().Client.SetRule(e.ToXmlString());
+            }
+            catch { }
         }
 
         private static void SetupConfig()
@@ -169,33 +192,26 @@ namespace smart_modul_BACKUP
         /// <summary>
         /// Přidá SmbWebApi do Manageru
         /// </summary>
-        /// <returns></returns>
-        private async Task<bool> SetupApiAsync()
+        /// <returns>True, pokud všemu rozumíme, false, pokud nějaké info chybí a je proto třeba otevřít přihlašovací okno</returns>
+        private bool SetupApiAsync()
         {
             var config = Manager.Get<ConfigManager>().Config;
 
             SmbApiClient API = null;
             if (config.WebCfg == null)
             {
+                //pokud nemáme info o připojení k API, pravděpodobně se jedná o první spuštění aplikace
+                //vrátíme proto false, čímž volající metodě sdělíme, že chceme otevřít dialogové okno pro přihlášení
                 return false;
             }
-            else if (config.WebCfg.Offline)
+            else if (!config.WebCfg.Online)
             {
-
+                //nejsme-li online, neděláme nic; API nastavíme na null a vrátíme true
             }
             else
             {
+                //pokud nám config tvrdí, že jsme online, vytvoříme instanci SmbApiClient a vrátíme true, že je vše v pohodě
                 API = new SmbApiClient(config.WebCfg.Username, config.WebCfg.Password.Value, ms_timeout: 1500);
-
-                try
-                {
-                    var hello = await API.HelloAsync().ConfigureAwait(false);
-                    //IsUserLoggedIn = true;
-                }
-                catch (Exception ex)
-                {
-                    return false;
-                }
             }
 
             Manager.SetSingleton(API);
@@ -207,19 +223,56 @@ namespace smart_modul_BACKUP
         /// Přidá PlanManager
         /// </summary>
         /// <returns></returns>
-        private async Task<bool> SetupPlanManager()
+        public static async Task<bool> SetupPlanManager(PlanXml plan = null)
         {
             try
             {
-                var plan_man = new PlanManager();
-                await plan_man.LoadAsync();
-                Manager.SetSingleton(plan_man);
+                var plan_man = Manager.Get<PlanManager>();
+
+                if (plan_man == null)
+                {
+                    plan_man = Manager.SetSingleton(new PlanManager());
+
+                    //jelikož PlanManager často pracuje na jiném vlákně, vysvětlíme mu, ať používá Dispatcher
+                    plan_man.PropertyChangedDispatcher = new Action<Action>(a =>
+                    {
+                        App.Current.Dispatcher.InvokeAsync(a);
+                    });
+                }
+                if (plan == null)
+                    await plan_man.LoadAsync(); //pokud nebyl zadán plán, načtem plán a sftp údaje
+                else
+                    await plan_man.SetPlanAsync(plan); //jinak použijeme zadaný plán a načtem pouze sftp údaje
                 return true;
             }
             catch
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// odhlásí klienta z webu
+        /// </summary>
+        public static void Logout()
+        {
+            //updatovat konfiguraci
+            var cfg_man = Manager.Get<ConfigManager>();
+            cfg_man.Config.WebCfg.Online = false;
+            cfg_man.Save();
+
+            try
+            {
+                //deaktivovat plán
+                Manager.Get<SmbApiClient>().Deactivate();
+            }
+            catch { }        
+
+            //odendat webové api
+            Manager.SetSingleton<SmbApiClient>(null);
+
+            //updatovat plán
+            SMB_Utils.Sync(() => SetupPlanManager(null));
         }
 
         /// <summary>
@@ -232,8 +285,15 @@ namespace smart_modul_BACKUP
             var res = login.ShowDialog(); //login window by se mělo o vše postarat, proto můžeme vrátit
             if (res == true)
             {
-                Manager.SetSingleton(login.api);
-                Manager.SetSingleton(new PlanManager().Load());
+                Manager.SetSingleton(login.api); //nastavit nový objekt SmbApiClient
+                try
+                {
+                    Manager.Get<ServiceState>().Client.UpdateApiAsync(); //říct službě, ať se také znovu připojí k api
+                }
+                catch { }
+
+                SMB_Utils.Sync(() => SetupPlanManager(login.plan)); //načíst info o plánu
+                
                 return true;
             }
             else

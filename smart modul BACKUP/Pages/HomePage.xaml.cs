@@ -24,13 +24,15 @@ namespace smart_modul_BACKUP
     public partial class HomePage : Page
     {
         public ConfigManager cfg_man { get; set; }
+        public PlanManager plan_man { get; set; }
 
         public HomePage()
         {
             InitializeComponent();
 
             cfg_man = Manager.Get<ConfigManager>();
-            Manager.Get<PlanManager>().Loaded += HomePage_Loaded;
+            plan_man = Manager.Get<PlanManager>();
+            plan_man.Loaded += HomePage_Loaded;
             showRelevant();
         }
 
@@ -41,14 +43,15 @@ namespace smart_modul_BACKUP
 
         void showRelevant()
         {
-            ConfigManager config = Manager.Get<ConfigManager>();
-            if (config?.Config?.WebCfg != null)
+            if (!plan_man.UseConfig)
             {
                 pan_notLoggedIn.Visibility = Visibility.Hidden;
+                pan_loggedIn.Visibility = Visibility.Visible;
             }
             else
             {
                 pan_notLoggedIn.Visibility = Visibility.Visible;
+                pan_loggedIn.Visibility = Visibility.Hidden;
             }
         }
 
@@ -60,6 +63,11 @@ namespace smart_modul_BACKUP
                 Manager.Get<BackupRuleLoader>().Load();
                 await Manager.Get<BackupInfoManager>().LoadAsync();
             });
+        }
+
+        private void click_logout(object sender, RoutedEventArgs e)
+        {
+            App.Logout();
         }
     }
 }

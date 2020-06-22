@@ -7,6 +7,8 @@ namespace SmartModulBackupClasses
     public class WebConfig : INotifyPropertyChanged
     {
         private bool unsavedChanges;
+
+        [XmlIgnore]
         public bool UnsavedChanges
         {
             get => unsavedChanges;
@@ -39,7 +41,7 @@ namespace SmartModulBackupClasses
 
         private string username = "";
         private Pwd password = new Pwd("");
-        private bool offline = false;
+        private bool online = false;
         //private PlanXml activePlan = null;
 
         public string Username
@@ -74,16 +76,16 @@ namespace SmartModulBackupClasses
             }
         }
 
-        public bool Offline
+        public bool Online
         {
-            get => offline;
+            get => online;
             set
             {
-                if (offline == value)
+                if (online == value)
                     return;
 
-                offline = value;
-                propChanged(nameof(Offline));
+                online = value;
+                propChanged(nameof(Online));
             }
         }
 

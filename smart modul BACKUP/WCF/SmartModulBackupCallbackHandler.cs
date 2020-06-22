@@ -162,7 +162,7 @@ namespace smart_modul_BACKUP.WCF
             }
         }
 
-        public void CompleteBackup(BackupInProgress backup, int BackupID)
+        public async void CompleteBackup(BackupInProgress backup, int BackupID)
         {
             try
             {
@@ -176,8 +176,9 @@ namespace smart_modul_BACKUP.WCF
                 {
                     inProgress.GetBackup(backup.ProgressId).Complete();
                     inProgress.RemoveBackup(backup.ProgressId);
-                    backups.Load();
                 });
+
+                await backups.LoadAsync();
 
                 var bak = backups.Backups.FirstOrDefault(f => f.LocalID == BackupID);
                 if (bak == null)

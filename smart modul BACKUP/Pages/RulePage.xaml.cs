@@ -38,8 +38,13 @@ namespace smart_modul_BACKUP
             //přidat pravidlo se zadaným jménem
             var newrule = new BackupRule()
             {
-                Enabled = true
+                Enabled = true,
             };
+
+            newrule.LocalBackups.enabled = true;
+            newrule.LocalBackups.MaxBackups = 5;
+            newrule.RemoteBackups.enabled = true;
+            newrule.RemoteBackups.MaxBackups = 50;
 
             MainWindow.main.ShowPage(new SingleRulePage(newrule, true));
         }
@@ -104,6 +109,13 @@ namespace smart_modul_BACKUP
         private void btn_click_addRule(object sender, RoutedEventArgs e)
         {
             AddRule();
+        }
+
+        private void rule_toggled(object sender, EventArgs e)
+        {
+            var rule = (sender as FrameworkElement)?.DataContext as BackupRule;
+            if (rule != null)
+                rules.Update(rule);
         }
     }
 }

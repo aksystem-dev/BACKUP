@@ -40,10 +40,31 @@ namespace SmartModulBackupClasses.Managers
         public bool UseApi { get; set; } = true;
         public bool UseSftp { get; set; } = true;
 
+        public Action<Action> PropertyChangedDispatchHandler;
+
         void arrayChanged()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Backups)));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LocalBackups)));
+            var dgate = PropertyChangedDispatchHandler ?? new Action<Action>(a => a());
+            dgate.Invoke(() =>
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Backups)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LocalBackups)));
+            });
+        }
+
+        private Task _loadAsyncTask;
+
+        public Task LoadAsync(bool sync = true)
+        {
+            //chceme aby _loadAsync neběželo víckrát najednou. Pokud už běží, vrátíme běžící task.
+            if (_loadAsyncTask != null)
+                return _loadAsyncTask;
+
+            //jinak to znamená, že momentálně neběží, tedy to můžem spustit
+            _loadAsyncTask = _loadAsync(sync);
+
+            //až to bude hotovo, chceme _loadAsyncTask opět nastavit na null
+            return _loadAsyncTask.ContinueWith(_ => _loadAsyncTask = null);
         }
 
         /// <summary>
@@ -51,40 +72,28 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         /// <param name="sync">pokud true, budou se doplňovat chybějící informace na všechny zvolené strany (lokálně / api / sftp)</param>
         /// <returns></returns>
-        public async Task LoadAsync(bool sync = true)
+        private async Task _loadAsync(bool sync = true)
         {
             backups.Clear();
 
-            IEnumerable<Backup> apiResults = null; //zde budou všechny zálohy z aktivovaného plánu (čili mohou být i z jiných počítačů)
-            IEnumerable<Backup> sftpResults = null;
-            IEnumerable<Backup> localResults = null;
+            IEnumerable<Backup> apiResults = Enumerable.Empty<Backup>(); ; //zde budou všechny zálohy z aktivovaného plánu (čili mohou být i z jiných počítačů)
+            IEnumerable<Backup> sftpResults = Enumerable.Empty<Backup>();
+            IEnumerable<Backup> localResults = Enumerable.Empty<Backup>(); ;
 
             List<Task> listTasks = new List<Task>();
 
             if (UseApi)
                 listTasks.Add(Task.Run(async () => apiResults = await listBksApi()));
-            else
-                apiResults = Enumerable.Empty<Backup>();
 
-            SftpUploader sftp = null;
-            if (UseSftp)
+            SftpUploader sftp = UseSftp ? Manager.Get<SftpUploader>() : null;
+            if (sftp != null)
             {
-                sftp = Manager.Get<SftpUploader>();
                 listTasks.Add(Task.Run(async () =>
                 {
-                    if ((await sftp.TryConnectAsync(2000)) == true)
-                    {
+                    if ((await sftp?.TryConnectAsync(2000)) == true)
                         sftpResults = await listBksSftp(sftp);
-                    }
-                    else
-                    {
-                        sftp = null;
-                        sftpResults = Enumerable.Empty<Backup>();
-                    }
                 }));
             }
-            else
-                sftpResults = Enumerable.Empty<Backup>();
 
             listTasks.Add(Task.Run(async () => localResults = await listBksLocal()));
 
@@ -122,6 +131,7 @@ namespace SmartModulBackupClasses.Managers
                 }
             }
 
+            //až budou všechny sftp tasky hotové, chceme se od sftp odpojit
             _ = Task.WhenAll(sftpTasks).ContinueWith(task => sftp?.Disconnect());
 
             arrayChanged();
@@ -185,8 +195,10 @@ namespace SmartModulBackupClasses.Managers
             {
                 List<Backup> found = new List<Backup>();
 
+                var folder = SMB_Utils.GetRemoteBkinfosPath();
+                sftpUploader.CreateDirectory(folder);
                 var sftp = sftpUploader.client;
-                var bk_list_async = sftp.BeginListDirectory(SMB_Utils.GetRemoteBkinfosPath(), null, null);
+                var bk_list_async = sftp.BeginListDirectory(folder, null, null);
                 var files = await Task.Factory.FromAsync(bk_list_async, sftp.EndListDirectory);
                 foreach(var file in files)
                 {
@@ -213,6 +225,7 @@ namespace SmartModulBackupClasses.Managers
                 List<Backup> found = new List<Backup>();
 
                 var folder = Const.BK_INFOS_FOLDER;
+                Directory.CreateDirectory(folder);
                 foreach (var file in Directory.GetFiles(folder, "*.xml"))
                 {
                     var content = File.ReadAllText(file);

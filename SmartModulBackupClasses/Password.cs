@@ -52,7 +52,7 @@ namespace SmartModulBackupClasses
                     var bytes = ProtectedData.Unprotect(enc_bytes, entropy, DataProtectionScope.LocalMachine);
                     return PasswordEncoding.GetString(bytes);
                 }
-                catch
+                catch (Exception ex)
                 {
                     Value = "";
                     return "";

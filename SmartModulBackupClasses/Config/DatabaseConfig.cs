@@ -1,11 +1,14 @@
 ﻿using System.Data.SqlClient;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace SmartModulBackupClasses
 {
     public class DatabaseConfig : INotifyPropertyChanged
     {
         private bool unsavedChanges;
+
+        [XmlIgnore]
         public bool UnsavedChanges
         {
             get => unsavedChanges;

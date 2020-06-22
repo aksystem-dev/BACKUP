@@ -97,7 +97,7 @@ namespace SmartModulBackupClasses.WebApi
             set => client.Timeout = TimeSpan.FromMilliseconds(value);
         }
 
-        public SmbApiClient(string username = null, string password = null, string pc_id = null, string pc_name = null, string smb_url = null, int? ms_timeout = null)
+        public SmbApiClient(string username = null, string password = null, string pc_id = null, string pc_name = null, string smb_url = null, int? ms_timeout = null, bool ignoreCertificate = true)
         {
             this.Username = username ?? "";
             this.Password = password ?? "";
@@ -110,6 +110,9 @@ namespace SmartModulBackupClasses.WebApi
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", token);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
+
+            if (ignoreCertificate)
+                requestHandler.ServerCertificateValidationCallback = (_1,_2,_3,_4) => true;
 
             if (ms_timeout.HasValue)
                 Timeout = ms_timeout.Value;

@@ -90,16 +90,27 @@ namespace smart_modul_BACKUP
             return to_return;
         }
 
+        /// <summary>
+        /// Odešle do služby žádost o udělání zálohy dle daného pravidla
+        /// </summary>
+        /// <param name="Rule"></param>
         public static void DoSingleBackup(BackupRule Rule)
         {
             if (service.State == ServiceConnectionState.Connected)
             {
+                //poslat žádost do služby
+                //Utils.DoSingleBackup -> ServiceState.DoSingleBackup -> WCF volání
                 var progress = service.DoSingleBackup(Rule);
-                progress = inProgress.SetBackup(progress);
+
+                //dostali jsme objekt BackupInProgress, pomocí kterého můžeme sledovat průběh zálohy
+                //služba nám bude posílat info o průběhu zálohy a bude se na daný BackupInProgress odkazovat pomocí id
+                progress = inProgress.SetBackup(progress); 
                 Rule.InProgress.Add(progress);
+
+                //až to bude, chceme BackupInProgress po chvilce odstranit
                 progress.Completed += async (obj, args) =>
                 {
-                    await Task.Delay(2000);
+                    await Task.Delay(5000);
                     App.Current.Dispatcher.Invoke(() =>
                     {
                         Rule.InProgress.Remove(progress);

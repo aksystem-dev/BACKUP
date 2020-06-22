@@ -39,7 +39,7 @@
                                             <local:ToggleOnOff VerticalAlignment="Center" HorizontalAlignment="Center"
                                                        Foreground="White" Width="30" Height="60" FontSize="8" ToggleMargin="3"
                                                        IsToggledOn="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                       AnimationDuration="0:0:0.1" />
+                                                       AnimationDuration="0:0:0.1" ToggledOff="rule_toggled" ToggledOn="rule_toggled" />
                                         </Border>
                                         <Label Foreground="White" Content="{Binding Path=Name}" FontSize="30" Grid.Column="1" 
                                        HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" />

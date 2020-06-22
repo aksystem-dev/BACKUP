@@ -12,7 +12,11 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="pan_notLoggedIn">
             <Label Content="NEJSTE PŘIHLÁŠEN." FontSize="30" HorizontalAlignment="Center" />
             <Label Content="PRO AKTIVACI PLÁNU SE PROSÍM PŘIHLAŠTE." FontSize="20" HorizontalAlignment="Center" />
-            <Button Content="PŘIHLÁSIT" Click="click_login" HorizontalAlignment="Center" />
+            <Button Content="PŘIHLÁSIT" Click="click_login" HorizontalAlignment="Center" Padding="5" />
         </StackPanel>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="pan_loggedIn">
+            <Button Content="ODHLÁSIT SE" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5" 
+                    Click="click_logout" />
+        </Grid>
     </Grid>
 </Page>

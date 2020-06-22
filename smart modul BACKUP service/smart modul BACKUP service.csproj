@@ -70,6 +70,7 @@
     <Compile Include="GUI.cs" />
     <Compile Include="GuiProgressBar.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Managers\RuleScheduler.cs" />
     <Compile Include="ProgressManager.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

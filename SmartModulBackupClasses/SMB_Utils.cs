@@ -32,15 +32,31 @@ namespace SmartModulBackupClasses
         }
 
         /// <summary>
-        /// Vrátí cestu na sftp serveru, která obsahuje složky bkinfos (ukládání info o zálohách) a 
-        /// Backups (samotné zálohy) tohoto počítače
+        /// Vrátí cestu na sftp serveru, kam se mají ukládat zálohy z tohoto pc
         /// </summary>
         /// <returns></returns>
         public static string GetRemoteBackupPath()
-            => Path.Combine(Manager.Get<ConfigManager>().Config.RemoteBackupDirectory, GetComputerId());
+        {
+            var pm = Manager.Get<PlanManager>();
+            if (pm.UseConfig)
+                return Path.Combine(Manager.Get<ConfigManager>().Config.SFTP.Directory, GetComputerId(), "Backups");
+            else
+                return Path.Combine(pm.Sftp.Directory, GetComputerId(), "Backups");
+        }
 
+        /// <summary>
+        /// Vrátí cestu na sftp serveru, kam se mají ukládat info o zálohách z tohoto pc
+        /// </summary>
+        /// <returns></returns>
         public static string GetRemoteBkinfosPath()
-            => Path.Combine(GetRemoteBackupPath(), "bkinfos");
+        {
+            var pm = Manager.Get<PlanManager>();
+            if (pm.UseConfig)
+                return Path.Combine(Manager.Get<ConfigManager>().Config.SFTP.Directory, GetComputerId(), "bkinfos");
+            else
+                return Path.Combine(pm.Sftp.Directory, GetComputerId(), "bkinfos");
+        }
+
         public static string GetRemotBackupsPath()
             => Path.Combine(GetRemoteBackupPath(), "Backups");
 

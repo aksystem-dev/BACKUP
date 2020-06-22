@@ -30,6 +30,7 @@ namespace smart_modul_BACKUP
 
         public event PropertyChangedEventHandler PropertyChanged;
         public SmbApiClient api;
+        public PlanXml plan = null;
 
         void updatePlans()
         {
@@ -152,9 +153,9 @@ namespace smart_modul_BACKUP
                 config.WebCfg = new WebConfig();
             config.WebCfg.Username = api.Username;
             config.WebCfg.Password = new Pwd(api.Password);
-            config.WebCfg.Offline = false;
+            config.WebCfg.Online = true;
             cfg_man.Save();
-
+            this.plan = plan;
             DialogResult = true;
             Close();
         }
@@ -178,9 +179,10 @@ namespace smart_modul_BACKUP
             var config = cfg_man.Config;
             if (config.WebCfg == null)
                 config.WebCfg = new WebConfig();
-            config.WebCfg.Offline = true;
+            config.WebCfg.Online = false;
             cfg_man.Save();
             api = null;
+            this.plan = null;
             DialogResult = true;
             Close();
         }

@@ -91,6 +91,24 @@
   <wsdl:message name="ISmartModulBackupInterface_ImStillHere_OutputMessage">
     <wsdl:part name="parameters" element="tns:ImStillHereResponse" />
   </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_UpdateApi_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateApi" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_UpdateApi_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateApiResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_ReloadConfig_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReloadConfig" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_ReloadConfig_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReloadConfigResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_SetRule_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetRule" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_SetRule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetRuleResponse" />
+  </wsdl:message>
   <wsdl:message name="ISmartModulBackupInterface_ShowError_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ShowError" />
   </wsdl:message>
@@ -187,6 +205,18 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ImStillHere">
       <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ImStillHere" message="tns:ISmartModulBackupInterface_ImStillHere_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ImStillHereResponse" message="tns:ISmartModulBackupInterface_ImStillHere_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateApi">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/UpdateApi" message="tns:ISmartModulBackupInterface_UpdateApi_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/UpdateApiResponse" message="tns:ISmartModulBackupInterface_UpdateApi_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ReloadConfig">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ReloadConfig" message="tns:ISmartModulBackupInterface_ReloadConfig_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ReloadConfigResponse" message="tns:ISmartModulBackupInterface_ReloadConfig_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SetRule">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/SetRule" message="tns:ISmartModulBackupInterface_SetRule_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/SetRuleResponse" message="tns:ISmartModulBackupInterface_SetRule_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ShowError">
       <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ShowError" message="tns:ISmartModulBackupInterface_ShowError_OutputCallbackMessage" />
@@ -306,6 +336,33 @@
     </wsdl:operation>
     <wsdl:operation name="ImStillHere">
       <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/ImStillHere" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateApi">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/UpdateApi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReloadConfig">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/ReloadConfig" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetRule">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/SetRule" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -23,6 +23,9 @@ namespace SmartModulBackupClasses
 
         void start()
         {
+            if (loopThread?.Join(1000) == false)
+                throw new InvalidOperationException("Už běžím!");
+
             //Console.WriteLine("start");
             tasks = new BlockingCollection<Func<Task>>();
             tokenSource = new CancellationTokenSource();
@@ -40,21 +43,28 @@ namespace SmartModulBackupClasses
 
         async void loop()
         {
-            while (!tokenSource.IsCancellationRequested && tasks.Count > 0)
+            try
             {
-                var task = tasks.Take(tokenSource.Token);
+                while (!tokenSource.IsCancellationRequested && tasks.Count > 0)
+                {
+                    var task = tasks.Take(tokenSource.Token);
 
-                try
-                {
-                    await task();
+                    try
+                    {
+                        await task();
+                    }
+                    catch (Exception ex)
+                    {
+                        OnExceptionCaught?.Invoke(this, ex);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    OnExceptionCaught?.Invoke(this, ex);
-                }
+
+                exit();
             }
+            catch (Exception ex)
+            {
 
-            exit();
+            }
         }
 
         public void Enqueue(Func<Task> task)

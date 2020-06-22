@@ -30,6 +30,7 @@
                        Foreground="White" Content="smart modul BACKUP" />
                 <Label DockPanel.Dock="Right" FontSize="24" Margin="10"
                        Foreground="White" Content="{Binding Path=client.Username}"
+                       VerticalAlignment="Center" HorizontalAlignment="Right"
                        ContentStringFormat="Uživatel: {0}" />
             </DockPanel>
         </Border>

@@ -19,9 +19,12 @@ namespace smart_modul_BACKUP
     public partial class ConfigPage : Page
     {
         ConfigManager cfg_man;
+
+        public PlanManager Plan_Man { get; set; }
         public ConfigPage()
         {
             cfg_man = Manager.Get<ConfigManager>();
+            Plan_Man = Manager.Get<PlanManager>();
 
             InitializeComponent();
             DataContext = cfg_man.Config;
@@ -99,9 +102,9 @@ namespace smart_modul_BACKUP
 
         private void page_unloaded(object sender, RoutedEventArgs e)
         {
-            UpdateConfig();
-            if (cfg_man.Config.UnsavedChanges)
-                cfg_man.Save();
+            //UpdateConfig();
+            //if (cfg_man.Config.UnsavedChanges)
+            //    cfg_man.Save();
         }
     }
 }

@@ -1746,7 +1746,7 @@
                 doing so can result in application failures when updating to a new Entity Framework Core release.
             </summary>
         </member>
-        <member name="T:Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerintTypeMapping">
+        <member name="T:Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerLongTypeMapping">
             <summary>
                 This is an internal API that supports the Entity Framework Core infrastructure and not subject to
                 the same compatibility standards as public APIs. It may be changed or removed without notice in
@@ -1754,7 +1754,7 @@
                 doing so can result in application failures when updating to a new Entity Framework Core release.
             </summary>
         </member>
-        <member name="M:Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerintTypeMapping.#ctor(System.String,System.Nullable{System.Data.DbType})">
+        <member name="M:Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerLongTypeMapping.#ctor(System.String,System.Nullable{System.Data.DbType})">
             <summary>
                 This is an internal API that supports the Entity Framework Core infrastructure and not subject to
                 the same compatibility standards as public APIs. It may be changed or removed without notice in
@@ -1762,7 +1762,7 @@
                 doing so can result in application failures when updating to a new Entity Framework Core release.
             </summary>
         </member>
-        <member name="M:Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerintTypeMapping.#ctor(Microsoft.EntityFrameworkCore.Storage.RelationalTypeMapping.RelationalTypeMappingParameters)">
+        <member name="M:Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerLongTypeMapping.#ctor(Microsoft.EntityFrameworkCore.Storage.RelationalTypeMapping.RelationalTypeMappingParameters)">
             <summary>
                 This is an internal API that supports the Entity Framework Core infrastructure and not subject to
                 the same compatibility standards as public APIs. It may be changed or removed without notice in
@@ -1770,14 +1770,14 @@
                 doing so can result in application failures when updating to a new Entity Framework Core release.
             </summary>
         </member>
-        <member name="M:Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerintTypeMapping.Clone(Microsoft.EntityFrameworkCore.Storage.RelationalTypeMapping.RelationalTypeMappingParameters)">
+        <member name="M:Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerLongTypeMapping.Clone(Microsoft.EntityFrameworkCore.Storage.RelationalTypeMapping.RelationalTypeMappingParameters)">
             <summary>
                 Creates a copy of this mapping.
             </summary>
             <param name="parameters"> The parameters for this mapping. </param>
             <returns> The newly created mapping. </returns>
         </member>
-        <member name="M:Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerintTypeMapping.GenerateNonNullSqlLiteral(System.Object)">
+        <member name="M:Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerLongTypeMapping.GenerateNonNullSqlLiteral(System.Object)">
             <summary>
                 This is an internal API that supports the Entity Framework Core infrastructure and not subject to
                 the same compatibility standards as public APIs. It may be changed or removed without notice in
@@ -5622,7 +5622,7 @@
             </summary>
             <param name="lastException"> The exception thrown during the last execution attempt. </param>
             <returns>
-                Returns the delay indicating how int to wait for before the next execution attempt if the operation should be retried;
+                Returns the delay indicating how long to wait for before the next execution attempt if the operation should be retried;
                 <c>null</c> otherwise
             </returns>
         </member>
@@ -5638,7 +5638,7 @@
                     to an <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" />.
                 </para>
                 <para>
-                    Calling this method is no inter necessary when building most applications, including those that
+                    Calling this method is no longer necessary when building most applications, including those that
                     use dependency injection in ASP.NET or elsewhere.
                     It is only needed when building the internal service provider for use with
                     the <see cref="M:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseInternalServiceProvider(System.IServiceProvider)" /> method.

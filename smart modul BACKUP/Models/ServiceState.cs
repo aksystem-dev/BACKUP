@@ -36,6 +36,8 @@ namespace smart_modul_BACKUP
 
         private ServiceInterface.SmartModulBackupInterfaceClient client = null;
 
+        public ServiceInterface.SmartModulBackupInterfaceClient Client => client;
+
         private ServiceController serviceController;
 
         public ServiceController GetService()
@@ -241,8 +243,8 @@ namespace smart_modul_BACKUP
         public BackupInProgress DoSingleBackup(BackupRule rule)
         {
             rule.SaveSelf();
-            client.Reload();
-            return client.DoSingleBackup(rule.LocalID);
+            //client.Reload();  -> o to ať se postará sama služba
+            return client.DoSingleBackup(rule.ToXmlString()); //odselat žádost přes WCF
         }
 
         public BackupInProgress[] GetBackupsInProgress() => client.GetBackupsInProgress();

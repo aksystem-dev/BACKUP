@@ -1,4 +1,5 @@
-﻿using SmartModulBackupClasses;
+﻿using smart_modul_BACKUP_service.Managers;
+using SmartModulBackupClasses;
 using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
@@ -78,9 +79,10 @@ namespace smart_modul_BACKUP_service.WCF
             Logger.Log("Test připojení klienta úspěšný: klient je pořád připojený.");
         }
 
-        public BackupInProgress DoSingleBackup(int ruleId)
+        public BackupInProgress DoSingleBackup(string ruleXml)
         {
-            BackupRule rule = Manager.Get<BackupRuleLoader>().Get(ruleId);
+            //BackupRule rule = Manager.Get<BackupRuleLoader>().Get(ruleId);
+            var rule = BackupRule.LoadFromXmlStr(ruleXml);
 
             if (rule == null)
                 return null;
@@ -107,6 +109,34 @@ namespace smart_modul_BACKUP_service.WCF
         public RestoreInProgress[] GetRestoresInProgress()
         {
             return Utils.InProgress.Restores;
+        }
+
+        public void UpdateApi()
+        {
+            try
+            {
+                SmartModulBackupService.updateApi(Manager.Get<ConfigManager>());
+            }
+            catch { }
+        }
+
+        public void ReloadConfig()
+        {
+            try
+            {
+                Manager.Get<ConfigManager>().Load();
+            }
+            catch { }
+        }
+
+        public void SetRule(string ruleXml)
+        {
+            try
+            {
+                Manager.Get<BackupRuleLoader>().SetRule(BackupRule.LoadFromXmlStr(ruleXml));
+                Manager.Get<RuleScheduler>().ScheduleRules(SmartModulBackupService._scheduleInterval);
+            }
+            catch { }
         }
     }
 }
