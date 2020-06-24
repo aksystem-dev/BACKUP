@@ -25,8 +25,8 @@
                                 Text="{Binding Path=Connection.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <local:LabelPasswordBox x:Name="PasswordSQL" LabelText="HESLO: "
                                         Margin="0,0,0,0" />
-                <Button Padding="5" HorizontalAlignment="Stretch" Click="TestSQL">
-                    <Label Content="TEST PŘIPOJENÍ" HorizontalAlignment="Center" FontSize="16" x:Name="btn_testsql" />
+                <Button Padding="5" HorizontalAlignment="Stretch" Click="TestSQL" x:Name="btn_testsql" >
+                    <Label Content="TEST PŘIPOJENÍ" HorizontalAlignment="Center" FontSize="16"/>
                 </Button>
             </StackPanel>
 
@@ -42,12 +42,12 @@
                                         Margin="0,0,0,0" />
                 <local:LabelTextBox LabelText="SLOŽKA NA SERVERU: "
                                     Text="{Binding Path=SFTP.Directory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Button Padding="5" HorizontalAlignment="Stretch" Click="TestSFTP">
-                    <Label Content="TEST PŘIPOJENÍ" HorizontalAlignment="Center" FontSize="16" x:Name="btn_testsftp" />
+                <Button Padding="5" HorizontalAlignment="Stretch" Click="TestSFTP" x:Name="btn_testsftp" >
+                    <Label Content="TEST PŘIPOJENÍ" HorizontalAlignment="Center" FontSize="16"/>
                 </Button>
             </StackPanel>
 
-            <StackPanel Style="{StaticResource Block}" Margin="15,15,15,15">
+            <StackPanel Style="{StaticResource Block}">
                 <Label Content="NASTAVENÍ ZÁLOHOVÁNÍ" Style="{StaticResource Header}" />
                 <!--<local:LabelTextBox LabelText="LOKÁLNÍ ÚLOŽIŠTĚ: "
                                 Text="{Binding Path=LocalBackupDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
@@ -57,6 +57,13 @@
                 <!--<local:LabelTextBox LabelText="SLOŽKA NA SERVERU: "
                                     Text="{Binding Path=RemoteBackupDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" /> -->
                 <CheckBox Margin="10" Content="POUŽÍVAT SHADOW COPY PRO ZÁLOHOVÁNÍ SOUBORŮ" IsChecked="{Binding UseShadowCopy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource Block}" Margin="15,15,15,15">
+                <Label Content="SLUŽBA" Style="{StaticResource Header}" />
+
+                <Button Width="100" Height="40" HorizontalAlignment="Center" Content="PROČISTIT ZÁLOHY"
+                        Click="click_cleanup_backups" />
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

@@ -33,7 +33,7 @@ namespace SmartModulBackupClasses
                 }
                 catch (Exception ex)
                 {
-                    SMB_Log.Log(ex);
+                    SMB_Log.LogEx(ex);
                     SMB_Log.Error($"SftpUploaderFactory: failed to get SftpUploader from web plan, returning null...");
                     return null;
                 }
@@ -48,7 +48,7 @@ namespace SmartModulBackupClasses
                 }
                 catch (Exception ex)
                 {
-                    SMB_Log.Log(ex);
+                    SMB_Log.LogEx(ex);
                     SMB_Log.Error($"SftpUploaderFactory: failed to get SftpUploader from config, returning null...");
                     return null;
                 }

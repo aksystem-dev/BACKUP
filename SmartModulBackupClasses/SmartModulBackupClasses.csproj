@@ -66,6 +66,7 @@
     <Compile Include="Config\WebConfig.cs" />
     <Compile Include="Const.cs" />
     <Compile Include="Error.cs" />
+    <Compile Include="FileUtils.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="Managers\BackupInfoManager.cs" />
     <Compile Include="Managers\BackupRuleLoader.cs" />
@@ -75,8 +76,6 @@
     <Compile Include="Password.cs" />
     <Compile Include="Sync\BackupInProgress.cs" />
     <Compile Include="BackupRule.cs" />
-    <Compile Include="BackupRuleCollection.cs" />
-    <Compile Include="BackupRuleExecutionInfo.cs" />
     <Compile Include="BackupSource.cs" />
     <Compile Include="BackupSourceCollection.cs" />
     <Compile Include="BackupSourceType.cs" />
@@ -102,6 +101,7 @@
     <Compile Include="WebApi\BaseRequest.cs" />
     <Compile Include="WebApi\ConfirmRulesRequest.cs" />
     <Compile Include="WebApi\DeactivateRequest.cs" />
+    <Compile Include="WebApi\DeleteBackupRequest.cs" />
     <Compile Include="WebApi\HelloResponse.cs" />
     <Compile Include="WebApi\PlanXml.cs" />
     <Compile Include="WebApi\RequestRecord.cs" />

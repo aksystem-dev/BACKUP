@@ -111,7 +111,7 @@ namespace SmartModulBackupClasses.Managers
             }
             catch (Exception ex) //pokud dojde k chybě při komunikaci s webem, prostě vezmeme jen lokální pravidla
             {
-                SMB_Log.Log(ex);
+                SMB_Log.Log("Došlo k chybě při komunikaci s api, beru pouze lokálně uložená pravidla.");
                 ruleList.Clear();
                 ruleList.AddRange(rulesLocal);
             }

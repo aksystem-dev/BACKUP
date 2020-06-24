@@ -39,21 +39,52 @@ namespace smart_modul_BACKUP_service
                 throw new InvalidOperationException("BackupTimeline neběží, nelze jí tedy zastavit, z logiky věci přece.");
         }
 
-        private IEnumerable<BackupTask> _tasks;
+        public void RescheduleRule(BackupRule rule)
+        {
+            if (Running)
+            {
+                _tokenSource.Cancel();
+                _loopThread?.Join();
+            }
+
+            try
+            {
+                _tasks.RemoveAll(bkt => bkt.Rule.LocalID == rule.LocalID);
+                _tasks.AddRange(rule.GetBackupTasksInTimeSpan(DateTime.Now, End));
+                _tasks = _tasks.OrderBy(bkt => bkt.ScheduledStart).ToList();
+            }
+            catch (Exception ex)
+            {
+                SMB_Log.LogEx(ex);
+            }
+
+            if (Running)
+            {
+                _tokenSource = new CancellationTokenSource();
+                _loopThread = new Thread(Loop);
+                _loopThread.Start();
+            }
+        }
+
+        private List<BackupTask> _tasks;
+
+        public DateTime End { get; private set; }
 
         /// <summary>
         /// Spustí Timeline s danými BackupTasky
         /// </summary>
         /// <param name="tasks"></param>
-        public void Start(IEnumerable<BackupTask> tasks)
+        public void Start(IEnumerable<BackupTask> tasks, DateTime end)
         {
             //lze startovat pouze pokud to již neběží
             if (!Running)
             {
+                End = end;
+
                 Logger.Log("Spuštěno BackupTimeline");
 
                 //nastavit _tasks, ale musíme dát pozor, aby to šlo chronologicky
-                _tasks = tasks.OrderBy(f => f.ScheduledStart);
+                _tasks = tasks.OrderBy(f => f.ScheduledStart).ToList();
 
                 Logger.Log($"Naplánované úlohy v časech: {String.Join(", ", (_tasks as IEnumerable<BackupTask>).Select(f => f.ScheduledStart))}");
 

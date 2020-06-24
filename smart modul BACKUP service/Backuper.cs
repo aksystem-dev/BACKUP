@@ -80,7 +80,7 @@ namespace smart_modul_BACKUP_service
 
                     try
                     {
-                        Sftp.Delete(current.RemotePath);
+                        Sftp.DeleteFile(current.RemotePath);
                         Logger.Log($"Odstraněna remote záloha pravidla {current.RefRuleName} umístěná na adrese {current.RemotePath}");
                     }
                     catch (Exception e)
@@ -100,52 +100,6 @@ namespace smart_modul_BACKUP_service
         }
 
         private delegate bool ExistsChecker(string path);
-
-        private string _backupSourceZip(BackupSource source, SqlBackuper sqlBackuper, Dictionary<string, VssBackuper> shadowCopies, string dir, string filename)
-        {
-            //toto bude cesta k dočasnému uložení zdroje.
-            string temp_source_path = Path.Combine(dir, filename);
-
-            if (source.type == BackupSourceType.Database)
-            {
-                //zde porychtujeme databáze
-
-                //pokud nemáme instanci SqlBackuperu (např. se připojení nezdařilo), kašlem na to
-                if (sqlBackuper == null)
-                    return null;
-
-                //vytvořit složku pro zip
-                Directory.CreateDirectory(temp_source_path);
-
-                //zálohovat databázi
-                _backupDatabase(sqlBackuper, source.path, Path.Combine(temp_source_path, filename + ".bak"));
-
-                //vytvořit zip soubor
-                string zip_path = temp_source_path + ".zip";
-                ZipFile.CreateFromDirectory(temp_source_path, zip_path);
-
-                //odstranit původní složku, ponechat pouze zip
-                Directory.Delete(temp_source_path, true);
-
-                return zip_path;
-            }
-            else if (source.type == BackupSourceType.Directory)
-            {
-                //zde porychtujeme složky
-
-                string root = Path.GetPathRoot(source.path);
-                string zip_path = temp_source_path + ".zip";
-
-               //vytvořit zip archiv
-                ZipFile.CreateFromDirectory(
-                    //pokud máme pro tento volume Shadow Copy, budeme zipovat Shadow Copy; jinak normálně ten soubor
-                    shadowCopies.ContainsKey(root) ? shadowCopies[root].GetShadowPath(source.path) : source.path,
-                    zip_path);
-                return zip_path;
-            }
-            else
-                throw new ArgumentException($"Neznám typ zdroje {source.type}.");
-        }
 
         /// <summary>
         /// Postará se o zálohu databáze na dané místo.
@@ -187,9 +141,10 @@ namespace smart_modul_BACKUP_service
                 Success = true,
                 StartDateTime = DateTime.Now,
                 ComputerId = SMB_Utils.GetComputerId(),
-                Saved = false
+                Saved = false,
+                IsZip = rule.Zip
             };
-            backups.AddQuietly(B);
+            SMB_Utils.Sync(() => backups.AddQuietlyAsync(B));
 
             //ujistit se, že TempDir existuje
             Directory.CreateDirectory(TempDir);
@@ -303,8 +258,8 @@ namespace smart_modul_BACKUP_service
 
             #endregion
 
-            string dir_to_zip = Path.Combine(temp_instance_dir, "dir");
-            Directory.CreateDirectory(dir_to_zip);
+            string bk_dir = Path.Combine(temp_instance_dir, "dir");
+            Directory.CreateDirectory(bk_dir);
 
             var all_sources = rule.Sources.All.Where(f => f.enabled);
 
@@ -329,7 +284,7 @@ namespace smart_modul_BACKUP_service
                 try
                 {
                     //tato metoda se pokusí provést zálohu databáze, složky nebo souboru, a vrátí případné chyby
-                    temp_fpath = _backupSource(source, SqlBackuper, shadowCopies, dir_to_zip, out error, out error_detail, out src_success);
+                    temp_fpath = _backupSource(source, SqlBackuper, shadowCopies, bk_dir, out error, out error_detail, out src_success);
                 }
                 catch (Exception e)
                 {
@@ -362,37 +317,54 @@ namespace smart_modul_BACKUP_service
                 ind++;
             }
 
-            #region ZIP FOLDER
+            string temp_zip_path = null;
 
-            //kam uložíme dočasný zip
-            string temp_zip_path = Path.Combine(temp_instance_dir, "temp.zip");
-
-            progress.Update("ZIPUJI ZÁLOHU", 0.6f);
-            Logger.Log("Zipuji zálohu");
-
-            try
+            if (rule.Zip)
             {
-                ZipFile.CreateFromDirectory(dir_to_zip, temp_zip_path);
-                B.Size = new FileInfo(temp_zip_path).Length;
+                #region ZIP FOLDER
+
+                //kam uložíme dočasný zip
+                temp_zip_path = Path.Combine(temp_instance_dir, "temp.zip");
+
+                progress.Update("ZIPUJI ZÁLOHU", 0.6f);
+                Logger.Log("Zipuji zálohu");
+
+                try
+                {
+                    ZipFile.CreateFromDirectory(bk_dir, temp_zip_path);
+                    B.Size = new FileInfo(temp_zip_path).Length;
+                }
+                catch (Exception e)
+                {
+                    string errmsg = $"Nepodařilo se zazipovati zálohu pravidla {rule.Name}\n\n{e.GetType().Name}\n\n{e.Message}";
+                    Logger.Ex(e);
+
+                    B.Errors.Add(new BackupError(errmsg, BackupErrorType.IOError));
+
+                    B.Success = false;
+
+                    //pokud se zazipování nepodařilo, tak víme, že nemá cenu se soubor snažit někam kopírovat nebo uploadovat,
+                    //takže tyhle věci přeskočíme
+                    goto after_backups;
+                }
+
+                #endregion
             }
-            catch (Exception e)
-            {
-                string errmsg = $"Nepodařilo se zazipovati zálohu pravidla {rule.Name}\n\n{e.GetType().Name}\n\n{e.Message}";
-                Logger.Ex(e);
+            else
+                try
+                {
+                    //pokud jsme nezipovali, nastavíme velikost zálohy na velikost její složky
+                    B.Size = FileUtils.GetDirSize(bk_dir);
+                }
+                catch (Exception ex)
+                {
+                    SMB_Log.LogEx(ex);
+                    B.Size = 0;
+                }
 
-                B.Errors.Add(new BackupError(errmsg, BackupErrorType.IOError));
-
-                B.Success = false;
-
-                //pokud se zazipování nepodařilo, tak víme, že nemá cenu se soubor snažit někam kopírovat nebo uploadovat,
-                //takže tyhle věci přeskočíme
-                goto after_backups;
-            }
-
-            #endregion
-
-            //název zip souboru zálohy
-            string zip_fname = rule.Name + "_" + B.LocalID.ToString() + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".zip";
+            //název, pod kterým se záloha uloží
+            string bk_fname = rule.Name + "_" + B.LocalID.ToString() + "_" + DateTime.Now.ToString("dd-MM-yyyy");
+            if (rule.Zip) bk_fname += ".zip"; //jedná-li se o zip, plácnem na konec příponu
 
             #region UPLOAD TO SFTP
 
@@ -403,12 +375,16 @@ namespace smart_modul_BACKUP_service
                 //zde se už jedná o konkrétní zálohu.
 
                 //vytvořit cestu k cíli na sftp serveru
-                string remote_path = Path.Combine(SMB_Utils.GetRemoteBackupPath(), rule.Name, zip_fname);
+                string remote_path = Path.Combine(SMB_Utils.GetRemoteBackupPath(), rule.Name, bk_fname);
 
                 try
                 {
-                    //nahrát soubor na server
-                    Sftp.Upload(temp_zip_path, remote_path);
+                    //pokud máme zip, nahrát zip na server
+                    if (rule.Zip)
+                        Sftp.UploadFile(temp_zip_path, remote_path);
+                    //jináč na server nahrát celou složku se zálohou
+                    else
+                        Sftp.UploadDirectory(bk_dir, remote_path, FolderUploadBehavior.ReplaceWhole);
 
                     B.AvailableRemotely = true;
                     B.RemotePath = remote_path;
@@ -436,23 +412,27 @@ namespace smart_modul_BACKUP_service
 
                 //budeme vytvářet lokální zálohy a ty zálohy budou lokální, tedy uložené lokálně, aby bylo jasno.
 
-                string zip_folder = Path.Combine(cfg.LocalBackupDirectory, rule.Name);
-                Directory.CreateDirectory(zip_folder);
+                string rule_folder = Path.Combine(cfg.LocalBackupDirectory, rule.Name);
+                Directory.CreateDirectory(rule_folder);
 
                 //zjistit id zálohy a cestu, kam chceme zálohu uložit
-                string zip_path = Path.Combine(zip_folder, zip_fname);
+                string this_bk_path = Path.Combine(rule_folder, bk_fname);
 
                 try
                 {
-                    //přesunout dočasný zip na místo, kde to již nebude dočasné
-                    File.Move(temp_zip_path, zip_path);
+                    //pokud máme zip, přesunout dočasný zip na místo, kde to již nebude dočasné
+                    if (rule.Zip)
+                        File.Move(temp_zip_path, this_bk_path);
+                    //jinak nam přesunout samotnou složku se zálohou
+                    else
+                        Directory.Move(bk_dir, this_bk_path);
 
                     B.AvailableLocally = true;
-                    B.LocalPath = zip_path;
+                    B.LocalPath = this_bk_path;
                 }
                 catch (Exception e)
                 {
-                    string errmsg = $"Chyba při zálohování dle pravidla {rule.Name}: asi se nepodařilo zkopírovat {temp_zip_path} do {zip_path}\n\n{e.GetType().Name}\n\n{e.Message}";
+                    string errmsg = $"Chyba při zálohování dle pravidla {rule.Name}: asi se nepodařilo zkopírovat {temp_zip_path} do {this_bk_path}\n\n{e.GetType().Name}\n\n{e.Message}";
                     Logger.Ex(e);
 
                     B.Errors.Add(new BackupError(errmsg, BackupErrorType.IOError));
@@ -476,7 +456,7 @@ namespace smart_modul_BACKUP_service
             {
                 //Utils.SavedBackups.RemoveInfos(f => !f.AvailableLocally && !f.AvailableRemotely);
                 B.Saved = true;
-                backups.Add(B);
+                SMB_Utils.Sync(() => backups.AddAsync(B));
                 Logger.Log("Info o záloze uloženo");
             }
             catch (Exception e)
@@ -491,19 +471,21 @@ namespace smart_modul_BACKUP_service
 
             #region REMOVE OLD BACKUPS
 
-            //pokud cleanupafterwards == true, musíme odstranit staré zálohy
-            if (cleanupAfterwards)
-                try
-                {
-                    progress.Update("ODSTRAŇUJI STARÉ ZÁLOHY", 0.84f);
-                    BackupCleanUpByRule(Sftp, rule, B.Errors, false);
-                }
-                catch (Exception e)
-                {
-                    string msg = $"Problém s odstraňováním starých záloh ({rule.Name})\n\n{e.Message}";
-                    Logger.Ex(e);
-                    B.Errors.Add(new BackupError(msg, BackupErrorType.DefaultError));
-                }
+            ////pokud cleanupafterwards == true, musíme odstranit staré zálohy
+            //if (cleanupAfterwards)
+            //    try
+            //    {
+            //        Logger.Log("Odstraňuji staré zálohy");
+            //        progress.Update("ODSTRAŇUJI STARÉ ZÁLOHY", 0.84f);
+            //        //BackupCleanUpByRule(Sftp, rule, B.Errors, false);
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        string msg = $"Problém s odstraňováním starých záloh ({rule.Name})\n\n{e.Message}";
+            //        Logger.Error(msg);
+            //        Logger.Ex(e);
+            //        B.Errors.Add(new BackupError(msg, BackupErrorType.DefaultError));
+            //    }
 
             #endregion
 
@@ -590,7 +572,7 @@ namespace smart_modul_BACKUP_service
 
             //informovat gui o záloze
             Utils.GUIS.CompleteBackup(progress, B.LocalID);
-
+            
             #endregion
 
             return B;
@@ -627,6 +609,7 @@ namespace smart_modul_BACKUP_service
 
                 //zálohovat databázi
                 _backupDatabase(sqlBackuper, source.path, bak_path);
+                File.SetAttributes(bak_path, FileAttributes.Normal);
 
                 error = null;
                 error_detail = null;

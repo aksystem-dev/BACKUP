@@ -48,5 +48,8 @@ namespace smart_modul_BACKUP_service.WCF
         
         [OperationContract]
         void SetRule(string ruleXml);
+
+        [OperationContract]
+        void CleanupBackups();
     }
 }

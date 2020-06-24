@@ -61,12 +61,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackupCleaner%29.cs" />
     <Compile Include="BackupInspector.cs" />
     <Compile Include="BackupTask.cs" />
     <Compile Include="BackupTimeline.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="FileUtils.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="GuiProgressBar.cs" />
     <Compile Include="Logger.cs" />

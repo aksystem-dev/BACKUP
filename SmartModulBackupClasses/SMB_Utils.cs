@@ -60,6 +60,11 @@ namespace SmartModulBackupClasses
         public static string GetRemotBackupsPath()
             => Path.Combine(GetRemoteBackupPath(), "Backups");
 
+        /// <summary>
+        /// Vrátí název souboru
+        /// </summary>
+        /// <param name="bk"></param>
+        /// <returns></returns>
         public static string BkInfoNameStr(this Backup bk)
             => bk.RefRuleName + "_" + bk.EndDateTime.ToString("dd-MM-yyyy") + "_" + bk.LocalID + ".xml";
 

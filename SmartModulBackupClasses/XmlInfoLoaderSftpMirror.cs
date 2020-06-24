@@ -80,7 +80,7 @@ namespace SmartModulBackupClasses
 
             try
             {
-                sftp.Upload(LocalPath, RemotePath);
+                sftp.UploadFile(LocalPath, RemotePath);
             }
             catch (Exception e)
             {

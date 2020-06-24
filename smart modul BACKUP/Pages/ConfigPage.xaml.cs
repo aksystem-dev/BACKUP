@@ -45,8 +45,11 @@ namespace smart_modul_BACKUP
 
         public void UpdateConfig()
         {
-            cfg_man.Config.SFTP.Password.Value = PasswordSFTP.GetPassword();
-            cfg_man.Config.Connection.Password.Value = PasswordSQL.GetPassword();
+            if (IsLoaded)
+            {
+                cfg_man.Config.SFTP.Password.Value = PasswordSFTP.GetPassword();
+                cfg_man.Config.Connection.Password.Value = PasswordSQL.GetPassword();
+            }
         }
 
         private async void TestSQL(object sender, RoutedEventArgs e)
@@ -105,6 +108,15 @@ namespace smart_modul_BACKUP
             //UpdateConfig();
             //if (cfg_man.Config.UnsavedChanges)
             //    cfg_man.Save();
+        }
+
+        private void click_cleanup_backups(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Manager.Get<ServiceState>().Client.CleanupBackupsAsync();
+            }
+            catch { }
         }
     }
 }

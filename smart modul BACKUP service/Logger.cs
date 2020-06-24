@@ -30,7 +30,7 @@ namespace smart_modul_BACKUP_service
 
         public static void Ex(Exception ex)
         {
-            SMB_Log.Log(ex);
+            SMB_Log.LogEx(ex);
 
             //StringBuilder exStr = new StringBuilder();
             //exStr.AppendLine($"Došlo k výjimce typu {ex.GetType().Name};");

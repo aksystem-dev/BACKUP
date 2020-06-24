@@ -35,6 +35,11 @@ namespace SmartModulBackupClasses
         public BackupConfig LocalBackups { get; set; } = new BackupConfig();
         public BackupConfig RemoteBackups { get; set; } = new BackupConfig();
 
+        /// <summary>
+        /// Zdali se zálohy mají zipovat
+        /// </summary>
+        public bool Zip { get; set; } = true;
+
         [XmlAttribute]
         public bool Enabled { get; set; } = true;
 

@@ -138,6 +138,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="CleanupBackups">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CleanupBackupsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="ShowError">
     <xs:complexType>
       <xs:sequence>

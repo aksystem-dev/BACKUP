@@ -86,11 +86,11 @@ namespace SmartModulBackupClasses.Managers
             try
             {
                 var hp = await _api.HelloAsync(); //stáhnout z api info o aktuálním plánu
-                SetPlanAsync(hp.ActivePlan);
+                await SetPlanAsync(hp.ActivePlan);
             }
             catch (Exception ex)
             {
-                SMB_Log.Log(ex);
+                SMB_Log.LogEx(ex);
                 SMB_Log.Log("PlanManager: downloading info about plan failed...");
                 Plan = null;
                 Sftp = null;

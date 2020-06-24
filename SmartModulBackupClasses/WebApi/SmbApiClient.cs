@@ -426,6 +426,42 @@ namespace SmartModulBackupClasses.WebApi
         public void AddBackup(Backup backup, int plan_id)
             => SMB_Utils.Sync(() => AddBackupAsync(backup, plan_id));
 
+        public async Task UpdateBackupAsync(Backup backup, int plan_id)
+        {
+            var request = new UploadBackupRequest()
+            {
+                Backup = backup,
+                PC_ID = pc_id,
+                PlanID = plan_id
+            };
+
+            var response = await PostAsync("/api/Backups/Update", request);
+
+            if (!response.Success)
+                throw new SmbApiException(response.Error, response.ErrorMessage);
+        }
+
+        public void UpdateBackup(Backup backup, int plan_id)
+            => SMB_Utils.Sync(() => UpdateBackupAsync(backup, plan_id));
+
+        public async Task DeleteBackupAsync(int backupLocalId, int plan_id)
+        {
+            var request = new DeleteBackupRequest()
+            {
+                localBackupId = backupLocalId,
+                PC_ID = pc_id,
+                PlanID = plan_id
+            };
+
+            var response = await PostAsync("/api/Backups/Delete", request);
+
+            if (!response.Success)
+                throw new SmbApiException(response.Error, response.ErrorMessage);
+        }
+
+        public void DeleteBackup(int backupLocalId, int plan_id)
+            => SMB_Utils.Sync(() => DeleteBackupAsync(backupLocalId, plan_id));
+
         /// <summary>
         /// Vrátí všechny zálohy daného plánu.
         /// </summary>

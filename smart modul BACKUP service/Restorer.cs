@@ -1,5 +1,6 @@
 ﻿using Renci.SshNet.Common;
 using SmartModulBackupClasses;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -296,14 +297,20 @@ namespace smart_modul_BACKUP_service
                 try
                 {
                     Logger.Log($"Stahuju zálohu přes SFTP {r.zip_path} do souboru {zip_path}");
-                    using (var writer = File.OpenWrite(zip_path))
-                        sftp.client.DownloadFile(r.zip_path.FixPathForSFTP(), writer);
+                    //using (var writer = File.OpenWrite(zip_path))
+                    //    sftp.client.DownloadFile(r.zip_path.FixPathForSFTP(), writer);
+
+                    var bk = Manager.Get<BackupInfoManager>().LocalBackups.FirstOrDefault(b => b.LocalID == r.backupID);
+                    if (bk.IsZip)
+                        sftp.DownloadFile(r.zip_path, zip_path);
+                    else
+                        sftp.DownloadFolder(r.zip_path, zip_path, FolderUploadBehavior.AddOverwrite);
                 }
                 catch (SftpPathNotFoundException e)
                 {
                     string msg = $"Soubor {r.zip_path.FixPathForSFTP()} nebyl nalezen na serveru";
                     Logger.Ex(e);
-
+
                     response?.errors.Add(new Error(msg));
                     throw e;
                 }

@@ -333,6 +333,9 @@
 
             <Label Style="{StaticResource Header}" Content="NASTAVENÍ ZÁLOH" />
 
+            <CheckBox HorizontalAlignment="Center" Margin="10" Content="ZIPOVAT ZÁLOHY"
+                      IsChecked="{Binding Path=Zip, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
             <Grid Margin="0,0,0,15">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

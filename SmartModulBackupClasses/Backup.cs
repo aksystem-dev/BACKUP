@@ -80,6 +80,27 @@ namespace SmartModulBackupClasses
             }
         }
 
+        public bool DoesLocalFileExist()
+        {
+            if (IsZip)
+                return File.Exists(LocalPath);
+            else
+                return Directory.Exists(LocalPath);
+        }
+
+        public bool DoesRemoteFileExist(SftpClient client)
+        {
+            if (!client.Exists(RemotePath))
+                return false;
+
+            var file = client.Get(RemotePath);
+
+            if (IsZip)
+                return file.IsRegularFile;
+            else
+                return file.IsDirectory;
+        }
+
         /// <summary>
         /// Jestli je záloha dostupná na tomto počítači (to znamená, že jsme na počítači, na kterém byla záloha vytvořena)
         /// </summary>
@@ -164,35 +185,9 @@ namespace SmartModulBackupClasses
         public DateTime EndDateTime { get; set; }
 
         /// <summary>
-        /// Pokud tato záloha tvrdí, že je dostupná lokálně, tato metoda zkontroluje, jestli tomu tak skutečně je (ověří, 
-        /// zdali existuje lokální soubor zálohy). Podle toho poté nastaví AvailableLocally a stejnou hodnotu vrátí.
+        /// Zdalipak je záloha uložena jako zip (true) nebo jako normální složka (false);
         /// </summary>
-        /// <returns></returns>
-        public bool CheckLocalAvailibility()
-        {
-            if (!AvailableOnThisComputer)
-                return false;
-
-            AvailableLocally = File.Exists(LocalPath);
-            return AvailableLocally;
-        }
-
-        public bool CheckRemoteAvailability(SftpClient client)
-        {
-            if (!AvailableRemotely)
-                return false;
-
-            var close = !client.IsConnected;
-            if (close)
-                client.Connect();
-
-            AvailableRemotely = client.Exists(RemotePath.FixPathForSFTP());
-
-            if (close)
-                client.Disconnect();
-            return AvailableRemotely;
-
-        }
+        public bool IsZip { get; set; } = true;
 
         public string ToXml()
         {

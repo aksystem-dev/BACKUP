@@ -109,6 +109,12 @@
   <wsdl:message name="ISmartModulBackupInterface_SetRule_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetRuleResponse" />
   </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_CleanupBackups_InputMessage">
+    <wsdl:part name="parameters" element="tns:CleanupBackups" />
+  </wsdl:message>
+  <wsdl:message name="ISmartModulBackupInterface_CleanupBackups_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CleanupBackupsResponse" />
+  </wsdl:message>
   <wsdl:message name="ISmartModulBackupInterface_ShowError_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ShowError" />
   </wsdl:message>
@@ -217,6 +223,10 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SetRule">
       <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/SetRule" message="tns:ISmartModulBackupInterface_SetRule_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/SetRuleResponse" message="tns:ISmartModulBackupInterface_SetRule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CleanupBackups">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/CleanupBackups" message="tns:ISmartModulBackupInterface_CleanupBackups_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/CleanupBackupsResponse" message="tns:ISmartModulBackupInterface_CleanupBackups_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ShowError">
       <wsdl:output wsaw:Action="http://tempuri.org/ISmartModulBackupInterface/ShowError" message="tns:ISmartModulBackupInterface_ShowError_OutputCallbackMessage" />
@@ -363,6 +373,15 @@
     </wsdl:operation>
     <wsdl:operation name="SetRule">
       <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/SetRule" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CleanupBackups">
+      <soap12:operation soapAction="http://tempuri.org/ISmartModulBackupInterface/CleanupBackups" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

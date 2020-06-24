@@ -113,6 +113,10 @@ namespace SmartModulBackupClasses.WebApi
         /// <summary>
         /// Plán není povolen
         /// </summary>
-        PlanNotEnabled
+        PlanNotEnabled,
+
+        AlreadyExists,
+
+        NotFound
     }
 }

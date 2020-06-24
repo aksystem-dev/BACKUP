@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Security.AccessControl;
+using SmartModulBackupClasses;
 
 namespace smart_modul_BACKUP_service
 {
@@ -22,6 +23,7 @@ namespace smart_modul_BACKUP_service
 
             if (!Directory.Exists(destination))
                 Directory.CreateDirectory(destination);
+            Directory.GetAccessControl(destination, AccessControlSections.All);
 
             foreach (string p in Directory.GetFiles(path))
             {
@@ -29,6 +31,7 @@ namespace smart_modul_BACKUP_service
                 try
                 {
                     File.Copy(p, target, true);
+                    File.SetAttributes(target, FileAttributes.Normal);
                     //File.SetLastWriteTime(target, DateTime.Now);
                 }
                 catch (Exception ex)
@@ -84,7 +87,7 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     if (log)
-                        Logger.Ex(e);
+                        SMB_Log.LogEx(e);
 
 
                     if (exception_behavior == ItemExceptionBehavior.StopOnException)
@@ -109,7 +112,7 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     if (log)
-                        Logger.Ex(e);
+                        SMB_Log.LogEx(e);
                     if (exception_behavior == ItemExceptionBehavior.StopOnException)
                         return false;
                     else if (exception_behavior == ItemExceptionBehavior.ThrowException)
@@ -130,7 +133,7 @@ namespace smart_modul_BACKUP_service
             catch (Exception e)
             {
                 if (log)
-                    Logger.Ex(e);
+                    SMB_Log.LogEx(e);
 
 
                 if (exception_behavior == ItemExceptionBehavior.StopOnException)
@@ -144,6 +147,19 @@ namespace smart_modul_BACKUP_service
             }
 
             return success;
+        }
+
+        public static long GetDirSize(string path)
+        {
+            long total = 0;
+            foreach(var subpath in Directory.GetFileSystemEntries(path))
+            {
+                if (File.Exists(subpath))
+                    total += new FileInfo(subpath).Length;
+                else
+                    total += GetDirSize(subpath);
+            }
+            return total;
         }
     }
 

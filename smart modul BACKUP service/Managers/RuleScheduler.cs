@@ -10,13 +10,13 @@ namespace smart_modul_BACKUP_service.Managers
 {
     public class RuleScheduler
     {
-        public void ScheduleRules(TimeSpan forHowLong)
-        {
-            var timeline = Manager.Get<BackupTimeline>();
+        //public void ScheduleRules(TimeSpan forHowLong)
+        //{
+        //    var timeline = Manager.Get<BackupTimeline>();
 
-            if (timeline.Running) timeline.Stop();
-            timeline.Start(GetBackupTaskList(forHowLong));
-        }
+        //    if (timeline.Running) timeline.Stop();
+        //    timeline.Start(GetBackupTaskList(forHowLong));
+        //}
 
 
         /// <summary>

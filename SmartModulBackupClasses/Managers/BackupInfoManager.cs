@@ -6,13 +6,23 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses.Managers
 {
+    /// <summary>
+    /// Spravuje informace o proběhnutých zálohách
+    /// </summary>
     public class BackupInfoManager : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Při dělání operací na tomto objektu se používá semafor. Toto číslo udává v milisekundách, jak dlouho
+        /// budeme maximálně na semaforu čekat než šlápnem na plyn a prosvištíme na červenou.
+        /// </summary>
+        public int Patience { get; set; }
 
         private List<Backup> backups = new List<Backup>();
         public Backup[] Backups
@@ -52,19 +62,23 @@ namespace SmartModulBackupClasses.Managers
             });
         }
 
-        private Task _loadAsyncTask;
+        /// <summary>
+        /// Aby bylo všechno bezpečné, měla by vždy probíhat jen jedna operace najednou
+        /// </summary>
+        private Semaphore semaphore = new Semaphore(1, 1, "SMB_BackupInfoManager_Semaphore");
 
-        public Task LoadAsync(bool sync = true)
+        public async Task LoadAsync(bool sync = true)
         {
-            //chceme aby _loadAsync neběželo víckrát najednou. Pokud už běží, vrátíme běžící task.
-            if (_loadAsyncTask != null)
-                return _loadAsyncTask;
-
-            //jinak to znamená, že momentálně neběží, tedy to můžem spustit
-            _loadAsyncTask = _loadAsync(sync);
-
-            //až to bude hotovo, chceme _loadAsyncTask opět nastavit na null
-            return _loadAsyncTask.ContinueWith(_ => _loadAsyncTask = null);
+            bool entered = semaphore.WaitOne(Patience);
+            try
+            {
+                await _loadAsync(sync);
+            }
+            finally
+            {
+                if (entered)
+                    semaphore.Release();
+            }
         }
 
         /// <summary>
@@ -82,9 +96,11 @@ namespace SmartModulBackupClasses.Managers
 
             List<Task> listTasks = new List<Task>();
 
+            //používáme-li api, stáhnem z něj informace o zálohách
             if (UseApi)
                 listTasks.Add(Task.Run(async () => apiResults = await listBksApi()));
 
+            //také je možné, že jsou informace uložené na sftp;
             SftpUploader sftp = UseSftp ? Manager.Get<SftpUploader>() : null;
             if (sftp != null)
             {
@@ -95,80 +111,166 @@ namespace SmartModulBackupClasses.Managers
                 }));
             }
 
+            //a konečně jsou také uložené lokálně
             listTasks.Add(Task.Run(async () => localResults = await listBksLocal()));
 
+            //posečkáme, až všechny tři úlohy sklidí ovoce své píle
             await Task.WhenAll(listTasks);
 
+            //?
             var pc_id = SMB_Utils.GetComputerId();
+
+            //teď přidáme do seznamu všechny získané informace. Budeme je přidávat postupně tak, aby nikdy nebylo
+            //více záloh se stejným LocalID ze stejného počátače. Nejprve přidáme zálohy z api. Api vrací zálohy
+            //nejen z volajícího počítače, ale ze všech počítačů napojených na jeho plán. Potom do toho zamícháme
+            //i informace z lokálních souborů a souborů na sftp; ty jsou zaručeně jen z tohoto počítače.
 
             backups.AddRange(apiResults);
 
+            //funkce, kterou se budou filtrovat přidané zálohy. 
             Func<Backup, bool> canAdd = new Func<Backup, bool>(bk =>
             {
-                if (!bk.MadeOnThisComputer)
+                //pokud nebyla vytvořena na tomto počítači, kašlem na to, prostě ji přidáme
+                if (!bk.MadeOnThisComputer) 
                     return true;
+
+                //pokud byla vytvořena na tomto počítači, přidáme ji pouze, pokud jsme už nepřidali nějakou se stejným localID
                 return !backups.Any(exbk => exbk.LocalID == bk.LocalID);
             });
 
             backups.AddRange(sftpResults.Where(canAdd)); 
             backups.AddRange(localResults.Where(canAdd));
 
-            foreach (var bk in backups.Where(f => f.AvailableOnThisComputer))
-                bk.CheckLocalAvailibility();
-
             List<Task> sftpTasks = new List<Task>();
+            List<Task> apiTasks = new List<Task>();
+            List<Task> localTasks = new List<Task>();
+
             if (sync)
-            {
-                //synchronizace - projdeme všechny zálohy a ujistíme se, aby všechny byly nahrané na všech třech stranách
-                foreach(var bk in backups.Where(f=>f.AvailableOnThisComputer))
+            { 
+                //máme tři zdroje informací o zálohách - api, sftp a lokální soubory. Chceme, aby na všech zdrojích
+                //byly všechny zálohy. o to se postaráme zde
+                foreach (var bk in LocalBackups) 
                 {
                     if (!apiResults.Any(f => f.LocalID == bk.LocalID) && UseApi && client != null)
-                        _ = saveBkApi(bk);
+                        apiTasks.Add(saveBkApi(bk));
                     if (!sftpResults.Any(f => f.LocalID == bk.LocalID) && UseSftp && sftp != null)
                         sftpTasks.Add(saveBkSftp(bk, sftp));
                     if (!localResults.Any(f => f.LocalID == bk.LocalID))
-                        _ = saveBkLocally(bk);
+                        localTasks.Add(saveBkLocally(bk));
                 }
             }
 
             //až budou všechny sftp tasky hotové, chceme se od sftp odpojit
-            _ = Task.WhenAll(sftpTasks).ContinueWith(task => sftp?.Disconnect());
+            await Task.WhenAll(sftpTasks).ContinueWith(task => sftp?.Disconnect());
+            await Task.WhenAll(apiTasks);
+            await Task.WhenAll(localTasks);
 
+            //kváknem že se změnila data, aby na to mohlo reagovat třeba UI
             arrayChanged();
         }
-
-        public void Load(bool sync = true) => SMB_Utils.Sync(() => LoadAsync(sync));
 
         /// <summary>
         /// Přidá info o záloze: uloží ho lokálně, popř. na SFTP, popř. na WEB
         /// </summary>
         /// <param name="bk"></param>
-        public void Add(Backup bk)
+        public async Task AddAsync(Backup bk)
         {
-            if (!backups.Contains(bk))
+            bool entered = semaphore.WaitOne(Patience);
+            try
             {
-                bk.LocalID = ++ID;
-                backups.Add(bk);
-            }
+                if (!backups.Contains(bk))
+                {
+                    bk.LocalID = ++ID;
+                    backups.Add(bk);
+                }
 
-            if (UseApi && client != null)
-                _ = saveBkApi(bk);
-            if (UseSftp)
-                _ = saveBkSftp(bk);
-            saveBkLocally(bk).Wait();
-            arrayChanged();
+                List<Task> tasks = new List<Task>();
+                if (UseApi && client != null)
+                    tasks.Add(saveBkApi(bk));
+                if (UseSftp)
+                    tasks.Add(saveBkSftp(bk));
+                tasks.Add(saveBkLocally(bk));
+                await Task.WhenAll(tasks);
+                arrayChanged();
+            }
+            finally
+            {
+                if (entered)
+                    semaphore.Release();
+            }
         }
 
         /// <summary>
         /// Přidá zálohu a nastaví jí správné Id, ale zatím ji nikam neukládá - proto na ní zavolej Add potom, až bude hodná uložení
         /// </summary>
         /// <param name="bk"></param>
-        public void AddQuietly(Backup bk)
+        public Task AddQuietlyAsync(Backup bk)
         {
-            bk.LocalID = ++ID;
-            backups.Add(bk);
+            return Task.Run(() =>
+            {
+                bool entered = semaphore.WaitOne(Patience);
+                try
+                {
+                    bk.LocalID = ++ID;
+                    backups.Add(bk);
+                }
+                finally
+                {
+                    if (entered)
+                        semaphore.Release();
+                }
+            });
         }
 
+        /// <summary>
+        /// Odstraní info o záloze
+        /// </summary>
+        /// <param name="bk"></param>
+        public async Task DeleteAsync(Backup bk, SftpUploader sftp = null)
+        {
+            bool entered = semaphore.WaitOne(Patience);
+            try
+            {
+                backups.RemoveAll(b => b.LocalID == bk.LocalID);
+
+                var del_local = deleteBkLocally(bk);
+                var del_sftp = UseSftp ? deleteBkSftp(bk, sftp) : Task.CompletedTask;
+                var del_api = UseApi ? deleteBkApi(bk) : Task.CompletedTask;
+
+                await Task.WhenAll(del_local, del_sftp, del_api);
+            }
+            finally
+            {
+                if (entered)
+                    semaphore.Release();
+            }
+        }
+
+        /// <summary>
+        /// Updatuje info o záloze
+        /// </summary>
+        /// <param name="bk"></param>
+        public async Task UpdateAsync(Backup bk, SftpUploader sftp = null)
+        {
+            bool entered = semaphore.WaitOne(Patience);
+            try
+            {
+                var ind = backups.FindIndex(b => b.LocalID == bk.LocalID);
+                if (ind >= 0 && backups[ind] != bk)
+                    backups[ind] = bk;
+
+                var del_local = updateBkLocally(bk);
+                var del_sftp = UseSftp ? updateBkSftp(bk, sftp) : Task.CompletedTask;
+                var del_api = UseApi ? updateBkApi(bk) : Task.CompletedTask;
+
+                await Task.WhenAll(del_local, del_sftp, del_api);
+            }
+            finally
+            {
+                if (entered)
+                    semaphore.Release();
+            }
+        }
 
         private async Task<IEnumerable<Backup>> listBksApi()
         {
@@ -249,7 +351,7 @@ namespace SmartModulBackupClasses.Managers
             }
             catch (Exception ex)
             {
-                SMB_Log.Log(ex);
+                SMB_Log.LogEx(ex);
                 return false;
             }
         }
@@ -277,7 +379,7 @@ namespace SmartModulBackupClasses.Managers
                 }
                 catch (Exception ex)
                 {
-                    SMB_Log.Log(ex);
+                    SMB_Log.LogEx(ex);
                     return false;
                 }
                 finally
@@ -285,7 +387,9 @@ namespace SmartModulBackupClasses.Managers
                     if (disc)
                         try
                         {
-                            sftp.Disconnect();
+                            if (sftp.IsConnected)
+                                sftp.Disconnect();
+                            sftp.Dispose();
                         }
                         catch { }
                 }
@@ -305,8 +409,151 @@ namespace SmartModulBackupClasses.Managers
                 }
                 catch (Exception ex)
                 {
-                    SMB_Log.Log(ex);
+                    SMB_Log.LogEx(ex);
                     return false;
+                }
+            });
+        }
+
+        private Task<bool> deleteBkLocally(Backup bk)
+        {
+            return Task.Run(() =>
+            {
+                try
+                {
+                    File.Delete(Path.Combine(Const.BK_INFOS_FOLDER, bk.BkInfoNameStr()));
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
+        }
+
+        private async Task<bool> deleteBkApi(Backup bk)
+        {
+            if (plans.Plan == null) return false;
+
+            try
+            {
+                var planId = plans.Plan.ID;
+                await client.DeleteBackupAsync(bk.LocalID, planId);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private async Task<bool> deleteBkSftp(Backup bk, SftpUploader sftp = null)
+        {
+            bool disc = false; //jestli se na konci metody odpojit
+            if (sftp == null)
+            {
+                sftp = Manager.Get<SftpUploader>();
+                disc = true;
+                if ((await sftp.TryConnectAsync(2000)) != true)
+                    return false;
+            }
+
+            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.BkInfoNameStr());
+            return await Task.Run<bool>(() =>
+            {
+                try
+                {
+                    sftp.GetFile(fpath).Delete();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    SMB_Log.LogEx(ex);
+                    return false;
+                }
+                finally
+                {
+                    if (disc)
+                        try
+                        {
+                            if (sftp.IsConnected)
+                                sftp.Disconnect();
+                            sftp.Dispose();
+                        }
+                        catch { }
+                }
+            });
+        }
+
+        private async Task<bool> updateBkLocally(Backup bk)
+        {
+            var path = Path.Combine(Const.BK_INFOS_FOLDER, bk.BkInfoNameStr());
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    File.WriteAllText(path, bk.ToXml());
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
+        }
+
+        private async Task<bool> updateBkApi(Backup bk)
+        {
+            if (plans.Plan == null) return false;
+
+            try
+            {
+                var planId = plans.Plan.ID;
+                await client.UpdateBackupAsync(bk, planId);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private async Task<bool> updateBkSftp(Backup bk, SftpUploader sftp = null)
+        {
+            bool disc = false; //jestli se na konci metody odpojit
+            if (sftp == null)
+            {
+                sftp = Manager.Get<SftpUploader>();
+                disc = true;
+                if ((await sftp.TryConnectAsync(2000)) != true)
+                    return false;
+            }
+
+            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.BkInfoNameStr());
+            return await Task.Run<bool>(() =>
+            {
+                try
+                {
+                    var file = sftp.GetFile(fpath);
+                    if (file != null) sftp.DeleteFile(fpath);
+                    sftp.client.WriteAllText(fpath, bk.ToXml());
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    SMB_Log.LogEx(ex);
+                    return false;
+                }
+                finally
+                {
+                    if (disc)
+                        try
+                        {
+                            if (sftp.IsConnected)
+                                sftp.Disconnect();
+                            sftp.Dispose();
+                        }
+                        catch { }
                 }
             });
         }

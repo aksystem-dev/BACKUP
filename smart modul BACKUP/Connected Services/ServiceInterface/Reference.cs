@@ -86,6 +86,12 @@ namespace smart_modul_BACKUP.ServiceInterface {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/SetRule", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/SetRuleResponse")]
         System.Threading.Tasks.Task SetRuleAsync(string ruleXml);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/CleanupBackups", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/CleanupBackupsResponse")]
+        void CleanupBackups();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/CleanupBackups", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/CleanupBackupsResponse")]
+        System.Threading.Tasks.Task CleanupBackupsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -244,6 +250,14 @@ namespace smart_modul_BACKUP.ServiceInterface {
         
         public System.Threading.Tasks.Task SetRuleAsync(string ruleXml) {
             return base.Channel.SetRuleAsync(ruleXml);
+        }
+        
+        public void CleanupBackups() {
+            base.Channel.CleanupBackups();
+        }
+        
+        public System.Threading.Tasks.Task CleanupBackupsAsync() {
+            return base.Channel.CleanupBackupsAsync();
         }
     }
 }

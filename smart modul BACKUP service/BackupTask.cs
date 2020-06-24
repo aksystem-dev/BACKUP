@@ -60,8 +60,9 @@ namespace smart_modul_BACKUP_service
             {
                 State = BackupTaskState.Aborted;
             }
-            catch
+            catch (Exception ex)
             {
+                SMB_Log.LogEx(ex);
                 State = BackupTaskState.Failed;
             }
             finally

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace smart_modul_BACKUP_service.WCF
 {
+
     // POZNÁMKA: Pomocí příkazu Přejmenovat v nabídce Refaktorovat můžete změnit název třídy Service1 společně v kódu a konfiguračním souboru.
     /// <summary>
     /// WCF objekt pro komunikaci s uživatelským rozhraním (zde implementovány metody, které může GUI volat)
@@ -57,7 +58,7 @@ namespace smart_modul_BACKUP_service.WCF
         public void Reload()
         {
             Logger.Log("Přijat příkaz přes WCF: Reload()");
-            serviceRef.Reload();
+            serviceRef.Load();
         }
 
         public void Disconnect()
@@ -104,6 +105,7 @@ namespace smart_modul_BACKUP_service.WCF
         public BackupInProgress[] GetBackupsInProgress()
         {
             return Utils.InProgress.Backups;
+           
         }
 
         public RestoreInProgress[] GetRestoresInProgress()
@@ -133,8 +135,17 @@ namespace smart_modul_BACKUP_service.WCF
         {
             try
             {
-                Manager.Get<BackupRuleLoader>().SetRule(BackupRule.LoadFromXmlStr(ruleXml));
-                Manager.Get<RuleScheduler>().ScheduleRules(SmartModulBackupService._scheduleInterval);
+                var rule = Manager.Get<BackupRuleLoader>().SetRule(BackupRule.LoadFromXmlStr(ruleXml));
+                Manager.Get<BackupTimeline>().RescheduleRule(rule);
+            }
+            catch { }
+        }
+
+        public void CleanupBackups()
+        {
+            try
+            {
+                Manager.Get<BackupCleaner>().CleanupAllRulesAsync();
             }
             catch { }
         }

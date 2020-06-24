@@ -126,7 +126,12 @@ namespace smart_modul_BACKUP
         {
             configPage.UpdateConfig();
             Manager.Get<ConfigManager>().Save();
-            _ = Manager.Get<ServiceState>().Client.ReloadConfigAsync();
+
+            try
+            {
+                _ = Manager.Get<ServiceState>().Client.ReloadConfigAsync();
+            }
+            catch { }
         }
 
         private bool cancelClose = true;

@@ -11,10 +11,12 @@ namespace SmartModulBackupClasses
     {
         public static event Action<LogArgs> OnLog;
 
-        public static void Log(Exception ex, int level = 0, LogType type = LogType.Error)
+        public static void LogEx(Exception ex, string addedMsg = null, int level = 0, LogType type = LogType.Error)
         {
             StringBuilder exStr = new StringBuilder();
             exStr.AppendLine($"Došlo k výjimce typu {ex.GetType().Name};");
+            if (addedMsg != null)
+                exStr.AppendLine(addedMsg);
             var trace = new StackTrace(ex, true).GetFrames().First(f => !f.GetMethod().DeclaringType.Namespace.StartsWith("System"));
             var meth = trace.GetMethod();
             exStr.AppendLine($"Metoda: {meth.DeclaringType.FullName + "." + meth.Name + "()"}, číslo řádku: {trace.GetFileLineNumber()}");

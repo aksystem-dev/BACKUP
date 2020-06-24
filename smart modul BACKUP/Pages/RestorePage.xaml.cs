@@ -58,7 +58,7 @@ namespace smart_modul_BACKUP
             panel_dbsToRestore.Visibility = Databases.Any() ? Visibility.Visible : Visibility.Collapsed;
 
             //defaultně zaškrtnout možnost, kterou uživatel nejpravděpodobněji chce
-            Backup.CheckLocalAvailibility();
+            //Backup.CheckLocalAvailibility();
             if (Backup.AvailableOnThisComputer)
                 rbt_local.IsChecked = true;
             else if (Backup.AvailableRemotely)
