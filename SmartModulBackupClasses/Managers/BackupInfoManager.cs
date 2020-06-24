@@ -22,7 +22,7 @@ namespace SmartModulBackupClasses.Managers
         /// Při dělání operací na tomto objektu se používá semafor. Toto číslo udává v milisekundách, jak dlouho
         /// budeme maximálně na semaforu čekat než šlápnem na plyn a prosvištíme na červenou.
         /// </summary>
-        public int Patience { get; set; }
+        public int Patience { get; set; } = 2000;
 
         private List<Backup> backups = new List<Backup>();
         public Backup[] Backups

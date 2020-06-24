@@ -41224,3 +41224,445 @@ Výjimčí blekot: Already exists.
 #######################
 NullReferenceException
 Odkaz na objekt není nastaven na instanci objektu.
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k chybě při komunikaci s api, beru pouze lokálně uložená pravidla. 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: Renci.SshNet.Sftp.SftpSession.RequestOpen(), číslo řádku: 0
+Výjimčí blekot: Already exists.
+ 
+
+#######################
+NullReferenceException
+Odkaz na objekt není nastaven na instanci objektu.
