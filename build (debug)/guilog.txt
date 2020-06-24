@@ -41666,3 +41666,888 @@ Výjimčí blekot: Already exists.
 #######################
 NullReferenceException
 Odkaz na objekt není nastaven na instanci objektu.
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k chybě při komunikaci s api, beru pouze lokálně uložená pravidla. 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k chybě při komunikaci s api, beru pouze lokálně uložená pravidla. 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k chybě při komunikaci s api, beru pouze lokálně uložená pravidla. 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+NullReferenceException
+Odkaz na objekt není nastaven na instanci objektu.

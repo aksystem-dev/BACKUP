@@ -153,7 +153,7 @@ namespace SmartModulBackupClasses.Managers
                 {
                     if (!apiResults.Any(f => f.LocalID == bk.LocalID) && UseApi && client != null)
                         apiTasks.Add(saveBkApi(bk));
-                    if (!sftpResults.Any(f => f.LocalID == bk.LocalID) && UseSftp && sftp != null)
+                    if (!sftpResults.Any(f => f.LocalID == bk.LocalID) && UseSftp && sftp?.IsConnected == true)
                         sftpTasks.Add(saveBkSftp(bk, sftp));
                     if (!localResults.Any(f => f.LocalID == bk.LocalID))
                         localTasks.Add(saveBkLocally(bk));
@@ -192,6 +192,10 @@ namespace SmartModulBackupClasses.Managers
                 tasks.Add(saveBkLocally(bk));
                 await Task.WhenAll(tasks);
                 arrayChanged();
+            }
+            catch(Exception ex)
+            {
+                SMB_Log.LogEx(ex);
             }
             finally
             {
@@ -239,6 +243,10 @@ namespace SmartModulBackupClasses.Managers
 
                 await Task.WhenAll(del_local, del_sftp, del_api);
             }
+            catch (Exception ex)
+            {
+                SMB_Log.LogEx(ex);
+            }
             finally
             {
                 if (entered)
@@ -264,6 +272,10 @@ namespace SmartModulBackupClasses.Managers
                 var del_api = UseApi ? updateBkApi(bk) : Task.CompletedTask;
 
                 await Task.WhenAll(del_local, del_sftp, del_api);
+            }
+            catch (Exception ex)
+            {
+                SMB_Log.LogEx(ex);
             }
             finally
             {

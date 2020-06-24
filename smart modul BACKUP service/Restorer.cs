@@ -20,6 +20,8 @@ namespace smart_modul_BACKUP_service
 
         public RestoreResponse Restore(Restore restoreInfo, RestoreInProgress progress)
         {
+            var bk = Manager.Get<BackupInfoManager>().LocalBackups.FirstOrDefault(bak => bak.LocalID == restoreInfo.backupID);
+
             Logger.Log("Obnova započata");
             progress.Update("STARTUJI OBNOVU", 0);
             Utils.GUIS.StartRestore(progress);
@@ -33,7 +35,7 @@ namespace smart_modul_BACKUP_service
             string temp_instance_dir = Path.Combine(TempDir, "restore" + Directory.GetDirectories(TempDir).Length.ToString());
             Directory.CreateDirectory(temp_instance_dir);
 
-            string zip_path;
+            string src_path;
             SftpUploader sftp = null;
             try
             {
@@ -50,7 +52,7 @@ namespace smart_modul_BACKUP_service
                     {
                         string msg = $"Došlo k chybě při připojování k sftp ({e.GetType().Name})\n\n{e.Message}";
                         Logger.Ex(e);
-
+
                         R.errors.Add(new Error(msg));
                         R.Success = SuccessLevel.TotalFailure;
                         return R;
@@ -59,7 +61,7 @@ namespace smart_modul_BACKUP_service
                     progress.Update("STAHUJI ZÁLOHU", 0.2f);
                 }
 
-                zip_path = GetZip(restoreInfo, temp_instance_dir, sftp, R);
+                src_path = GetZip(restoreInfo, temp_instance_dir, sftp, R, bk); //může být buďto složka nebo zip
             }
             catch (Exception e)
             {
@@ -73,7 +75,6 @@ namespace smart_modul_BACKUP_service
                     catch (Exception ex)
                     {
                         Logger.Ex(e);
-
                     }
 
                 R.Success = SuccessLevel.TotalFailure;
@@ -82,26 +83,32 @@ namespace smart_modul_BACKUP_service
 
             #endregion
 
-            #region UNZIP
+            string src_dir; //bude vždy složka
 
-            string unzipped_dir = Path.Combine(temp_instance_dir, "unzipped");
-            try
+            if (bk.IsZip)
             {
-                progress.Update("EXTRAHUJI ZIP", 0.27f);
-                Logger.Log($"Obnova: extrahuju {zip_path} do {unzipped_dir}");
-                ZipFile.ExtractToDirectory(zip_path, unzipped_dir);
-            }
-            catch (Exception e)
-            {
-                string msg = $"Došlo k chybě při extrahování zip archivu z {zip_path} do {unzipped_dir} - {e.GetType().Name}: {e.Message}";
-                Logger.Ex(e);
-
-                R.errors.Add(new Error(msg));
-                R.Success = SuccessLevel.TotalFailure;
-                return R;
-            }
+                #region UNZIP
+                src_dir = Path.Combine(temp_instance_dir, "unzipped");
+                try
+                {
+                    progress.Update("EXTRAHUJI ZIP", 0.27f);
+                    Logger.Log($"Obnova: extrahuju {src_path} do {src_dir}");
+                    ZipFile.ExtractToDirectory(src_path, src_dir);
+                }
+                catch (Exception e)
+                {
+                    string msg = $"Došlo k chybě při extrahování zip archivu z {src_path} do {src_dir} - {e.GetType().Name}: {e.Message}";
+                    Logger.Ex(e);
 
-            #endregion
+
+                    R.errors.Add(new Error(msg));
+                    R.Success = SuccessLevel.TotalFailure;
+                    return R;
+                }
+                #endregion
+            }
+            else
+                src_dir = src_path;
 
             #region SQL CONNECTION INSTANCE
 
@@ -140,7 +147,7 @@ namespace smart_modul_BACKUP_service
 
                 #region RESTORE SOURCE
 
-                string unzipped_path = Path.Combine(unzipped_dir, source.filename);
+                string unzipped_path = Path.Combine(src_dir, source.filename);
 
                 SuccessLevel success = SuccessLevel.EverythingWorked;
 
@@ -253,21 +260,23 @@ namespace smart_modul_BACKUP_service
         }
 
         /// <summary>
-        /// Pokud je záloha lokální, vrátí, kde je uložený zip zálohy. Jinak zip stáhne a vrátí, kam ho stáhnul.
+        /// Pokud je záloha lokální, vrátí, kde je uložený zip zálohy popř. složka zálohy. Jinak zip / složku stáhne a vrátí, kam to stáhnul.
         /// </summary>
         /// <param name="r"></param>
         /// <param name="workdir"></param>
         /// <returns></returns>
-        private string GetZip(Restore r, string workdir, SftpUploader sftp = null, RestoreResponse response = null)
+        private string GetZip(Restore r, string workdir, SftpUploader sftp = null, RestoreResponse response = null, Backup bk = null)
         {
             Logger.Log("GetZip zavoláno");
+            bk = bk ?? Manager.Get<BackupInfoManager>().LocalBackups.FirstOrDefault(b => b.LocalID == r.backupID);
 
             //je-li záloha lokální, prostě vrátíme lokální umístění zipu
             if (r.location == BackupLocation.Local)
             {
                 Logger.Log("Při obnově se použije lokálně uložený zip");
 
-                if (!File.Exists(r.zip_path))
+                bool exists = bk.IsZip ? File.Exists(r.zip_path) : Directory.Exists(r.zip_path);
+                if (!exists)
                 {
                     string msg = $"Lokální zip soubor nebyl nalezen (měl být na adrese {r.zip_path}, ale zdá se, že není)";
                     Logger.Error(msg);
@@ -288,9 +297,8 @@ namespace smart_modul_BACKUP_service
                 //if (!sftp.client.Exists(r.zip_path))
                 //{
                 //    string msg = $"Na serveru není zip uložen (měl být na adrese {r.zip_path}, ale zdá se, že není)";
-                //    Logger.Ex(e);
-
-                //    response?.errors.Add(msg);
+                //    Logger.Error(msg);
+                //    response?.errors.Add(new Error(msg));
                 //    throw new Exception();
                 //}
 
@@ -300,7 +308,6 @@ namespace smart_modul_BACKUP_service
                     //using (var writer = File.OpenWrite(zip_path))
                     //    sftp.client.DownloadFile(r.zip_path.FixPathForSFTP(), writer);
 
-                    var bk = Manager.Get<BackupInfoManager>().LocalBackups.FirstOrDefault(b => b.LocalID == r.backupID);
                     if (bk.IsZip)
                         sftp.DownloadFile(r.zip_path, zip_path);
                     else

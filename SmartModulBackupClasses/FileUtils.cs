@@ -23,7 +23,7 @@ namespace smart_modul_BACKUP_service
 
             if (!Directory.Exists(destination))
                 Directory.CreateDirectory(destination);
-            Directory.GetAccessControl(destination, AccessControlSections.All);
+            //Directory.SetAccessControl(destination, AccessControlSections.All);
 
             foreach (string p in Directory.GetFiles(path))
             {

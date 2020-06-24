@@ -178,38 +178,42 @@ namespace smart_modul_BACKUP_service
 
             if (bk.AvailableRemotely && sftp != null)
             {
-                //pokud záloha tvrdí, že je dostupná přes sftp, ale není, vysvětlíme jí, jak se věci mají
-                if (!bk.DoesRemoteFileExist(sftp.client))
+                try
                 {
-                    SMB_Log.Log("Záloha tvrdí, že je dostupná vzdáleně, ale není, vysvětluji jí to");
-
-                    bk.AvailableRemotely = false;
-                    availabilityChanged = true;
-                }
-                //jinak pokud existuje na sftp, ale máme jí odstranit, dáme se do toho
-                else if(deleteRemote)
-                {
-                    try
+                    //pokud záloha tvrdí, že je dostupná přes sftp, ale není, vysvětlíme jí, jak se věci mají
+                    if (!bk.DoesRemoteFileExist(sftp.client))
                     {
-                        if (bk.IsZip)
-                        {
-                            var file = sftp.GetFile(bk.RemotePath);
-                            file.Delete();
-                        }
-                        else
-                        {
-                            var folder = sftp.GetDirectory(bk.RemotePath);
-                            sftp.DeleteDirectory(folder.FullName);
-                        }
+                        SMB_Log.Log("Záloha tvrdí, že je dostupná vzdáleně, ale není, vysvětluji jí to");
 
                         bk.AvailableRemotely = false;
                         availabilityChanged = true;
                     }
-                    catch (Exception ex)
+                    //jinak pokud existuje na sftp, ale máme jí odstranit, dáme se do toho
+                    else if (deleteRemote)
                     {
-                        SMB_Log.LogEx(ex, "Problém při odstraňování vzdálené zálohy.");
+                        try
+                        {
+                            if (bk.IsZip)
+                            {
+                                var file = sftp.GetFile(bk.RemotePath);
+                                file.Delete();
+                            }
+                            else
+                            {
+                                var folder = sftp.GetDirectory(bk.RemotePath);
+                                sftp.DeleteDirectory(folder.FullName);
+                            }
+
+                            bk.AvailableRemotely = false;
+                            availabilityChanged = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            SMB_Log.LogEx(ex, "Problém při odstraňování vzdálené zálohy.");
+                        }
                     }
                 }
+                catch { }
             }
 
             //pokud záloha není dostupná ani lokálně ani vzdáleně, můžeme o ní odstranit informaci, páč je zbytečná

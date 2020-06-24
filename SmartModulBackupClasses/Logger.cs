@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,10 +18,12 @@ namespace SmartModulBackupClasses
             exStr.AppendLine($"Došlo k výjimce typu {ex.GetType().Name};");
             if (addedMsg != null)
                 exStr.AppendLine(addedMsg);
-            var trace = new StackTrace(ex, true).GetFrames().First(f => !f.GetMethod().DeclaringType.Namespace.StartsWith("System"));
+            var calling = new StackFrame(1);
+            var trace = new StackTrace(ex, true).GetFrames().First(f => f.GetMethod().DeclaringType.Assembly == calling.GetMethod().DeclaringType.Assembly);
             var meth = trace.GetMethod();
-            exStr.AppendLine($"Metoda: {meth.DeclaringType.FullName + "." + meth.Name + "()"}, číslo řádku: {trace.GetFileLineNumber()}");
+            exStr.AppendLine($"Metoda: {meth.DeclaringType.FullName + "." + meth.Name + "()"}, číslo řádku volajícího log: {calling.GetFileLineNumber()}");
             exStr.AppendLine($"Výjimčí blekot: {ex.Message}");
+            exStr.AppendLine($"Stack trace: {ex.StackTrace}");
             OnLog.Invoke(new LogArgs()
             {
                 Message = exStr.ToString(),

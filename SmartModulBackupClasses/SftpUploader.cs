@@ -162,9 +162,13 @@ namespace SmartModulBackupClasses
             List<Exception> problems = new List<Exception>();
             foreach(var file in files)
             {
+                //toto nejsou fyzické soubory, kašlemž na ně
+                if (file.Name == "." || file.Name == "..")
+                    continue;
+
                 try
                 {
-                    string localPath = Path.Combine(remoteSource, Path.GetFileName(file.FullName));
+                    string localPath = Path.Combine(localDestination, Path.GetFileName(file.FullName));
 
                     if (file.IsDirectory)
                     {
