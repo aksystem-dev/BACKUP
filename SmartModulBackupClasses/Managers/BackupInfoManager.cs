@@ -48,7 +48,7 @@ namespace SmartModulBackupClasses.Managers
         }
 
         public bool UseApi { get; set; } = true;
-        public bool UseSftp { get; set; } = true;
+        public bool UseSftp { get; set; } = false;
 
         public Action<Action> PropertyChangedDispatchHandler;
 

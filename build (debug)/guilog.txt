@@ -42585,3 +42585,1280 @@ Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
  > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
 
 #######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+NullReferenceException
+Odkaz na objekt není nastaven na instanci objektu.
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+NullReferenceException
+Odkaz na objekt není nastaven na instanci objektu.
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+NullReferenceException
+Odkaz na objekt není nastaven na instanci objektu.
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+NullReferenceException
+Odkaz na objekt není nastaven na instanci objektu.
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+==============================
+Výjimka! (XamlParseException)
+
+Prvek Binding nelze nastavit ve vlastnosti parentScrollViewer typu RuleControl. Prvek Binding lze nastavit pouze ve vlastnosti DependencyProperty objektu DependencyObject.
+
+   v System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
+   v System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
+   v System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
+   v System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
+   v smart_modul_BACKUP.SingleRulePage.InitializeComponent() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\SingleRulePage.xaml:řádek 1
+   v smart_modul_BACKUP.SingleRulePage..ctor(BackupRule rule, Boolean add) v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\SingleRulePage.xaml.cs:řádek 32
+   v smart_modul_BACKUP.RulePage.ruleClick(Object sender, RoutedEventArgs e) v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\RulePage.xaml.cs:řádek 106
+   v System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   v System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   v System.Windows.Controls.Primitives.ButtonBase.OnClick()
+   v System.Windows.Controls.Button.OnClick()
+   v System.Windows.Controls.Primitives.ButtonBase.OnMouseLeftButtonUp(MouseButtonEventArgs e)
+   v System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   v System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   v System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   v System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+   v System.Windows.UIElement.OnMouseUpThunk(Object sender, MouseButtonEventArgs e)
+   v System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   v System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   v System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   v System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   v System.Windows.UIElement.RaiseTrustedEvent(RoutedEventArgs args)
+   v System.Windows.Input.InputManager.ProcessStagingArea()
+   v System.Windows.Input.InputManager.ProcessInput(InputEventArgs input)
+   v System.Windows.Input.InputProviderSite.ReportInput(InputReport inputReport)
+   v System.Windows.Interop.HwndMouseInputProvider.ReportInput(IntPtr hwnd, InputMode mode, Int32 timestamp, RawMouseActions actions, Int32 x, Int32 y, Int32 wheel)
+   v System.Windows.Interop.HwndMouseInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   v System.Windows.Interop.HwndSource.InputFilterMessage(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   v MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   v MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+   v System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   v System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+==============================
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu SshException;
+Metoda: SmartModulBackupClasses.Managers.BackupInfoManager+<>c__DisplayClass38_0.<saveBkSftp>b__0(), číslo řádku volajícího log: 0
+Výjimčí blekot: Already exists.
+Stack trace:    v Renci.SshNet.Sftp.SftpSession.RequestOpen(String path, Flags flags, Boolean nullOnError)
+   v Renci.SshNet.Sftp.SftpFileStream..ctor(ISftpSession session, String path, FileMode mode, FileAccess access, Int32 bufferSize)
+   v Renci.SshNet.SftpClient.Create(String path)
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<>c__DisplayClass38_0.<saveBkSftp>b__0() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:řádek 388
+ 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+NullReferenceException
+Odkaz na objekt není nastaven na instanci objektu.
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+#######################
+
+ > SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,password) from config 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+NullReferenceException
+Odkaz na objekt není nastaven na instanci objektu.
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+NullReferenceException
+Odkaz na objekt není nastaven na instanci objektu.
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+NullReferenceException
+Odkaz na objekt není nastaven na instanci objektu.
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+
+===========
+GUI started
+===========
+
+OneGuiPerUser init
+Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+An already running instance not found; I will become the pipe host
+Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+#######################
+
+ > PlanManager: use config instead 
+
+#######################
+#######################
+
+ > Došlo k výjimce typu NullReferenceException;
+chyba při načítání pravidel; načítám pouze lokálně uložená pravidla
+Metoda: SmartModulBackupClasses.Managers.BackupRuleLoader.Load(), číslo řádku volajícího log: 0
+Výjimčí blekot: Odkaz na objekt není nastaven na instanci objektu.
+Stack trace:    v SmartModulBackupClasses.Managers.BackupRuleLoader.Load() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:řádek 66
+ 
+
+#######################
+ObjectDisposedException
+K uvolněnému objektu nelze přistupovat.
+Název objektu: System.ServiceModel.Channels.ServiceChannel

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SmartModulBackupClasses.Rules
 {
@@ -31,5 +32,8 @@ namespace SmartModulBackupClasses.Rules
         /// Čas v ms, po který se bude čekat na dokončení procesu
         /// </summary>
         public int Timeout { get; set; }
+
+        [XmlIgnore]
+        public bool selected { get; set; }
     }
 }

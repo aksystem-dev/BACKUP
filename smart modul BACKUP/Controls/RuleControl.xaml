@@ -48,7 +48,7 @@
         <Style TargetType="Label" x:Key="Header">
             <Setter Property="FontSize" Value="24" />
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Margin" Value="0,0,0,20" />
+            <Setter Property="Margin" Value="0,0,0,5" />
             <Setter Property="Padding" Value="20" />
             <Setter Property="Background" Value="{StaticResource Blue1}" />
             <Setter Property="Foreground" Value="White" />
@@ -155,34 +155,51 @@
 
         <StackPanel Style="{StaticResource Block}">
             <Label Style="{StaticResource Header}" Content="PROCESY PŘED SPUŠTĚNÍM" />
-            <DataGrid ItemsSource="{Binding Path=ProcessesBeforeStart}" PreviewMouseWheel="mousewheel">
+            <StackPanel Orientation="Horizontal">
+                <Button Padding="5" Margin="5" Click="click_add_process" Content="PŘIDAT" />
+                <Button Padding="5" Margin="5" Click="click_remove_processes" Content="ODEBRAT" />
+            </StackPanel>
+            <DataGrid ItemsSource="{Binding Path=ProcessesBeforeStart}" 
+                      PreviewMouseWheel="mousewheel" x:Name="dg_processesBeforeStart"
+                      Margin="20,0,20,20">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="Auto" MinWidth="30" Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type rules:ProcessToStart}">
+                                <CheckBox Content="" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                          IsChecked="{Binding Path=selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="*" Header="NÁZEV PROCESU">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type rules:ProcessToStart}">
-                                <local:PathTextbox PathDialogType="OpenFile" 
+                                <local:PathTextbox PathDialogType="OpenFile" VerticalAlignment="Center" HorizontalAlignment="Stretch"
                                                    Text="{Binding Path=ProcessName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="2*" Header="ARGUMENTY">
+                    <DataGridTemplateColumn Width="*" Header="ARGUMENTY">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type rules:ProcessToStart}">
-                                <TextBox Text="{Binding Path=Arguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Text="{Binding Path=Arguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                             </DataTemplate>    
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="Auto" Header="VYŽADOVAT">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type rules:ProcessToStart}">
-                                <CheckBox IsChecked="{Binding Path=Require, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <CheckBox IsChecked="{Binding Path=Require, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="Auto" Header="ČASOVÝ LIMIT (MS)">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type rules:ProcessToStart}">
-                                <TextBox Text="{Binding Path=Timeout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Text="{Binding Path=Timeout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

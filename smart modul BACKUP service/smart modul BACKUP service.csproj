@@ -62,8 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackupInspector.cs" />
-    <Compile Include="BackupTask.cs" />
+    <Compile Include="BackupTask\BackupTask.cs" />
     <Compile Include="BackupTimeline.cs" />
+    <Compile Include="BackupTask\BackupTaskExecute.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="GuiProgressBar.cs" />

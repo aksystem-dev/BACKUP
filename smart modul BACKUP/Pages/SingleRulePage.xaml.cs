@@ -55,7 +55,6 @@ namespace smart_modul_BACKUP
             {
                 MessageBox.Show(ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         private void btn_click_delete(object sender, RoutedEventArgs e)

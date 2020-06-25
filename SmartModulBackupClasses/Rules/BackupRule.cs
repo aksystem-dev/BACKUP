@@ -36,7 +36,8 @@ namespace SmartModulBackupClasses
         public BackupConfig LocalBackups { get; set; } = new BackupConfig();
         public BackupConfig RemoteBackups { get; set; } = new BackupConfig();
 
-        public List<ProcessToStart> ProcessesBeforeStart { get; set; } = new List<ProcessToStart>();
+        public ObservableCollection<ProcessToStart> ProcessesBeforeStart { get; set; }
+            = new ObservableCollection<ProcessToStart>();
 
         /// <summary>
         /// Zdali se zálohy mají zipovat

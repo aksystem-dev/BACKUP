@@ -18,6 +18,7 @@ using Alphaleonis.Win32.Vss;
 using SmartModulBackupClasses.Managers;
 using SmartModulBackupClasses.WebApi;
 using smart_modul_BACKUP_service.Managers;
+using smart_modul_BACKUP_service.BackupExe;
 
 namespace smart_modul_BACKUP_service
 {
@@ -286,6 +287,11 @@ namespace smart_modul_BACKUP_service
 
             if (timeline.Running)
                 timeline.Stop();
+
+            foreach (var task in BackupTask.RunningBackupTasks)
+                task.Cancel();
+
+            Task.WhenAll(BackupTask.RunningBackupTasks.Select(bt => bt.TheTask)).Wait();
 
             Logger.Log("Služba smart modul BACKUP stopnuta");
         }

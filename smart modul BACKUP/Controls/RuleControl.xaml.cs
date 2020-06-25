@@ -14,6 +14,7 @@ using System.Globalization;
 using smart_modul_BACKUP.Managers;
 using SmartModulBackupClasses.Managers;
 using System.Windows.Input;
+using SmartModulBackupClasses.Rules;
 
 namespace smart_modul_BACKUP
 {
@@ -28,7 +29,16 @@ namespace smart_modul_BACKUP
         private ObservableCollection<BackupSourceModel> directories = new ObservableCollection<BackupSourceModel>();
         private ObservableCollection<BackupSourceModel> files = new ObservableCollection<BackupSourceModel>();
 
-        public ScrollViewer parentScrollViewer { get; set; }
+        public ScrollViewer parentScrollViewer
+        {
+            get { return (ScrollViewer)GetValue(parentScrollViewerProperty); }
+            set { SetValue(parentScrollViewerProperty, value); }
+        }
+
+        public static readonly DependencyProperty parentScrollViewerProperty =
+            DependencyProperty.Register("parentScrollViewer", typeof(ScrollViewer), typeof(RuleControl), new PropertyMetadata(null));
+
+
 
         public RuleControl()
         {
@@ -744,6 +754,26 @@ namespace smart_modul_BACKUP
             args.RoutedEvent = ScrollViewer.MouseWheelEvent;
             parentScrollViewer?.RaiseEvent(args);
             e.Handled = true;
+        }
+
+        private void click_add_process(object sender, RoutedEventArgs e)
+        {
+            Rule.ProcessesBeforeStart.Add(new ProcessToStart()
+            {
+                Arguments = "",
+                ProcessName = "",
+                Require = false,
+                Timeout = 1000
+            });
+        }
+
+        private void click_remove_processes(object sender, RoutedEventArgs e)
+        {
+            foreach(var p in Rule.ProcessesBeforeStart.ToArray())
+            {
+                if (p.selected)
+                    Rule.ProcessesBeforeStart.Remove(p);
+            }
         }
     }
 }
