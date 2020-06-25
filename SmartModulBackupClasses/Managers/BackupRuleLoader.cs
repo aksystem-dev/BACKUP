@@ -13,6 +13,7 @@ namespace SmartModulBackupClasses.Managers
     {
         const string deleteSave = "rules_to_delete.txt";
 
+        //nechcem do api posílat víc příkazů najednou
         TaskQueue apiQueue = new TaskQueue();
         private SmbApiClient client => Manager.Get<SmbApiClient>();
         private readonly string folder;
@@ -24,10 +25,17 @@ namespace SmartModulBackupClasses.Managers
 
         private List<BackupRule> ruleList = new List<BackupRule>();
 
+        //PropertyChanged je třeba invokovat přes Dispatcher, aby to nemělo kecy
         public Action<Action> UI_Dispatcher;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<BackupRule> OnRuleUpdated;
+
+        /// <summary>
+        /// Zdali stahovat updatovaná pravidla přes api; byl bych s tím opatrný, může to být bezpečnostní riziko dle
+        /// mého skromného názoru
+        /// </summary>
+        public bool Download { get; set; } = false;
 
         public BackupRule[] Rules => ruleList.ToArray();
 
@@ -57,42 +65,59 @@ namespace SmartModulBackupClasses.Managers
             {
                 var rulesWeb = client.GetBackupRules();
 
+                //nejprve projdeme info o pravidlech stažených z webu
                 foreach (var w_rule in rulesWeb)
                 {
+                    //pro každé se pokusíme najít příslušné lokální pravidlo
                     var l_rule = rulesLocal.FirstOrDefault(f => f.LocalID == w_rule.LocalID);
+
+                    //pokud existuje lokální pravidlo
                     if (l_rule != null)
                     {
-                        if (l_rule.LastEdit >= w_rule.LastEdit) //pokud má lokální pravidlo datum změny po webové verzi, znamená to, že byly provedeny lokální změny
+                        //pokud má lokální pravidlo datum změny po webové verzi, znamená to, že byly provedeny lokální změny
+                        if (l_rule.LastEdit > w_rule.LastEdit)
                         {
                             ruleList.Add(l_rule);
                             apiQueue.Enqueue(() => client.UpdateRulesAsync(l_rule)); //musíme o tom informovat server
                         }
-                        else
+                        //pokud jsme změnili pravidlo na webu a zároveň je zapnuté stahování updatovaných pravidel
+                        else if (l_rule.LastEdit < w_rule.LastEdit && Download)
                         {
                             w_rule.path = l_rule.path;
                             ruleList.Add(w_rule);
+                            w_rule.SaveSelf();
                         }
+                        //jinak by měla být webová verze shodná s lokální, takže prostě přidáme l_rule na seznam
+                        else
+                            ruleList.Add(l_rule);
                     }
+                    //pokud neexistuje
                     else
                     {
-                        if (w_rule.Downloaded) //pokud pravidlo již bylo staženo, znamená to, že bylo lokálně smazáno, smažeme ho tedy i na webu
+                        //pokud pravidlo již bylo staženo, znamená to, že bylo lokálně smazáno, smažeme ho tedy i na webu
+                        if (w_rule.Downloaded)
                             apiQueue.Enqueue(() => client.DeleteRulesAsync(w_rule.LocalID));
-                        else
+                        //jinak to znamená, že pravidlo bylo vytvořeno na serveru, stáhneme ho pouze, pokud je stahování zapnuto
+                        else if (Download)
                         {
                             w_rule.path = Path.Combine(folder, w_rule.Name + ".xml");
                             ruleList.Add(w_rule);
-                            apiQueue.Enqueue(() => client.ConfirmRulesAsync(w_rule.LocalID)); //přidat: nastaví Downloaded na serveru
+
+                            //nastavit downloaded na serveru, ať víme, že pravidlo již bylo staženo
+                            apiQueue.Enqueue(() => client.ConfirmRulesAsync(w_rule.LocalID)); 
                         }
                     }
                 }
 
+                //projít lokální pravidla
                 foreach (var l_rule in rulesLocal)
                 {
                     if (ruleList.Any(f => f.LocalID == l_rule.LocalID)) 
                         continue;
                     //pokračujeme pouze, pokud toto pravidlo není ve výsledném seznamu pravidel
 
-                    if (l_rule.Uploaded) //pokud pravidlo bylo již uploadováno, znamená to, že bylo smazáno na serveru, smažeme ho tedy i lokálně
+                    //pokud pravidlo bylo již uploadováno, znamená to, že bylo smazáno na serveru, smažeme ho tedy i lokálně
+                    if (l_rule.Uploaded && Download) 
                     {
                         try
                         {
@@ -101,6 +126,7 @@ namespace SmartModulBackupClasses.Managers
                         catch { }
                         continue;
                     }
+                    //jinak ho prostě přidáme a informujeme server o novém pravidlu
                     else
                     {
                         ruleList.Add(l_rule);
@@ -109,9 +135,15 @@ namespace SmartModulBackupClasses.Managers
                     }
                 }
             }
-            catch (Exception ex) //pokud dojde k chybě při komunikaci s webem, prostě vezmeme jen lokální pravidla
+            //pokud dojde k chybě při komunikaci s webem (nebo nějaké jiné chybě), prostě vezmeme jen lokální pravidla
+            catch (Exception ex) 
             {
-                SMB_Log.Log("Došlo k chybě při komunikaci s api, beru pouze lokálně uložená pravidla.");
+                //Pokud došlo k nějaké chybě, která není spojena s webovým api, zapíšeme výjimku
+                if (!(ex is SmbApiException) && !(ex is HttpStatusException))
+                    SMB_Log.LogEx(ex, "chyba při načítání pravidel; načítám pouze lokálně uložená pravidla");
+                //jinak jen kváknem
+                else
+                    SMB_Log.Log("Došlo k chybě při komunikaci s api, beru pouze lokálně uložená pravidla.");
                 ruleList.Clear();
                 ruleList.AddRange(rulesLocal);
             }

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using smart_modul_BACKUP.Managers;
 using SmartModulBackupClasses.Managers;
+using System.Windows.Input;
 
 namespace smart_modul_BACKUP
 {
@@ -26,6 +27,8 @@ namespace smart_modul_BACKUP
         private ObservableCollection<BackupSourceModel> databases = new ObservableCollection<BackupSourceModel>();
         private ObservableCollection<BackupSourceModel> directories = new ObservableCollection<BackupSourceModel>();
         private ObservableCollection<BackupSourceModel> files = new ObservableCollection<BackupSourceModel>();
+
+        public ScrollViewer parentScrollViewer { get; set; }
 
         public RuleControl()
         {
@@ -733,6 +736,14 @@ namespace smart_modul_BACKUP
             
             //znovu načíst serverové databáze do observablecollection
             loadServerDbs();
+        }
+
+        private void mousewheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            var args = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+            args.RoutedEvent = ScrollViewer.MouseWheelEvent;
+            parentScrollViewer?.RaiseEvent(args);
+            e.Handled = true;
         }
     }
 }

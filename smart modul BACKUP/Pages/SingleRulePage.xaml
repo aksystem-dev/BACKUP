@@ -41,8 +41,9 @@
             </DockPanel>
         </Border>
         
-        <ScrollViewer Grid.Row="1">
-            <local:RuleControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+        <ScrollViewer Grid.Row="1" x:Name="scroll_viewer">
+            <local:RuleControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                               parentScrollViewer="{Binding ElementName=scroll_viewer}" />
         </ScrollViewer>
     </Grid>
 </Page>

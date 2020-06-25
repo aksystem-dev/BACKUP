@@ -7,6 +7,7 @@
              xmlns:model="clr-namespace:SmartModulBackupClasses;assembly=SmartModulBackupClasses"
              xmlns:s="clr-namespace:System;assembly=mscorlib"
              xmlns:debug="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:rules="clr-namespace:SmartModulBackupClasses.Rules;assembly=SmartModulBackupClasses"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=model:BackupRule}" d:DesignWidth="800" >
 
@@ -109,13 +110,15 @@
 
 
             <!--#endregion-->
-            <!--#region DEN V TÝDNU-->
+
 
             <Border Style="{StaticResource Block2}">
                 <StackPanel Orientation="Vertical">
-                    <Label Style="{StaticResource Header2}" Content="DATUM SPUŠTĚNÍ" />
-
                     <StackPanel Orientation="Vertical" Margin="15" >
+                        <!--#region DEN V TÝDNU-->
+
+                        <Label Style="{StaticResource Header2}" Content="DATUM SPUŠTĚNÍ" />
+
                         <CheckBox Content="OMEZIT DNY V TÝDNU" FontWeight="Bold" Margin="5,0,0,0" x:Name="cb_limitWeekdays" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" />
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <CheckBox Content="PO" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" x:Name="cb_monday" Margin="5" />
@@ -136,24 +139,12 @@
                         </StackPanel>
 
                         <!--#endregion-->
-                        <!--<local:LabelTextBox LabelText="ČAS SPUŠTĚNÍ *:"
-                                    Text="{Binding Path=Conditions.Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Valid="{Binding Path=Conditions.TimeValid, Mode=OneWay}"/>-->
-                        <!--<local:LabelTextBox LabelText="MĚSÍC:"
-                                    Text="{Binding Path=Conditions.Month, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Valid="{Binding Path=Conditions.MonthValid, Mode=OneWay}"/> -->
                         <local:LabelTextBox LabelText="DEN V MĚSÍCI:" Style="{StaticResource ltb_bindToValid}"
                                     Text="{Binding Path=Conditions.DayInMonth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Valid="{Binding Path=Conditions.DayInMonthValid, Mode=OneWay}"/>
-                        <!--
-                <local:LabelTextBox LabelText="DEN V TÝDNU:"
-                                    Text="{Binding Path=Conditions.DayInWeek, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Valid="{Binding Path=Conditions.DayInWeekValid, Mode=OneWay}"/>-->
                         <local:LabelTextBox LabelText="DEN V ROCE:" Style="{StaticResource ltb_bindToValid}"
                                     Text="{Binding Path=Conditions.DayInYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Valid="{Binding Path=Conditions.DayInYearValid, Mode=OneWay}"/>
-                        <!--#endregion-->
-
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -161,6 +152,43 @@
         </StackPanel>
 
         <!--<Label Content="ZDROJE ZÁLOHY" Style="{StaticResource h1}" />-->
+
+        <StackPanel Style="{StaticResource Block}">
+            <Label Style="{StaticResource Header}" Content="PROCESY PŘED SPUŠTĚNÍM" />
+            <DataGrid ItemsSource="{Binding Path=ProcessesBeforeStart}" PreviewMouseWheel="mousewheel">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="*" Header="NÁZEV PROCESU">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type rules:ProcessToStart}">
+                                <local:PathTextbox PathDialogType="OpenFile" 
+                                                   Text="{Binding Path=ProcessName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="2*" Header="ARGUMENTY">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type rules:ProcessToStart}">
+                                <TextBox Text="{Binding Path=Arguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>    
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="Auto" Header="VYŽADOVAT">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type rules:ProcessToStart}">
+                                <CheckBox IsChecked="{Binding Path=Require, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="Auto" Header="ČASOVÝ LIMIT (MS)">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type rules:ProcessToStart}">
+                                <TextBox Text="{Binding Path=Timeout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
 
         <StackPanel Style="{StaticResource Block}">
 

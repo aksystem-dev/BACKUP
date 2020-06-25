@@ -57,7 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackupConfig.cs" />
+    <Compile Include="Rules\BackupConfig.cs" />
     <Compile Include="BackupError.cs" />
     <Compile Include="BackupInfo.cs" />
     <Compile Include="Backup.cs" />
@@ -74,12 +74,13 @@
     <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="Managers\PlanManager.cs" />
     <Compile Include="Password.cs" />
+    <Compile Include="Rules\ProcessToStart.cs" />
     <Compile Include="Sync\BackupInProgress.cs" />
-    <Compile Include="BackupRule.cs" />
-    <Compile Include="BackupSource.cs" />
-    <Compile Include="BackupSourceCollection.cs" />
-    <Compile Include="BackupSourceType.cs" />
-    <Compile Include="Conditions.cs" />
+    <Compile Include="Rules\BackupRule.cs" />
+    <Compile Include="Rules\BackupSource.cs" />
+    <Compile Include="Rules\BackupSourceCollection.cs" />
+    <Compile Include="Rules\BackupSourceType.cs" />
+    <Compile Include="Rules\Conditions.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="IHaveID.cs" />

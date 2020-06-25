@@ -3,6 +3,7 @@ using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -155,6 +156,24 @@ namespace smart_modul_BACKUP_service
 
             //Ujistit se, že existuje složka, kam budeme ukládat dočasné soubory
             Directory.CreateDirectory(temp_instance_dir);
+
+            #endregion
+
+            #region RUN PROCESSES
+
+            foreach(var pars in rule.ProcessesBeforeStart)
+            {
+                try
+                {
+                    var process = Process.Start(pars.ProcessName, pars.Arguments);
+                    process.WaitForExit(pars.Timeout);
+                }
+                catch (Exception ex)
+                {
+                    B.Errors.Add(new BackupError($"Nepodařilo se úspěšně dokončit proces před spuštěním pravidla. {ex.Message}", BackupErrorType.DefaultError));
+                    B.Success = false;
+                }
+            }
 
             #endregion
 

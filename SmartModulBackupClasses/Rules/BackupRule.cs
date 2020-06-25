@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartModulBackupClasses.Rules;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -34,6 +35,8 @@ namespace SmartModulBackupClasses
         public Conditions Conditions { get; set; } = new Conditions();
         public BackupConfig LocalBackups { get; set; } = new BackupConfig();
         public BackupConfig RemoteBackups { get; set; } = new BackupConfig();
+
+        public List<ProcessToStart> ProcessesBeforeStart { get; set; } = new List<ProcessToStart>();
 
         /// <summary>
         /// Zdali se zálohy mají zipovat
