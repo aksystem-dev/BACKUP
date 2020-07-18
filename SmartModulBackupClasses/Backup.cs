@@ -33,7 +33,7 @@ namespace SmartModulBackupClasses
 
         public Backup()
         {
-            
+
         }
 
         /// <summary>
@@ -128,11 +128,16 @@ namespace SmartModulBackupClasses
         /// Cesta k lokální záloze na počítači, na kterém byla vytvořena.
         /// </summary>
         public string LocalPath { get; set; }
-        
+
+        private string _remotePath;
         /// <summary>
         /// Cesta k záloze na serveru.
         /// </summary>
-        public string RemotePath { get; set; }
+        public string RemotePath
+        {
+            get => _remotePath;
+            set => _remotePath = value.FixPathForSFTP();
+        }
 
         /// <summary>
         /// ID pravidla, podle nějž byla záloha vytvořena.
@@ -164,7 +169,7 @@ namespace SmartModulBackupClasses
         {
             get
             {
-                if (Success) return Sources.All(f => f.Success == SuccessLevel.EverythingWorked) ? SuccessLevel.EverythingWorked : SuccessLevel.SomeErrors;
+                if (Success) return Sources.All(f => f?.Success == SuccessLevel.EverythingWorked) ? SuccessLevel.EverythingWorked : SuccessLevel.SomeErrors;
                 return Sources.Any() ? SuccessLevel.SomeErrors : SuccessLevel.TotalFailure;
             }
         }
@@ -188,6 +193,10 @@ namespace SmartModulBackupClasses
         /// Zdalipak je záloha uložena jako zip (true) nebo jako normální složka (false);
         /// </summary>
         public bool IsZip { get; set; } = true;
+
+        public BackupRuleType BackupType { get; set; }
+
+        public OneToOneBackupStatus OneToOneStatus { get; set; }
 
         public string ToXml()
         {

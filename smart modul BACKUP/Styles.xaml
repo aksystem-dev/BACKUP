@@ -6,7 +6,7 @@
     <Style TargetType="Label" x:Key="Header">
         <Setter Property="FontSize" Value="24" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Margin" Value="0,0,0,20" />
+        <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="20" />
         <Setter Property="Background" Value="{StaticResource Blue1}" />
         <Setter Property="Foreground" Value="White" />
@@ -85,8 +85,8 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Background" Value="{StaticResource Gray1}" />
         <Setter Property="Padding" Value="2" />
-        <Setter Property="Margin" Value="3" />
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Margin" Value="6" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -94,10 +94,15 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{TemplateBinding Background}"
                             Padding="{TemplateBinding Padding}"
-                            Margin="{TemplateBinding Margin}" 
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="bg" Property="Background" Value="{StaticResource Gray1b}" />
+                            <Setter TargetName="bg" Property="TextElement.Foreground" Value="{StaticResource Gray0}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -24,10 +24,28 @@ namespace smart_modul_BACKUP_service
 
         public BackupTimeline() { }
 
+        private static void logError(string error, Exception ex)
+        {
+            SmbLog.Error(error, ex, LogCategory.BackupTimeline);
+        }
+
+        private static void logInfo(string info, Exception ex = null)
+        {
+            SmbLog.Info(info, ex, LogCategory.BackupTimeline);
+        }
+
+        public void Stop()
+        {
+            lock (this)
+            {
+                stop();
+            }
+        }
+
         /// <summary>
         /// Ukončí vyhodnocování dalších pravidel.
         /// </summary>
-        public void Stop()
+        private void stop()
         {
             //timeline lze stopnout pouze pokud běží, tedy Running == true
             if (Running)
@@ -42,28 +60,23 @@ namespace smart_modul_BACKUP_service
 
         public void RescheduleRule(BackupRule rule)
         {
-            if (Running)
+            lock (this)
             {
-                _tokenSource.Cancel();
-                _loopThread?.Join();
-            }
+                if (Running)
+                    stop();
 
-            try
-            {
-                _tasks.RemoveAll(bkt => bkt.Rule.LocalID == rule.LocalID);
-                _tasks.AddRange(rule.GetBackupTasksInTimeSpan(DateTime.Now, End));
-                _tasks = _tasks.OrderBy(bkt => bkt.ScheduledStart).ToList();
-            }
-            catch (Exception ex)
-            {
-                SMB_Log.LogEx(ex);
-            }
+                try
+                {
+                    _tasks.RemoveAll(bkt => bkt.Rule.LocalID == rule.LocalID);
+                    _tasks.AddRange(rule.GetBackupTasksInTimeSpan(DateTime.Now, End));
+                }
+                catch (Exception ex)
+                {
+                    SmbLog.Error($"Problém při přeplánování pravidla {rule.Name}", ex, LogCategory.BackupTimeline);
+                }
 
-            if (Running)
-            {
-                _tokenSource = new CancellationTokenSource();
-                _loopThread = new Thread(Loop);
-                _loopThread.Start();
+                if (!Running)
+                    start(_tasks, End);
             }
         }
 
@@ -71,23 +84,31 @@ namespace smart_modul_BACKUP_service
 
         public DateTime End { get; private set; }
 
+        public void Start(IEnumerable<BackupTask> tasks, DateTime end)
+        {
+            lock(this)
+            {
+                start(tasks, end);
+            }
+        }
+
         /// <summary>
         /// Spustí Timeline s danými BackupTasky
         /// </summary>
         /// <param name="tasks"></param>
-        public void Start(IEnumerable<BackupTask> tasks, DateTime end)
+        private void start(IEnumerable<BackupTask> tasks, DateTime end)
         {
             //lze startovat pouze pokud to již neběží
             if (!Running)
             {
                 End = end;
 
-                Logger.Log("Spuštěno BackupTimeline");
+                logInfo("Spuštěno BackupTimeline");
 
                 //nastavit _tasks, ale musíme dát pozor, aby to šlo chronologicky
                 _tasks = tasks.OrderBy(f => f.ScheduledStart).ToList();
 
-                Logger.Log($"Naplánované úlohy v časech: {String.Join(", ", (_tasks as IEnumerable<BackupTask>).Select(f => f.ScheduledStart))}");
+                logInfo($"Naplánované úlohy v časech: {String.Join(", ", (_tasks as IEnumerable<BackupTask>).Select(f => f.ScheduledStart))}");
 
                 //vysvětlit objektu, že od teď probíhá vyhodnocování
                 Running = true;
@@ -112,14 +133,14 @@ namespace smart_modul_BACKUP_service
                 {
                     if (!backup.Rule.Enabled)
                     {
-                        Logger.Log($"Pravidlo {backup.Rule.Name} je naplánováno, ale zakázáno. Budu ho tedy ignorovat.");
+                        logInfo($"Pravidlo {backup.Rule.Name} je naplánováno, ale zakázáno. Budu ho tedy ignorovat.");
                         continue;
                     }
 
                     //pokud je tam pravidlo, jehož naplánované  datum spuštění je dřív než teď, spustíme ho hned
                     if (backup.ScheduledStart <= DateTime.Now)
                     {
-                        Logger.Log($"BackupTimeline: pravidlo {backup.Rule.Name} mělo být spuštěno již v {backup.ScheduledStart}. Jdu na to hned.");
+                        logInfo($"BackupTimeline: pravidlo {backup.Rule.Name} mělo být spuštěno již v {backup.ScheduledStart}. Jdu na to hned.");
                         backup.Execute();
                     }
                     //jinak (pokud je třeba ho vyhodnotit někday v budoucnu)
@@ -127,7 +148,7 @@ namespace smart_modul_BACKUP_service
                     {
                         //počkáme, dokud nenastane čas na aktuální pravidlo
                         //pravidla by měla být seřazena už předem, čili toto by mělo fungovat
-                        Logger.Log($"BackupTimeline: Čekám do {backup.ScheduledStart}");
+                        logInfo($"BackupTimeline: Čekám do {backup.ScheduledStart}");
                         Task.Delay(backup.ScheduledStart - DateTime.Now, _tokenSource.Token).Wait();
 
                         //pokud jsme to v mezičase zrušili, utečem z cyklu
@@ -146,18 +167,18 @@ namespace smart_modul_BACKUP_service
                 {
                     //pokud došlo k OperationCancelledException, musela ho způsobit metoda Stop(), která sama
                     //nastavuje Running na false, čili prostě zavoláme return a skončíme metodu a tedy i vlákno
-                    Logger.Log("Vlákno BackupTimeline zrušeno");
+                    logInfo("Vlákno BackupTimeline zrušeno");
                     return;
                 }
                 catch (Exception e)
                 {
                     //jinak se pravděpodobně jedná jen o problém s jedním konkrétním pravidlem, vypíšeme to tedy
                     //a pokračujem
-                    Logger.Ex(e);
+                    logError("Došlo k chybě v BackupTimeline", e);
                 }
             }
 
-            Logger.Log("BackupTimeline hotova.");
+            logInfo("BackupTimeline hotova.");
             Running = false;
         }
 

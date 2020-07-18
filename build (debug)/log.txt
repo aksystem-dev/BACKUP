@@ -1,0 +1,164 @@
+2020-07-18 18:29:17.1642|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 18:47:46.5900|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:28:04.6878|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:30:01.2145|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:37:02.8837|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:42:59.6668|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:44:50.3189|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:46:01.1761|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:46:07.6888|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:47:01.5913|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:47:52.1412|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:47:56.2757|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:50:11.1913|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:54:10.6622|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:56:38.0207|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 20:59:03.4998|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:01:46.5787|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:04:14.9035|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:05:13.4230|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:07:25.4004|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:08:01.1819|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:08:21.1128|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:08:44.2408|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:10:21.3644|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:10:26.2998|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:12:54.2313|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:13:05.5461|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:14:11.1384|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:16:28.6333|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:18:29.9133|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:20:49.1868|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:23:17.0922|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:24:56.0062|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:41:50.9016|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:41:56.0569|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-18 21:42:40.6550|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-19 00:08:23.0346|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-19 00:08:29.1821|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-19 00:16:05.9444|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-19 00:16:05.9813|INFO|smart modul BACKUP|OneGuiPerUser: OneGuiPerUser init
+2020-07-19 00:16:05.9813|INFO|smart modul BACKUP|OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+2020-07-19 00:16:06.9846|INFO|smart modul BACKUP|OneGuiPerUser: An already running instance not found; I will become the pipe host
+2020-07-19 00:16:06.9846|INFO|smart modul BACKUP|OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+2020-07-19 00:16:11.0289|INFO|smart modul BACKUP|Default: Aplikace spuštìna, naètena konfigurace pro logování
+2020-07-19 00:16:12.9299|INFO|smart modul BACKUP|SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+2020-07-19 00:16:14.9845|ERROR|smart modul BACKUP|GUI: problém pøi zjišování mnoství dat uloenıch na serveru
+2020-07-19 00:17:26.2997|ERROR|smart modul BACKUP|GuiServiceClient: Chyba v TestConnection()
+2020-07-19 00:22:20.6782 Default: Aplikace spuštìna, naètena konfigurace pro logování
+
+2020-07-19 00:22:20.7102 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 00:22:20.7102 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 00:22:21.7029 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 00:22:21.7029 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 00:22:25.7742 Default: Aplikace spuštìna, naètena konfigurace pro logování
+
+2020-07-19 00:22:27.5116 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 00:22:29.5763 GUI: problém pøi zjišování mnoství dat uloenıch na serveru
+System.Net.Sockets.SocketException Nemohlo bıt vytvoøeno ádné pøipojení, protoe cílovı poèítaè je aktivnì odmítl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:øádek 47
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:øádek 157
+2020-07-19 00:23:50.1139 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt není nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:øádek 35
+2020-07-19 00:40:01.9312 Default: Aplikace spuštìna, naètena konfigurace pro logování
+
+2020-07-19 00:40:01.9672 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 00:40:01.9681 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 00:40:02.9682 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 00:40:02.9682 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 00:40:06.5250 Default: Aplikace spuštìna, naètena konfigurace pro logování
+
+2020-07-19 00:40:08.4116 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 00:40:10.4549 GUI: problém pøi zjišování mnoství dat uloenıch na serveru
+System.Net.Sockets.SocketException Nemohlo bıt vytvoøeno ádné pøipojení, protoe cílovı poèítaè je aktivnì odmítl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:øádek 47
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:øádek 157
+2020-07-19 00:40:30.9799 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt není nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:øádek 35
+2020-07-19 00:40:32.7607 Default: Aplikace spuštìna, naètena konfigurace pro logování
+
+2020-07-19 00:40:32.7875 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 00:40:32.7875 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 00:40:33.7801 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 00:40:33.7801 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 00:40:35.0089 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 00:40:37.0628 GUI: problém pøi zjišování mnoství dat uloenıch na serveru
+System.Net.Sockets.SocketException Nemohlo bıt vytvoøeno ádné pøipojení, protoe cílovı poèítaè je aktivnì odmítl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:øádek 47
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:øádek 157
+2020-07-19 00:40:44.6779 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt není nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:øádek 35
+2020-07-19 00:43:04.5640 Default: Aplikace spuštìna, naètena konfigurace pro logování
+
+2020-07-19 00:43:04.5909 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 00:43:04.5909 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 00:43:05.5940 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 00:43:05.5940 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 00:43:09.4082 Default: Aplikace spuštìna, naètena konfigurace pro logování
+
+2020-07-19 00:43:10.8833 BackupRuleLoader: Problém pøi naèítání pravidla v umístìní Rules\fungujePlanovac.xml
+System.InvalidOperationException Dokument XML obsahuje chybu (0, 0).    v System.Xml.Serialization.XmlSerializer.Deserialize(XmlReader xmlReader, String encodingStyle, XmlDeserializationEvents events)
+   v System.Xml.Serialization.XmlSerializer.Deserialize(TextReader textReader)
+   v SmartModulBackupClasses.BackupRule.LoadFromXml(String file, Boolean autoSaveSelf) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Rules\BackupRule.cs:øádek 124
+   v SmartModulBackupClasses.Managers.BackupRuleLoader.tryGetRule(String path) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupRuleLoader.cs:øádek 361
+2020-07-19 00:43:11.2084 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 00:43:13.2392 GUI: problém pøi zjišování mnoství dat uloenıch na serveru
+System.Net.Sockets.SocketException Nemohlo bıt vytvoøeno ádné pøipojení, protoe cílovı poèítaè je aktivnì odmítl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:øádek 47
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:øádek 157
+2020-07-19 00:45:00.2796 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt není nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:øádek 35
+2020-07-19 00:53:10.6581 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt není nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:øádek 35
+2020-07-19 00:55:57.8018 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt není nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:øádek 35
+2020-07-19 01:03:03.0856 Default: Aplikace spuštìna, naètena konfigurace pro logování
+
+2020-07-19 01:03:03.1155 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 01:03:03.1155 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 01:03:04.1091 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 01:03:04.1091 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 01:03:07.9187 Default: Aplikace spuštìna, naètena konfigurace pro logování
+
+2020-07-19 01:03:09.8115 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 01:03:19.4637 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt není nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:øádek 35
+2020-07-19 01:13:09.2091 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt není nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:øádek 35

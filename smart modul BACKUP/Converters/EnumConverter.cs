@@ -9,6 +9,9 @@ using System.Windows.Data;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Vezme enum, udělá z něj int, a vrací prvek v poli Values na daném indexu.
+    /// </summary>
     public class EnumConverter : IValueConverter
     {
         public object[] Values

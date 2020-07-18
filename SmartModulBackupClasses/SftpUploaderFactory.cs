@@ -20,36 +20,37 @@ namespace SmartModulBackupClasses
         /// <returns></returns>
         public SftpUploader GetInstance()
         {
-            //return new SftpUploader(Config.Adress, Config.Port, Config.Username, Config.Password.Value);
             var cfg_man = Manager.Get<ConfigManager>();
-            var plan_man = Manager.Get<PlanManager>();
-            if (plan_man?.UseConfig == false)
+            var plan_man = Manager.Get<AccountManager>();
+
+            //pokud jsme připojeni na web, vrátit SftpUploader vytvořený pomocí přístupových údajů stažených přes web
+            if (plan_man.State == LoginState.LoginSuccessful)
             {
-                var sftp = plan_man.Sftp;
+                var sftp = plan_man.SftpInfo;
                 try
                 {
-                    SMB_Log.Log($"SftpUploaderFactory: returning SftpUploader({sftp.Host},{sftp.Port},{sftp.Username},{sftp.Password}) from web plan");
+                    SmbLog.Info($"SftpUploaderFactory: returning SftpUploader({sftp.Host},{sftp.Port},{sftp.Username},{new string('*', sftp.Password.Length)}) from web plan", category: LogCategory.SFTP);
                     return new SftpUploader(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
                 }
                 catch (Exception ex)
                 {
-                    SMB_Log.LogEx(ex);
-                    SMB_Log.Error($"SftpUploaderFactory: failed to get SftpUploader from web plan, returning null...");
+                    SmbLog.Error($"SftpUploaderFactory: failed to get SftpUploader from web plan, returning null...", ex, LogCategory.SFTP);
                     return null;
                 }
             }
-            else if (cfg_man?.Config?.SFTP != null)
+
+            //jinak vrátít SftpUploader pomocí lokální konfigurace
+            else if (plan_man.State == LoginState.Offline && cfg_man?.Config?.SFTP != null)
             {
                 var sftp = cfg_man.Config.SFTP;
                 try
                 {
-                    SMB_Log.Log($"SftpUploaderFactory: returning SftpUploader({sftp.Host},{sftp.Port},{sftp.Username},{sftp.Password.Value}) from config");
+                    SmbLog.Info($"SftpUploaderFactory: returning SftpUploader({sftp.Host},{sftp.Port},{sftp.Username},{new string('*', sftp.Password.Value.Length)}) from config", category: LogCategory.SFTP);
                     return new SftpUploader(sftp.Host, sftp.Port, sftp.Username, sftp.Password.Value);
                 }
                 catch (Exception ex)
                 {
-                    SMB_Log.LogEx(ex);
-                    SMB_Log.Error($"SftpUploaderFactory: failed to get SftpUploader from config, returning null...");
+                    SmbLog.Error($"SftpUploaderFactory: failed to get SftpUploader from config, returning null...", ex, LogCategory.SFTP);
                     return null;
                 }
             }

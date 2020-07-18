@@ -40,17 +40,23 @@
     <Reference Include="AlphaVSS.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=959d3993561034e3, processorArchitecture=MSIL">
       <HintPath>..\packages\AlphaVSS.2.0.0\lib\net45\AlphaVSS.Common.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,14 +67,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackupInspector.cs" />
-    <Compile Include="BackupTask\BackupTask.cs" />
+    <Compile Include="BackupCleaner.cs" />
+    <Compile Include="BackupExe\BackupTask.cs" />
+    <Compile Include="BackupExe\BackupTaskOneToOne.cs" />
     <Compile Include="BackupTimeline.cs" />
-    <Compile Include="BackupTask\BackupTaskExecute.cs" />
+    <Compile Include="BackupExe\BackupTaskFull.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FolderStructure\FileNode.cs" />
+    <Compile Include="FolderStructure\FolderNode.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="GuiProgressBar.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="DumbLogger.cs" />
+    <Compile Include="Managers\FolderObserver.cs" />
     <Compile Include="Managers\RuleScheduler.cs" />
     <Compile Include="ProgressManager.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -83,6 +93,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Backuper.cs" />
+    <Compile Include="RestoreExe\RestoreTask.cs" />
     <Compile Include="Restorer.cs" />
     <Compile Include="ServiceStatus.cs" />
     <Compile Include="SmartModulBackupService.cs">

@@ -22,17 +22,36 @@ using smart_modul_BACKUP_service.BackupExe;
 
 namespace smart_modul_BACKUP_service
 {
+    /// <summary>
+    /// Zde je kód pro chování windows služby na pozadí
+    /// </summary>
     public partial class SmartModulBackupService : ServiceBase
     {
+        /// <summary>
+        /// Interval, v kterém se bude automaticky znovu načítat konfigurace, pravidla, 
+        /// a plánovat zálohy
+        /// </summary>
         public static TimeSpan _scheduleInterval = new TimeSpan(0, 10, 0);
 
         const bool wait = false;
 
+        /// <summary>
+        /// Časovač využívaný pro reload (načítání konfigurace, pravidel, plánování záloh, apod);
+        /// </summary>
         private System.Timers.Timer timer;
+
+        /// <summary>
+        /// WCF služba, na kterou se napojí instance uživatelského rozhraní
+        /// </summary>
         private WCF.SmartModulBackupInterface wcf_service;
+
+        /// <summary>
+        /// Hostitel služby
+        /// </summary>
         private ServiceHost host;
 
-        public BackupTimeline timeline;
+        BackupTimeline timeline;
+        FolderObserver observer;
 
         public SmartModulBackupService()
         {
@@ -48,129 +67,119 @@ namespace smart_modul_BACKUP_service
             evlog.Log = "SmartModulBackupLog";
             evlog.Clear();
 
-            //když někdo pošle zprávu přes SMB_Log, předáme jí Loggeru
-            SMB_Log.OnLog += SMB_Log_OnLog;
-
-            Logger.eventLog = evlog;
+            DumbLogger.eventLog = evlog;
         }
 
+        /// <summary>
+        /// SMB_Log je definovaný v projektu SmartModulBackupClasses, aby měly jeho třídy
+        /// možnost psát do EventLogu, musíme se napojit na událost OnLog a předat zprávu
+        /// Loggeru definovanému v SmartModulBackupService
+        /// </summary>
+        /// <param name="obj"></param>
         private void SMB_Log_OnLog(LogArgs obj)
         {
             switch(obj.Type)
             {
                 case LogType.Error: 
-                    Logger.Error(obj.Message);
+                    DumbLogger.Error(obj.Message);
                     break;
                 case LogType.Info: 
-                    Logger.Log(obj.Message); 
+                    DumbLogger.Log(obj.Message); 
                     break;
                 case LogType.Success: 
-                    Logger.Success(obj.Message); 
+                    DumbLogger.Success(obj.Message); 
                     break;
                 case LogType.Warning: 
-                    Logger.Warn(obj.Message); 
+                    DumbLogger.Warn(obj.Message); 
                     break;
             }
         }
 
+        /// <summary>
+        /// Kód pro spuštění při startu služby
+        /// </summary>
+        /// <param name="args"></param>
         protected override void OnStart(string[] args)
         {
             try
             {
+                //pokud je konstanta wait == true, počkat 10 vteřin, aby se mohly napojit debugovací nástroje
                 if (wait)
                     Thread.Sleep(10000);
 
                 //když dojde k výjimce, vypsat ji do eventlogu
                 AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-                Logger.Log("Služba smart modul BACKUP spuštěna!!");
+                DumbLogger.Log("Služba smart modul BACKUP spuštěna!!");
 
-                //cd do složky, kam chceme
+                //cd do složky, kam chceme 
+                //TODO: zařídit, aby se tato složka buďto:
+                //  - dala nastavit
+                //  - byla v umístění .exe služby a GUI
                 string cd = "C:\\smart modul BACKUP";
                 if (!Directory.Exists(cd)) Directory.CreateDirectory(cd);
                 Directory.SetCurrentDirectory(cd);
-                Logger.Log($"Aktuální adresa: {cd}");
+                DumbLogger.Log($"Aktuální adresa: {cd}");
 
-                Manager.SetSingleton(new ConfigManager()); //pracuje s config.xml
+                //Manager umožňuje
+                //  - uchovávat instance užitečných tříd a pak je dostávat podle typu (SetSingleton<T>, Get<T>)
+                //  - vytvářet nové instance užitečných tříd vždy, když si o ní řekneme (SetTransient<T>, Get<T>)
+
+                var loggingConfig = Manager.SetSingleton(new ConfigManager()).Load().Config.Logging; //pracuje s config.xml
+                SmbLog.Configure(loggingConfig, SmbAssembly.Service); //nastavit logger
+                SmbLog.Info("Načtena konfigurace pro logování");
                 Manager.SetTransient(new SqlBackuperFactory()); //SqlBackuper využívaný na SQL zálohy
                 Manager.SetTransient(new SftpUploaderFactory()); //SftpUploader - obaluje SftpClient
-                Manager.SetSingleton(new PlanManager()); //PlanManager - umožňuje získávat info o plánu
+                Manager.SetSingleton(new AccountManager()); //AccountManager - umožňuje získávat info o plánu
                 Manager.SetSingleton(new RuleScheduler()); //RuleScheduler - plánuje pravidla
                 Manager.SetSingleton(new BackupCleaner()); //BackupCleaner - odstraňuje staré zálohy
+                observer = Manager.SetSingleton(new FolderObserver());
 
-                //Vytvořit Backuper - ten se stará o samotné zálohy
-                var backuper = new Backuper()
-                {
-                    TempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp_dir")
-                };
-                Manager.SetSingleton(backuper);
+                ////Vytvořit Backuper - ten se stará o samotné zálohy
+                //var backuper = new Backuper()
+                //{
+                //    TempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp_dir")
+                //};
+                //Manager.SetSingleton(backuper);
 
                 //Vytvořit BackupTimeline - ta se stará o spouštění záloh ve správné časy
                 timeline = Manager.SetSingleton(new BackupTimeline());
 
-                //Vytvořit Restorer - ten se stará o obnovy (ty se nespouští automaticky, pouze přímo z GUI)
-                var restorer = new Restorer()
-                {
-                    TempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp_dir_restore")
-                };
-                Manager.SetSingleton(restorer);
+                ////Vytvořit Restorer - ten se stará o obnovy (ty se nespouští automaticky, pouze přímo z GUI)
+                //var restorer = new Restorer()
+                //{
+                //    TempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp_dir_restore")
+                //};
+                //Manager.SetSingleton(restorer);
 
-                Manager.SetSingleton(new BackupInfoManager());
-                Manager.SetSingleton(new BackupRuleLoader());
+                Manager.SetSingleton(new BackupInfoManager()); //načítá info o provedených zálohách z lokální složky, webového api, popř. SFTP serveru
+                Manager.SetSingleton(new BackupRuleLoader()); //načítá info o pravidlech, synchronizujíc je s webovým API
 
                 //spustit wcf službu pro komunikaci s uživatelským rozhraním
                 wcf_service = new WCF.SmartModulBackupInterface(this);
                 host = new ServiceHost(wcf_service);
                 host.Open();
-                Logger.Log($"Hostuji WCF službu; host.State = {host.State}");
+                SmbLog.Info($"Hostuji WCF službu; host.State = {host.State}", null, LogCategory.ServiceHost);
 
                 //zveřejnit objekt, který umožní interakci s GUI odkudkoliv z kódu
                 Utils.GUIS = wcf_service.Callback;
 
-                host.Closed += (_, __) => Logger.Warn("WCF služba ukončena?");
-                host.Faulted += (_, __) => Logger.Error("Došlo k chybě při komunikaci s GUI");
+                //když se něco pokazí, kváknout
+                host.Closed += (_, __) => SmbLog.Warn("WCF služba ukončena?", null, LogCategory.ServiceHost);
+                host.Faulted += (_, __) => SmbLog.Error("Došlo k chybě při komunikaci s GUI", null, LogCategory.ServiceHost);
 
+                Load();
 
-                Load(); //načte všechna důležitá data jakož konfiguraci, pravidla, apod.
+                timer = new System.Timers.Timer();
+                timer.Elapsed += Timer_Elapsed;
+                timer.Interval = _scheduleInterval.TotalMilliseconds;
+                timer.Start();
             }
             catch(Exception e)
             {
-                Logger.Ex(e);
-                Logger.Warn("Ukončuji službu");
+                DumbLogger.Ex(e);
+                DumbLogger.Warn("Ukončuji službu");
 
-                Stop();
-            }
-        }
-
-        /// <summary>
-        /// Poté, co se lokálně uloží xml s informacemi o zálohách, je chceme zkopírovat na sftp
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Backups_OnInfosSaved(object sender, InfoSaveEventArgs<Backup> e)
-        {
-            
-        }
-
-        /// <summary>
-        /// Spustí časovač s daným intervalem. Nepovede-li se to, služba se vypne.
-        /// </summary>
-        /// <param name="interval"></param>
-        private void StartTimer(int interval)
-        {
-            try
-            {
-                timer = new System.Timers.Timer();
-                timer.Interval = interval;
-                timer.Elapsed += Timer_Elapsed;
-                timer.Start();
-
-                Logger.Log("Časovač spuštěn; první tik za " + interval + "ms ");
-            }
-            catch (Exception e)
-            {
-                Logger.Ex(e);
-
                 Stop();
             }
         }
@@ -220,29 +229,15 @@ namespace smart_modul_BACKUP_service
             rule.SaveSelf();
         }
 
-        ///// <summary>
-        ///// Vytvoří soubor konfigurace.
-        ///// </summary>
-        //private void NewConfig()
-        //{
-        //    Logger.Log("Vytvářím soubor konfigurace");
-
-        //    Utils.Config = new Config();
-
-        //    Utils.Config.Connection = new DatabaseConfig();
-
-        //    File.WriteAllText("config.xml", Utils.Config.ToXML());
-        //}
-
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = (e.ExceptionObject as Exception);
-            SMB_Log.LogEx(ex);
+            SmbLog.Fatal("Došlo k neošetřené výjimce", ex);
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Logger.Log("Časovač začasoval");
+            SmbLog.Info("Časovač začasoval", null, LogCategory.Service);
 
             timer.Interval = _scheduleInterval.TotalMilliseconds;
 
@@ -255,9 +250,11 @@ namespace smart_modul_BACKUP_service
             if (timeline.Running)
                 timeline.Stop();
 
-            //naplánovat pravidla
-            DateTime plan_till = DateTime.Now + _scheduleInterval;
-            var bk_tasks = Manager.Get<RuleScheduler>().GetBackupTaskList(_scheduleInterval);
+            var load_called = DateTime.Now;
+
+            //zastavit pozorovač složek
+            observer.Stop();
+            observer.Clear();
 
             //znovu načíst důležitou konfiguraci
             var cfg = Manager.Get<ConfigManager>().Load();
@@ -265,11 +262,18 @@ namespace smart_modul_BACKUP_service
             Manager.Get<BackupRuleLoader>().Load();
             SMB_Utils.Sync(() => Manager.Get<BackupInfoManager>().LoadAsync());
 
+            //naplánovat pravidla
+            DateTime plan_till = load_called + _scheduleInterval;
+            var bk_tasks = Manager.Get<RuleScheduler>().GetBackupTaskList(load_called, plan_till);
+
             //odstranit staré zálohy
             Manager.Get<BackupCleaner>().CleanupAllRulesAsync();
 
             //spustit časovou osu
-            Manager.Get<BackupTimeline>().Start(bk_tasks, plan_till);
+            timeline.Start(bk_tasks, plan_till);
+
+            //spustit pozorovač složek
+            observer.Start();
 
             //ověřit, zdali jsme stále připojeni k GUI
             Utils.GUIS.TestConnection();
@@ -279,8 +283,15 @@ namespace smart_modul_BACKUP_service
         {
             if (host != null && host.State == CommunicationState.Opened)
             {
-                Logger.Log("Ukončuji komunikaci s rozhraním");
-                Utils.GUIS.Goodbye();
+                SmbLog.Info("Ukončuji komunikaci s rozhraním", null, LogCategory.ServiceHost);
+                try
+                {
+                    Utils.GUIS.Goodbye();
+                }
+                catch(Exception ex)
+                {
+                    SmbLog.Error("Chyba při ukončování WCF komunikace s GUI", ex, LogCategory.ServiceHost);
+                }
                 host.Close();
                 host = null;
             }
@@ -293,56 +304,16 @@ namespace smart_modul_BACKUP_service
 
             Task.WhenAll(BackupTask.RunningBackupTasks.Select(bt => bt.TheTask)).Wait();
 
-            Logger.Log("Služba smart modul BACKUP stopnuta");
+            DumbLogger.Log("Služba smart modul BACKUP stopnuta");
         }
 
-        ///// <summary>
-        ///// Znovu načte službu (znovu načte konfigurační soubory a podle nich naplánuje pravidla. Zálohy, které již probíhají, se nezruší.)
-        ///// </summary>
-        //public void Reload(bool loadSftp = true, bool loadSql = true, bool loadConfig = true, bool loadRules = true, bool scheduleRules = true, bool startTimer = true)
-        //{
-        //    //pokud časovač běží, vypneme ho
-        //    if (timer != null && timer.Enabled)
-        //        timer.Stop();
-
-        //    //pokud timeline běží, vypneme jí, aby se nestalo, že se jedno pravidlo spustí v jeden moment vícekrát
-        //    if (timeline.Running)
-        //        timeline.Stop();
-
-        //    //načíst vše potřebné
-        //    var cfg = Manager.Get<ConfigManager>();
-        //    if (loadConfig)
-        //    {
-        //        cfg.Load();
-
-        //        updateApi(cfg);
-        //    }
-        //    if (loadRules)
-        //        Manager.Get<BackupRuleLoader>().Load();
-
-        //    //naplánovat pravidla
-        //    if (scheduleRules)
-        //    {
-        //        Manager.Get<RuleScheduler>().ScheduleRules(_scheduleInterval);
-        //    }
-
-        //    //spustit časovač, který bude plánovat pravidla v daném intervalu
-        //    if (startTimer)
-        //        StartTimer((int)_scheduleInterval.TotalMilliseconds);
-        //}
-
         /// <summary>
-        /// Vytvoří novou instanci SmbApiClient a znovu načte PlanManager.
+        /// Znovu se přihlásí do AccountManageru
         /// </summary>
         /// <param name="cfg"></param>
         public static void updateApi(ConfigManager cfg)
         {
-            //pokud se načetla konfigurace, mohlo se změnit nastavení připojení k api; to tedy také znovu načteme
-            if (!cfg.Config.WebCfg.Online)
-                Manager.SetSingleton<SmbApiClient>(null); //jsme-li offline, připojení nemáme
-            else
-                Manager.SetSingleton(new SmbApiClient(cfg.Config.WebCfg));
-            Manager.Get<PlanManager>().Load(); //znovu načíst info o plánu
+            Manager.Get<AccountManager>().LoginWithAsync(cfg.Config.WebCfg).Wait();
         }
     }
 }

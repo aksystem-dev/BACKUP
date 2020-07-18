@@ -10,6 +10,7 @@ namespace SmartModulBackupClasses
     /// Načítá informace z lokálních souborů a zároveň ze souboru přes sftp.
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Obsolete("Používá se BackupInfoManager a BackupRuleLoader")]
     public class XmlInfoLoaderSftpMirror<T> : XmlInfoLoader<T> where T : IHaveID
     {
         public string RemotePath { get; private set; }

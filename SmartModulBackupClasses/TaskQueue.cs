@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Spouští tasky jeden po druhém na vedlejším vlákně
+    /// </summary>
     public class TaskQueue
     {
         BlockingCollection<Func<Task>> tasks;

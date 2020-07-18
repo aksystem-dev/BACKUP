@@ -20,15 +20,23 @@ namespace SmartModulBackupClasses.Managers
 
         /// <summary>
         /// Při dělání operací na tomto objektu se používá semafor. Toto číslo udává v milisekundách, jak dlouho
-        /// budeme maximálně na semaforu čekat než šlápnem na plyn a prosvištíme na červenou.
+        /// budeme maximálně na semaforu čekat
         /// </summary>
         public int Patience { get; set; } = 2000;
 
         private List<Backup> backups = new List<Backup>();
+
+        /// <summary>
+        /// Seznam všech načtených záloh.
+        /// </summary>
         public Backup[] Backups
         {
             get => backups.ToArray();
         }
+
+        /// <summary>
+        /// Seznam načtených záloh, které byly vytvořeny na tomto počítači.
+        /// </summary>
         public IEnumerable<Backup> LocalBackups
         {
             get
@@ -38,18 +46,23 @@ namespace SmartModulBackupClasses.Managers
             }
         }
 
-        SmbApiClient client => Manager.Get<SmbApiClient>();
+        SmbApiClient client => Manager.Get<AccountManager>()?.Api;
         readonly ConfigManager config;
-        readonly PlanManager plans;
+        readonly AccountManager plans;
+
         public BackupInfoManager()
         {
             config = Manager.Get<ConfigManager>();
-            plans = Manager.Get<PlanManager>();
+            plans = Manager.Get<AccountManager>();
         }
 
         public bool UseApi { get; set; } = true;
         public bool UseSftp { get; set; } = false;
 
+        /// <summary>
+        /// Pokud se tato třída využívá ve WPF, sem dejte něco jako Application.Current.Dispatcher.InvokeAsync;
+        /// jinak to bude skuhrat, že měníme GUI z jiného vlákna
+        /// </summary>
         public Action<Action> PropertyChangedDispatchHandler;
 
         void arrayChanged()
@@ -63,10 +76,25 @@ namespace SmartModulBackupClasses.Managers
         }
 
         /// <summary>
-        /// Aby bylo všechno bezpečné, měla by vždy probíhat jen jedna operace najednou
+        /// Aby nedocházelo k konfliktům, měla by vždy probíhat jen jedna operace najednou
+        /// (nejen v tomto programu, ale ve všech programech využívajících tuto třídu -
+        /// čili jak Windows Služba tak GUI)
         /// </summary>
         private Semaphore semaphore = new Semaphore(1, 1, "SMB_BackupInfoManager_Semaphore");
 
+        /// <summary>
+        /// Načte info:
+        /// <para>   a) ze xml souborů v Const.BK_INFOS_FOLDER</para>
+        /// <para>   b) pokud UseApi => z webového api (to vrátí všechny zálohy na aktuálním plánu, čili mohou být i z jiných
+        ///     PC; pro filtr záloh jen z tohoto PC použijte LocalBackups)</para>
+        /// <para>   c) pokud UseSftp => z SFTP serveru, kde mohou také být uloženy informace o zálohách v .xml formátu</para>
+        /// </summary>
+        /// <param name="sync">
+        ///     pokud true, metoda se postará o to, aby na žádném ze zdrojů 
+        ///     (lokální, pokud UseApi => webové api, pokud UseSftp => sftp server) 
+        ///     nechybělo žádné info, které není na jiném zdroji
+        /// </param>
+        /// <returns></returns>
         public async Task LoadAsync(bool sync = true)
         {
             bool entered = semaphore.WaitOne(Patience);
@@ -195,7 +223,7 @@ namespace SmartModulBackupClasses.Managers
             }
             catch(Exception ex)
             {
-                SMB_Log.LogEx(ex);
+                SmbLog.Error("Problém při přidávání info o záloze", ex, LogCategory.BackupInfoManager);
             }
             finally
             {
@@ -245,7 +273,7 @@ namespace SmartModulBackupClasses.Managers
             }
             catch (Exception ex)
             {
-                SMB_Log.LogEx(ex);
+                SmbLog.Error("Problém při ostraňování info o záloze", ex, LogCategory.BackupInfoManager);
             }
             finally
             {
@@ -275,7 +303,7 @@ namespace SmartModulBackupClasses.Managers
             }
             catch (Exception ex)
             {
-                SMB_Log.LogEx(ex);
+                SmbLog.Error("Problém při updatování info o záloze", ex, LogCategory.BackupInfoManager);
             }
             finally
             {
@@ -288,7 +316,7 @@ namespace SmartModulBackupClasses.Managers
         {
             try
             {
-                var baks = await client.ListBackupsAsync(plans.Plan.ID);
+                var baks = await client.ListBackupsAsync(plans.PlanInfo.ID);
                 var pc_id = SMB_Utils.GetComputerId();
                 return baks;
             }
@@ -358,12 +386,12 @@ namespace SmartModulBackupClasses.Managers
         {
             try
             {
-                await client.AddBackupAsync(bk, plans.Plan.ID);
+                await client.AddBackupAsync(bk, plans.PlanInfo.ID);
                 return true;
             }
             catch (Exception ex)
             {
-                SMB_Log.LogEx(ex);
+                SmbLog.Error("Problém při nahrávání info o záloze do webové aplikace", ex, LogCategory.BackupInfoManager);
                 return false;
             }
         }
@@ -391,7 +419,7 @@ namespace SmartModulBackupClasses.Managers
                 }
                 catch (Exception ex)
                 {
-                    SMB_Log.LogEx(ex);
+                    SmbLog.Error("Problém při nahrávání info o záloze na SFTP server", ex, LogCategory.BackupInfoManager);
                     return false;
                 }
                 finally
@@ -421,7 +449,7 @@ namespace SmartModulBackupClasses.Managers
                 }
                 catch (Exception ex)
                 {
-                    SMB_Log.LogEx(ex);
+                    SmbLog.Error("Problém při ukládání info o záloze do souboru", ex, LogCategory.BackupInfoManager);
                     return false;
                 }
             });
@@ -445,11 +473,11 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<bool> deleteBkApi(Backup bk)
         {
-            if (plans.Plan == null) return false;
+            if (plans.PlanInfo == null) return false;
 
             try
             {
-                var planId = plans.Plan.ID;
+                var planId = plans.PlanInfo.ID;
                 await client.DeleteBackupAsync(bk.LocalID, planId);
                 return true;
             }
@@ -480,7 +508,7 @@ namespace SmartModulBackupClasses.Managers
                 }
                 catch (Exception ex)
                 {
-                    SMB_Log.LogEx(ex);
+                    SmbLog.Error("Problém při odstraňování info o záloze ze SFTP serveru", ex, LogCategory.BackupInfoManager);
                     return false;
                 }
                 finally
@@ -516,11 +544,11 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<bool> updateBkApi(Backup bk)
         {
-            if (plans.Plan == null) return false;
+            if (plans.PlanInfo == null) return false;
 
             try
             {
-                var planId = plans.Plan.ID;
+                var planId = plans.PlanInfo.ID;
                 await client.UpdateBackupAsync(bk, planId);
                 return true;
             }
@@ -553,7 +581,7 @@ namespace SmartModulBackupClasses.Managers
                 }
                 catch (Exception ex)
                 {
-                    SMB_Log.LogEx(ex);
+                    SmbLog.Error("Problém při updatování info o záloze na SFTP serveru", ex, LogCategory.BackupInfoManager);
                     return false;
                 }
                 finally

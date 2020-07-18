@@ -26,7 +26,7 @@ namespace smart_modul_BACKUP_service.WCF
                 }
                 catch (Exception e)
                 {
-                    Logger.Ex(e);
+                    SmbLog.Error("Problém při volání metody na callback objektu", e, LogCategory.ServiceHost);
                     callbacks.Remove(cb);
                 }
             }

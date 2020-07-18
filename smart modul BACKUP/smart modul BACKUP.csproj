@@ -57,16 +57,22 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -105,6 +111,7 @@
     <Compile Include="Controls\ToggleOnOff.xaml.cs">
       <DependentUpon>ToggleOnOff.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AnyVisibilityConverter.cs" />
     <Compile Include="Converters\BackupSourceColorConverter.cs" />
     <Compile Include="Converters\ByteSizeToStringConverter.cs" />
     <Compile Include="Converters\ChooseConverter.cs" />
@@ -113,7 +120,6 @@
     <Compile Include="Converters\NotNullConverter.cs" />
     <Compile Include="Converters\ServiceStatusConverter.cs" />
     <Compile Include="Converters\TrueBoldConverter.cs" />
-    <Compile Include="GuiLog.cs" />
     <Compile Include="Handy.cs" />
     <Compile Include="InProgress.cs" />
     <Compile Include="Managers\AvailableDbLoader.cs" />
@@ -121,7 +127,6 @@
     <Compile Include="Models\ProgBarsTag.cs" />
     <Compile Include="Models\BackupSourceModel.cs" />
     <Compile Include="Models\Database.cs" />
-    <Compile Include="LoadedStatic.cs" />
     <Compile Include="Models\ProgressBarCollection.cs" />
     <Compile Include="Models\ProgressBarModel.cs" />
     <Compile Include="Models\ServiceState.cs" />
@@ -133,7 +138,6 @@
     <Compile Include="Pages\ConfigPage.xaml.cs">
       <DependentUpon>ConfigPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DateConverter.cs" />
     <Compile Include="Controls\LabelPasswordBox.xaml.cs">
       <DependentUpon>LabelPasswordBox.xaml</DependentUpon>
     </Compile>

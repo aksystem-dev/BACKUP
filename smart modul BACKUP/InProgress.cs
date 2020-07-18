@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace smart_modul_BACKUP
 {
     /// <summary>
-    /// Obsahuje informace o probíhajících zálohách a obnovách.
+    /// Obsahuje informace o probíhajících zálohách a obnovách. Má seznam BackupInProgress a RestoreInProgress.
     /// </summary>
     public class InProgress : INotifyPropertyChanged
     {
@@ -22,9 +22,9 @@ namespace smart_modul_BACKUP
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void _b_ch() =>
-            App.Current.Dispatcher.Invoke(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Backups))));
+            App.Current.Dispatcher.InvokeAsync(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Backups))));
         private void _r_ch() =>
-            App.Current.Dispatcher.Invoke(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Restores))));
+            App.Current.Dispatcher.InvokeAsync(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Restores))));
 
         /// <summary>
         /// Pokud záloha se stejným id již je na seznamu, updatuje ji; jinak ji tam přidá
@@ -47,7 +47,7 @@ namespace smart_modul_BACKUP
                         found.Errors.Add(backup.Errors[i]);
                 }
 
-                App.Current.Dispatcher.Invoke(() => found.Refresh());
+                App.Current.Dispatcher.InvokeAsync(() => found.Refresh());
                 return found;
             }
             else
@@ -81,7 +81,7 @@ namespace smart_modul_BACKUP
                         found.Errors.Add(restore.Errors[i]);
                 }
 
-                App.Current.Dispatcher.Invoke(() => found.Refresh());
+                App.Current.Dispatcher.InvokeAsync(() => found.Refresh());
                 return found;
             }
             else

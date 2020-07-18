@@ -14,9 +14,9 @@ using System.Windows.Forms;
 namespace smart_modul_BACKUP.WCF
 {
     /// <summary>
-    /// Zde se zpracovávají zprávy ze služby.
+    /// Metody, které volá služba na GUI.
     /// </summary>
-    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, UseSynchronizationContext = false, IncludeExceptionDetailInFaults = true)]
+    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false, IncludeExceptionDetailInFaults = true)]
     class SmartModulBackupCallbackHandler : ISmartModulBackupInterfaceCallback
     {
         public event Action OnServiceDisconnected;
@@ -25,6 +25,9 @@ namespace smart_modul_BACKUP.WCF
         private InProgress inProgress => Manager.Get<InProgress>();
         private BackupInfoManager backups => Manager.Get<BackupInfoManager>();
 
+        /// <summary>
+        /// Služba pravidelně bude na klientovi volat tuto metodu, aby si ověřila, že klient je stále připojen.
+        /// </summary>
         public void TestConnection()
         {
             try
@@ -33,25 +36,38 @@ namespace smart_modul_BACKUP.WCF
             }
             catch (Exception e)
             {
-                GuiLog.Log($"{e.GetType().Name}\n{e.Message}");
+                SmbLog.Error($"Chyba v TestConnection()", e, LogCategory.GuiServiceClient);
             }
         }
 
+        /// <summary>
+        /// Zobrazí bublinu s chybovou hláškou.
+        /// </summary>
+        /// <param name="error"></param>
         public void ShowError(string error)
         {
             Manager.Get<NotifyIcon>()?.ShowBalloonTip(2000, "Chyba", error, ToolTipIcon.Error);
         }
 
+        [Obsolete("Nedělá nic.")]
         public void ShowMsg(string msg)
         {
             //MessageBox.Show(msg);
         }
 
+        /// <summary>
+        /// Zavolá událost OnServiceDisconnected.
+        /// </summary>
         public void Goodbye()
         {
             OnServiceDisconnected?.Invoke();
         }
 
+        /// <summary>
+        /// Informuje GUI o spuštěné obnově a nastaví daný RestoreInProgress jako objekt, skrze nějž
+        /// lze předávat informace o průběho dané obnovy.
+        /// </summary>
+        /// <param name="progress"></param>
         public void StartRestore(RestoreInProgress progress)
         {
             try
@@ -70,6 +86,11 @@ namespace smart_modul_BACKUP.WCF
             }
         }
 
+        /// <summary>
+        /// Informuje GUI o spuštěné záloze a nastaví daný BackupInProgress jako objekt, skrze nějž
+        /// lze předávat informace o průběho dané zálohy.
+        /// </summary>
+        /// <param name="progress"></param>
         public void StartBackup(BackupInProgress progress)
         {
             try
@@ -89,6 +110,10 @@ namespace smart_modul_BACKUP.WCF
             }
         }
 
+        /// <summary>
+        /// Updatuje informace o průběhu obnovy.
+        /// </summary>
+        /// <param name="progress"></param>
         public void UpdateRestore(RestoreInProgress progress)
         {
             try
@@ -107,6 +132,10 @@ namespace smart_modul_BACKUP.WCF
             }
         }
 
+        /// <summary>
+        /// Updatuje informace o průběhu zálohy.
+        /// </summary>
+        /// <param name="progress"></param>
         public void UpdateBackup(BackupInProgress progress)
         {
             try
@@ -125,6 +154,11 @@ namespace smart_modul_BACKUP.WCF
             }
         }
 
+        /// <summary>
+        /// Informuje GUI o tom, že obnova je dokončena.
+        /// </summary>
+        /// <param name="restore"></param>
+        /// <param name="response"></param>
         public void CompleteRestore(RestoreInProgress restore, RestoreResponse response)
         {
             try
@@ -162,6 +196,11 @@ namespace smart_modul_BACKUP.WCF
             }
         }
 
+        /// <summary>
+        /// Informuje GUI o tom, že záloha je dokončena.
+        /// </summary>
+        /// <param name="backup"></param>
+        /// <param name="BackupID"></param>
         public async void CompleteBackup(BackupInProgress backup, int BackupID)
         {
             try

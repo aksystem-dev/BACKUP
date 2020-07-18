@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Převádí počet bytů na hezký řetězec s rozumnou jednotkou velikosti.
+    /// </summary>
     class ByteSizeToStringConverter : IValueConverter
     {
         string[] suffixes = { "B", "KB", "MB", "GB", "TB", "PB", "EB" };

@@ -8,6 +8,9 @@ using System.Xml.Serialization;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Info o databázi.
+    /// </summary>
     public class Database : INotifyPropertyChanged
     {
         [XmlText]

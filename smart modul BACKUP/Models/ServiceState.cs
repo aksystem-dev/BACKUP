@@ -13,6 +13,9 @@ using System.Windows;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Umožňuje interakci s Windows smart modul BACKUP službou přes WCF rozhraní.
+    /// </summary>
     public class ServiceState : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -21,6 +24,15 @@ namespace smart_modul_BACKUP
         public Restore[] RestoresInProgress => _restoresInProgress.ToArray();
 
         private ServiceConnectionState _state = ServiceConnectionState.NotInitialized;
+
+        private void propChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        /// <summary>
+        /// Aktuální stav.
+        /// </summary>
         public ServiceConnectionState State
         {
             get => _state;
@@ -30,16 +42,30 @@ namespace smart_modul_BACKUP
                     return;
 
                 _state = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(State)));
+                propChanged(nameof(State));
+                propChanged(nameof(IsServiceRunning));
             }
         }
 
-        private ServiceInterface.SmartModulBackupInterfaceClient client = null;
+        public bool IsServiceRunning
+        {
+            get => State == ServiceConnectionState.NotConnected || State == ServiceConnectionState.Connected;
+        }
 
-        public ServiceInterface.SmartModulBackupInterfaceClient Client => client;
+        /// <summary>
+        /// Odkaz na SmartModulBackupInterfaceClient pro komunikaci s WCF službou
+        /// </summary>
+        public ServiceInterface.SmartModulBackupInterfaceClient Client { get; private set; } = null;
 
+        /// <summary>
+        /// Odkaz na serviceController umožňující kontrolovat a řídit stav Windows služby
+        /// </summary>
         private ServiceController serviceController;
 
+        /// <summary>
+        /// Vrátí ServiceController pro Windows službu s názvem smart modul BACKUP service
+        /// </summary>
+        /// <returns></returns>
         public ServiceController GetService()
         {
             return ServiceController.GetServices().FirstOrDefault(f => f.ServiceName == "smart modul BACKUP service");
@@ -141,13 +167,13 @@ namespace smart_modul_BACKUP
             while (true)
                 try
                 {
-                    var callback = new WCF.SmartModulBackupCallbackHandler() { client = client };
+                    var callback = new WCF.SmartModulBackupCallbackHandler() { client = Client };
                     callback.OnServiceDisconnected += Callback_OnServiceDisconnected;
                     var context = new InstanceContext(callback);
 
-                    client = new ServiceInterface.SmartModulBackupInterfaceClient(context);
+                    Client = new ServiceInterface.SmartModulBackupInterfaceClient(context);
                     //client.Open();
-                    client.Connect();
+                    Client.Connect();
 
                     break;
                 }
@@ -170,19 +196,22 @@ namespace smart_modul_BACKUP
         /// </summary>
         private void Callback_OnServiceDisconnected()
         {
-            client.Close();
+            Client.Close();
             State = ServiceConnectionState.NotRunning;
         }
 
+        /// <summary>
+        /// Řekne službě, že se odpojujeme, a odpojí se
+        /// </summary>
         public void Disconnect()
         {
             if (this.State != ServiceConnectionState.Connected)
                 return;
 
-            if (client.State == CommunicationState.Opened)
+            if (Client.State == CommunicationState.Opened)
             {
-                client.Disconnect();
-                client.Close();
+                Client.Disconnect();
+                Client.Close();
             }
 
             State = ServiceConnectionState.NotConnected;
@@ -193,18 +222,18 @@ namespace smart_modul_BACKUP
         /// </summary>
         public void Reload()
         {
-            if (client == null || client.State != CommunicationState.Opened)
+            if (Client == null || Client.State != CommunicationState.Opened)
                 return;
 
             //restartovat službu, je-li připojena
             if (this.State == ServiceConnectionState.Connected)
                 try
                 {
-                    client.Reload();
+                    Client.Reload();
                 }
                 catch (Exception ex)
                 {
-                    GuiLog.Log($"výj. v ServiceState.cs: {ex.GetType().Name}: \n{ex.Message}");
+                    SmbLog.Error($"výj. v ServiceState.cs: {ex.GetType().Name}: \n{ex.Message}", ex, LogCategory.GuiServiceClient);
                 }
         }
 
@@ -219,36 +248,44 @@ namespace smart_modul_BACKUP
             //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RestoresInProgress)));
 
             //počkat, až služba provede obnovu
-            return client.Restore(restore);
+            return Client.Restore(restore);
         }
 
-        //public void CompleteRestore(RestoreResponse response)
-        //{
-        //    //odstranit objekt obnovy ze seznamu a informovat o změně
-        //    _restoresInProgress.RemoveAll(f => f.ID == response.info.ID);
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RestoresInProgress)));
-
-        //    //zobrazit bublinu
-        //    if (response.Success)
-        //        LoadedStatic.notifyIcon?.ShowBalloonTip(2000, "Data úspěšně obnovena", "Obnova dokončena", 
-        //            System.Windows.Forms.ToolTipIcon.Info);
-        //    else if (response.SuccessfulRestoreSourceIndexes.Any())
-        //        LoadedStatic.notifyIcon?.ShowBalloonTip(2000, "Obnova dokončena, ale došlo k chybám", "Obnova dokončena",
-        //            System.Windows.Forms.ToolTipIcon.Warning);
-        //    else
-        //        LoadedStatic.notifyIcon?.ShowBalloonTip(2000, "Obnova dat se nezdařila", "Obnova selhala",
-        //            System.Windows.Forms.ToolTipIcon.Error);
-        //}
-
+        /// <summary>
+        /// Řekne službě, ať provede zálohu určitého pravidla. Vrátí odkaz na BackupInProgress, pomocí nějž lze
+        /// monitorovat průběh zálohy.
+        /// </summary>
+        /// <param name="rule"></param>
+        /// <returns></returns>
         public BackupInProgress DoSingleBackup(BackupRule rule)
         {
             rule.SaveSelf();
             //client.Reload();  -> o to ať se postará sama služba
-            return client.DoSingleBackup(rule.ToXmlString()); //odselat žádost přes WCF
+            return Client.DoSingleBackup(rule.ToXmlString()); //odselat žádost přes WCF
         }
 
-        public BackupInProgress[] GetBackupsInProgress() => client.GetBackupsInProgress();
-        public RestoreInProgress[] GetRestoresInProgresses() => client.GetRestoresInProgress();
+        /// <summary>
+        /// Vypne službu.
+        /// </summary>
+        /// <returns></returns>
+        public bool StopService()
+        {
+            if (!serviceController.CanStop)
+                return false;
+
+            try
+            {
+                serviceController.Stop();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public BackupInProgress[] GetBackupsInProgress() => Client.GetBackupsInProgress();
+        public RestoreInProgress[] GetRestoresInProgresses() => Client.GetRestoresInProgress();
     }
 
     public enum ServiceConnectionState

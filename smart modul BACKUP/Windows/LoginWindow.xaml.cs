@@ -20,6 +20,8 @@ namespace smart_modul_BACKUP
     /// </summary>
     public partial class LoginWindow : Window, INotifyPropertyChanged
     {
+        public WebConfig WebCfg { get; set; } = new WebConfig() { Online = true };
+
         public ObservableCollection<PlanXml> AvailablePlans
         {
             get;
@@ -29,17 +31,18 @@ namespace smart_modul_BACKUP
         int selectedPlan = -1;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public SmbApiClient api;
-        public PlanXml plan = null;
+
+        private readonly AccountManager _account;
 
         void updatePlans()
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AvailablePlans)));
         }
 
-
         public LoginWindow()
         {
+            _account = Manager.Get<AccountManager>();
+
             InitializeComponent();
         }
 
@@ -77,15 +80,17 @@ namespace smart_modul_BACKUP
 
             btn_login.IsEnabled = false;
 
-            api = new SmbApiClient(txt_username.Text, pwd.Password, ms_timeout: 1500);
-
             try
             {
+                WebCfg.Username = txt_username.Text;
+                WebCfg.Password.Value = pwd.Password;
+
+                await _account.LoginWithAsync(WebCfg);
+
                 AvailablePlans.Clear();
-                var hello = await api.HelloAsync();
-                foreach (var plan in hello.AvailablePlans)
+                foreach (var plan in _account.HelloInfo.AvailablePlans)
                     AvailablePlans.Add(plan);
-                selectedPlan = hello.ActivePlanIndex;
+                selectedPlan = _account.HelloInfo.ActivePlanIndex;
                 showValiSuccess("Přihlášení bylo úspěšné. Vyberte prosím plán.");
             }
             catch (HttpStatusException http_ex)
@@ -100,7 +105,6 @@ namespace smart_modul_BACKUP
                 showValiError("Došlo k nějaké chybě, omlouváme se.");
             }
 
-            //updatePlans();
             if (selectedPlan >= 0)
                 lbx_plans.SelectedIndex = selectedPlan;
             else
@@ -122,7 +126,8 @@ namespace smart_modul_BACKUP
 
             try
             {
-                await api.ActivateAsync(plan.ID);
+                await _account.Api.ActivateAsync(plan.ID);
+                await _account.RedownloadSftp();
             }
             catch (SmbApiException api_ex)
             {
@@ -148,14 +153,8 @@ namespace smart_modul_BACKUP
             }
 
             var cfg_man = Manager.Get<ConfigManager>();
-            var config = cfg_man.Config;
-            if (config.WebCfg == null)
-                config.WebCfg = new WebConfig();
-            config.WebCfg.Username = api.Username;
-            config.WebCfg.Password = new Pwd(api.Password);
-            config.WebCfg.Online = true;
+            cfg_man.Config.WebCfg = WebCfg;
             cfg_man.Save();
-            this.plan = plan;
             DialogResult = true;
             Close();
         }
@@ -181,8 +180,6 @@ namespace smart_modul_BACKUP
                 config.WebCfg = new WebConfig();
             config.WebCfg.Online = false;
             cfg_man.Save();
-            api = null;
-            this.plan = null;
             DialogResult = true;
             Close();
         }

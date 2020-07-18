@@ -4,19 +4,100 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:smart_modul_BACKUP"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
+      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="HomePage" KeepAlive="True">
 
-    <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="pan_notLoggedIn">
-            <Label Content="NEJSTE PŘIHLÁŠEN." FontSize="30" HorizontalAlignment="Center" />
-            <Label Content="PRO AKTIVACI PLÁNU SE PROSÍM PŘIHLAŠTE." FontSize="20" HorizontalAlignment="Center" />
-            <Button Content="PŘIHLÁSIT" Click="click_login" HorizontalAlignment="Center" Padding="5" />
+    <Page.Resources>
+        <local:ByteSizeToStringConverter x:Key="conv_niceByte" />
+
+        <local:EnumConverter x:Key="conv_acct_state">
+            <local:EnumConverter.Values>
+                <x:Array Type="{x:Type sys:String}">
+                    <sys:String>Nepřihlášen</sys:String>
+                    <sys:String>Došlo k chybě</sys:String>
+                    <sys:String>Přihlášen</sys:String>
+                </x:Array>
+            </local:EnumConverter.Values>
+        </local:EnumConverter>
+
+        <!--<local:EnumConverter x:Key="conv_can_logout">
+            <local:EnumConverter.Values>
+                <x:Array Type="{x:Type sys:Object}">
+                    <sys:Boolean>False</sys:Boolean>
+                    <sys:Boolean>True</sys:Boolean>
+                    <sys:Boolean>True</sys:Boolean>
+                </x:Array>
+            </local:EnumConverter.Values>
+        </local:EnumConverter>-->
+    </Page.Resources>
+
+    <ScrollViewer>
+
+        <StackPanel>
+            <StackPanel Style="{StaticResource Block}" Margin="20">
+                <Label Content="ÚČET" Style="{StaticResource Header}" />
+                <Label Content="{Binding Path=plan_man.State, Converter={StaticResource conv_acct_state}}"
+                       ContentStringFormat="STAV: {0}" Margin="10,10,10,0" />
+                <StackPanel HorizontalAlignment="Center" Margin="0" Orientation="Horizontal">
+                    <Button x:Name="btn_login" Content="PŘIHLÁSIT" Click="click_login" Margin="0,5,5,5" Padding="10" />
+                    <Button x:Name="btn_logout" Content="ODHLÁSIT" Click="click_logout" Margin="0,5,0,5" Padding="10" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource Block}" Margin="20,0,20,20" Visibility="Collapsed"
+                        x:Name="pan_plan">
+                <Label Content="PLÁN" Style="{StaticResource Header}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <StackPanel.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="Margin" Value="10,10,10,0" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <Label ContentStringFormat="ZABRANÉ MÍSTO: {0}" Content="{Binding ZabraneMistoStr}" />
+                        <Label ContentStringFormat="DOSTUPNÉ MÍSTO: {0}" 
+                               Content="{Binding plan_man.PlanInfo.Kapacita, Converter={StaticResource conv_niceByte}}" />
+                        <Label ContentStringFormat="TARIF: {0}" Content="{Binding plan_man.PlanInfo.TarifName}" />
+                        <Label ContentStringFormat="PLATNÝ DO: {0}" Content="{Binding plan_man.PlanInfo.PlatnostDo}" 
+                               Margin="10" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource Block}" Margin="20,0,20,20" Visibility="Collapsed"
+                        x:Name="pan_customSftp">
+                <Label Content="ÚLOŽIŠTĚ" Style="{StaticResource Header}" />
+                <Label ContentStringFormat="ZABRANÉ MÍSTO: {0}" Content="{Binding ZabraneMistoStr}" Margin="10" />
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource Block}" Margin="20,0,20,20">
+                <Label Content="ZÁLOHY" Style="{StaticResource Header}" />
+                <Label ContentStringFormat="CELKOVÝ POČET ZÁLOH Z TOHOTO PC: {0}" Margin="10,10,10,10"
+                       Content="{Binding TotalBackupsFromThisPc}" />
+                <Label ContentStringFormat="ULOŽENÉ NA TOMTO PC: {0}" Margin="30,0,10,10"
+                       Content="{Binding TotalLocallyAvailableBackupsFromThisPc}" />
+                <Label ContentStringFormat="ULOŽENÉ NA SERVERU: {0}" Margin="30,0,10,10" 
+                       Content="{Binding TotalServerBackupsFromThisPc}" />
+            </StackPanel>
+        
+            <!--<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="pan_notLoggedIn">
+                <Label Content="NEJSTE PŘIHLÁŠEN." FontSize="30" HorizontalAlignment="Center" />
+                <Label Content="PRO AKTIVACI PLÁNU SE PROSÍM PŘIHLAŠTE." FontSize="20" HorizontalAlignment="Center" />
+                <Button Content="PŘIHLÁSIT" Click="click_login" HorizontalAlignment="Center" Padding="5" />
+            </StackPanel>
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="pan_loggedIn">
+                <Button Content="ODHLÁSIT SE" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5" 
+                        Click="click_logout" />
+            </Grid>-->
         </StackPanel>
-        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="pan_loggedIn">
-            <Button Content="ODHLÁSIT SE" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5" 
-                    Click="click_logout" />
-        </Grid>
-    </Grid>
+
+    </ScrollViewer>
 </Page>

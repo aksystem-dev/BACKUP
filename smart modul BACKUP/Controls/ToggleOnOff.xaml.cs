@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace smart_modul_BACKUP
 {
     /// <summary>
-    /// Interakční logika pro ToggleOnOff.xaml
+    /// Hezký přepínač. Funguje stejně jako CheckBox.
     /// </summary>
     public partial class ToggleOnOff : UserControl, INotifyPropertyChanged
     {
@@ -51,10 +51,11 @@ namespace smart_modul_BACKUP
             get { return (bool)GetValue(IsToggledOnProperty); }
             set
             {
-                if (IsToggledOn != value)
-                    (value ? ToggledOn : ToggledOff)?.Invoke(this, null);
+                if (value == IsToggledOn)
+                    return;
 
                 SetValue(IsToggledOnProperty, value);
+                (value ? ToggledOn : ToggledOff)?.Invoke(this, null);
             }
         }
 

@@ -18,7 +18,7 @@ namespace smart_modul_BACKUP
 
 
     /// <summary>
-    /// Interakční logika pro LabelTextBox.xaml
+    /// Label a k němu PasswordBox.
     /// </summary>
     public partial class LabelPasswordBox : UserControl
     {

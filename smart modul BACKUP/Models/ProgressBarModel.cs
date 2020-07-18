@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Info o tom, v jakém stavu je vyhodnocování nějakého úkolu.
+    /// </summary>
+    [Obsolete("Místo tohoto se používá BackupInProgress, RestoreInProgress a ProgressMonitor.")]
     public class ProgressBarModel : INotifyPropertyChanged
     {
         public ProgressBarModel Me => this;

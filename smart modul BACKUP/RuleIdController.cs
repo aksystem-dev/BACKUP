@@ -11,6 +11,7 @@ namespace smart_modul_BACKUP
     /// <summary>
     /// Přiděluje pravidlům ID.
     /// </summary>
+    [Obsolete("Nepoužívá se.")]
     class RuleIdController
     {
         private string _idfile;

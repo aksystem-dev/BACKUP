@@ -97,13 +97,13 @@ namespace SmartModulBackupClasses.WebApi
             set => client.Timeout = TimeSpan.FromMilliseconds(value);
         }
 
-        public SmbApiClient(string username = null, string password = null, string pc_id = null, string pc_name = null, string smb_url = null, int? ms_timeout = null, bool ignoreCertificate = true)
+        public SmbApiClient(string username = null, string password = null, string pc_id = null, string pc_name = null, int? ms_timeout = null, bool ignoreCertificate = true)
         {
             this.Username = username ?? "";
             this.Password = password ?? "";
             this.pc_id = pc_id ?? SMB_Utils.GetComputerId();
             this.pc_name = pc_name ?? SMB_Utils.GetComputerName();
-            this.smb_url = smb_url ?? "https://localhost:5001";
+            this.smb_url = Const.SMB_URL;
 
             client = new HttpClient(requestHandler);
             client.BaseAddress = new Uri(this.smb_url);
@@ -119,7 +119,7 @@ namespace SmartModulBackupClasses.WebApi
         }
 
         public SmbApiClient(WebConfig config, int? ms_timeout = null)
-            : this(config.Username, config.Password.Value, null, null, null, ms_timeout)
+            : this(config.Username, config.Password.Value, null, null, ms_timeout)
         {
         }
 

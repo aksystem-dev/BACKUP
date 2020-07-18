@@ -11,29 +11,15 @@ namespace smartModulBackupTEsts
     {
         static void Main(string[] args)
         {
-            var queue = new TaskQueue();
-            for (int i = 0; i < 10; i++)
-            {
-                queue.Enqueue(GetTask());
-            }
+            var sftp = new SftpUploader("192.168.0.171", 22, "tester", "password");
+            sftp.Connect();
+
+            
+            Console.WriteLine(sftp.GetDirSize("Test"));
+
+            sftp.Disconnect();
 
             Console.ReadKey();
-        }
-
-        static int ct = 0;
-        static Func<Task> GetTask()
-        {
-            int val = ++ct;
-            int zero = 0;
-            return new Func<Task>(() =>
-            {
-                return Task.Run(() =>
-                {
-                    Task.Delay(1000).Wait();
-                    Console.WriteLine(val.ToString() + " !");
-                    int test = 5 / zero;
-                });
-            });
         }
     }
 }

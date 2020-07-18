@@ -1,4 +1,5 @@
 ﻿using smart_modul_BACKUP_service.Managers;
+using smart_modul_BACKUP_service.RestoreExe;
 using SmartModulBackupClasses;
 using SmartModulBackupClasses.Managers;
 using System;
@@ -26,6 +27,12 @@ namespace smart_modul_BACKUP_service.WCF
         public ISmartModulBackupInterfaceCallback Callback => callbacks as ISmartModulBackupInterfaceCallback;
         public InstanceContext context { get; private set; }
 
+        private static void logInfo(string info)
+            => SmbLog.Info(info, null, LogCategory.ServiceHost);
+
+        private static void logError(string error, Exception ex = null)
+            => SmbLog.Error(error, null, LogCategory.ServiceHost);
+
         public SmartModulBackupInterface(SmartModulBackupService service)
         {
             serviceRef = service;
@@ -45,11 +52,11 @@ namespace smart_modul_BACKUP_service.WCF
         /// </summary>
         public void Connect()
         {
-            Logger.Log("Připojeno uživatelské rozhraní");
+            logInfo("Připojeno uživatelské rozhraní");
 
             //uložit odkaz na callback objekt, aby byl přístupný i z jiných vláken
             if (callbacks.AddCallback(OperationContext.Current.GetCallbackChannel<ISmartModulBackupInterfaceCallback>()))
-                Logger.Log("Callback objekt uložen");
+                logInfo("Callback objekt uložen");
         }
 
         /// <summary>
@@ -57,7 +64,7 @@ namespace smart_modul_BACKUP_service.WCF
         /// </summary>
         public void Reload()
         {
-            Logger.Log("Přijat příkaz přes WCF: Reload()");
+            logInfo("Přijat příkaz přes WCF: Reload()");
             serviceRef.Load();
         }
 
@@ -65,7 +72,7 @@ namespace smart_modul_BACKUP_service.WCF
         {
             if (connected)
             {
-                Logger.Log("Rozhraní se odpojilo");
+                logInfo("Rozhraní se odpojilo");
 
                 callbacks.RemoveCallback(OperationContext.Current.GetCallbackChannel<ISmartModulBackupInterfaceCallback>());
             }
@@ -77,7 +84,7 @@ namespace smart_modul_BACKUP_service.WCF
         /// </summary>
         public void ImStillHere()
         {
-            Logger.Log("Test připojení klienta úspěšný: klient je pořád připojený.");
+            logInfo("Test připojení klienta úspěšný: klient je pořád připojený.");
         }
 
         public BackupInProgress DoSingleBackup(string ruleXml)
@@ -93,26 +100,39 @@ namespace smart_modul_BACKUP_service.WCF
 
         public RestoreInProgress Restore(Restore restoreInfo)
         {
-            var rip = Utils.InProgress.NewRestore();
-            Task.Run(() =>
-            {
-                Manager.Get<Restorer>().Restore(restoreInfo, rip);
-                Utils.InProgress.RemoveRestore(rip);
-            });
-            return rip;
+            //var rip = Utils.InProgress.NewRestore();
+            //Task.Run(() =>
+            //{
+            //    Manager.Get<Restorer>().Restore(restoreInfo, rip);
+            //    Utils.InProgress.RemoveRestore(rip);
+            //});
+
+            var task = new RestoreTask(restoreInfo);
+            return task.Start();
         }
 
+        /// <summary>
+        /// Vrátí všechny probíhající zálohy.
+        /// </summary>
+        /// <returns></returns>
         public BackupInProgress[] GetBackupsInProgress()
         {
             return Utils.InProgress.Backups;
            
         }
 
+        /// <summary>
+        /// Vrátí všechny probíhající obnovy.
+        /// </summary>
+        /// <returns></returns>
         public RestoreInProgress[] GetRestoresInProgress()
         {
             return Utils.InProgress.Restores;
         }
 
+        /// <summary>
+        /// Zavolá updataApi na SmartModulBackupService.
+        /// </summary>
         public void UpdateApi()
         {
             try
@@ -122,6 +142,9 @@ namespace smart_modul_BACKUP_service.WCF
             catch { }
         }
 
+        /// <summary>
+        /// Znovu načte konfiguraci ze souboru.
+        /// </summary>
         public void ReloadConfig()
         {
             try
@@ -131,6 +154,10 @@ namespace smart_modul_BACKUP_service.WCF
             catch { }
         }
 
+        /// <summary>
+        /// Nastaví pravidlo podle daného xml.
+        /// </summary>
+        /// <param name="ruleXml"></param>
         public void SetRule(string ruleXml)
         {
             try
@@ -141,6 +168,9 @@ namespace smart_modul_BACKUP_service.WCF
             catch { }
         }
 
+        /// <summary>
+        /// Odstraní staré zálohy.
+        /// </summary>
         public void CleanupBackups()
         {
             try

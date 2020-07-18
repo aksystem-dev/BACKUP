@@ -57,7 +57,7 @@
 
     <StackPanel Orientation="Vertical">
 
-        <StackPanel Style="{StaticResource Block}">
+        <StackPanel Style="{StaticResource Block}" x:Name="panel_conditions">
 
             <!--#region  PODMÍNKY SPUŠTĚNÍ-->
             <Label Content="PODMÍNKY SPUŠTĚNÍ" Style="{StaticResource Header}" />
@@ -114,10 +114,10 @@
 
             <Border Style="{StaticResource Block2}">
                 <StackPanel Orientation="Vertical">
+                    <Label Style="{StaticResource Header2}" Content="DATUM SPUŠTĚNÍ" />
+
                     <StackPanel Orientation="Vertical" Margin="15" >
                         <!--#region DEN V TÝDNU-->
-
-                        <Label Style="{StaticResource Header2}" Content="DATUM SPUŠTĚNÍ" />
 
                         <CheckBox Content="OMEZIT DNY V TÝDNU" FontWeight="Bold" Margin="5,0,0,0" x:Name="cb_limitWeekdays" Checked="UpdateWeekdays" Unchecked="UpdateWeekdays" />
                         <StackPanel Orientation="Horizontal" Margin="10">
@@ -211,165 +211,169 @@
 
             <Label Style="{StaticResource Header}" Content="ZDROJE ZÁLOHY" />
 
+            <StackPanel x:Name="pan_folderSources">
             <!--#region ZDROJE ZÁLOHY: SLOŽKY-->
-            <Border Padding="5" Margin="10,10,10,0" Background="{StaticResource Gray1}">
-                <DockPanel>
-                    <Label Content="SLOŽKY" FontSize="16" FontWeight="Bold" Foreground="Black" 
-                               DockPanel.Dock="Left" VerticalAlignment="Center" />
-                    <Button x:Name="btn_addFolderSource"
-                                Content="+" HorizontalAlignment="Right" Padding="2"
-                                FontSize="18" FontWeight="Bold"
-                                Width="40"
-                                DockPanel.Dock="Right" />
-                    <Button x:Name="btn_removeFolderSource"
-                                Content="-" HorizontalAlignment="Right" Padding="2"
-                                FontSize="18" FontWeight="Bold"
-                                Width="40"
-                                DockPanel.Dock="Right" />
-                </DockPanel>
-            </Border>
+                <Border Padding="5" Margin="10,10,10,0" Background="{StaticResource Gray1}">
+                    <DockPanel>
+                        <Label Content="SLOŽKY" FontSize="16" FontWeight="Bold" Foreground="Black" 
+                                   DockPanel.Dock="Left" VerticalAlignment="Center" />
+                        <Button x:Name="btn_addFolderSource"
+                                    Content="+" HorizontalAlignment="Right" Padding="2"
+                                    FontSize="18" FontWeight="Bold"
+                                    Width="40"
+                                    DockPanel.Dock="Right" />
+                        <Button x:Name="btn_removeFolderSource"
+                                    Content="-" HorizontalAlignment="Right" Padding="2"
+                                    FontSize="18" FontWeight="Bold"
+                                    Width="40"
+                                    DockPanel.Dock="Right" />
+                    </DockPanel>
+                </Border>
 
-            <ItemsControl Margin="10,0,10,10" 
-                              Background="{StaticResource Gray3}" Name="FolderBackups">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type local:BackupSourceModel}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                <ItemsControl Margin="10,0,10,10" 
+                                  Background="{StaticResource Gray3}" Name="FolderBackups">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:BackupSourceModel}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-                            <CheckBox Content="" Padding="0"  Grid.Row="0" Grid.Column="0" 
-                                          VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                          Margin="10" IsChecked="{Binding Path=selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <local:PathTextbox Margin="-6,0,0,0"
-                                                   Text="{Binding Path=source.path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                   PathDialogType="FolderBrowser"
-                                                   Grid.Row="0" Grid.Column="1" />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                <CheckBox Content="" Padding="0"  Grid.Row="0" Grid.Column="0" 
+                                              VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                              Margin="10" IsChecked="{Binding Path=selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <local:PathTextbox Margin="-6,0,0,0"
+                                                       Text="{Binding Path=source.path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                       PathDialogType="FolderBrowser"
+                                                       Grid.Row="0" Grid.Column="1" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
             <!--#endregion-->
 
             <!--#region ZDROJE ZÁLOHY: SOUBORY-->
-            <Border Padding="5" Margin="10,10,10,0" Background="{StaticResource Gray1}">
-                <DockPanel>
-                    <Label Content="SOUBORY" FontSize="16" FontWeight="Bold" Foreground="Black" 
-                               DockPanel.Dock="Left" VerticalAlignment="Center" />
-                    <Button x:Name="btn_addFileSource"
-                                Content="+" HorizontalAlignment="Right" Padding="2"
-                                FontSize="18" FontWeight="Bold"
-                                Width="40"
-                                DockPanel.Dock="Right" />
-                    <Button x:Name="btn_removeFileSource"
-                                Content="-" HorizontalAlignment="Right" Padding="2"
-                                FontSize="18" FontWeight="Bold"
-                                Width="40"
-                                DockPanel.Dock="Right" />
-                </DockPanel>
-            </Border>
+            <StackPanel x:Name="pan_fileSources">
+                <Border Padding="5" Margin="10,10,10,0" Background="{StaticResource Gray1}">
+                    <DockPanel>
+                        <Label Content="SOUBORY" FontSize="16" FontWeight="Bold" Foreground="Black" 
+                                   DockPanel.Dock="Left" VerticalAlignment="Center" />
+                        <Button x:Name="btn_addFileSource"
+                                    Content="+" HorizontalAlignment="Right" Padding="2"
+                                    FontSize="18" FontWeight="Bold"
+                                    Width="40"
+                                    DockPanel.Dock="Right" />
+                        <Button x:Name="btn_removeFileSource"
+                                    Content="-" HorizontalAlignment="Right" Padding="2"
+                                    FontSize="18" FontWeight="Bold"
+                                    Width="40"
+                                    DockPanel.Dock="Right" />
+                    </DockPanel>
+                </Border>
 
-            <ItemsControl Margin="10,0,10,10" 
-                              Background="{StaticResource Gray3}" Name="IndividualFileBackups">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type local:BackupSourceModel}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                <ItemsControl Margin="10,0,10,10" 
+                                  Background="{StaticResource Gray3}" Name="IndividualFileBackups">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:BackupSourceModel}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-                            <CheckBox Content="" Padding="0"  Grid.Row="0" Grid.Column="0" 
-                                          VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                          Margin="10" IsChecked="{Binding Path=selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <local:PathTextbox Margin="-6,0,0,0"
-                                                   Text="{Binding Path=source.path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                   PathDialogType="OpenFile"
-                                                   Grid.Row="0" Grid.Column="1" />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                <CheckBox Content="" Padding="0"  Grid.Row="0" Grid.Column="0" 
+                                              VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                              Margin="10" IsChecked="{Binding Path=selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <local:PathTextbox Margin="-6,0,0,0"
+                                                       Text="{Binding Path=source.path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                       PathDialogType="OpenFile"
+                                                       Grid.Row="0" Grid.Column="1" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
             <!--#endregion-->
 
             <!--#region ZDROJE ZÁLOHY: DATABÁZE-->
-            <Border Padding="5" Margin="10,10,10,0" Background="{StaticResource Gray1}">
-                <DockPanel>
-                    <Label Content="DATABÁZE" FontSize="16" FontWeight="Bold" Foreground="Black" 
-                                   DockPanel.Dock="Left" VerticalAlignment="Center" />
+            <StackPanel x:Name="pan_databaseSources">
+                <Border Padding="5" Margin="10,10,10,0" Background="{StaticResource Gray1}">
+                    <DockPanel>
+                        <Label Content="DATABÁZE" FontSize="16" FontWeight="Bold" Foreground="Black" 
+                                       DockPanel.Dock="Left" VerticalAlignment="Center" />
 
-                    <StackPanel Orientation="Horizontal" Margin="10,0,10,0" DockPanel.Dock="Right"
-                                    HorizontalAlignment="Right">
-                        <Button Content="ZÁLOHOVAT VŠECHNY" Padding="5"
-                                FontSize="12" FontWeight="Bold" Click="BackupAllDb" />
-                        <Button Content="NEZÁLOHOVAT ŽÁDNÉ" Padding="5"
-                                FontSize="12" FontWeight="Bold" Click="DontBackupAllDb" />
-                        <Button Content="AKTUALIZOVAT SEZNAM" Click="_dbReload"
-                                    FontSize="12" FontWeight="Bold" Padding="5" />
-                    </StackPanel>
-                </DockPanel>
-            </Border>
+                        <StackPanel Orientation="Horizontal" Margin="10,0,10,0" DockPanel.Dock="Right"
+                                        HorizontalAlignment="Right">
+                            <Button Content="ZÁLOHOVAT VŠECHNY" Padding="5"
+                                    FontSize="12" FontWeight="Bold" Click="BackupAllDb" />
+                            <Button Content="NEZÁLOHOVAT ŽÁDNÉ" Padding="5"
+                                    FontSize="12" FontWeight="Bold" Click="DontBackupAllDb" />
+                            <Button Content="AKTUALIZOVAT SEZNAM" Click="_dbReload"
+                                        FontSize="12" FontWeight="Bold" Padding="5" />
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
 
-            <ItemsControl Name="DbBackups" Margin="10,0,10,10"
-                                  AlternationCount="2">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type local:BackupSourceModel}">
-                        <Grid Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},
-                                                           Path=(ItemsControl.AlternationIndex),
-                                                           Converter={StaticResource alternator}}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                <ItemsControl Name="DbBackups" Margin="10,0,10,10"
+                                      AlternationCount="2">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:BackupSourceModel}">
+                            <Grid Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},
+                                                               Path=(ItemsControl.AlternationIndex),
+                                                               Converter={StaticResource alternator}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-                            <Label Margin="10"
-                                           Content="{Binding Path=DbInfo.name}" Grid.Row="0" Grid.Column="0"
-                                           VerticalAlignment="Center" FontSize="16"
-                                           FontWeight="{Binding Path=selected,
-                                                                Converter={StaticResource bool2bold},
-                                                                ConverterParameter={StaticResource true}}"
-                                           Foreground="{Binding Path=self,Mode=OneWay, 
-                                                                Converter={StaticResource bak_src_to_color}}"/>
+                                <Label Margin="10"
+                                               Content="{Binding Path=DbInfo.name}" Grid.Row="0" Grid.Column="0"
+                                               VerticalAlignment="Center" FontSize="16"
+                                               FontWeight="{Binding Path=selected,
+                                                                    Converter={StaticResource bool2bold},
+                                                                    ConverterParameter={StaticResource true}}"
+                                               Foreground="{Binding Path=self,Mode=OneWay, 
+                                                                    Converter={StaticResource bak_src_to_color}}"/>
 
-                            <Label Margin="10"
-                                           Content="{Binding Path=DbInfo.firma}" Grid.Row="0" Grid.Column="1"
-                                           VerticalAlignment="Center" FontSize="16"
-                                           FontWeight="{Binding Path=selected,
-                                                                Converter={StaticResource bool2bold},
-                                                                ConverterParameter={StaticResource true}}"
-                                           Foreground="{Binding Path=self,Mode=OneWay, 
-                                                                Converter={StaticResource bak_src_to_color}}"/>
+                                <Label Margin="10"
+                                               Content="{Binding Path=DbInfo.firma}" Grid.Row="0" Grid.Column="1"
+                                               VerticalAlignment="Center" FontSize="16"
+                                               FontWeight="{Binding Path=selected,
+                                                                    Converter={StaticResource bool2bold},
+                                                                    ConverterParameter={StaticResource true}}"
+                                               Foreground="{Binding Path=self,Mode=OneWay, 
+                                                                    Converter={StaticResource bak_src_to_color}}"/>
 
-                            <StackPanel Margin="10"
-                                                Grid.Row="0" Grid.Column="2"
-                                                Height="Auto" VerticalAlignment="Center">
-                                <RadioButton Loaded="RadioButtonLoaded"
-                                                     Content="Zálohovat"
-                                                     Checked="BackupChecked"
-                                                     IsChecked="{Binding Path=IsEnabled, Mode=OneWay}"/>
-                                <RadioButton Loaded="RadioButtonLoaded"
-                                                     Content="Nezálohovat"
-                                                     Checked="BackupUnchecked"
-                                                     IsChecked="{Binding Path=IsDisabled, Mode=OneWay}"/>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-       
-        <!--</ScrollViewer>-->
-        <!--#endregion-->
+                                <StackPanel Margin="10"
+                                                    Grid.Row="0" Grid.Column="2"
+                                                    Height="Auto" VerticalAlignment="Center">
+                                    <RadioButton Loaded="RadioButtonLoaded"
+                                                         Content="Zálohovat"
+                                                         Checked="BackupChecked"
+                                                         IsChecked="{Binding Path=IsEnabled, Mode=OneWay}"/>
+                                    <RadioButton Loaded="RadioButtonLoaded"
+                                                         Content="Nezálohovat"
+                                                         Checked="BackupUnchecked"
+                                                         IsChecked="{Binding Path=IsDisabled, Mode=OneWay}"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <!--#endregion-->
         </StackPanel>
 
         <!--#region NASTAVENÍ ZÁLOH-->
@@ -378,7 +382,7 @@
 
             <Label Style="{StaticResource Header}" Content="NASTAVENÍ ZÁLOH" />
 
-            <CheckBox HorizontalAlignment="Center" Margin="10" Content="ZIPOVAT ZÁLOHY"
+            <CheckBox HorizontalAlignment="Center" Margin="10" Content="ZIPOVAT ZÁLOHY" x:Name="cb_zip"
                       IsChecked="{Binding Path=Zip, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <Grid Margin="0,0,0,15">

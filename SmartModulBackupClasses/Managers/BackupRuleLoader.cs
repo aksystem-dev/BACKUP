@@ -15,7 +15,7 @@ namespace SmartModulBackupClasses.Managers
 
         //nechcem do api posílat víc příkazů najednou
         TaskQueue apiQueue = new TaskQueue();
-        private SmbApiClient client => Manager.Get<SmbApiClient>();
+        private SmbApiClient client => Manager.Get<AccountManager>()?.Api;
         private readonly string folder;
 
         public BackupRuleLoader()
@@ -138,12 +138,9 @@ namespace SmartModulBackupClasses.Managers
             //pokud dojde k chybě při komunikaci s webem (nebo nějaké jiné chybě), prostě vezmeme jen lokální pravidla
             catch (Exception ex) 
             {
-                //Pokud došlo k nějaké chybě, která není spojena s webovým api, zapíšeme výjimku
-                if (!(ex is SmbApiException) && !(ex is HttpStatusException))
-                    SMB_Log.LogEx(ex, "chyba při načítání pravidel; načítám pouze lokálně uložená pravidla");
-                //jinak jen kváknem
-                else
-                    SMB_Log.Log("Došlo k chybě při komunikaci s api, beru pouze lokálně uložená pravidla.");
+                if (!(ex is NullReferenceException))
+                    SmbLog.Error("Chyba při načítání pravidel z webové aplikace. Načítám pouze lokálně uložená pravidla.", ex, LogCategory.BackupRuleLoader);
+
                 ruleList.Clear();
                 ruleList.AddRange(rulesLocal);
             }
@@ -168,6 +165,10 @@ namespace SmartModulBackupClasses.Managers
         //    }
         //}
 
+        /// <summary>
+        /// Vrátí BackupRules uložené ve složce jako xml
+        /// </summary>
+        /// <returns></returns>
         private IEnumerable<BackupRule> loadFromFiles()
         {
             if (!Directory.Exists(folder))
@@ -206,6 +207,9 @@ namespace SmartModulBackupClasses.Managers
         /// <returns></returns>
         public BackupRule Add(BackupRule rule)
         {
+            if (ruleList.Any(r => r.Name == rule.Name))
+                throw new InvalidOperationException($"Pravidla musí mít unikátní názvy! Název {rule.Name} je již zabrán.");
+
             rule.LocalID = ++ID;
             rule.LastEdit = DateTime.Now;
             ruleList.Add(rule);
@@ -225,6 +229,9 @@ namespace SmartModulBackupClasses.Managers
         /// <returns></returns>
         public BackupRule Update(BackupRule rule)
         {
+            if (ruleList.Any(r => r.Name == rule.Name && r.LocalID != rule.LocalID))
+                throw new InvalidOperationException($"Pravidla musí mít unikátní názvy! Název {rule.Name} je již zabrán.");
+
             var f_rule = ruleList.FirstOrDefault(f => f.LocalID == rule.LocalID);
             if (f_rule == null)
                 throw new InvalidOperationException("Nelze updatovat neexistující pravidlo.");
@@ -294,6 +301,16 @@ namespace SmartModulBackupClasses.Managers
             return rule;
         }
 
+        /// <summary>
+        /// Jestli alespoň jedno pravidlo splňuje funkci
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public bool Any(Func<BackupRule, bool> func)
+        {
+            return ruleList.Any(func);
+        }
+
         private string idpath => Path.Combine(folder, "id");
 
         /// <summary>
@@ -343,8 +360,9 @@ namespace SmartModulBackupClasses.Managers
             {
                 return BackupRule.LoadFromXml(path);
             }
-            catch
+            catch (Exception ex)
             {
+                SmbLog.Error($"Problém při načítání pravidla v umístění {path}", ex, LogCategory.BackupRuleLoader);
                 return null;
             }
         }

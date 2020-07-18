@@ -33,7 +33,7 @@ namespace smart_modul_BACKUP
             //btn_addRule.Click += (_, __) => AddRule();
         }
 
-        private void AddRule()
+        private void AddRule(BackupRuleType type)
         {
             //přidat pravidlo se zadaným jménem
             var newrule = new BackupRule()
@@ -45,6 +45,8 @@ namespace smart_modul_BACKUP
             newrule.LocalBackups.MaxBackups = 5;
             newrule.RemoteBackups.enabled = true;
             newrule.RemoteBackups.MaxBackups = 50;
+
+            newrule.RuleType = type;
 
             MainWindow.main.ShowPage(new SingleRulePage(newrule, true));
         }
@@ -64,16 +66,6 @@ namespace smart_modul_BACKUP
             {
                 MessageBox.Show(ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            //Rule.SaveSelf();
-
-            //if (LoadedStatic.service.State == ServiceConnectionState.Connected)
-            //{
-            //    LoadedStatic.service.client.Reload();
-            //    LoadedStatic.service.client.DoSingleBackup(Rule.LocalID);
-            //}
-            //else
-            //    MessageBox.Show("Služba není připojena, nelze provést jednorázovou zálohu.");
         }
 
         private void deleteRule(object sender, RoutedEventArgs e)
@@ -84,19 +76,6 @@ namespace smart_modul_BACKUP
                 return;
 
             Utils.DeleteRule(Rule);
-
-            //var dialog = new YesNoDialog()
-            //{
-            //    PromptText = "ODSTRANIT PRAVIDLO?"
-            //};
-
-            //bool? result = dialog.ShowDialog();
-
-            //if (result == true)
-            //{
-            //    File.Delete(Rule.path);
-            //    LoadedStatic.rules.Remove(Rule);
-            //}
         }
 
         private void ruleClick(object sender, RoutedEventArgs e)
@@ -106,10 +85,6 @@ namespace smart_modul_BACKUP
                 MainWindow.main.ShowPage(new SingleRulePage(rule));
         }
 
-        private void btn_click_addRule(object sender, RoutedEventArgs e)
-        {
-            AddRule();
-        }
 
         private void rule_toggled(object sender, EventArgs e)
         {
@@ -117,5 +92,35 @@ namespace smart_modul_BACKUP
             if (rule != null)
                 rules.Update(rule);
         }
+
+
+        private void btn_click_addRule(object sender, RoutedEventArgs e)
+        {
+            AddRule(BackupRuleType.FullBackups);
+            popup_ruleTypeSelection.IsOpen = false;
+        }
+
+        private void btn_click_addOneToOneRule(object sender, RoutedEventArgs e)
+        {
+            AddRule(BackupRuleType.OneToOne);
+            popup_ruleTypeSelection.IsOpen = false;
+        }
+
+        private void btn_click_addProtectedFolderRule(object sender, RoutedEventArgs e)
+        {
+            AddRule(BackupRuleType.ProtectedFolder);
+            popup_ruleTypeSelection.IsOpen = false;
+        }
+
+        private void btn_click_showPopup(object sender, RoutedEventArgs e)
+        {
+            popup_ruleTypeSelection.IsOpen = true;
+        }
+
+        private void btn_click_hidePopup(object sender, RoutedEventArgs e)
+        {
+            popup_ruleTypeSelection.IsOpen = false;
+        }
+
     }
 }

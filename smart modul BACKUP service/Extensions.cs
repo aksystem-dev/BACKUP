@@ -10,6 +10,7 @@ namespace smart_modul_BACKUP_service
 {
     public static class Extensions
     {
+
         public static TimeSpan Mod(this TimeSpan me, TimeSpan with)
         {
             while (me >= with)
@@ -27,6 +28,11 @@ namespace smart_modul_BACKUP_service
         /// <returns></returns>
         public static IEnumerable<BackupTask> GetBackupTasksInTimeSpan(this BackupRule rule, DateTime start, DateTime end)
         {
+            //v případě typu ProtectedFolder nechceme vrátit žádné BackupTasky,
+            //páč tento typ pravidel se časovaně spouštět nemá
+            if (rule.RuleType == BackupRuleType.ProtectedFolder)
+                yield break;
+
             foreach (var i in rule.Conditions.AvailableDateTimesInTimeSpan(start, end, exclusiveStart: true))
             {
                 var bt = new BackupTask(rule, i);

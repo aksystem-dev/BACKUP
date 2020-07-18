@@ -15,7 +15,7 @@ namespace SmartModulBackupClasses
     public class Pwd : INotifyPropertyChanged
     {
         static readonly byte[] entropy = { 5, 10, 15, 10, 5, 1, 3, 4 };
-        private string hash;
+        private string _hash;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -30,13 +30,13 @@ namespace SmartModulBackupClasses
         [XmlText]
         public string Hash
         {
-            get => hash;
+            get => _hash;
             set
             {
-                if (value == hash)
+                if (value == _hash)
                     return;
 
-                hash = value;
+                _hash = value;
                 pwdChanged();
             }
         }
@@ -63,9 +63,9 @@ namespace SmartModulBackupClasses
                 var bytes = PasswordEncoding.GetBytes(value);
                 var enc_bytes = ProtectedData.Protect(bytes, entropy, DataProtectionScope.LocalMachine);
                 var hashed = Convert.ToBase64String(enc_bytes);
-                if (hash != hashed)
+                if (_hash != hashed)
                 {
-                    hash = hashed;
+                    _hash = hashed;
                     pwdChanged();
                 }
             }

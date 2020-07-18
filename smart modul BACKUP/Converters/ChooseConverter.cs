@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Vrátí TrueText, je-li vstup true, FalseText, je-li vstup false
+    /// </summary>
     class ChooseConverter : IValueConverter
     {
         public object TrueText { get; set; }

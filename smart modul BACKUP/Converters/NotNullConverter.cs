@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Vrátí true, pokud vstup není null, jinak vrátí false.
+    /// </summary>
     public class NotNullConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

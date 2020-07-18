@@ -5,13 +5,22 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:smart_modul_BACKUP"
       xmlns:smb="clr-namespace:SmartModulBackupClasses;assembly=SmartModulBackupClasses"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" d:DesignWidth="800"
       Title="SingleRulePage"
       Unloaded="page_unloaded">
 
-    <!--<Grid>
-        
-    </Grid>-->
+    <Page.Resources>
+        <local:EnumConverter x:Key="ruleTypeNameConv">
+            <local:EnumConverter.Values>
+                <x:Array Type="{x:Type sys:String}">
+                    <sys:String>ÚPLNÉ ZÁLOHY</sys:String>
+                    <sys:String>ZÁLOHY 1:1</sys:String>
+                    <sys:String>CHRÁNĚNÉ SLOŽKY</sys:String>
+                </x:Array>
+            </local:EnumConverter.Values>
+        </local:EnumConverter>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -25,10 +34,15 @@
                     <Button Click="btn_click_back" ToolTip="ZPĚT">
                         <Image Source="{StaticResource back}" />
                     </Button>
-                    <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             Background="{x:Null}" Foreground="White"
-                             VerticalAlignment="Center" HorizontalAlignment="Left"
-                             FontSize="30" x:Name="txt_rulename" />
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Background="{x:Null}" Foreground="White" BorderBrush="White"
+                                 HorizontalAlignment="Left"
+                                 FontSize="30" x:Name="txt_rulename"
+                                 Margin="10,10,10,0" />
+                        <Label Content="{Binding Path=RuleType, Converter={StaticResource ruleTypeNameConv}}"
+                               Foreground="White" HorizontalAlignment="Left" Margin="10" FontSize="14" />
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right" Margin="0,0,15,0">
                     <Button Click="btn_click_backup" ToolTip="JEDNORÁZOVÁ ZÁLOHA">

@@ -31,6 +31,12 @@ namespace smart_modul_BACKUP_service
         private Guid setId;
         private Guid snapId;
 
+        private void logInfo(string info)
+            => SmbLog.Info(info, null, LogCategory.ShadowCopy);
+
+        private void logError(string error, Exception ex = null)
+            => SmbLog.Error(error, null, LogCategory.ShadowCopy);
+
         /// <summary>
         /// Vytvoří Shadow Copy.
         /// </summary>
@@ -41,10 +47,12 @@ namespace smart_modul_BACKUP_service
             if (Used)
                 throw new InvalidOperationException("Tento objekt VssBackuper už byl použit. Vytvořte nový objekt.");
 
+            logInfo($"DoBackup({root}, _)");
+
             Used = true;
             Root = Path.GetPathRoot(root);
             var vss = VssFactoryProvider.Default.GetVssFactory();
-            Console.WriteLine("IVssFactory načteno");
+            //Console.WriteLine("IVssFactory načteno");
 
             try
             {
@@ -61,8 +69,7 @@ namespace smart_modul_BACKUP_service
 
                 if (!backup.IsVolumeSupported(Root))
                 {
-                    Logger.Error($"Nelze udělat shadow copy {Root}");
-
+                    logError($"Nelze udělat shadow copy {Root}");
 
                     errors?.Add(new BackupError(
                         $"Svazek {Root} není podporován Shadow Copy.",
@@ -82,12 +89,11 @@ namespace smart_modul_BACKUP_service
 
                 SnapshotProperties = backup.GetSnapshotProperties(snapId);
 
-                Logger.Log($"Shadow Copy úspěšně vytvořena, dostupná na {SnapshotProperties.SnapshotDeviceObject}");
+                logInfo($"Shadow Copy úspěšně vytvořena, dostupná na {SnapshotProperties.SnapshotDeviceObject}");
             }
             catch (Exception e)
             {
-                Logger.Ex(e);
-
+                logError("Problém při vytváření shadow copy", e);
 
                 errors?.Add(new BackupError(
                     $"Problém s Shadow Copy: {e.GetType().Name}\n\n{e.Message}",
@@ -103,8 +109,7 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (Exception ee)
                 {
-                    Logger.Ex(e);
-
+                    logError("Problém při rušení shadow copy", e);
 
                     errors?.Add(new BackupError(
                         $"Nepodařilo se ani zrušit zálohu... {ee.GetType().Name}\n\n{e.Message}",
@@ -141,7 +146,7 @@ namespace smart_modul_BACKUP_service
         {
             backup.BackupComplete();
 
-            Logger.Log("Odstraňuji Shadow Copy");
+            logInfo("Odstraňuji Shadow Copy");
             backup.DeleteSnapshotSet(setId, false);
             backup.Dispose();
         }

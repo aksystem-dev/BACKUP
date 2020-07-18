@@ -13,6 +13,7 @@ namespace SmartModulBackupClasses
     /// Načítá seznam položek z xml souboru, umožňuje s těmito položkami pracovat
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Obsolete("Používá se BackupInfoManager a BackupRuleLoader")]
     public class XmlInfoLoader<T> where T : IHaveID
     {
         public string LocalPath { get; private set; }

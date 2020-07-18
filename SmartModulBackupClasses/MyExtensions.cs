@@ -75,6 +75,11 @@ namespace SmartModulBackupClasses
             return paths.ToArray();
         }
 
+        /// <summary>
+        /// SFTP server, který používáme, z nějakého důvodu rozumí jen '/', nikolov '\'
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string FixPathForSFTP(this string path)
         {
             return path.Replace('\\', '/');

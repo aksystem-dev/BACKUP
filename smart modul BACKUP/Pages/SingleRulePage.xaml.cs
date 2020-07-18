@@ -27,18 +27,37 @@ namespace smart_modul_BACKUP
             DataContext = rule;
             
             if(add)
-                rule.Name = $"Pravidlo {rules.ID + 1}";
+                rule.Name = $"Pravidlo {rules.ID + 1}"; //inicializace názvu
 
             InitializeComponent();
 
             txt_rulename.IsEnabled = add;
+            txt_rulename.BorderThickness = add ? new Thickness(2) : new Thickness(0);
         }
 
+        /// <summary>
+        /// Zpět
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_click_back(object sender, RoutedEventArgs e)
         {
-            MainWindow.main.Back();
+            //porychtovat potenciální problémy s názvem pravidla
+            if (rule.Name == "")
+                MessageBox.Show("Pravidlo musí mít název.");
+            else if (add && rules.Any(r => r.Name == rule.Name))
+                MessageBox.Show("Pravidlo s takovým názvem již existuje.");
+
+            //pokud má pravidlo validní název, umožnit uživateli opustit stránku a uložit pravidlo (page_unloaded)
+            else
+                MainWindow.main.Back();
         }
 
+        /// <summary>
+        /// Jednorázová záloha
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_click_backup(object sender, RoutedEventArgs e)
         {
             BackupRule Rule = DataContext as BackupRule;
@@ -57,6 +76,13 @@ namespace smart_modul_BACKUP
             }
         }
 
+        bool updateOnUnloaded = true;
+
+        /// <summary>
+        /// Odstranění pravidla při kliknutí na koš
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_click_delete(object sender, RoutedEventArgs e)
         {
             BackupRule Rule = DataContext as BackupRule;
@@ -64,13 +90,23 @@ namespace smart_modul_BACKUP
             if (Rule == null)
                 return;
 
-            Utils.DeleteRule(Rule);
+            if (!add)
+                Utils.DeleteRule(Rule);
 
+            updateOnUnloaded = false;
             MainWindow.main.ShowPage(MainWindow.main.rulePage);
         }
 
+        /// <summary>
+        /// Když upouštíme stránku s pravidlem, chceme ho automaticky uložit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void page_unloaded(object sender, RoutedEventArgs e)
         {
+            if (!updateOnUnloaded)
+                return;
+
             if (add)
             {
                 rule.path = Path.Combine(Const.RULES_FOLDER, rule.Name + ".xml");

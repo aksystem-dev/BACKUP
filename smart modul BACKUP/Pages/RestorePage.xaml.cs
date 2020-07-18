@@ -108,16 +108,27 @@ namespace smart_modul_BACKUP
 
         private void btn_click_restore(object sender, RoutedEventArgs e)
         {
-            var progress = service.StartRestore(GetRestoreObject());
-            progress = inProgress.SetRestore(progress);
-            Backup.InProgress.Add(progress);
+            if (service.State != ServiceConnectionState.Connected)
+                MessageBox.Show("Služba není připojena", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+                try
+                {
+                    var progress = service.StartRestore(GetRestoreObject());
+                    progress = inProgress.SetRestore(progress);
+                    Backup.InProgress.Add(progress);
 
-            progress.Completed += async (obj, args) =>
-            {
-                await Task.Delay(2000);
-                App.Current.Dispatcher.Invoke(() =>
-                    Backup.InProgress.Remove(progress));
-            };
+                    progress.Completed += async (obj, args) =>
+                    {
+                        await Task.Delay(2000);
+                        App.Current.Dispatcher.Invoke(() =>
+                            Backup.InProgress.Remove(progress));
+                    };
+                }
+                catch (Exception ex)
+                {
+                    SmbLog.Error("výjimka při spouštění obnovy z GUI", ex, LogCategory.GUI);
+                    MessageBox.Show("Došlo k chybě.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
 
             MainWindow.main.Back();
             

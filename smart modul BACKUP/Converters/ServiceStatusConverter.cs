@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Podle aktuálního stavu ServiceState vrátí text popisující, co se právě děje.
+    /// </summary>
     public class ServiceStatusConverter : IValueConverter
     {
         public string ConnectedText { get; set; }

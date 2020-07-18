@@ -20,11 +20,13 @@ namespace smart_modul_BACKUP
     {
         ConfigManager cfg_man;
 
-        public PlanManager Plan_Man { get; set; }
+        public ServiceState service { get; set; }
+        public AccountManager Plan_Man { get; set; }
         public ConfigPage()
         {
             cfg_man = Manager.Get<ConfigManager>();
-            Plan_Man = Manager.Get<PlanManager>();
+            Plan_Man = Manager.Get<AccountManager>();
+            service = Manager.Get<ServiceState>();
 
             InitializeComponent();
             DataContext = cfg_man.Config;
@@ -37,12 +39,18 @@ namespace smart_modul_BACKUP
             LoadConfigToPasswords();   
         }
 
+        /// <summary>
+        /// Nastavit obsah PasswordBoxů na hesla v konfiguraci
+        /// </summary>
         public void LoadConfigToPasswords()
         {
             PasswordSFTP.SetPassword(cfg_man.Config.SFTP.Password.Value);
             PasswordSQL.SetPassword(cfg_man.Config.Connection.Password.Value);
         }
 
+        /// <summary>
+        /// Nastavit hesla v konfiguraci podle PasswordBoxů
+        /// </summary>
         public void UpdateConfig()
         {
             if (IsLoaded)
@@ -52,6 +60,11 @@ namespace smart_modul_BACKUP
             }
         }
 
+        /// <summary>
+        /// Otestovat, zdali jsou zadané údaje na připojení na SQL server platné
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void TestSQL(object sender, RoutedEventArgs e)
         {
             UpdateConfig();
@@ -76,6 +89,11 @@ namespace smart_modul_BACKUP
             btn_testsql.IsEnabled = true;
         }
 
+        /// <summary>
+        /// Otestovat, zdali jsou zadané údaje na připojení na SFTP platné
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private async void TestSFTP(object sender, RoutedEventArgs args)
         {
             UpdateConfig();
@@ -103,6 +121,7 @@ namespace smart_modul_BACKUP
             btn_testsftp.IsEnabled = true;
         }
 
+        // Ukládání konfigurace je pořešeno v MainWindow.xaml.cs, metoda saveCfg
         private void page_unloaded(object sender, RoutedEventArgs e)
         {
             //UpdateConfig();
@@ -110,6 +129,11 @@ namespace smart_modul_BACKUP
             //    cfg_man.Save();
         }
 
+        /// <summary>
+        /// Předat službě požadavek na pročištění záloh (použitím BackupCleaner).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void click_cleanup_backups(object sender, RoutedEventArgs e)
         {
             try
@@ -117,6 +141,24 @@ namespace smart_modul_BACKUP
                 Manager.Get<ServiceState>().Client.CleanupBackupsAsync();
             }
             catch { }
+        }
+
+        /// <summary>
+        /// Vypnout službu, pokud uživatel odpoví ano na MessageBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_click_turnServiceOff(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show(
+                "Když je služba vypnutá, apikace smart modul BACKUP nemůže vytvářet zálohy. Opravdu ji chcete vypnout?",
+                "Otázka", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                if (service.StopService())
+                    MessageBox.Show("Služba byla vypnuta.");
+                else
+                    MessageBox.Show("Službu se nepodařilo vypnout.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

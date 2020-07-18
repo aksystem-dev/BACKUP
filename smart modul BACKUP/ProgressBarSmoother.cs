@@ -9,6 +9,9 @@ using System.Windows.Media.Animation;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Aby změna hodnota ProgressBaru byla animovaná.
+    /// </summary>
     public class ProgressBarSmoother
     {
         public static double GetSmoothValue(DependencyObject obj)

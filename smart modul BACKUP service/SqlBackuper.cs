@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.IO;
+using SmartModulBackupClasses;
 
 namespace smart_modul_BACKUP_service
 {
     /// <summary>
-    /// Umí zálohovat a obnovovat zálohy SQL serveru.
+    /// Umí vytvářet a obnovovat zálohy SQL serveru.
     /// </summary>
     public class SqlBackuper
     {
@@ -20,26 +21,11 @@ namespace smart_modul_BACKUP_service
             connection = new SqlConnection(connstr);
         }
 
-        //public bool Open(bool catchError = true)
-        //{
-        //    if (catchError)
-        //        try
-        //        {
-        //            connection.Open();
-        //            return true;
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            Logger.Ex(e);
-
-        //            return false;
-        //        }
-        //    else
-        //    {
-        //        connection.Open();
-        //        return true;
-        //    }
-        //}
+        private void logInfo(string info)
+            => SmbLog.Info(info, null, LogCategory.SQL);
+
+        private void logError(string error, Exception ex = null)
+            => SmbLog.Error(error, ex, LogCategory.SQL);
 
         public void Open() => connection.Open();
 
@@ -53,7 +39,7 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (Exception e)
                 {
-                    Logger.Ex(e);
+                    logError("Problém při zavírání SQL připojení", e);
 
                     return false;
                 }
@@ -73,7 +59,7 @@ namespace smart_modul_BACKUP_service
         /// <returns></returns>
         public void Backup(string database, string path)
         {
-            Logger.Log($"Zálohuji databázi {database} do {path}");
+            logInfo($"Zálohuji databázi {database} do {path}");
 
             //sql musíme poslat absolutní adresu, takle se ujistíme, že je absolutní:
             path = Path.GetFullPath(path);
@@ -85,7 +71,7 @@ namespace smart_modul_BACKUP_service
             com.ExecuteNonQuery();
             File.SetLastWriteTime(path, DateTime.Now);
 
-            Logger.Log($"Záloha databáze {database} úspěšně vytvořena");
+            logInfo($"Záloha databáze {database} úspěšně vytvořena");
         }
 
         /// <summary>
@@ -95,7 +81,7 @@ namespace smart_modul_BACKUP_service
         /// <param name="path"></param>
         public void Restore(string database, string path)
         {
-            Logger.Log($"Obnovuji databázi {database} z {path}");
+            logInfo($"Obnovuji databázi {database} z {path}");
 
             path = Path.GetFullPath(path);
 
@@ -145,7 +131,7 @@ namespace smart_modul_BACKUP_service
 
             com.Dispose();
 
-            Logger.Log($"Databáze {database} úspěšně obnovena");
+            logInfo($"Databáze {database} úspěšně obnovena");
         }
     }
 }

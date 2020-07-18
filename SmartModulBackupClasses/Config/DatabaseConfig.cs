@@ -4,6 +4,9 @@ using System.Xml.Serialization;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Info o připojení k SQL databázi.
+    /// </summary>
     public class DatabaseConfig : INotifyPropertyChanged
     {
         private bool unsavedChanges;

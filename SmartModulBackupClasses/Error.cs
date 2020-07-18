@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Struktura pro předání info o chybě skrzevá WCF
+    /// </summary>
     [DataContract]
     public struct Error
     {
@@ -15,6 +18,9 @@ namespace SmartModulBackupClasses
         [DataMember]
         public string ErrorDetail;
 
+        /// <summary>
+        /// Struktura pro předání info o chybě skrzevá WCF
+        /// </summary>
         public Error(string header, string detail = "")
         {
             ErrorHeader = header;

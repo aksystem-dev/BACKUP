@@ -5,6 +5,9 @@ using System.Xml.Serialization;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Obal na BackupSource pro Binding na GUI.
+    /// </summary>
     public class BackupSourceModel : INotifyPropertyChanged
     {
         public BackupSourceModel self => this;

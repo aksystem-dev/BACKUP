@@ -6,6 +6,7 @@
       xmlns:debug="clr-namespace:System.Diagnostics;assembly=WindowsBase"
       xmlns:local="clr-namespace:smart_modul_BACKUP"
       xmlns:model="clr-namespace:SmartModulBackupClasses;assembly=SmartModulBackupClasses"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="800"
       d:DataContext="{d:DesignInstance Type=model:Config}"
@@ -13,6 +14,18 @@
       Title="ConfigPage"
       KeepAlive="True"
       Loaded="ConfigPage_Loaded" Unloaded="page_unloaded">
+
+    <Page.Resources>
+        <local:EnumConverter x:Key="conv_stateToEnabled">
+            <local:EnumConverter.Values>
+                <x:Array Type="{x:Type sys:Object}">
+                    <sys:Boolean>true</sys:Boolean>
+                    <sys:Boolean>false</sys:Boolean>
+                    <sys:Boolean>false</sys:Boolean>
+                </x:Array>
+            </local:EnumConverter.Values>
+        </local:EnumConverter>
+    </Page.Resources>
 
     <ScrollViewer>
         <StackPanel>
@@ -30,7 +43,7 @@
                 </Button>
             </StackPanel>
 
-            <StackPanel Style="{StaticResource Block}" IsEnabled="{Binding ElementName=window, Path=Plan_Man.UseConfig}">
+            <StackPanel Style="{StaticResource Block}" IsEnabled="{Binding ElementName=window, Path=Plan_Man.State, Converter={StaticResource conv_stateToEnabled}}">
                 <Label Content="SFTP PŘIPOJENÍ" Style="{StaticResource Header}" />
                 <local:LabelTextBox LabelText="ADRESA: "
                             Text="{Binding Path=SFTP.Host, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -59,11 +72,16 @@
                 <CheckBox Margin="10" Content="POUŽÍVAT SHADOW COPY PRO ZÁLOHOVÁNÍ SOUBORŮ" IsChecked="{Binding UseShadowCopy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
 
-            <StackPanel Style="{StaticResource Block}" Margin="15,15,15,15">
+            <StackPanel Style="{StaticResource Block}" Margin="15,15,15,15" Orientation="Vertical"
+                        HorizontalAlignment="Stretch">
                 <Label Content="SLUŽBA" Style="{StaticResource Header}" />
 
-                <Button Width="100" Height="40" HorizontalAlignment="Center" Content="PROČISTIT ZÁLOHY"
-                        Click="click_cleanup_backups" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Width="200" Height="40" VerticalAlignment="Center" Content="PROČISTIT ZÁLOHY"
+                            Click="click_cleanup_backups" />
+                    <Button Width="200" Height="40" VerticalAlignment="Center" Content="VYPNOUT SLUŽBU"
+                            IsEnabled="{Binding ElementName=window, Path=service.IsServiceRunning}" Click="btn_click_turnServiceOff" />
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

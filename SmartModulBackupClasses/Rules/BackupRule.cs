@@ -25,17 +25,46 @@ namespace SmartModulBackupClasses
         [XmlIgnore]
         public ObservableCollection<BackupInProgress> InProgress { get; set; }
             = new ObservableCollection<BackupInProgress>();
-
-        [XmlIgnore]
+        
+        /// <summary>
+        /// Cesta, z níž bylo pravidlo načteno
+        /// </summary>
+        [XmlAttribute]
         public string path = null;
 
+        /// <summary>
+        /// Lokální ID unikátní pro tento PC
+        /// </summary>
         public int LocalID { get; set; }
+
+        /// <summary>
+        /// Název pravidla (také by měl být na 1 PC unikítní)
+        /// </summary>
         public string Name { get; set; } = "Pravidlo";
+
+        /// <summary>
+        /// Definice zdrojů pro zálohu
+        /// </summary>
         public BackupSourceCollection Sources { get; set; } = new BackupSourceCollection();
+
+        /// <summary>
+        /// Podmínky spuštení v čase
+        /// </summary>
         public Conditions Conditions { get; set; } = new Conditions();
+
+        /// <summary>
+        /// Nastavení lokálních záloh
+        /// </summary>
         public BackupConfig LocalBackups { get; set; } = new BackupConfig();
+
+        /// <summary>
+        /// Nastavení záloh přes SFTP
+        /// </summary>
         public BackupConfig RemoteBackups { get; set; } = new BackupConfig();
 
+        /// <summary>
+        /// Procesy pro spuštení před zahájením vyhodnocování pravidla
+        /// </summary>
         public ObservableCollection<ProcessToStart> ProcessesBeforeStart { get; set; }
             = new ObservableCollection<ProcessToStart>();
 
@@ -44,8 +73,17 @@ namespace SmartModulBackupClasses
         /// </summary>
         public bool Zip { get; set; } = true;
 
+        /// <summary>
+        /// Zdali je automatické spuštění pravidla povoleno
+        /// </summary>
         [XmlAttribute]
         public bool Enabled { get; set; } = true;
+
+        /// <summary>
+        /// Typ záloh
+        /// </summary>
+        [XmlAttribute]
+        public BackupRuleType RuleType { get; set; } = BackupRuleType.FullBackups;
 
         /// <summary>
         /// Jestli bylo pravidlo nahráno na server.
@@ -59,7 +97,14 @@ namespace SmartModulBackupClasses
         [XmlAttribute]
         public bool Downloaded { get; set; } = false;
 
+        /// <summary>
+        /// Datum posledního vyhodnocení
+        /// </summary>
         public DateTime LastExecution { get; set; } = DateTime.MinValue;
+
+        /// <summary>
+        /// Datum poselední úpravy
+        /// </summary>
         public DateTime LastEdit { get; set; }
 
         public void SaveSelf()
@@ -99,7 +144,9 @@ namespace SmartModulBackupClasses
         public static BackupRule LoadFromXmlStr(string xml)
         {
             var deser = new XmlSerializer(typeof(BackupRule));
-            return deser.Deserialize(new StringReader(xml)) as BackupRule;
+            var rule = deser.Deserialize(new StringReader(xml)) as BackupRule;
+            rule.Sources.FixIds();
+            return rule;
         }
 
         public string ToXmlString()
@@ -109,5 +156,12 @@ namespace SmartModulBackupClasses
             ser.Serialize(writer, this);
             return writer.ToString();
         }
+    }
+
+    public enum BackupRuleType
+    {
+        FullBackups,
+        OneToOne,
+        ProtectedFolder
     }
 }

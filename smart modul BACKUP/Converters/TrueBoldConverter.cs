@@ -9,6 +9,9 @@ using System.Windows.Data;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Podle vstupu a parametru rozhodne, jestli vrátí FontWeights.Bold, nebo FontWeights.Normal
+    /// </summary>
     public class TrueBoldConverter : IValueConverter
     {
 

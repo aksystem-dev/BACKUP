@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Seznam ProgressBarModel. ProgressBar se přidá pomocí Add(), a odstraní zavoláním Remove() na získané instanci.
+    /// </summary>
+    [Obsolete("Místo tohoto se používá BackupInProgress, RestoreInProgress a ProgressMonitor.")]
     public class ProgressBarCollection : INotifyPropertyChanged
     {
         private List<ProgressBarModel> _progressBars = new List<ProgressBarModel>();
@@ -16,6 +20,10 @@ namespace smart_modul_BACKUP
 
         private void _change(params string[] names) => names.ForEach(f => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(f)));
 
+        /// <summary>
+        /// Přidá novou instanci ProgressBarModel na seznam a vrátí na ni odkaz.
+        /// </summary>
+        /// <returns></returns>
         public ProgressBarModel Add()
         {
             var model = new ProgressBarModel()
@@ -37,6 +45,11 @@ namespace smart_modul_BACKUP
             _change(nameof(ProgressBars));
         }
 
+        /// <summary>
+        /// Vrátí ProgressBarModel podle id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ProgressBarModel GetById(int id)
         {
             return _progressBars.FirstOrDefault(f => f.ID == id);

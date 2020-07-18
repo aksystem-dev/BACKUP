@@ -76,6 +76,9 @@ namespace SmartModulBackupClasses
             }
         }
 
+        /// <summary>
+        /// Pokud false, znamená to, že používáme aplikaci offline; pokud true, znamená to, že se připojujeme na API
+        /// </summary>
         public bool Online
         {
             get => online;

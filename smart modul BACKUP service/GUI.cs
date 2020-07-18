@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartModulBackupClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,21 @@ namespace smart_modul_BACKUP_service
     {
         private WCF.SmartModulBackupInterface wcf_interface;
 
+        private static void logInfo(string message)
+        {
+            SmbLog.Info(message, null, LogCategory.ServiceHost);
+        }
+
+        private static void logError(string error, Exception ex = null)
+        {
+            SmbLog.Error(error, null, LogCategory.ServiceHost);
+        }
+
+        private static void logWarn(string message)
+        {
+            SmbLog.Warn(message, null, LogCategory.ServiceHost);
+        }
+
         public GUI(WCF.SmartModulBackupInterface wcf)
         {
             wcf_interface = wcf;
@@ -26,7 +42,7 @@ namespace smart_modul_BACKUP_service
             {
                 if (wcf_interface.Callback == null)
                 {
-                    Logger.Log($"GUI nepřipojeno, nemůžu mu předat zprávu.");
+                    logInfo($"GUI nepřipojeno, nemůžu mu předat zprávu.");
                 }
 
                 try
@@ -35,22 +51,20 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (TimeoutException e)
                 {
-                    Logger.Ex(e);
-                    Logger.Warn("Odpojuji rozhraní");
+                    logWarn("Čas vypršel. Odpojuji rozhraní");
                     wcf_interface.context.Abort();
                 }
                 catch (Exception e)
                 {
-                    Logger.Ex(e);
-
+                    logError("Došlo k chybě při volání metody na GUI.", e);
+
                     try
                     {
                         wcf_interface.context.Abort();
                     }
                     catch (Exception ee)
                     {
-                        Logger.Ex(e);
-
+                        logError("Došlo k chybě při rušení spojení s GUI", ee);
                     }
                 }
             });

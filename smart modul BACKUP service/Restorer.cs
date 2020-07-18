@@ -14,15 +14,31 @@ namespace smart_modul_BACKUP_service
     /// <summary>
     /// Provádí obnovy záloh.
     /// </summary>
+    [Obsolete("Nepoužívá se. Kód pro provedení obnovy byl přesunut do třídy RestoreTask.")]
     public class Restorer
     {
         public string TempDir;
+
+        //public RestoreResponse restoreZip(Restore restoreInfo, RestoreInProgress progress)
+        //{
+        //    var bk = Manager.Get<BackupInfoManager>().LocalBackups.FirstOrDefault(bak => bak.LocalID == restoreInfo.backupID);
+        //    SMB_Log.Log("Obnova započata");
+        //    progress?.Update("STARTUJI OBNOVU", 0);
+
+        //    var R = new RestoreResponse(restoreInfo) { Success = SuccessLevel.EverythingWorked };
+
+        //    //vytvořit složku, kam se extrahuje zip
+        //    string temp_instance_dir = Path.Combine(TempDir, "restore" + Directory.GetDirectories(TempDir).Length.ToString());
+        //    Directory.CreateDirectory(temp_instance_dir);
+
+        //    SftpUploader sftp = null;
+        //}
 
         public RestoreResponse Restore(Restore restoreInfo, RestoreInProgress progress)
         {
             var bk = Manager.Get<BackupInfoManager>().LocalBackups.FirstOrDefault(bak => bak.LocalID == restoreInfo.backupID);
 
-            Logger.Log("Obnova započata");
+            DumbLogger.Log("Obnova započata");
             progress.Update("STARTUJI OBNOVU", 0);
             Utils.GUIS.StartRestore(progress);
             progress.AfterUpdateCalled += () => Utils.GUIS.UpdateRestore(progress);
@@ -51,7 +67,7 @@ namespace smart_modul_BACKUP_service
                     catch (Exception e)
                     {
                         string msg = $"Došlo k chybě při připojování k sftp ({e.GetType().Name})\n\n{e.Message}";
-                        Logger.Ex(e);
+                        DumbLogger.Ex(e);
 
                         R.errors.Add(new Error(msg));
                         R.Success = SuccessLevel.TotalFailure;
@@ -65,7 +81,7 @@ namespace smart_modul_BACKUP_service
             }
             catch (Exception e)
             {
-                Logger.Log("GetZip selhal, vracím R");
+                DumbLogger.Log("GetZip selhal, vracím R");
 
                 if (sftp?.IsConnected == true)
                     try
@@ -74,7 +90,7 @@ namespace smart_modul_BACKUP_service
                     }
                     catch (Exception ex)
                     {
-                        Logger.Ex(e);
+                        DumbLogger.Ex(e);
                     }
 
                 R.Success = SuccessLevel.TotalFailure;
@@ -92,13 +108,13 @@ namespace smart_modul_BACKUP_service
                 try
                 {
                     progress.Update("EXTRAHUJI ZIP", 0.27f);
-                    Logger.Log($"Obnova: extrahuju {src_path} do {src_dir}");
+                    DumbLogger.Log($"Obnova: extrahuju {src_path} do {src_dir}");
                     ZipFile.ExtractToDirectory(src_path, src_dir);
                 }
                 catch (Exception e)
                 {
                     string msg = $"Došlo k chybě při extrahování zip archivu z {src_path} do {src_dir} - {e.GetType().Name}: {e.Message}";
-                    Logger.Ex(e);
+                    DumbLogger.Ex(e);
 
 
                     R.errors.Add(new Error(msg));
@@ -128,7 +144,7 @@ namespace smart_modul_BACKUP_service
             catch (Exception e)
             {
                 string msg = $"Došlo k chybě k připojivání přes SQL ({e.GetType().Name}): {e.Message}";
-                Logger.Ex(e);
+                DumbLogger.Ex(e);
 
                 R.Success = SuccessLevel.SomeErrors;
                 R.errors.Add(new Error(msg));
@@ -161,7 +177,7 @@ namespace smart_modul_BACKUP_service
                         catch (Exception e)
                         {
                             string msg = $"Problém s obnovením SQL databáze {source.sourcepath} ({e.GetType().Name}): {e.Message}";
-                            Logger.Ex(e);
+                            DumbLogger.Ex(e);
 
                             R.errors.Add(new Error(msg));
                             success = SuccessLevel.TotalFailure;
@@ -181,7 +197,7 @@ namespace smart_modul_BACKUP_service
                         catch (Exception e)
                         {
                             string msg = $"Problém s obnovením adresáře {source.sourcepath} ({e.GetType().Name}): {e.Message}";
-                            Logger.Ex(e);
+                            DumbLogger.Ex(e);
 
                             R.errors.Add(new Error(msg));
                             success = SuccessLevel.TotalFailure;
@@ -196,7 +212,7 @@ namespace smart_modul_BACKUP_service
                         catch (Exception e)
                         {
                             string msg = $"Problém s obnovením souboru {source.sourcepath} ({e.GetType().Name}): {e.Message}";
-                            Logger.Ex(e);
+                            DumbLogger.Ex(e);
 
                             R.errors.Add(new Error(msg));
                             success = SuccessLevel.TotalFailure;
@@ -206,9 +222,9 @@ namespace smart_modul_BACKUP_service
                 }
 
                 if (success == SuccessLevel.EverythingWorked)
-                    Logger.Success($"Zdroj {source.sourcepath} (typ {source.type}) úspěšně obnoven");
+                    DumbLogger.Success($"Zdroj {source.sourcepath} (typ {source.type}) úspěšně obnoven");
                 else
-                    Logger.Success($"Během obnovy zdroje {source.sourcepath} (typ {source.type}) došlo k chybám");
+                    DumbLogger.Success($"Během obnovy zdroje {source.sourcepath} (typ {source.type}) došlo k chybám");
                 source.Success = success;
 
                 #endregion
@@ -225,18 +241,18 @@ namespace smart_modul_BACKUP_service
             }
             catch (Exception e)
             {
-                Logger.Warn($"{e.GetType().Name}: \n\n{e.Message}");
+                DumbLogger.Warn($"{e.GetType().Name}: \n\n{e.Message}");
             }
 
             try
             {
                 progress.Update("ODSTRAŇUJI DOČASNOU SLOŽKU", 0.95f);
-                Logger.Log("Odstraňuji dočasnou složku...");
+                DumbLogger.Log("Odstraňuji dočasnou složku...");
                 Directory.Delete(temp_instance_dir, true);
             }
             catch (Exception e)
             {
-                Logger.Ex(e);
+                DumbLogger.Ex(e);
 
             }
 
@@ -245,12 +261,12 @@ namespace smart_modul_BACKUP_service
 
             if (R.Success == SuccessLevel.EverythingWorked)
             {
-                Logger.Success($"Úspěšně dokončena obnova.");
+                DumbLogger.Success($"Úspěšně dokončena obnova.");
                 progress.Update("OBNOVA ÚSPŠNĚ DOKONČENA", 1);
             }
             else
             {
-                Logger.Warn($"Obnova dokončena, ale došlo k chybám.");
+                DumbLogger.Warn($"Obnova dokončena, ale došlo k chybám.");
                 progress.Update("OBNOVA DOKONČENA, ALE DOŠLO K CHYBÁM", 1);
             }
 
@@ -267,19 +283,19 @@ namespace smart_modul_BACKUP_service
         /// <returns></returns>
         private string GetZip(Restore r, string workdir, SftpUploader sftp = null, RestoreResponse response = null, Backup bk = null)
         {
-            Logger.Log("GetZip zavoláno");
+            DumbLogger.Log("GetZip zavoláno");
             bk = bk ?? Manager.Get<BackupInfoManager>().LocalBackups.FirstOrDefault(b => b.LocalID == r.backupID);
 
             //je-li záloha lokální, prostě vrátíme lokální umístění zipu
             if (r.location == BackupLocation.Local)
             {
-                Logger.Log("Při obnově se použije lokálně uložený zip");
+                DumbLogger.Log("Při obnově se použije lokálně uložený zip");
 
                 bool exists = bk.IsZip ? File.Exists(r.zip_path) : Directory.Exists(r.zip_path);
                 if (!exists)
                 {
                     string msg = $"Lokální zip soubor nebyl nalezen (měl být na adrese {r.zip_path}, ale zdá se, že není)";
-                    Logger.Error(msg);
+                    DumbLogger.Error(msg);
                     response?.errors.Add(new Error(msg));
                     throw new Exception();
                 }
@@ -290,7 +306,7 @@ namespace smart_modul_BACKUP_service
             //je-li na serveru, zip stáhneme a vrátíme cestu, kam jsme ho stáhli
             else if (r.location == BackupLocation.SFTP)
             {
-                Logger.Log("Při obnově se použije záloha na vzdáleném serveru");
+                DumbLogger.Log("Při obnově se použije záloha na vzdáleném serveru");
 
                 string zip_path = Path.Combine(workdir, Path.GetFileName(r.zip_path));
 
@@ -304,7 +320,7 @@ namespace smart_modul_BACKUP_service
 
                 try
                 {
-                    Logger.Log($"Stahuju zálohu přes SFTP {r.zip_path} do souboru {zip_path}");
+                    DumbLogger.Log($"Stahuju zálohu přes SFTP {r.zip_path} do souboru {zip_path}");
                     //using (var writer = File.OpenWrite(zip_path))
                     //    sftp.client.DownloadFile(r.zip_path.FixPathForSFTP(), writer);
 
@@ -316,7 +332,7 @@ namespace smart_modul_BACKUP_service
                 catch (SftpPathNotFoundException e)
                 {
                     string msg = $"Soubor {r.zip_path.FixPathForSFTP()} nebyl nalezen na serveru";
-                    Logger.Ex(e);
+                    DumbLogger.Ex(e);
 
                     response?.errors.Add(new Error(msg));
                     throw e;
@@ -324,7 +340,7 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     string msg = $"Při stahování zipu došlo k výjimce {e.GetType().Name}: {e.Message}";
-                    Logger.Ex(e);
+                    DumbLogger.Ex(e);
 
                     response?.errors.Add(new Error(msg));
                     throw e;

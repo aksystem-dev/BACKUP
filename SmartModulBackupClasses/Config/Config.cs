@@ -11,10 +11,16 @@ using System.ComponentModel;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Info o konfiguraci klientské aplikace
+    /// </summary>
     public class Config : INotifyPropertyChanged
     {
         private bool unsavedChanges;
 
+        /// <summary>
+        /// Jestli došlo v tomto objektu nebo v některém z jeho potomků ke změně vlastnosti.
+        /// </summary>
         [XmlIgnore]
         public bool UnsavedChanges
         {
@@ -26,12 +32,16 @@ namespace SmartModulBackupClasses
 
                 unsavedChanges = value;
 
-                if (Connection != null)
-                    connection.UnsavedChanges = value;
-                if (SFTP != null)
-                    SFTP.UnsavedChanges = value;
-                if (WebCfg != null)
-                    WebCfg.UnsavedChanges = value;
+                //pokud to nastavujem na false, chceme to nastavit i u potomků
+                if (value == false)
+                {
+                    if (Connection != null)
+                        connection.UnsavedChanges = value;
+                    if (SFTP != null)
+                        SFTP.UnsavedChanges = value;
+                    if (WebCfg != null)
+                        WebCfg.UnsavedChanges = value;
+                }
 
                 propChanged(nameof(UnsavedChanges));
             }
@@ -49,6 +59,12 @@ namespace SmartModulBackupClasses
             PropertyChanged += Config_PropertyChanged;
         }
 
+        /// <summary>
+        /// Zpracovává PropertyChanged událost tohoto objektu a jeho potomků (DatabaseConfig Conneciton,
+        /// SftpConfig SFTP, WebConfig WebCfg)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Config_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != nameof(UnsavedChanges))
@@ -60,6 +76,9 @@ namespace SmartModulBackupClasses
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
+        /// <summary>
+        /// Info o připojení k SQL databázi.
+        /// </summary>
         public DatabaseConfig Connection
         {
             get => connection;
@@ -78,6 +97,9 @@ namespace SmartModulBackupClasses
             }
         }
 
+        /// <summary>
+        /// Info o připojení k SFTP serveru.
+        /// </summary>
         public SftpConfig SFTP
         {
             get => sFTP;
@@ -96,6 +118,9 @@ namespace SmartModulBackupClasses
             }
         }
 
+        /// <summary>
+        /// Info o připojení k webovému API.
+        /// </summary>
         public WebConfig WebCfg
         {
             get => webCfg; 
@@ -150,6 +175,9 @@ namespace SmartModulBackupClasses
                 propChanged(nameof(UseShadowCopy));
             }
         }
+
+        public LoggingConfig Logging { get; set; } = null;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -182,5 +210,42 @@ namespace SmartModulBackupClasses
             }
         }
 
+        public void Loaded()
+        {
+            //inicializace LoggingConfig
+            if (Logging == null)
+            {
+                Logging = new LoggingConfig();
+                foreach(var l in Enum.GetValues(typeof(LogCategory)))
+                {
+                    Logging.Categories.Add(
+                        new ConfigureLogCategory()
+                        {
+                            Category = (LogCategory)l,
+                            LogLevel = NLog.LogLevel.Info.Name
+                        }
+                    );
+                }
+
+                Logging.Targets.EventLogTargets.Add(
+                    new EventLogTarget() 
+                    {
+                        LogLevel = NLog.LogLevel.Trace.Name,
+                        UsedByGui = false,
+                        UsedByService = true
+                    }
+                );
+
+                Logging.Targets.FileLogTargets.Add(
+                    new FileLogTarget()
+                    {
+                        LogLevel = NLog.LogLevel.FromOrdinal(SmbLog.DEF_LOG_LEVEL_ORDINAL).Name,
+                        UsedByGui = true,
+                        UsedByService = false,
+                        FileName = "log.txt"
+                    }
+                );
+            }
+        }
     }
 }

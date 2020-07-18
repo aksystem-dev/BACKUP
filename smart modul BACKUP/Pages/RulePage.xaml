@@ -21,7 +21,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        
+
         <ScrollViewer IsEnabled="True" Grid.Row="1" Grid.Column="0">
             <StackPanel Orientation="Vertical" Margin="0,0,0,15">
                 <ItemsControl ItemsSource="{Binding Path=Rules}" x:Name="RuleList">
@@ -81,8 +81,8 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <Border Margin="10">
-                    <Button Style="{StaticResource TransparentButton}" Padding="10" Click="btn_click_addRule"
-                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Style="{StaticResource TransparentButton}" Padding="10" Click="btn_click_showPopup"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="btn_addRule">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{StaticResource plus}" Width="30" Height="30" Margin="10" 
                                    VerticalAlignment="Center" />
@@ -93,5 +93,25 @@
                 </Border>
             </StackPanel>
         </ScrollViewer>
+
+        <Popup x:Name="popup_ruleTypeSelection" Width="200" Height="Auto" PlacementTarget="{Binding ElementName=btn_addRule}"
+               Placement="Bottom">
+            <Border BorderBrush="Gray" BorderThickness="3">
+                <StackPanel Background="White">
+                    <Button Style="{StaticResource TransparentButton}" Padding="5"
+                            HorizontalAlignment="Right" Width="30" Height="30" Content="×"
+                            Click="btn_click_hidePopup" />
+                    <Button Style="{StaticResource TransparentButton}" Padding="10"
+                            Content="ÚPLNÉ ZÁLOHY" Click="btn_click_addRule" 
+                            HorizontalAlignment="Stretch" />
+                    <Button Style="{StaticResource TransparentButton}" Padding="10"
+                            Content="ZÁLOHY 1:1" Click="btn_click_addOneToOneRule" 
+                            HorizontalAlignment="Stretch" />
+                    <Button Style="{StaticResource TransparentButton}" Padding="10"
+                            Content="CHRÁNĚNÉ SLOŽKY" Click="btn_click_addProtectedFolderRule"
+                            HorizontalAlignment="Stretch" />
+                </StackPanel>
+            </Border>
+        </Popup>
     </Grid>
 </Page>

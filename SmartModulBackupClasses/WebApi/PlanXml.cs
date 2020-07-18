@@ -50,5 +50,7 @@ namespace SmartModulBackupClasses.WebApi
         /// Jestli je plán použitelný (jestli už superadmin přidělil přístupy na SFTP)
         /// </summary>
         public bool Enabled { get; set; }
+
+        public DateTime PlatnostDo { get; set; }
     }
 }

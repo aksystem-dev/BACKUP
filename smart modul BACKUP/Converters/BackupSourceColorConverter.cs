@@ -10,6 +10,10 @@ using System.Windows.Media;
 
 namespace smart_modul_BACKUP
 {
+    /// <summary>
+    /// Nastaví barvu labelu pro název databáze podle toho, jestli danou databázi zálohujeme, nezálohujeme,
+    /// nebo o ní ani nevíme.
+    /// </summary>
     class BackupSourceColorConverter : IValueConverter
     {
         public Brush UnselectedBrush { get; set; }

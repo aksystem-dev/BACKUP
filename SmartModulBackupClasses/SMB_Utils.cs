@@ -37,11 +37,11 @@ namespace SmartModulBackupClasses
         /// <returns></returns>
         public static string GetRemoteBackupPath()
         {
-            var pm = Manager.Get<PlanManager>();
-            if (pm.UseConfig)
+            var pm = Manager.Get<AccountManager>();
+            if (pm.State == LoginState.Offline)
                 return Path.Combine(Manager.Get<ConfigManager>().Config.SFTP.Directory, GetComputerId(), "Backups");
             else
-                return Path.Combine(pm.Sftp.Directory, GetComputerId(), "Backups");
+                return Path.Combine(pm.SftpInfo.Directory, GetComputerId(), "Backups");
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace SmartModulBackupClasses
         /// <returns></returns>
         public static string GetRemoteBkinfosPath()
         {
-            var pm = Manager.Get<PlanManager>();
-            if (pm.UseConfig)
+            var pm = Manager.Get<AccountManager>();
+            if (pm.State == LoginState.Offline)
                 return Path.Combine(Manager.Get<ConfigManager>().Config.SFTP.Directory, GetComputerId(), "bkinfos");
             else
-                return Path.Combine(pm.Sftp.Directory, GetComputerId(), "bkinfos");
+                return Path.Combine(pm.SftpInfo.Directory, GetComputerId(), "bkinfos");
         }
 
         public static string GetRemotBackupsPath()

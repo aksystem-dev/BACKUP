@@ -16,6 +16,7 @@ namespace smart_modul_BACKUP_service
     /// <summary>
     /// Vyhodnocuje pravidla a provádí podle nich zálohy.
     /// </summary>
+    [Obsolete("Nepoužívá se. Kód pro provedení zálohy byl přesunut do třídy BackupTask.")]
     public class Backuper
     {
         public string TempDir;
@@ -53,12 +54,12 @@ namespace smart_modul_BACKUP_service
                     try
                     {
                         File.Delete(current.LocalPath);
-                        Logger.Log($"Odstraněna lokální zálohu pravidla {current.RefRuleName} umístěnou na adrese {current.LocalPath}");
+                        DumbLogger.Log($"Odstraněna lokální zálohu pravidla {current.RefRuleName} umístěnou na adrese {current.LocalPath}");
                     }
                     catch (Exception e)
                     {
                         string msg = $"Problém s odstraňováním staré lokální zálohy pravidla {current.RefRuleName} umístěné na adrese {current.LocalPath}\n\n{e.Message}";
-                        Logger.Ex(e);
+                        DumbLogger.Ex(e);
                         errors?.Add(new BackupError(msg, BackupErrorType.IOError));
                     }
                 }
@@ -82,12 +83,12 @@ namespace smart_modul_BACKUP_service
                     try
                     {
                         Sftp.DeleteFile(current.RemotePath);
-                        Logger.Log($"Odstraněna remote záloha pravidla {current.RefRuleName} umístěná na adrese {current.RemotePath}");
+                        DumbLogger.Log($"Odstraněna remote záloha pravidla {current.RefRuleName} umístěná na adrese {current.RemotePath}");
                     }
                     catch (Exception e)
                     {
                         string msg = $"Problém s odstraňováním staré remote zálohy pravidla {current.RefRuleName} umístěné na adrese {current.RemotePath}\n\n{e.Message}";
-                        Logger.Ex(e);
+                        DumbLogger.Ex(e);
                         errors?.Add(new BackupError(msg, BackupErrorType.SftpError));
                     }
                 }
@@ -130,7 +131,7 @@ namespace smart_modul_BACKUP_service
             Utils.GUIS.StartBackup(progress);
             progress.AfterUpdateCalled += () => Utils.GUIS.UpdateBackup(progress);
 
-            Logger.Log($"Pravidlo {rule.Name} (id {rule.LocalID}) spuštěno");
+            DumbLogger.Log($"Pravidlo {rule.Name} (id {rule.LocalID}) spuštěno");
 
             //objekt s informacemi o této záloze, který posléze uložíme do souboru
             var B = new Backup()
@@ -185,16 +186,16 @@ namespace smart_modul_BACKUP_service
                 backups.LocalBackups.Any(f => f.RefRule == rule.LocalID && f.AvailableRemotely))
             {
                 progress.Update("PŘIPOJUJI SE K SFTP", 0.05f);
-                Logger.Log("Připojuji se k SFTP");
+                DumbLogger.Log("Připojuji se k SFTP");
                 try
                 {
                     Sftp = Manager.Get<SftpUploader>();
                     Sftp.Connect();
-                    Logger.Log("Úspěšně připojeno k SFTP serveru");
+                    DumbLogger.Log("Úspěšně připojeno k SFTP serveru");
                 }
                 catch (Exception e)
                 {
-                    Logger.Ex(e);
+                    DumbLogger.Ex(e);
                     Utils.GUIS.ShowError("Službě smart modul BACKUP se nepodařilo připojit ke vzdálenému úložišti.");
 
                     B.Errors.Add(new BackupError(
@@ -216,16 +217,16 @@ namespace smart_modul_BACKUP_service
             if (rule.Sources.Databases.Any())
             {
                 progress.Update("PŘIPOJUJI SE K SQL SERVERU", 0.1f);
-                Logger.Log("Připojuji se přes SQL");
+                DumbLogger.Log("Připojuji se přes SQL");
                 try
                 {
                     SqlBackuper = Manager.Get<SqlBackuper>();
                     SqlBackuper.Open();
-                    Logger.Log("Úspěšně připojeno k SQL serveru");
+                    DumbLogger.Log("Úspěšně připojeno k SQL serveru");
                 }
                 catch (Exception e)
                 {
-                    Logger.Ex(e);
+                    DumbLogger.Ex(e);
                     Utils.GUIS.ShowError("Službě smart modul BACKUP se nepodařilo připojit k SQL serveru.");
 
                     B.Errors.Add(new BackupError(
@@ -248,7 +249,7 @@ namespace smart_modul_BACKUP_service
             if (cfg.UseShadowCopy)
             {
                 progress.Update("VYTVÁŘÍM SHADOW COPY", 0.2f);
-                Logger.Log("Vytvářím Shadow Copy");
+                DumbLogger.Log("Vytvářím Shadow Copy");
 
                 foreach (var src in rule.Sources.Directories)
                 {
@@ -257,22 +258,22 @@ namespace smart_modul_BACKUP_service
                     {
                         try
                         {
-                            Logger.Log($"Chystám se na Shadow Copy svazku {root}");
+                            DumbLogger.Log($"Chystám se na Shadow Copy svazku {root}");
 
                             var shadowCopy = new VssBackuper();
                             shadowCopy.DoBackup(root, B.Errors);
                             shadowCopies.Add(root, shadowCopy);
 
-                            Logger.Log($"Shadow Copy svazku {root} vytvořena");
+                            DumbLogger.Log($"Shadow Copy svazku {root} vytvořena");
                         }
                         catch (Exception ex)
                         {
-                            Logger.Ex(ex);
+                            DumbLogger.Ex(ex);
                         }
                     }
                 }
 
-                Logger.Log("Shadow Copy vytvořeny");
+                DumbLogger.Log("Shadow Copy vytvořeny");
             }
 
             #endregion
@@ -293,7 +294,7 @@ namespace smart_modul_BACKUP_service
                 #region BACKUP SOURCE
 
                 progress.Update($"VYTVÁŘÍM ZÁLOHU ZDROJE {source.id}", SMB_Utils.Lerp(prog_start, prog_end, ind / max_ind));
-                Logger.Log($"Vytvářím zálohu zdroje {source.id}");
+                DumbLogger.Log($"Vytvářím zálohu zdroje {source.id}");
 
                 string temp_fpath = null;
                 string error = null;
@@ -328,7 +329,7 @@ namespace smart_modul_BACKUP_service
                     //uložit info o zdroji zálohy do objektu zálohy
                     B.Sources.Add(saved_source);
 
-                    Logger.Log($"Záloha zdroje {source.id} hotova; výsledný objekt:\n{saved_source.PropertiesString()}");
+                    DumbLogger.Log($"Záloha zdroje {source.id} hotova; výsledný objekt:\n{saved_source.PropertiesString()}");
                 }
 
                 #endregion
@@ -346,7 +347,7 @@ namespace smart_modul_BACKUP_service
                 temp_zip_path = Path.Combine(temp_instance_dir, "temp.zip");
 
                 progress.Update("ZIPUJI ZÁLOHU", 0.6f);
-                Logger.Log("Zipuji zálohu");
+                DumbLogger.Log("Zipuji zálohu");
 
                 try
                 {
@@ -356,7 +357,7 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     string errmsg = $"Nepodařilo se zazipovati zálohu pravidla {rule.Name}\n\n{e.GetType().Name}\n\n{e.Message}";
-                    Logger.Ex(e);
+                    DumbLogger.Ex(e);
 
                     B.Errors.Add(new BackupError(errmsg, BackupErrorType.IOError));
 
@@ -411,7 +412,7 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     B.Success = false;
-                    Logger.Ex(e);
+                    DumbLogger.Ex(e);
 
                     B.Errors.Add(new BackupError(
                         $"Problém s nahráváním souboru přes SFTP na server. (chyba {e.GetType().Name}\n\n {e.Message}",
@@ -452,7 +453,7 @@ namespace smart_modul_BACKUP_service
                 catch (Exception e)
                 {
                     string errmsg = $"Chyba při zálohování dle pravidla {rule.Name}: asi se nepodařilo zkopírovat {temp_zip_path} do {this_bk_path}\n\n{e.GetType().Name}\n\n{e.Message}";
-                    Logger.Ex(e);
+                    DumbLogger.Ex(e);
 
                     B.Errors.Add(new BackupError(errmsg, BackupErrorType.IOError));
 
@@ -476,12 +477,12 @@ namespace smart_modul_BACKUP_service
                 //Utils.SavedBackups.RemoveInfos(f => !f.AvailableLocally && !f.AvailableRemotely);
                 B.Saved = true;
                 SMB_Utils.Sync(() => backups.AddAsync(B));
-                Logger.Log("Info o záloze uloženo");
+                DumbLogger.Log("Info o záloze uloženo");
             }
             catch (Exception e)
             {
                 string errmsg = $"Nepodařilo se uložit informace o záloze {rule.Name}\n\n{e.GetType().Name}\n\n{e.Message}";
-                Logger.Ex(e);
+                DumbLogger.Ex(e);
                 B.Errors.Add(new BackupError(errmsg, BackupErrorType.IOError));
                 B.Success = false;
             }
@@ -521,7 +522,7 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (Exception e)
                 {
-                    Logger.Ex(e);
+                    DumbLogger.Ex(e);
                     B.Success = false;
                 }
             }
@@ -541,7 +542,7 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (Exception e)
                 {
-                    Logger.Ex(e);
+                    DumbLogger.Ex(e);
                     B.Success = false;
                 }
             }
@@ -562,7 +563,7 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (Exception ex)
                 {
-                    Logger.Ex(ex);
+                    DumbLogger.Ex(ex);
                 }
 
             #endregion
@@ -570,7 +571,7 @@ namespace smart_modul_BACKUP_service
             #region DELETE TEMP FOLDER
 
             //nakonec odstranit dočasnou složku
-            Logger.Log("Odstraňuji dočasnou složku");
+            DumbLogger.Log("Odstraňuji dočasnou složku");
             progress.Update("ODSTRAŇUJI DOČASNOU SLOŽKU", 0.96f);
             FileUtils.DeleteFolder(temp_instance_dir, log: true);
 
@@ -580,12 +581,12 @@ namespace smart_modul_BACKUP_service
 
             if (B.Success)
             {
-                Logger.Success($"Pravidlo {rule.Name} úspěšně uplatněno.");
+                DumbLogger.Success($"Pravidlo {rule.Name} úspěšně uplatněno.");
                 progress.Update($"PRAVIDLO {rule.Name} ÚSPĚŠNĚ UPLATNĚNO", 1);
             }
             else
             {
-                Logger.Failure($"Pravidlo {rule.Name} uplatněno, ale došlo k chybám.");
+                DumbLogger.Failure($"Pravidlo {rule.Name} uplatněno, ale došlo k chybám.");
                 progress.Update($"PRAVIDLO {rule.Name} UPLATNĚNO, ALE DOŠLO K CHYBÁM", 1);
             }
 
@@ -607,7 +608,7 @@ namespace smart_modul_BACKUP_service
         /// <returns></returns>
         private string _backupSource(BackupSource source, SqlBackuper sqlBackuper, Dictionary<string, VssBackuper> shadowCopies, string dir, out string error, out string error_detail, out SuccessLevel success)
         {
-            Logger.Log($"_backupSourceFile called for {source.type} {source.id}");
+            DumbLogger.Log($"_backupSourceFile called for {source.type} {source.id}");
             Directory.CreateDirectory(dir);
 
             if (source.type == BackupSourceType.Database)

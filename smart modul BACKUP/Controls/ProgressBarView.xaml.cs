@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 namespace smart_modul_BACKUP
 {
     /// <summary>
-    /// Interaction logic for ProgressBarView.xaml
+    /// ProgressBar a Label k tomu
     /// </summary>
     public partial class ProgressBarView : UserControl
     {

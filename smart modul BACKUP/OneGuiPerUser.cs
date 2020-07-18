@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartModulBackupClasses;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Pipes;
@@ -34,12 +35,12 @@ namespace smart_modul_BACKUP
         /// <returns></returns>
         public bool Init()
         {
-            GuiLog.Log("OneGuiPerUser init");
+            SmbLog.Info("OneGuiPerUser init", null, LogCategory.OneGuiPerUser);
 
             //vytvoříme trubku s daným názvem a pokusíme se připojit jako klient
             //pokud je připojení úspěšné, znamená to, že už jeden tento proces běží
 
-            GuiLog.Log($"Creating named pipe with name {PipeName}");
+            SmbLog.Info($"Creating named pipe with name {PipeName}", null, LogCategory.OneGuiPerUser);
 
             var client = new NamedPipeClientStream(PipeName);
             try
@@ -47,7 +48,7 @@ namespace smart_modul_BACKUP
                 client.Connect(1000);
                 if (client.IsConnected)
                 {
-                    GuiLog.Log($"Connected to an already running instance hosting a pipe with name {PipeName}");
+                    SmbLog.Info($"Connected to an already running instance hosting a pipe with name {PipeName}", null, LogCategory.OneGuiPerUser);
 
                     //pokud už instance tohoto programu běží, řekneme jí, ať se dá do popředí
                     using (var writer = new StreamWriter(client))
@@ -55,7 +56,7 @@ namespace smart_modul_BACKUP
 
                     Thread.Sleep(500);
 
-                    GuiLog.Log("OneGuiPerUser Init() returning");
+                    SmbLog.Info("OneGuiPerUser Init() returning", null, LogCategory.OneGuiPerUser);
 
                     //vrátíme false
                     return false;
@@ -67,7 +68,7 @@ namespace smart_modul_BACKUP
             //pokud připojení nebylo úspěšné, zbavíme se klienta a stane se z nás server
             client.Dispose();
 
-            GuiLog.Log("An already running instance not found; I will become the pipe host");
+            SmbLog.Info("An already running instance not found; I will become the pipe host", null, LogCategory.OneGuiPerUser);
 
             Server = true;
             var access = new PipeSecurity();
@@ -79,7 +80,7 @@ namespace smart_modul_BACKUP
             listener = new NamedPipeServerStream(PipeName, PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous,
                 1024, 1024, access);
 
-            GuiLog.Log($"Pipe with name {PipeName} opened");
+            SmbLog.Info($"Pipe with name {PipeName} opened", null, LogCategory.OneGuiPerUser);
 
             listener.BeginWaitForConnection(ConnectionReceived, null);
 
@@ -89,7 +90,7 @@ namespace smart_modul_BACKUP
         //když se připojí nová instance gui, řekne nám, abychom se otevřeli
         private void ConnectionReceived(IAsyncResult result)
         {
-            GuiLog.Log($"Connection received on {PipeName}");
+            SmbLog.Info($"Connection received on {PipeName}", null, LogCategory.OneGuiPerUser);
             listener.EndWaitForConnection(result);
            
             reader = new StreamReader(listener);

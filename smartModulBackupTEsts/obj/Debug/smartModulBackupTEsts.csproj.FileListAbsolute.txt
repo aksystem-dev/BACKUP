@@ -21,3 +21,5 @@ D:\Projects\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupT
 D:\Projects\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.exe
 D:\Projects\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupTEsts.pdb
 D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\SmartModulBackupClasses.dll.config
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\NLog.dll
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\NLog.xml

@@ -17,7 +17,7 @@
 
         <TextBox Text="{Binding ElementName=Root, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Grid.Row="0" Grid.Column="0" x:Name="txt_path" />
-        <Button x:Name="btn_open" Margin="0,3,3,3"
+        <Button x:Name="btn_open" Margin="0,6,6,6"
             Width="40" Grid.Row="0" Grid.Column="1" FontWeight="Bold">...</Button>
     </Grid>
 </UserControl>

@@ -44,12 +44,14 @@ namespace smart_modul_BACKUP
         /// </summary>
         public static bool startHidden => ARGS.Contains("-hidden");
 
+        /// <summary>
+        /// Umožňuje volat funkce ve vlákně GUI z jiných vláken.
+        /// </summary>
+        /// <param name="a"></param>
         public static void dispatch(Action a)
         {
             Application.Current.Dispatcher.InvokeAsync(a);
         }
-
-        //public static bool IsUserLoggedIn { get; set; } = false;
 
         private void OnAppStart(object sender, StartupEventArgs e)
         {
@@ -60,25 +62,24 @@ namespace smart_modul_BACKUP
             if (!Directory.Exists(cd)) Directory.CreateDirectory(cd);
             Directory.SetCurrentDirectory(cd);
 
-            SMB_Log.OnLog += SMB_Log_OnLog;
-            GuiLog.Clear();
-            GuiLog.FileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "guilog.txt");
-            GuiLog.Log("\n===========\nGUI started\n===========\n");
-
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
             try
             {
                 Setup();
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException ex) when (!Utils.AmIAdmin()) //pokud nemáme dost oprávnění, řekneme si o administrátora
             {
+                if (SmbLog.IsConfigured)
+                    SmbLog.Info("Došlo k UnauthorizedAccessException, požaduji oprávnění administrátora", ex, LogCategory.GUI);
                 Utils.RestartAsAdmin(new string[] { });
             }
-            catch (Exception ex)
+            catch (Exception ex) //neošetřené výjimky vyblejt do logu a ukončit aplikaci
             {
-                GuiLog.Log($"==============================\nVýjimka! ({ex.GetType().Name})\n\n{ex.Message}\n\n{ex.StackTrace}\n==============================");
+                if (SmbLog.IsConfigured)
+                    SmbLog.Fatal("Neošetřená výjimka při spouštění GUI", ex, LogCategory.GUI);
 
+                //odpojení od služby
                 var service = Manager.Get<ServiceState>();
                 if (service != null && service.State == ServiceConnectionState.Connected)
                     service.Disconnect();
@@ -89,49 +90,19 @@ namespace smart_modul_BACKUP
 
         private void Setup()
         {
-            SetupGuicom();
-            SetupConfig();
-            var apiTask = Task.Run(SetupApiAsync);
-            SetupNotifyIcon();
-            SetupAvailableDbs();
-            SetupSftp();
-            Manager.SetSingleton(new InProgress());
-            if (!apiTask.Result)
+            SetupConfig(); //nastaví ConfigManager
+            SetupGuicom(); //nastaví OneGuiPerUser
+            var apiTask = Task.Run(SetupApiAsync); //na pozadí začne nastavovat webové api
+            SetupNotifyIcon(); //vytvořit NotifyIcon
+            SetupAvailableDbs(); //nastavit AvailableDbLoader
+            SetupSftp(); //nastavit SftpUploaderFactory
+            Manager.SetSingleton(new InProgress()); //nastavit InProgress
+            if (!apiTask.Result) //počkat si na apiTask; pokud vrátí false, ukázat login okno
                 ShowLogin(true);
-            else
-                SMB_Utils.Sync(() => SetupPlanManager(null));
-            SetupService();
-            SetupRules();
-            SetupBackups();
+            SetupService(); //nastavit ServiceState
+            SetupRules(); //nastavit BackupRuleLoader
+            SetupBackups(); //nastavit BackupInfoManager
         }
-
-        private static void SetupSftp()
-        {
-            Manager.SetTransient(new SftpUploaderFactory());
-        }
-
-        private static void SetupBackups()
-        {
-            var man = Manager.SetSingleton(new BackupInfoManager());
-            man.PropertyChangedDispatchHandler = dispatch;
-            man.LoadAsync();
-        }
-
-        private static void SetupAvailableDbs()
-        {
-            Manager.SetSingleton(new AvailableDbLoader()).Load();
-        }
-
-        private static void SetupNotifyIcon()
-        {
-            //vytvořit notifyIcon
-            var notifyIcon = new System.Windows.Forms.NotifyIcon();
-            notifyIcon.Icon = smart_modul_BACKUP.Properties.Resources.ikona_smart_modul512;
-            notifyIcon.Visible = true;
-            notifyIcon.Text = "smart modul BACKUP";
-            Manager.SetSingleton(notifyIcon);
-        }
-
         private static void SetupGuicom()
         {
             var guicom = Manager.SetSingleton(new OneGuiPerUser());
@@ -142,18 +113,78 @@ namespace smart_modul_BACKUP
             }
 
         }
-
-        private static void SetupService()
+        private static void SetupConfig()
         {
-            Manager.SetSingleton(new ServiceState()).SetupWithMessageBoxes();
+            var cfg_man = Manager.SetSingleton(new ConfigManager()).Load();
+            SmbLog.Configure(cfg_man.Config.Logging, SmbAssembly.Gui);
+            SmbLog.Info("Aplikace spuštěna, načtena konfigurace pro logování");
         }
 
+        /// <summary>
+        /// Přidá SmbWebApi do Manageru
+        /// </summary>
+        /// <returns>True, pokud všemu rozumíme, false, pokud nějaké info chybí a je proto třeba otevřít přihlašovací okno</returns>
+        private async Task<bool> SetupApiAsync()
+        {
+            var account = Manager.SetSingleton(new AccountManager());
+
+            //neboť na PropertyChanged AccountManageru budeme věšet UI funkce a není vyloučeno, 
+            //že se bude volat z jiného vlákna, nastavíme ho na dispatch metodu
+            account.propertyChangedDispatcher = dispatch; 
+
+            var config = Manager.Get<ConfigManager>().Config;
+
+            if (config.WebCfg == null)
+            {
+                //pokud nemáme info o připojení k API, pravděpodobně se jedná o první spuštění aplikace
+                //vrátíme proto false, čímž volající metodě sdělíme, že chceme otevřít dialogové okno pro přihlášení
+                return false;
+            }
+            else
+            {
+                //TryLoginWithAsync vrátí true, pokud buďto:
+                //   a) používáme aplikaci offline
+                //   b) používáme aplikaci online a úspěšně jsme se připojili na api
+                //ale vrátí false, pokud se něco nezdaří
+                //pokud se tedy něco nezdaří, vrátíme false, čímž se otevře login okno, jinak vrátíme true, čímž 
+                //se nestane nic
+                return await account.TryLoginWithAsync(config.WebCfg);
+            }
+        }
+        private static void SetupNotifyIcon()
+        {
+            //vytvořit notifyIcon
+            var notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.Icon = smart_modul_BACKUP.Properties.Resources.ikona_smart_modul512;
+            notifyIcon.Visible = true;
+            notifyIcon.Text = "smart modul BACKUP";
+            Manager.SetSingleton(notifyIcon);
+        }
+        private static void SetupAvailableDbs()
+        {
+            Manager.SetSingleton(new AvailableDbLoader()).Load();
+        }
+        private static void SetupSftp()
+        {
+            Manager.SetTransient(new SftpUploaderFactory());
+        }
+        private static void SetupService()
+        {
+            Manager.SetSingleton(new ServiceState()).SetupWithMessageBoxes(App.autoRun);
+        }
         private static void SetupRules()
         {
             var rloader = Manager.SetSingleton(new BackupRuleLoader()).Load();
             rloader.UI_Dispatcher = dispatch;
             rloader.OnRuleUpdated += Rloader_OnRuleUpdated;
         }
+        private static void SetupBackups()
+        {
+            var man = Manager.SetSingleton(new BackupInfoManager());
+            man.PropertyChangedDispatchHandler = dispatch;
+            man.LoadAsync();
+        }
+
 
         /// <summary>
         /// Když v GUI upravíme / přidáme pravidlo, informujem o tom službu
@@ -169,86 +200,15 @@ namespace smart_modul_BACKUP
             catch { }
         }
 
-        private static void SetupConfig()
-        {
-            Manager.SetSingleton(new ConfigManager()).Load();
-        }
-
-        private void SMB_Log_OnLog(LogArgs obj)
-        {
-            GuiLog.Log($"#######################\n\n > {obj.Message} \n\n#######################");
-        }
 
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            GuiLog.Log($"==============================\nVýjimka! ({e.Exception.GetType().Name})\n\n{e.Exception.Message}\n\n{e.Exception.StackTrace}\n==============================");
+            SmbLog.Fatal("Neošetřená výjimka v GUI", e.Exception, LogCategory.GUI);
         }
 
         private void OnAppExit(object sender, ExitEventArgs e)
         {
             Manager.Get<System.Windows.Forms.NotifyIcon>()?.Dispose();
-        }
-
-        /// <summary>
-        /// Přidá SmbWebApi do Manageru
-        /// </summary>
-        /// <returns>True, pokud všemu rozumíme, false, pokud nějaké info chybí a je proto třeba otevřít přihlašovací okno</returns>
-        private bool SetupApiAsync()
-        {
-            var config = Manager.Get<ConfigManager>().Config;
-
-            SmbApiClient API = null;
-            if (config.WebCfg == null)
-            {
-                //pokud nemáme info o připojení k API, pravděpodobně se jedná o první spuštění aplikace
-                //vrátíme proto false, čímž volající metodě sdělíme, že chceme otevřít dialogové okno pro přihlášení
-                return false;
-            }
-            else if (!config.WebCfg.Online)
-            {
-                //nejsme-li online, neděláme nic; API nastavíme na null a vrátíme true
-            }
-            else
-            {
-                //pokud nám config tvrdí, že jsme online, vytvoříme instanci SmbApiClient a vrátíme true, že je vše v pohodě
-                API = new SmbApiClient(config.WebCfg.Username, config.WebCfg.Password.Value, ms_timeout: 1500);
-            }
-
-            Manager.SetSingleton(API);
-
-            return true;
-        }
-
-        /// <summary>
-        /// Přidá PlanManager
-        /// </summary>
-        /// <returns></returns>
-        public static async Task<bool> SetupPlanManager(PlanXml plan = null)
-        {
-            try
-            {
-                var plan_man = Manager.Get<PlanManager>();
-
-                if (plan_man == null)
-                {
-                    plan_man = Manager.SetSingleton(new PlanManager());
-
-                    //jelikož PlanManager často pracuje na jiném vlákně, vysvětlíme mu, ať používá Dispatcher
-                    plan_man.PropertyChangedDispatcher = new Action<Action>(a =>
-                    {
-                        App.Current.Dispatcher.InvokeAsync(a);
-                    });
-                }
-                if (plan == null)
-                    await plan_man.LoadAsync(); //pokud nebyl zadán plán, načtem plán a sftp údaje
-                else
-                    await plan_man.SetPlanAsync(plan); //jinak použijeme zadaný plán a načtem pouze sftp údaje
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         /// <summary>
@@ -261,39 +221,31 @@ namespace smart_modul_BACKUP
             cfg_man.Config.WebCfg.Online = false;
             cfg_man.Save();
 
+            var _account = Manager.Get<AccountManager>();
+            _ = _account.Api.DeactivateAsync();
+
             try
             {
-                //deaktivovat plán
-                Manager.Get<SmbApiClient>().Deactivate();
+                _account.TryLoginWithAsync(cfg_man.Config.WebCfg).Wait();
             }
             catch { }        
-
-            //odendat webové api
-            Manager.SetSingleton<SmbApiClient>(null);
-
-            //updatovat plán
-            SMB_Utils.Sync(() => SetupPlanManager(null));
         }
 
         /// <summary>
-        /// Zobrazí okno Login; pokud dojde k úspěšnému přihlášení, nastaví SmbApiClient a PlanManager
+        /// Zobrazí okno Login; pokud dojde k úspěšnému přihlášení, nastaví AccountManager
         /// </summary>
         /// <returns></returns>
         public static bool ShowLogin(bool quitOnFail)
         {
             var login = new LoginWindow();
-            var res = login.ShowDialog(); //login window by se mělo o vše postarat, proto můžeme vrátit
+            var res = login.ShowDialog(); //login window by se mělo o vše postarat
             if (res == true)
             {
-                Manager.SetSingleton(login.api); //nastavit nový objekt SmbApiClient
                 try
                 {
                     Manager.Get<ServiceState>().Client.UpdateApiAsync(); //říct službě, ať se také znovu připojí k api
                 }
                 catch { }
-
-                SMB_Utils.Sync(() => SetupPlanManager(login.plan)); //načíst info o plánu
-                
                 return true;
             }
             else

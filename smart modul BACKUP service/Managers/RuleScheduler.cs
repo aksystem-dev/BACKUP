@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace smart_modul_BACKUP_service.Managers
 {
+    /// <summary>
+    /// Poskytuje metodu GetBackupTaskList
+    /// </summary>
     public class RuleScheduler
     {
         //public void ScheduleRules(TimeSpan forHowLong)
@@ -19,19 +22,21 @@ namespace smart_modul_BACKUP_service.Managers
         //    timeline.Start(GetBackupTaskList(forHowLong));
         //}
 
+        private static void logError(string error, Exception ex = null)
+            => SmbLog.Error(error, ex, LogCategory.RuleScheduler);
+
+        private static void logInfo(string info, Exception ex = null)
+            => SmbLog.Info(info, ex, LogCategory.RuleScheduler);
 
         /// <summary>
         /// Naplánuje pravidla podle BackupRuleLoader a vrátí seznam BackupTasků
         /// </summary>
         /// <param name="forHowLong">Pravidla jsou plánována od DateTime.Now po DateTime.Now + forHowLong</param>
-        public List<BackupTask> GetBackupTaskList(TimeSpan forHowLong)
+        public List<BackupTask> GetBackupTaskList(DateTime start, DateTime end)
         {
             int total = 0;
 
-            DateTime start = DateTime.Now;
-            DateTime end = start + forHowLong;
-
-            Logger.Log($"Plánuji pravidla mezi {start} a {end}");
+            logInfo($"Plánuji pravidla mezi {start} a {end}");
 
             List<BackupTask> backupTasks = new List<BackupTask>();
             var rules = Manager.Get<BackupRuleLoader>().Rules;
@@ -39,17 +44,17 @@ namespace smart_modul_BACKUP_service.Managers
             {
                 if (!rule.Enabled)
                 {
-                    Logger.Log($"Pravidlo {rule.Name} zakázáno, kašlu na něj tedy");
+                    logInfo($"Pravidlo {rule.Name} zakázáno, kašlu na něj tedy");
                     continue;
                 }
 
-                Logger.Log($"Plánuji vyhodnocování {rule.Name}");
+                logInfo($"Plánuji vyhodnocování {rule.Name}");
 
                 var tasks = rule.GetBackupTasksInTimeSpan(start, end);
 
                 //toto jenom vypisuje info do eventlogu, lze do dát pryč
                 foreach (var t in tasks)
-                    Logger.Log($"{rule.Name} se spustí v {t.ScheduledStart}, čili za {t.ScheduledStart - DateTime.Now}");
+                    logInfo($"{rule.Name} se spustí v {t.ScheduledStart}, čili za {t.ScheduledStart - DateTime.Now}");
 
                 //přidat to do listu
                 backupTasks.AddRange(tasks);
@@ -57,7 +62,7 @@ namespace smart_modul_BACKUP_service.Managers
                 total += tasks.Count();
             }
 
-            Logger.Log($"Naplánováno {total} spuštění pravidel.");
+            logInfo($"Naplánováno {total} spuštění pravidel.");
 
             return backupTasks;
         }

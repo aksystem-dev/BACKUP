@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace smart_modul_BACKUP.Managers
 {
+    /// <summary>
+    /// Načítá dostupné databáze ze SQL serveru.
+    /// </summary>
     public class AvailableDbLoader
     {
         public ObservableCollection<AvailableDatabase> availableDatabases { get; set; }

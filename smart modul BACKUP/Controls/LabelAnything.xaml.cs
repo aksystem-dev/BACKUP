@@ -18,7 +18,7 @@ namespace smart_modul_BACKUP
 
 
     /// <summary>
-    /// Interakční logika pro LabelAnything.xaml
+    /// Label a k němu nějaký ovládací prvek.
     /// </summary>
     public partial class LabelAnything : UserControl
     {

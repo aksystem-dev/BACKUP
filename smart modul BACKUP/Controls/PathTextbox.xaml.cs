@@ -9,11 +9,10 @@ using System.Windows.Controls;
 namespace smart_modul_BACKUP
 {
     /// <summary>
-    /// Interakční logika pro PathTextbox.xaml
+    /// Umožňuje vybrat cestu k souboru.
     /// </summary>
     public partial class PathTextbox : UserControl
     {
-
         #region DEPENDENCY PROPERTIES
 
         public string Filter

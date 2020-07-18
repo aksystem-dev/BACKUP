@@ -19,7 +19,7 @@ using SmartModulBackupClasses.Rules;
 namespace smart_modul_BACKUP
 {
     /// <summary>
-    /// Interakční logika pro RuleControl.xaml
+    /// Vše co je potřeba pro konfiguraci pravidla.
     /// </summary>
     public partial class RuleControl : UserControl
     {
@@ -37,8 +37,6 @@ namespace smart_modul_BACKUP
 
         public static readonly DependencyProperty parentScrollViewerProperty =
             DependencyProperty.Register("parentScrollViewer", typeof(ScrollViewer), typeof(RuleControl), new PropertyMetadata(null));
-
-
 
         public RuleControl()
         {
@@ -67,6 +65,8 @@ namespace smart_modul_BACKUP
 
             directories.CollectionChanged += Directories_CollectionChanged;
             files.CollectionChanged += Files_CollectionChanged;
+
+
         }
 
 
@@ -94,10 +94,39 @@ namespace smart_modul_BACKUP
             Rule.Sources.Files = files.Select(f => f.source).ToArray();
         }
 
-
-
         private void RuleControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            //podle typu pravidla upravit GUI
+            //do budoucna: vlastní RuleControl pro každý typ pravidla?
+            switch (Rule.RuleType)
+            {
+                case BackupRuleType.FullBackups:
+                    pan_databaseSources.Visibility = Visibility.Visible;
+                    pan_fileSources.Visibility = Visibility.Visible;
+                    txt_localBackupCount.Visibility = Visibility.Visible;
+                    txt_remoteBackupsCount.Visibility = Visibility.Visible;
+                    cb_zip.Visibility = Visibility.Visible;
+                    panel_conditions.Visibility = Visibility.Visible;
+                    break;
+                case BackupRuleType.OneToOne:
+                    pan_databaseSources.Visibility = Visibility.Collapsed;
+                    pan_fileSources.Visibility = Visibility.Collapsed;
+                    txt_localBackupCount.Visibility = Visibility.Collapsed;
+                    txt_remoteBackupsCount.Visibility = Visibility.Collapsed;
+                    cb_zip.Visibility = Visibility.Collapsed;
+                    panel_conditions.Visibility = Visibility.Visible;
+                    break;
+                case BackupRuleType.ProtectedFolder:
+                    pan_databaseSources.Visibility = Visibility.Collapsed;
+                    pan_fileSources.Visibility = Visibility.Collapsed;
+                    txt_localBackupCount.Visibility = Visibility.Visible;
+                    txt_remoteBackupsCount.Visibility = Visibility.Visible;
+                    cb_zip.Visibility = Visibility.Visible;
+                    panel_conditions.Visibility = Visibility.Collapsed;
+                    break;
+                default:
+                    throw new NotImplementedException($"Neznám typ zálohy {Rule.RuleType}");
+            }
 
             //nastavit databases jako zdroj dat pro DbBackups ovládací prvek
             DbBackups.ItemsSource = databases;
