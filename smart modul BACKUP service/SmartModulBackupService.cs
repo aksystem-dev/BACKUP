@@ -65,7 +65,7 @@ namespace smart_modul_BACKUP_service
                 EventLog.CreateEventSource("SmartModulBackupEvents", "SmartModulBackupLog");
             evlog.Source = "SmartModulBackupEvents";
             evlog.Log = "SmartModulBackupLog";
-            evlog.Clear();
+            //evlog.Clear();
 
             DumbLogger.eventLog = evlog;
         }
@@ -281,21 +281,6 @@ namespace smart_modul_BACKUP_service
 
         protected override void OnStop()
         {
-            if (host != null && host.State == CommunicationState.Opened)
-            {
-                SmbLog.Info("Ukončuji komunikaci s rozhraním", null, LogCategory.ServiceHost);
-                try
-                {
-                    Utils.GUIS.Goodbye();
-                }
-                catch(Exception ex)
-                {
-                    SmbLog.Error("Chyba při ukončování WCF komunikace s GUI", ex, LogCategory.ServiceHost);
-                }
-                host.Close();
-                host = null;
-            }
-
             if (timeline.Running)
                 timeline.Stop();
 
@@ -303,6 +288,21 @@ namespace smart_modul_BACKUP_service
                 task.Cancel();
 
             Task.WhenAll(BackupTask.RunningBackupTasks.Select(bt => bt.TheTask)).Wait();
+
+            if (host != null && host.State == CommunicationState.Opened)
+            {
+                SmbLog.Info("Ukončuji komunikaci s rozhraním", null, LogCategory.ServiceHost);
+                try
+                {
+                    Utils.GUIS.Goodbye();
+                }
+                catch (Exception ex)
+                {
+                    SmbLog.Error("Chyba při ukončování WCF komunikace s GUI", ex, LogCategory.ServiceHost);
+                }
+                host.Close();
+                host = null;
+            }
 
             DumbLogger.Log("Služba smart modul BACKUP stopnuta");
         }

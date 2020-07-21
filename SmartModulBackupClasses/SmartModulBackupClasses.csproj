@@ -60,7 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\LoggingConfig.cs" />
+    <Compile Include="IHashable.cs" />
     <Compile Include="OneToOneBackupStatus.cs" />
+    <Compile Include="Reflector.cs" />
     <Compile Include="Rules\BackupConfig.cs" />
     <Compile Include="BackupError.cs" />
     <Compile Include="BackupInfo.cs" />

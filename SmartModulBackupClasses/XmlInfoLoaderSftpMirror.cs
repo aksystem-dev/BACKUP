@@ -97,9 +97,9 @@ namespace SmartModulBackupClasses
 
         private void _loadFromSftp(SftpUploader sftp)
         {
-            if (sftp.client.Exists(RemotePath.FixPathForSFTP()))
+            if (sftp.client.Exists(RemotePath.NormalizePath()))
             {
-                string text = sftp.client.ReadAllText(RemotePath.FixPathForSFTP());
+                string text = sftp.client.ReadAllText(RemotePath.NormalizePath());
                 SMB_Log.Log($"XmlInfoLoaderSftpMirror._loadFromSftp(): staženo \"{RemotePath}\":\n\n{text}");
                 _loadInfos(append: true, xml: text);
             }

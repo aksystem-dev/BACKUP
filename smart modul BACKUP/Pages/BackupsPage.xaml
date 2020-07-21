@@ -122,28 +122,26 @@
                     <DataTemplate DataType="{x:Type smb:Backup}">
                         <StackPanel Style="{StaticResource Block}">
                             <Border Style="{StaticResource Top}" Background="{StaticResource Blue0}">
-                                <StackPanel>
-                                    <DockPanel LastChildFill="True">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" DockPanel.Dock="Left">
-                                            <Image Margin="20,0,0,0" VerticalAlignment="Center" 
-                                               Source="{Binding Path=SuccessLevel, Converter={StaticResource successImg}}"
-                                               ToolTip="{Binding Path=SuccessLevel, Converter={StaticResource successToolTip}}" />
-                                            <Label Content="{Binding Path=RefRuleName}" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <Button HorizontalAlignment="Right" ToolTip="OBNOVA" Margin="15"
-                                            Click="btn_click_restore">
-                                            <Image Source="{StaticResource restore}" />
-                                        </Button>
-                                    </DockPanel>
-                                    <ItemsControl ItemsSource="{Binding Path=InProgress}" DockPanel.Dock="Bottom">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type smb:ProgressMonitor}">
-                                                <local:ProgressBarView Model="{Binding}" Margin="10" Text="PROBÍHAJÍCÍ OBNOVA" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
+                                <DockPanel LastChildFill="True">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" DockPanel.Dock="Left">
+                                        <Image Margin="20,0,0,0" VerticalAlignment="Center" 
+                                            Source="{Binding Path=SuccessLevel, Converter={StaticResource successImg}}"
+                                            ToolTip="{Binding Path=SuccessLevel, Converter={StaticResource successToolTip}}" />
+                                        <Label Content="{Binding Path=RefRuleName}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <Button HorizontalAlignment="Right" ToolTip="OBNOVA" Margin="15"
+                                        Click="btn_click_restore">
+                                        <Image Source="{StaticResource restore}" />
+                                    </Button>
+                                </DockPanel>
                             </Border>
+                            <ItemsControl ItemsSource="{Binding Path=InProgress}" DockPanel.Dock="Bottom">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type smb:ProgressMonitor}">
+                                        <local:ProgressBarView Model="{Binding}" Margin="10" Text="PROBÍHAJÍCÍ OBNOVA" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                             <StackPanel Visibility="{Binding Path=Errors, Converter={StaticResource anyVis}}" Margin="5">
                                 <Label Content="CHYBY" FontSize="16" FontWeight="Bold" />
                                 <ItemsControl ItemsSource="{Binding Path=Errors}">
@@ -168,8 +166,8 @@
                                 </Grid.Resources>
 
                                 <StackPanel Orientation="Vertical" Grid.Column="0" Margin="10,5,10,10">
-                                    <Label Content="{Binding Path=AvailableLocally, Converter={StaticResource anoNe}}" ContentStringFormat="Uložené lokálně: {0}" />
-                                    <Label Content="{Binding Path=AvailableRemotely, Converter={StaticResource anoNe}}" ContentStringFormat="Uložené na serveru: {0}" />
+                                    <Label Content="{Binding Path=AvailableOnThisComputer, Converter={StaticResource anoNe}}" ContentStringFormat="Dostupné na tomto PC: {0}" />
+                                    <Label Content="{Binding Path=AvailableOnCurrentSftpServer, Converter={StaticResource anoNe}}" ContentStringFormat="Dostupné na aktuálním serveru: {0}" />
                                 </StackPanel>
 
                                 <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10,5,10,10">

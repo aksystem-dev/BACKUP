@@ -129,7 +129,7 @@
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\ProgressBarCollection.cs" />
     <Compile Include="Models\ProgressBarModel.cs" />
-    <Compile Include="Models\ServiceState.cs" />
+    <Compile Include="Managers\ServiceState.cs" />
     <Compile Include="MyExtensions.cs" />
     <Compile Include="OneGuiPerUser.cs" />
     <Compile Include="Pages\BackupsPage.xaml.cs">

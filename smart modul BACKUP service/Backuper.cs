@@ -436,7 +436,7 @@ namespace smart_modul_BACKUP_service
                 Directory.CreateDirectory(rule_folder);
 
                 //zjistit id zálohy a cestu, kam chceme zálohu uložit
-                string this_bk_path = Path.Combine(rule_folder, bk_fname);
+                string this_bk_path = Path.GetFullPath(Path.Combine(rule_folder, bk_fname));
 
                 try
                 {

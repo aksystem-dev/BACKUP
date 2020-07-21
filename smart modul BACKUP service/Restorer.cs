@@ -331,7 +331,7 @@ namespace smart_modul_BACKUP_service
                 }
                 catch (SftpPathNotFoundException e)
                 {
-                    string msg = $"Soubor {r.zip_path.FixPathForSFTP()} nebyl nalezen na serveru";
+                    string msg = $"Soubor {r.zip_path.NormalizePath()} nebyl nalezen na serveru";
                     DumbLogger.Ex(e);
 
                     response?.errors.Add(new Error(msg));

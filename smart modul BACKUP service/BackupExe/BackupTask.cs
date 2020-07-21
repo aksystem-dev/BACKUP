@@ -87,6 +87,8 @@ namespace smart_modul_BACKUP_service.BackupExe
                 _runningBackupTasks.Add(this);
 
             Progress = Utils.InProgress.NewBackup(); //vytvoření objektu pro komunikaci s GUI
+            Progress.RuleId = Rule.LocalID;
+            Progress.RuleName = Rule.Name;
             Progress.TAG = this; //umožnit přístup k tomuto objektu skrze BackupInProgress
             Progress.AfterUpdateCalled += () => Utils.GUIS.UpdateBackup(Progress); //volání update na Progress automaticky informuje GUI
             Utils.GUIS.StartBackup(Progress);

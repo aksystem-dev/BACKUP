@@ -73,7 +73,9 @@ namespace smart_modul_BACKUP_service.BackupExe
                 StartDateTime = DateTime.Now,
                 ComputerId = SMB_Utils.GetComputerId(),
                 Saved = false,
-                IsZip = Rule.Zip
+                IsZip = Rule.Zip,
+                SftpHash = Rule.RemoteBackups.enabled ? SMB_Utils.GetSftpHash() : null,
+                PlanId = SMB_Utils.GetCurrentPlanId()
             };
             await Manager.Get<BackupInfoManager>().AddQuietlyAsync(B_Obj);
 
@@ -555,7 +557,7 @@ namespace smart_modul_BACKUP_service.BackupExe
         {
             string rule_folder = Path.Combine(cfg.LocalBackupDirectory, Rule.Name);
             Directory.CreateDirectory(rule_folder);
-            string this_bk_path = Path.Combine(rule_folder, fname);
+            string this_bk_path = Path.GetFullPath(Path.Combine(rule_folder, fname));
 
             try
             {

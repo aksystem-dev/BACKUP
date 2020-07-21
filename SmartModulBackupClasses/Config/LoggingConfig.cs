@@ -15,7 +15,7 @@ namespace SmartModulBackupClasses
     {
         public List<ConfigureLogCategory> Categories { get; set; } = new List<ConfigureLogCategory>();
         public LogTargetCollection Targets { get; set; } = new LogTargetCollection();
-        
+
         public void ConfigureNLog()
         {
             var nLog_cfg = new NLog.Config.LoggingConfiguration();
@@ -54,7 +54,9 @@ namespace SmartModulBackupClasses
         ServiceHost,
         RuleScheduler,
         SQL,
-        ShadowCopy
+        ShadowCopy,
+        GuiSetup,
+        GuiAvailableDbLoad
     }
 
     public class LogTargetCollection 
@@ -76,6 +78,9 @@ namespace SmartModulBackupClasses
 
         [XmlAttribute(AttributeName = "usedByGui")]
         public bool UsedByGui { get; set; }
+
+        [XmlAttribute(AttributeName = "clearOnStart")]
+        public bool ClearOnStart { get; set; }
     }
 
     public class EventLogTarget : LogTarget { }

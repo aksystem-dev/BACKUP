@@ -134,11 +134,11 @@ namespace smart_modul_BACKUP
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void click_cleanup_backups(object sender, RoutedEventArgs e)
+        private async void click_cleanup_backups(object sender, RoutedEventArgs e)
         {
             try
             {
-                Manager.Get<ServiceState>().Client.CleanupBackupsAsync();
+                await Manager.Get<ServiceState>().Client.CleanupBackupsAsync();
             }
             catch { }
         }

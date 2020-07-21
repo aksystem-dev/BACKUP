@@ -1,9 +1,12 @@
 ﻿using Microsoft.Win32;
+using Renci.SshNet;
 using SmartModulBackupClasses.Managers;
+using SmartModulBackupClasses.WebApi;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -235,5 +238,81 @@ namespace SmartModulBackupClasses
 
             return ex;
         }
+
+        /// <summary>
+        /// Vrátí instanci SftpResponse pro připojení na SFTP. Vrátí null, pokud údaje nejsou dostupné.
+        /// </summary>
+        /// <returns></returns>
+        public static SftpResponse GetSftpConnection()
+        {
+            var acc = Manager.Get<AccountManager>();
+            if (acc?.State == LoginState.LoginSuccessful && acc.SftpInfo != null)
+                return acc.SftpInfo;
+            else if (acc?.State == LoginState.LoginFailed)
+                return null;
+            else
+            {
+                var cfg = Manager.Get<ConfigManager>()?.Config?.SFTP;
+
+                if (cfg == null)
+                    return null;
+
+                return new SftpResponse()
+                {
+                    Directory = cfg.Directory,
+                    Host = cfg.Host,
+                    Password = cfg.Password.Value,
+                    Port = cfg.Port,
+                    Username = cfg.Username
+                };
+            }
+        }
+
+        /// <summary>
+        /// Vrátí hash aktuálního připojení na SFTP, aby si mohly zálohy pamatovat, na jaký SFTP server byly nahrány.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetSftpHash()
+        {
+            var info = GetSftpConnection();
+            var builder = new StringBuilder();
+            
+            builder.AppendLine(info.Host);
+            builder.AppendLine(info.Username);
+            builder.AppendLine(info.Directory);
+
+            return HashString(builder.ToString());
+        }
+
+        /// <summary>
+        /// Vrátí hash daného řetězce ve formátu Base 64 String.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string HashString(string str)
+        {
+            var bytesToHash = Encoding.UTF8.GetBytes(str);
+
+            using(var hasher = SHA256.Create())
+            {
+                var hashedBytes = hasher.ComputeHash(bytesToHash);
+                return Convert.ToBase64String(hashedBytes);
+            }
+        }
+
+        /// <summary>
+        /// Vrátí ID aktuálního plánu. Pokud plán není, vrátí -1.
+        /// </summary>
+        /// <returns></returns>
+        public static int GetCurrentPlanId()
+        {
+            var acc = Manager.Get<AccountManager>()?.HelloInfo?.ActivePlan;
+
+            if (acc == null)
+                return -1;
+
+            return acc.ID;
+        }
+
     }
 }

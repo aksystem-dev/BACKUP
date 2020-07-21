@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,7 +12,7 @@ namespace SmartModulBackupClasses
     public enum SmbAssembly { Service, Gui }
 
     /// <summary>
-    /// Společná třída využívaná službou i GUI pro zapisování věcí, které se v aplikaci dějou.
+    /// Společná třída využívaná službou i GUI pro zapisování věcí, které se v aplikaci dějou. Využívá knihovny NLog.
     /// </summary>
     public static class SmbLog
     {
@@ -52,6 +53,12 @@ namespace SmartModulBackupClasses
                 {
                     if ((assembly == SmbAssembly.Gui && target.UsedByGui) || (assembly == SmbAssembly.Service && target.UsedByService))
                     {
+                        if (target.ClearOnStart)
+                            try
+                            {
+                                new EventLog("SmartModulBackupLog").Clear();
+                            }
+                            catch { }
                         var nLogTarget = new NLog.Targets.EventLogTarget($"target_eventLog{ind}");
                         nLogTarget.Log = "SmartModulBackupLog";
                         nLogTarget.Layout = LAYOUT_EVENT_LOG;
@@ -71,6 +78,8 @@ namespace SmartModulBackupClasses
                 {
                     if ((assembly == SmbAssembly.Gui && target.UsedByGui) || (assembly == SmbAssembly.Service && target.UsedByService))
                     {
+                        if (target.ClearOnStart)
+                            File.WriteAllText(target.FileName, "");
                         var nLogTarget = new NLog.Targets.FileTarget($"target_fileLog{ind}");
                         nLogTarget.FileName = target.FileName;
                         nLogTarget.Layout = LAYOUT_FILE_LOG;

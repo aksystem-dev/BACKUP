@@ -1,4 +1,5 @@
 ﻿using Renci.SshNet;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,7 +29,7 @@ namespace SmartModulBackupClasses
         public object TAG { get; set; }
 
         [XmlIgnore]
-        public ObservableCollection<RestoreInProgress> InProgress { get; set; }
+        public ObservableCollection<RestoreInProgress> InProgress { get; private set; }
             = new ObservableCollection<RestoreInProgress>();
 
         public Backup()
@@ -102,13 +103,34 @@ namespace SmartModulBackupClasses
         }
 
         /// <summary>
+        /// Jestli byla zálohy vytvořena na tomto PC.
+        /// </summary>
+        [XmlIgnore]
+        public bool MadeOnThisComputer => ComputerId == SMB_Utils.GetComputerId();
+
+        /// <summary>
         /// Jestli je záloha dostupná na tomto počítači (to znamená, že jsme na počítači, na kterém byla záloha vytvořena)
         /// </summary>
         [XmlIgnore]
         public bool AvailableOnThisComputer => AvailableLocally && MadeOnThisComputer;
 
+        /// <summary>
+        /// Jestli byla záloha nahrána na aktuální SFTP server.
+        /// </summary>
         [XmlIgnore]
-        public bool MadeOnThisComputer => ComputerId == SMB_Utils.GetComputerId();
+        public bool UploadedToCurrentSftpServer => SftpHash == SMB_Utils.GetSftpHash();
+
+        /// <summary>
+        /// Zdali je záloha dostupná na aktuálním SFTP serveru.
+        /// </summary>
+        [XmlIgnore]
+        public bool AvailableOnCurrentSftpServer => (UploadedToCurrentSftpServer && AvailableRemotely) || (SftpHash == null && AvailableRemotely);
+
+        /// <summary>
+        /// Jestli byla záloha vytvořena k aktuálnímu plánu.
+        /// </summary>
+        [XmlIgnore]
+        public bool UploadedToCurrentPlan => PlanId != -1 && PlanId == SMB_Utils.GetCurrentPlanId();
 
         private bool _availableRemotely;
         /// <summary>
@@ -136,7 +158,7 @@ namespace SmartModulBackupClasses
         public string RemotePath
         {
             get => _remotePath;
-            set => _remotePath = value.FixPathForSFTP();
+            set => _remotePath = value.NormalizePath();
         }
 
         /// <summary>
@@ -189,14 +211,38 @@ namespace SmartModulBackupClasses
         /// </summary>
         public DateTime EndDateTime { get; set; }
 
+        private bool _isZip = true;
+
         /// <summary>
         /// Zdalipak je záloha uložena jako zip (true) nebo jako normální složka (false);
         /// </summary>
-        public bool IsZip { get; set; } = true;
+        public bool IsZip
+        {
+            get
+            {
+                if (BackupType == BackupRuleType.OneToOne)
+                    return false;
+                return _isZip;
+            }
+
+            set => _isZip = value;
+        }
 
         public BackupRuleType BackupType { get; set; }
 
         public OneToOneBackupStatus OneToOneStatus { get; set; }
+
+        /// <summary>
+        /// Hash připojení na SFTP, kam byla tato záloha nahrána.
+        /// </summary>
+        public string SftpHash { get; set; }
+
+        /// <summary>
+        /// Pokud byla tato záloha nahrána na webové api, zde bude uložen id plánu, na který byla nahrána.
+        /// Pokud záloha byla vytvořena offline, bude zde -1.
+        /// </summary>
+        [DefaultValue(-1)]
+        public int PlanId { get; set; }
 
         public string ToXml()
         {

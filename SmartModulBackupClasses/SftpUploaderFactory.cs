@@ -54,6 +54,8 @@ namespace SmartModulBackupClasses
                     return null;
                 }
             }
+
+            //pokud jsme ve stavu LoginState.Failed, žádné SFTP nebude
             else
                 return null;
         }

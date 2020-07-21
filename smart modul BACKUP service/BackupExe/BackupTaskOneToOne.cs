@@ -41,10 +41,12 @@ namespace smart_modul_BACKUP_service.BackupExe
                 Saved = false,
                 IsZip = Rule.Zip,
                 OneToOneStatus = new OneToOneBackupStatus(),
-                LocalPath = Path.Combine(cfg.LocalBackupDirectory, Rule.Name, "OneToOne"),
-                RemotePath = Path.Combine(SMB_Utils.GetRemoteBackupPath(), Rule.Name, "OneToOne"),
+                LocalPath = Path.GetFullPath(Path.Combine(cfg.LocalBackupDirectory, Rule.Name, "OneToOne")),
+                RemotePath = Rule.RemoteBackups.enabled ? Path.Combine(SMB_Utils.GetRemoteBackupPath(), Rule.Name, "OneToOne") : null,
                 AvailableLocally = Rule.LocalBackups.enabled,
-                AvailableRemotely = Rule.RemoteBackups.enabled
+                AvailableRemotely = Rule.RemoteBackups.enabled,
+                SftpHash = Rule.RemoteBackups.enabled ? SMB_Utils.GetSftpHash() : null,
+                PlanId = SMB_Utils.GetCurrentPlanId()
             };
             await Manager.Get<BackupInfoManager>().AddQuietlyAsync(B_Obj);
 
@@ -142,7 +144,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             bool copied_all = FileUtils.CopyFolderContentsDiff(
                 //pokud máme pro tento volume Shadow Copy, budeme zipovat Shadow Copy; jinak normálně ten soubor
                 shadowCopies.ContainsKey(root) ? shadowCopies[root].GetShadowPath(src) : src,
-                dest, errorPaths: failed_paths);
+                dest, delete: Rule.OneToOneDelete, errorPaths: failed_paths);
 
             if (!copied_all)
                 error("Nepodařilo se zálohovat některé soubory lokálně");
@@ -157,7 +159,8 @@ namespace smart_modul_BACKUP_service.BackupExe
                 string root = Path.GetPathRoot(src);
                 string dest = Path.Combine(B_Obj.RemotePath, Path.GetFileName(src));
                 logInfo($"Záloha 1:1 sftp: {src} >> {dest}");
-                sftp.UploadDirectoryDiff(shadowCopies.ContainsKey(root) ? shadowCopies[root].GetShadowPath(src) : src, dest);
+                sftp.UploadDirectoryDiff(shadowCopies.ContainsKey(root) ? shadowCopies[root].GetShadowPath(src) : src,
+                    dest, Rule.OneToOneDelete);
                 return true;
             }
             catch (Exception ex)

@@ -66,7 +66,11 @@ namespace smart_modul_BACKUP
 
             try
             {
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
                 Setup();
+                stopwatch.Stop();
+                SmbLog.Debug($"SETUP TIME: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
             }
             catch (UnauthorizedAccessException ex) when (!Utils.AmIAdmin()) //pokud nemáme dost oprávnění, řekneme si o administrátora
             {
@@ -90,18 +94,61 @@ namespace smart_modul_BACKUP
 
         private void Setup()
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
             SetupConfig(); //nastaví ConfigManager
+            stopwatch.Stop();
+            SmbLog.Debug($"Config setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
+
+            stopwatch.Restart();
             SetupGuicom(); //nastaví OneGuiPerUser
-            var apiTask = Task.Run(SetupApiAsync); //na pozadí začne nastavovat webové api
+            stopwatch.Stop();
+            SmbLog.Debug($"OneGuiPerUser setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
+
+            var apiTask = Task.Run(async () =>
+            {
+                var asyncStopwatch = new Stopwatch();
+                asyncStopwatch.Start();
+                var result = await SetupApiAsync(); //na pozadí začne nastavovat webové api
+                asyncStopwatch.Stop();
+                SmbLog.Debug($"Api setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
+                return result;
+            });
+
+            stopwatch.Restart();
             SetupNotifyIcon(); //vytvořit NotifyIcon
+            stopwatch.Stop();
+            SmbLog.Debug($"NotifyIcon setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
+
+            stopwatch.Restart();
             SetupAvailableDbs(); //nastavit AvailableDbLoader
+            stopwatch.Stop();
+            SmbLog.Debug($"AvailableDbs setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
+
+            stopwatch.Restart();
             SetupSftp(); //nastavit SftpUploaderFactory
+            stopwatch.Stop();
+            SmbLog.Debug($"Sftp setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
+
             Manager.SetSingleton(new InProgress()); //nastavit InProgress
+
             if (!apiTask.Result) //počkat si na apiTask; pokud vrátí false, ukázat login okno
                 ShowLogin(true);
+
+            stopwatch.Restart();
             SetupService(); //nastavit ServiceState
+            stopwatch.Stop();
+            SmbLog.Debug($"ServiceState setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
+
+            stopwatch.Restart();
             SetupRules(); //nastavit BackupRuleLoader
+            stopwatch.Stop();
+            SmbLog.Debug($"BackupRuleLoader setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
+
+            stopwatch.Restart();
             SetupBackups(); //nastavit BackupInfoManager
+            stopwatch.Stop();
+            SmbLog.Debug($"BackupInfoManager setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
         }
         private static void SetupGuicom()
         {
@@ -162,7 +209,8 @@ namespace smart_modul_BACKUP
         }
         private static void SetupAvailableDbs()
         {
-            Manager.SetSingleton(new AvailableDbLoader()).Load();
+            var adl = Manager.SetSingleton(new AvailableDbLoader());
+            Task.Run(adl.Load);
         }
         private static void SetupSftp()
         {
@@ -228,7 +276,21 @@ namespace smart_modul_BACKUP
             {
                 _account.TryLoginWithAsync(cfg_man.Config.WebCfg).Wait();
             }
-            catch { }        
+            catch (Exception ex)
+            {
+                SmbLog.Error("Chyba při odhlašování GUI", ex, LogCategory.WebApi);
+            }
+            
+            try
+            {
+                var service = Manager.Get<ServiceState>();
+                if (service.State == ServiceConnectionState.Connected)
+                    service.Client.UpdateApiAsync(); //říct službě, ať se také znovu připojí k api
+            }
+            catch (Exception ex)
+            {
+                SmbLog.Error("Chyba při volání UpdateApiAsync na službě", ex, LogCategory.GuiServiceClient);
+            }
         }
 
         /// <summary>
@@ -243,9 +305,14 @@ namespace smart_modul_BACKUP
             {
                 try
                 {
-                    Manager.Get<ServiceState>().Client.UpdateApiAsync(); //říct službě, ať se také znovu připojí k api
+                    var service = Manager.Get<ServiceState>();
+                    if (service.State == ServiceConnectionState.Connected)
+                        service.Client.UpdateApiAsync(); //říct službě, ať se také znovu připojí k api
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    SmbLog.Error("Chyba při volání UpdateApiAsync na službě", ex, LogCategory.GuiServiceClient);
+                }
                 return true;
             }
             else

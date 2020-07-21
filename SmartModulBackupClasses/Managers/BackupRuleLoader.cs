@@ -57,7 +57,7 @@ namespace SmartModulBackupClasses.Managers
         /// <returns>Odkaz na tento objekt</returns>
         public BackupRuleLoader Load()
         {
-            ruleList.Clear();
+            var newRuleList = new List<BackupRule>();
 
             var rulesLocal = loadFromFiles().ToList();
 
@@ -77,19 +77,19 @@ namespace SmartModulBackupClasses.Managers
                         //pokud má lokální pravidlo datum změny po webové verzi, znamená to, že byly provedeny lokální změny
                         if (l_rule.LastEdit > w_rule.LastEdit)
                         {
-                            ruleList.Add(l_rule);
+                            newRuleList.Add(l_rule);
                             apiQueue.Enqueue(() => client.UpdateRulesAsync(l_rule)); //musíme o tom informovat server
                         }
                         //pokud jsme změnili pravidlo na webu a zároveň je zapnuté stahování updatovaných pravidel
                         else if (l_rule.LastEdit < w_rule.LastEdit && Download)
                         {
                             w_rule.path = l_rule.path;
-                            ruleList.Add(w_rule);
+                            newRuleList.Add(w_rule);
                             w_rule.SaveSelf();
                         }
                         //jinak by měla být webová verze shodná s lokální, takže prostě přidáme l_rule na seznam
                         else
-                            ruleList.Add(l_rule);
+                            newRuleList.Add(l_rule);
                     }
                     //pokud neexistuje
                     else
@@ -101,7 +101,7 @@ namespace SmartModulBackupClasses.Managers
                         else if (Download)
                         {
                             w_rule.path = Path.Combine(folder, w_rule.Name + ".xml");
-                            ruleList.Add(w_rule);
+                            newRuleList.Add(w_rule);
 
                             //nastavit downloaded na serveru, ať víme, že pravidlo již bylo staženo
                             apiQueue.Enqueue(() => client.ConfirmRulesAsync(w_rule.LocalID)); 
@@ -112,7 +112,7 @@ namespace SmartModulBackupClasses.Managers
                 //projít lokální pravidla
                 foreach (var l_rule in rulesLocal)
                 {
-                    if (ruleList.Any(f => f.LocalID == l_rule.LocalID)) 
+                    if (newRuleList.Any(f => f.LocalID == l_rule.LocalID)) 
                         continue;
                     //pokračujeme pouze, pokud toto pravidlo není ve výsledném seznamu pravidel
 
@@ -129,7 +129,7 @@ namespace SmartModulBackupClasses.Managers
                     //jinak ho prostě přidáme a informujeme server o novém pravidlu
                     else
                     {
-                        ruleList.Add(l_rule);
+                        newRuleList.Add(l_rule);
                         apiQueue.Enqueue(() => client.UpdateRulesAsync(l_rule));
                         l_rule.Uploaded = true;
                     }
@@ -141,9 +141,12 @@ namespace SmartModulBackupClasses.Managers
                 if (!(ex is NullReferenceException))
                     SmbLog.Error("Chyba při načítání pravidel z webové aplikace. Načítám pouze lokálně uložená pravidla.", ex, LogCategory.BackupRuleLoader);
 
-                ruleList.Clear();
-                ruleList.AddRange(rulesLocal);
+                newRuleList.Clear();
+                newRuleList.AddRange(rulesLocal);
             }
+
+            //updatovat stávající seznam podle nového seznamu
+            ruleList.UpdateCollectionByCompare(newRuleList, (r1, r2) => r1.LocalID == r2.LocalID);
 
             rulesChanged();
             return this;

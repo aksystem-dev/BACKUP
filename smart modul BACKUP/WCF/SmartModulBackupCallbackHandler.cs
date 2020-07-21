@@ -60,7 +60,14 @@ namespace smart_modul_BACKUP.WCF
         /// </summary>
         public void Goodbye()
         {
-            OnServiceDisconnected?.Invoke();
+            try
+            {
+                OnServiceDisconnected?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                SmbLog.Error("Problém v komunikaci GUI se službou (na straně GUI)", ex, LogCategory.GuiServiceClient);
+            }
         }
 
         /// <summary>

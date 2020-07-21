@@ -2,6 +2,7 @@
 using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -35,9 +36,14 @@ namespace smart_modul_BACKUP
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Zobrazení se bude bindovat na BkMan.LocalBackups
+        /// </summary>
         public BackupInfoManager BkMan { get; set; }
 
         private void change(params string[] property) => property.ForEach(f => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(f)));
+
+        #region FILTRY DLE DATA
 
         public bool CertainDateEnabled
         {
@@ -104,7 +110,9 @@ namespace smart_modul_BACKUP
                 cvs.View.Refresh();
             }
         }
-        
+
+        #endregion
+
         public BackupsPage()
         {
             InitializeComponent();
@@ -114,12 +122,27 @@ namespace smart_modul_BACKUP
             if (BkMan != null)
                 cvs.Source = BkMan.Backups;
 
+            //když se změní načtené zálohy, updatovat zobrazení
             BkMan.PropertyChanged += BkMan_PropertyChanged;
         }
 
+        /// <summary>
+        /// Updatovat zobrazení při změně načtených záloh
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BkMan_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            cvs.Source = BkMan.Backups;
+            //pokud stránka není načtená, nebudeme na to reagovat
+            if (!IsLoaded)
+                return;
+
+            //zajímá nás IEnumerable s názvem "LocalBackups"
+            if (e.PropertyName == "LocalBackups")
+            {
+                cvs.Source = BkMan.LocalBackups; //nastavíme nový zdroj
+                cvs.View.Refresh(); //updatujeme cvs
+            }
         }
 
         private bool _backup_certainPassed(Backup b) => !CertainDateEnabled || b.EndDateTime.Date == CertainDate || b.StartDateTime.Date == CertainDate;

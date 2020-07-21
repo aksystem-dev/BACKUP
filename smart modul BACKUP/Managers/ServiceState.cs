@@ -8,6 +8,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -84,6 +85,7 @@ namespace smart_modul_BACKUP
             State = ServiceConnectionState.NotInstalled;
 
             //pokud jsme ServiceController nenašli, pravděpodobně to znamená, že služba není nainstalována
+            //zeptat se uživatele jestli nainstalovat
             if (serviceController == null)
             {
                 while (true)
@@ -116,6 +118,12 @@ namespace smart_modul_BACKUP
 
             State = ServiceConnectionState.NotRunning;
 
+            //pokud se služba spouští, počkat, až se spustí
+            while (serviceController.Status == ServiceControllerStatus.StartPending)
+                Thread.Sleep(500);
+
+            //pokud služba není spuštěna, zeptat se uživatele, jestli jí spustit
+            //a spustit jí, pokud odpověď zní ano
             if (serviceController.Status != ServiceControllerStatus.Running)
             {
                 installAndRun = installAndRun ||
@@ -194,8 +202,9 @@ namespace smart_modul_BACKUP
         /// <summary>
         /// Když na Callback objektu služba zavolá Goodbye(), jakože se vypíná
         /// </summary>
-        private void Callback_OnServiceDisconnected()
+        private async void Callback_OnServiceDisconnected()
         {
+            await Task.Delay(100);
             Client.Close();
             State = ServiceConnectionState.NotRunning;
         }

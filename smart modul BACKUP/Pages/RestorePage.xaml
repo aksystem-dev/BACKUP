@@ -75,7 +75,7 @@
                             IsEnabled="{Binding ElementName=rbt_local, Path=IsChecked}"
                             Text="{Binding Path=localPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
-                        <RadioButton IsEnabled="{Binding Path=Backup.AvailableRemotely}" GroupName="A" x:Name="rbt_remote"
+                        <RadioButton IsEnabled="{Binding Path=Backup.AvailableOnCurrentSftpServer}" GroupName="A" x:Name="rbt_remote"
                                  Content="OBNOVIT ZE SERVERU" />
                     </StackPanel>
                 </StackPanel>

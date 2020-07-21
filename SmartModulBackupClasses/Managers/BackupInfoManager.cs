@@ -116,11 +116,11 @@ namespace SmartModulBackupClasses.Managers
         /// <returns></returns>
         private async Task _loadAsync(bool sync = true)
         {
-            backups.Clear();
+            var newBackups = new List<Backup>();
 
-            IEnumerable<Backup> apiResults = Enumerable.Empty<Backup>(); ; //zde budou všechny zálohy z aktivovaného plánu (čili mohou být i z jiných počítačů)
+            IEnumerable<Backup> apiResults = Enumerable.Empty<Backup>(); //zde budou všechny zálohy z aktivovaného plánu (čili mohou být i z jiných počítačů)
             IEnumerable<Backup> sftpResults = Enumerable.Empty<Backup>();
-            IEnumerable<Backup> localResults = Enumerable.Empty<Backup>(); ;
+            IEnumerable<Backup> localResults = Enumerable.Empty<Backup>();
 
             List<Task> listTasks = new List<Task>();
 
@@ -145,15 +145,11 @@ namespace SmartModulBackupClasses.Managers
             //posečkáme, až všechny tři úlohy sklidí ovoce své píle
             await Task.WhenAll(listTasks);
 
-            //?
-            var pc_id = SMB_Utils.GetComputerId();
-
             //teď přidáme do seznamu všechny získané informace. Budeme je přidávat postupně tak, aby nikdy nebylo
             //více záloh se stejným LocalID ze stejného počátače. Nejprve přidáme zálohy z api. Api vrací zálohy
             //nejen z volajícího počítače, ale ze všech počítačů napojených na jeho plán. Potom do toho zamícháme
             //i informace z lokálních souborů a souborů na sftp; ty jsou zaručeně jen z tohoto počítače.
-
-            backups.AddRange(apiResults);
+            newBackups.AddRange(apiResults);
 
             //funkce, kterou se budou filtrovat přidané zálohy. 
             Func<Backup, bool> canAdd = new Func<Backup, bool>(bk =>
@@ -163,11 +159,11 @@ namespace SmartModulBackupClasses.Managers
                     return true;
 
                 //pokud byla vytvořena na tomto počítači, přidáme ji pouze, pokud jsme už nepřidali nějakou se stejným localID
-                return !backups.Any(exbk => exbk.LocalID == bk.LocalID);
+                return !newBackups.Any(exbk => exbk.LocalID == bk.LocalID);
             });
 
-            backups.AddRange(sftpResults.Where(canAdd)); 
-            backups.AddRange(localResults.Where(canAdd));
+            newBackups.AddRange(sftpResults.Where(canAdd)); 
+            newBackups.AddRange(localResults.Where(canAdd));
 
             List<Task> sftpTasks = new List<Task>();
             List<Task> apiTasks = new List<Task>();
@@ -179,19 +175,31 @@ namespace SmartModulBackupClasses.Managers
                 //byly všechny zálohy. o to se postaráme zde
                 foreach (var bk in LocalBackups) 
                 {
-                    if (!apiResults.Any(f => f.LocalID == bk.LocalID) && UseApi && client != null)
+                    //pokud UseApi == true
+                    //a zároveň narazíme na zálohu, která byla vytvořena k aktuálnímu plánu, ale webové api o ni neví,
+                    //nahrajeme jí tam
+                    if (UseApi && !apiResults.Any(f => f.LocalID == bk.LocalID) && client != null && bk.UploadedToCurrentPlan)
                         apiTasks.Add(saveBkApi(bk));
-                    if (!sftpResults.Any(f => f.LocalID == bk.LocalID) && UseSftp && sftp?.IsConnected == true)
+
+                    //pokud UseSftp == true
+                    //a zároveň narazíme na zálohu, která byla nahrána na aktuální SFTP server ale nebylo o ní nahráno info,
+                    //nahrajeme jí tam
+                    if (UseSftp && !sftpResults.Any(f => f.LocalID == bk.LocalID) && sftp?.IsConnected == true)
                         sftpTasks.Add(saveBkSftp(bk, sftp));
+
+                    //pokud info o záloze není uloženo lokálně, uložíme ho
                     if (!localResults.Any(f => f.LocalID == bk.LocalID))
                         localTasks.Add(saveBkLocally(bk));
                 }
             }
 
             //až budou všechny sftp tasky hotové, chceme se od sftp odpojit
-            await Task.WhenAll(sftpTasks).ContinueWith(task => sftp?.Disconnect());
+            await Task.WhenAll(sftpTasks).ContinueWith(task => sftp?.Disconnect(false));
             await Task.WhenAll(apiTasks);
             await Task.WhenAll(localTasks);
+
+            //nastavit pole backups podle newBackups
+            backups.UpdateCollectionByCompare(newBackups, (b1, b2) => b1.LocalID == b2.LocalID);
 
             //kváknem že se změnila data, aby na to mohlo reagovat třeba UI
             arrayChanged();
@@ -314,10 +322,13 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<IEnumerable<Backup>> listBksApi()
         {
+            if (plans?.PlanInfo == null)
+                return Enumerable.Empty<Backup>();
+
             try
             {
                 var baks = await client.ListBackupsAsync(plans.PlanInfo.ID);
-                var pc_id = SMB_Utils.GetComputerId();
+                //var pc_id = SMB_Utils.GetComputerId();
                 return baks;
             }
             catch (Exception ex)

@@ -16,8 +16,10 @@ namespace SmartModulBackupClasses
     /// </summary>
     public class SftpUploader : IDisposable
     {
+        private void logTrace(string message)
+            => SmbLog.Trace(message, null, LogCategory.SFTP);
+
         public SftpClient client { get; private set; }
-        private int _users = 0;
 
         public bool IsConnected => client.IsConnected;
 
@@ -26,6 +28,11 @@ namespace SmartModulBackupClasses
             client = new SftpClient(host, port, username, password);
         }
 
+        /// <summary>
+        /// Pokusí se připojit a vrátí, zdali to bylo úspěšné.
+        /// </summary>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
         public bool TryConnect(int timeout = 500)
         {
             try
@@ -41,21 +48,79 @@ namespace SmartModulBackupClasses
 
         public async Task<bool> TryConnectAsync(int timeout) => await Task.Run(() => TryConnect(timeout));
 
+        /// <summary>
+        /// Připojí se.
+        /// </summary>
         public void Connect()
         {
             if (!client.IsConnected)
                 client.Connect();
-
-            _users++;
         }
 
-        public void Disconnect()
+        /// <summary>
+        /// Odpojí se.
+        /// </summary>
+        /// <param name="throwException"></param>
+        /// <returns></returns>
+        public bool Disconnect(bool throwException = true)
         {
-            if (_users > 0)
-                _users--;
+            try
+            {
+                if (client.IsConnected)
+                    client.Disconnect();
 
-            if (_users == 0 && client.IsConnected)
-                client.Disconnect();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                if (throwException)
+                    throw ex;
+                return false;
+            }
+        }
+
+        public Dictionary<string, SftpFile> ListDir(SftpFile dir, bool recursive)
+        {
+            if (!dir.IsDirectory)
+                throw new ArgumentException("parametr dir musí být složka");
+
+            var to_return = new Dictionary<string, SftpFile>();
+
+            //projít obsah vzdálené složky
+            foreach (var entry in client.ListDirectory(dir.FullName))
+            {
+                //přidat normální soubory
+                if (entry.IsRegularFile)
+                    to_return.Add(entry.FullName.NormalizePath(), entry);
+                //přidat adresáře
+                else if (entry.IsDirectory)
+                {
+                    if (entry.Name == "." || entry.Name == "..") //tyto názvy neberem
+                        continue;
+
+                    to_return.Add(entry.FullName.NormalizePath(), entry);
+
+                    //pokud recursive, přidat rekurzivně obsah adresáře
+                    if (recursive)
+                        foreach (var sub_entry in ListDir(entry.FullName, true))
+                            to_return.Add(sub_entry.Key, sub_entry.Value);
+                }
+            }
+
+            return to_return;
+        }
+
+        public Dictionary<string, SftpFile> ListDir(string dir, bool recursive)
+        {
+            //pokud na serveru složka dir neexistuje, vrátit prázdný slovník
+            if (!client.Exists(dir))
+                return new Dictionary<string, SftpFile>();
+
+            var entry = client.Get(dir);
+            if (!entry.IsDirectory)
+                return new Dictionary<string, SftpFile>();
+
+            return ListDir(entry, recursive);
         }
 
         /// <summary>
@@ -65,41 +130,48 @@ namespace SmartModulBackupClasses
         /// <param name="remoteDestination"></param>
         public void UploadFile(string localSource, string remoteDestination)
         {
-            remoteDestination = remoteDestination.FixPathForSFTP();
+            logTrace($"UploadFile({localSource}, {remoteDestination})");
+
+            remoteDestination = remoteDestination.NormalizePath();
             CreateDirectory(remoteDestination.PathMoveUp());
 
             using (var stream = File.OpenRead(localSource))
                 client.UploadFile(stream, remoteDestination, true);
         }
 
-        public void UploadFileDiff(string localSource, string remoteDestination)
-        {
-            remoteDestination = remoteDestination.FixPathForSFTP();
-            CreateDirectory(remoteDestination.PathMoveUp());
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="localSource"></param>
+        ///// <param name="remoteDestination"></param>
+        //public void UploadFileDiff(string localSource, string remoteDestination)
+        //{
+        //    remoteDestination = remoteDestination.NormalizePath();
+        //    CreateDirectory(remoteDestination.PathMoveUp());
 
-            DateTime localFileLastWriteTimeUtc = File.GetLastWriteTimeUtc(localSource);
-            bool doIt = false;
-            if (!client.Exists(remoteDestination))
-                doIt = true;
-            else
-            {
-                DateTime remoteFileLastWriteTimeUtc = client.GetLastWriteTime(remoteDestination).ToUniversalTime();
-                if (localFileLastWriteTimeUtc > remoteFileLastWriteTimeUtc.AddSeconds(1))
-                    doIt = true;
-            }
+        //    DateTime localFileLastWriteTimeUtc = File.GetLastWriteTimeUtc(localSource);
+        //    bool doIt = false;
+        //    if (!client.Exists(remoteDestination))
+        //        doIt = true;
+        //    else
+        //    {
+        //        DateTime remoteFileLastWriteTimeUtc = client.GetLastWriteTime(remoteDestination).ToUniversalTime();
+        //        if (localFileLastWriteTimeUtc > remoteFileLastWriteTimeUtc.AddSeconds(1))
+        //            doIt = true;
+        //    }
 
-            //soubor nahrajeme pouze, pokud na serveru není, nebo je datum poslední změny souboru na serveru minimálně o vteřinu dřív, než datum poslední změny lokálního souboru
-            if (doIt)
-            {
-                Console.WriteLine($"local {localSource} >> remote {remoteDestination}");
-                using (var stream = File.OpenRead(localSource))
-                    client.UploadFile(stream, remoteDestination, true);
-                //client.SetLastWriteTimeUtc(remoteDestination, localLastWriteTime);
-                var att = client.GetAttributes(remoteDestination);
-                att.LastWriteTime = localFileLastWriteTimeUtc.ToLocalTime();
-                client.SetAttributes(remoteDestination, att);
-            }
-        }
+        //    //soubor nahrajeme pouze, pokud na serveru není, nebo je datum poslední změny souboru na serveru minimálně o vteřinu dřív, než datum poslední změny lokálního souboru
+        //    if (doIt)
+        //    {
+        //        Console.WriteLine($"local {localSource} >> remote {remoteDestination}");
+        //        using (var stream = File.OpenRead(localSource))
+        //            client.UploadFile(stream, remoteDestination, true);
+        //        //client.SetLastWriteTimeUtc(remoteDestination, localLastWriteTime);
+        //        var att = client.GetAttributes(remoteDestination);
+        //        att.LastWriteTime = localFileLastWriteTimeUtc.ToLocalTime();
+        //        client.SetAttributes(remoteDestination, att);
+        //    }
+        //}
 
         /// <summary>
         /// Nahraje adresář
@@ -135,7 +207,7 @@ namespace SmartModulBackupClasses
                 try
                 {
                     var fname = Path.GetFileName(path);
-                    var remote_path = Path.Combine(remoteDestination, fname).FixPathForSFTP();
+                    var remote_path = Path.Combine(remoteDestination, fname).NormalizePath();
                     if (Directory.Exists(path))
                     {
                         UploadDirectory(path, remote_path, behavior, filter);
@@ -165,6 +237,11 @@ namespace SmartModulBackupClasses
         /// <param name="remoteDestination"></param>
         public void UploadDirectoryDiff(string localSource, string remoteDestination, bool delete = false)
         {
+            logTrace($"UploadDirectoryDiff({localSource}, {remoteDestination})");
+
+            remoteDestination = remoteDestination.NormalizePath();
+            localSource = localSource.NormalizePath();
+
             //ověřit, že existuje lokální složka
             if (!Directory.Exists(localSource))
                 throw new DirectoryNotFoundException("Lokální složka neexistuje.");
@@ -177,32 +254,119 @@ namespace SmartModulBackupClasses
 
             //pakliže neexistuje, vytvoříme jí
             if (remdir == null)
+            {
                 CreateDirectory(remoteDestination);
+                remdir = GetDirectory(remoteDestination);
+            }
+
+            //získat seznam stávajících souborů v cílové složce na serveru
+            var remote_contents = ListDir(remdir, false);
+
+            //zde budeme ukládat cesty ke vzdáleným souborům, které jsme spárovali s lokálními
+            var seen_dest_paths = delete ? new HashSet<string>() : null;
+
+            //SEM SE VRÁTIT!!!
 
             //projít všechny soubory v lokální složce
-            foreach (var path in Directory.GetFileSystemEntries(localSource))
+            foreach (var pair in FileUtils.ListDir(localSource, false))
             {
+                var local_path = pair.Key;
+                var local_info = pair.Value;
+
                 try
                 {
-                    var fname = Path.GetFileName(path);
-                    var remote_path = Path.Combine(remoteDestination, fname).FixPathForSFTP();
-                    if (Directory.Exists(path))
-                    {
-                        UploadDirectoryDiff(path, remote_path, delete);
-                    }
-                    else if (File.Exists(path))
-                    {
-                       // var remote_info = client.Exists(remote_path) ? client.Get(remote_path) : null;
+                    var fname = Path.GetFileName(local_path);
+                    var remote_path = Path.Combine(remoteDestination, fname).NormalizePath();
 
-                        UploadFileDiff(path, remote_path);
+                    //získat info o odpovídajícím vzdáleném souboru
+                    SftpFile remote_file = null;
+                    if (remote_contents.ContainsKey(remote_path))
+                    {
+                        remote_file = remote_contents[remote_path];
+
+                        //zapsat tento soubor do seznamu viděných cílových
+                        if (delete)
+                            seen_dest_paths.Add(remote_path);
+                    }
+
+                    if (local_info is DirectoryInfo)
+                    {
+                        //pokud nám překáží soubor se stejným názvem a delete == true, odstranit ho
+                        if (remote_file?.IsRegularFile == true && delete)
+                            try
+                            {
+                                DeleteFile(remote_path);
+                            }
+                            catch (Exception ex)
+                            {
+                                SmbLog.Error($"Problém při odstraňování překážejícího souboru {remote_path} při UploadDirectoryDiff", ex, LogCategory.SFTP);
+                            }
+
+                        //rekurzivně zavolat tuto metodu pro porychtování podadresáře
+                        UploadDirectoryDiff(local_path, remote_path, delete);
+                    }
+                    else if (local_info is FileInfo)
+                    {
+                        bool do_upload = false; //zde uložíme, jestli chceme cílový soubor přepsat zdrojovým
+
+                        //pokud nám překáží adresář se stejným názvem a delete == true, odstranit ho
+                        if (remote_file?.IsDirectory == true && delete)
+                            try
+                            {
+                                do_upload = true;
+                                DeleteDirectory(remote_path);
+                            }
+                            catch (Exception ex)
+                            {
+                                SmbLog.Error($"Problém při odstraňování překážejícího adresáře {remote_path} při UploadDirectoryDiff", ex, LogCategory.SFTP);
+                            }
+
+                        //pokud cílový soubor neexistuje
+                        //nebo pokud má zdrojový soubor datum změny > cílový soubor + 1s, do_upload musí být true
+                        if (remote_file == null
+                            || local_info.LastWriteTimeUtc > remote_file.LastWriteTimeUtc.AddSeconds(1))
+                            do_upload = true;
+
+                        if (do_upload)
+                            UploadFile(local_path, remote_path);
                     }
                 }
                 catch (Exception ex)
                 {
-                    SmbLog.Error($"Nepodařilo se nahrát soubor/složku {path} na SFTP server.", ex, LogCategory.SFTP);
+                    SmbLog.Error($"Nepodařilo se nahrát soubor/složku {local_path} na SFTP server.", ex, LogCategory.SFTP);
                     problems.Add(ex);
                 }
             }
+
+            //projít soubory ve vzdálené složce
+            if (delete)
+                foreach (var pair in remote_contents)
+                {
+                    //přeskočit soubory, pro které jsme našli odpovídající zdrojové soubory
+                    if (seen_dest_paths.Contains(pair.Key))
+                        continue;
+
+                    if (pair.Value.IsRegularFile)
+                        try
+                        {
+                            DeleteFile(pair.Key);
+                        }
+                        catch (Exception ex)
+                        {
+                            problems.Add(ex);
+                            SmbLog.Error("Nepodařilo se odstranit soubor, který byl smazán (UploadDirectoryDiff)", ex, LogCategory.SFTP);
+                        }
+                    else if (pair.Value.IsDirectory)
+                        try
+                        {
+                            DeleteDirectory(pair.Key);
+                        }
+                        catch (Exception ex)
+                        {
+                            problems.Add(ex);
+                            SmbLog.Error("Nepodařilo se odstranit adresář, který byl smazán (UploadDirectoryDiff)", ex, LogCategory.SFTP);
+                        }
+                }
 
             if (problems.Any())
                 throw new AggregateException(problems);
@@ -212,7 +376,7 @@ namespace SmartModulBackupClasses
 
         public void DownloadFile(string remoteSource, string localDestionation)
         {
-            remoteSource = remoteSource.FixPathForSFTP();
+            remoteSource = remoteSource.NormalizePath();
             using (var writer = File.Create(localDestionation))
                 client.DownloadFile(remoteSource, writer);
         }
@@ -225,7 +389,7 @@ namespace SmartModulBackupClasses
         /// <param name="behavior"></param>
         public void DownloadFolder(string remoteSource, string localDestination, FolderUploadBehavior behavior)
         {
-            remoteSource = remoteSource.FixPathForSFTP();
+            remoteSource = remoteSource.NormalizePath();
 
             if (!client.Exists(remoteSource))
                 throw new SftpPathNotFoundException("Složka na serveru není.");
@@ -296,7 +460,7 @@ namespace SmartModulBackupClasses
         /// <param name="onlyContents"></param>
         public void DeleteDirectory(string remoteDirectory, bool onlyContents = false)
         {
-            remoteDirectory = remoteDirectory.FixPathForSFTP();
+            remoteDirectory = remoteDirectory.NormalizePath();
 
             List<Exception> problems = new List<Exception>();
 
@@ -341,8 +505,9 @@ namespace SmartModulBackupClasses
         public void DeleteFile(string remoteFile)
         {
             //Logger.Log($"client.delete({remoteFile.FixPathForSFTP()})");
-            client.Delete(remoteFile.FixPathForSFTP());
+            client.Delete(remoteFile.NormalizePath());
         }
+
 
         /// <summary>
         /// Vytvoří složku
@@ -350,7 +515,7 @@ namespace SmartModulBackupClasses
         /// <param name="remoteDestination"></param>
         public void CreateDirectory(string remoteDestination)
         {
-            remoteDestination = remoteDestination.FixPathForSFTP();
+            remoteDestination = remoteDestination.NormalizePath();
 
             string[] paths = remoteDestination.PathProgression();
             for (int i = 1; i < paths.Length; i++)
@@ -365,7 +530,7 @@ namespace SmartModulBackupClasses
 
         public SftpFile GetFile(string path)
         {
-            path = path.FixPathForSFTP();
+            path = path.NormalizePath();
 
             if (!client.Exists(path))
                 return null;
@@ -376,7 +541,7 @@ namespace SmartModulBackupClasses
 
         public SftpFile GetDirectory(string path)
         {
-            path = path.FixPathForSFTP();
+            path = path.NormalizePath();
 
             if (!client.Exists(path))
                 return null;
@@ -387,7 +552,7 @@ namespace SmartModulBackupClasses
 
         public long GetDirSize(string path)
         {
-            path = path.FixPathForSFTP();
+            path = path.NormalizePath();
             if (!client.Exists(path))
                 return 0;
 

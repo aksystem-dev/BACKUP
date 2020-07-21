@@ -137,6 +137,7 @@ namespace smart_modul_BACKUP_service.WCF
         {
             try
             {
+                Manager.Get<ConfigManager>().Load();
                 SmartModulBackupService.updateApi(Manager.Get<ConfigManager>());
             }
             catch { }

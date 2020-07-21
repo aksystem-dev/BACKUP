@@ -65,8 +65,6 @@ namespace smart_modul_BACKUP
 
             directories.CollectionChanged += Directories_CollectionChanged;
             files.CollectionChanged += Files_CollectionChanged;
-
-
         }
 
 
@@ -107,6 +105,7 @@ namespace smart_modul_BACKUP
                     txt_remoteBackupsCount.Visibility = Visibility.Visible;
                     cb_zip.Visibility = Visibility.Visible;
                     panel_conditions.Visibility = Visibility.Visible;
+                    cb_oneToOneDelete.Visibility = Visibility.Collapsed;
                     break;
                 case BackupRuleType.OneToOne:
                     pan_databaseSources.Visibility = Visibility.Collapsed;
@@ -115,6 +114,7 @@ namespace smart_modul_BACKUP
                     txt_remoteBackupsCount.Visibility = Visibility.Collapsed;
                     cb_zip.Visibility = Visibility.Collapsed;
                     panel_conditions.Visibility = Visibility.Visible;
+                    cb_oneToOneDelete.Visibility = Visibility.Visible;
                     break;
                 case BackupRuleType.ProtectedFolder:
                     pan_databaseSources.Visibility = Visibility.Collapsed;
@@ -123,6 +123,7 @@ namespace smart_modul_BACKUP
                     txt_remoteBackupsCount.Visibility = Visibility.Visible;
                     cb_zip.Visibility = Visibility.Visible;
                     panel_conditions.Visibility = Visibility.Collapsed;
+                    cb_oneToOneDelete.Visibility = Visibility.Collapsed;
                     break;
                 default:
                     throw new NotImplementedException($"Neznám typ zálohy {Rule.RuleType}");

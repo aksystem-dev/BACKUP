@@ -385,6 +385,9 @@
             <CheckBox HorizontalAlignment="Center" Margin="10" Content="ZIPOVAT ZÁLOHY" x:Name="cb_zip"
                       IsChecked="{Binding Path=Zip, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
+            <CheckBox HorizontalAlignment="Center" Margin="10" Content="ODSTRAŇOVÁNÍ SOUBORŮ" x:Name="cb_oneToOneDelete"
+                      IsChecked="{Binding Path=OneToOneDelete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
             <Grid Margin="0,0,0,15">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

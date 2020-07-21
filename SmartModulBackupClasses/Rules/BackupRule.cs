@@ -107,6 +107,12 @@ namespace SmartModulBackupClasses
         /// </summary>
         public DateTime LastEdit { get; set; }
 
+        /// <summary>
+        /// Jestli soubory v cílovém umístění i odstraňovat. Pouze pro zálohy 1:1 (OneToOne)
+        /// </summary>
+        [DefaultValue(true)]
+        public bool OneToOneDelete { get; set; } = true;
+
         public void SaveSelf()
         {
             XmlSerializer ser = new XmlSerializer(typeof(BackupRule));

@@ -123,7 +123,8 @@ namespace smart_modul_BACKUP_service.RestoreExe
             if (Info.sources.Any(src => src.type == BackupSourceType.Database))
                 getSql();
 
-            foreach(var src in Info.sources)
+            progress?.Update("OBNOVUJI ZDROJE", 0.55f);
+            foreach (var src in Info.sources)
                 restoreLocalSourceFromPermanentLocation(src);
 
         finish:
@@ -151,8 +152,10 @@ namespace smart_modul_BACKUP_service.RestoreExe
                 getSql();
 
             if (!getZip()) goto finish;
+
             if (!unZip()) goto finish;
 
+            progress?.Update("OBNOVUJI ZDROJE", 0.55f);
             foreach (var src in Info.sources)
                 restoreLocalSourceFromTempLocation(src);
 
@@ -169,12 +172,15 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
             if (response.errors.Any() && response.Success == SuccessLevel.EverythingWorked)
                 response.Success = SuccessLevel.SomeErrors;
+
+            progress?.Update("HOTOVO", 1);
         }
 
         private bool getSftp()
         {
             try
             {
+                progress?.Update("PŘIPOJUJI SE K SFTP", 0.05f);
                 sftp = Manager.Get<SftpUploader>();
                 sftp.Connect();
                 return true;
@@ -192,6 +198,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
         {
             try
             {
+                progress?.Update("PŘIPOJUJI SE K SQL", 0.1f);
                 sql = Manager.Get<SqlBackuper>();
                 sql.Open();
                 return true;
@@ -226,6 +233,8 @@ namespace smart_modul_BACKUP_service.RestoreExe
             {
                 logInfo("Stahuji zip ze serveru");
 
+                progress?.Update("STAHUJI ZIP ZE SERVERU", 0.15f);
+
                 zip_path = Path.Combine(temp_instance_dir, Path.GetFileName(Info.zip_path));
 
                 try
@@ -252,6 +261,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
         {
             try
             {
+                progress?.Update("ROZBALUJI ZIP", 0.35f);
                 src_dir = Path.Combine(temp_instance_dir, "unzipped");
                 ZipFile.ExtractToDirectory(zip_path, src_dir);
                 return true;
@@ -407,6 +417,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
             try
             {
+                progress?.Update("ODPOJUJI SE OD SFTP", 0.8f);
                 if (sftp.IsConnected)
                     sftp.Disconnect();
                 sftp.Dispose();
@@ -425,6 +436,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
             try
             {
+                progress?.Update("ODPOJUJI SE OD SQL", 0.85f);
                 if (sql.connection.State == System.Data.ConnectionState.Open)
                     sql.Close();
                 sql.connection.Dispose();
@@ -439,6 +451,8 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
         private bool removeTempDir()
         {
+            progress?.Update("ODSTRAŇUJI ZBYTKY", 0.9f);
+
             if (!Directory.Exists(temp_instance_dir)) return true;
 
             if (!FileUtils.DeleteFolder(temp_instance_dir))

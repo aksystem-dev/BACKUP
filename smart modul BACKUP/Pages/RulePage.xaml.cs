@@ -16,7 +16,7 @@ using System.Windows.Data;
 namespace smart_modul_BACKUP
 {
     /// <summary>
-    /// Interakční logika pro RulePage.xaml
+    /// Stránka se seznamem pravidel.
     /// </summary>
     public partial class RulePage : Page
     {
@@ -26,7 +26,7 @@ namespace smart_modul_BACKUP
         {
             InitializeComponent();
 
-            Manager.Get<AvailableDbLoader>().Load();
+            //Manager.Get<AvailableDbLoader>().Load();
             DataContext = rules;
 
             //při kliknutí na + přidáme pravidlo

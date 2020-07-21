@@ -45,7 +45,7 @@ namespace smart_modul_BACKUP
             var client = new NamedPipeClientStream(PipeName);
             try
             {
-                client.Connect(1000);
+                client.Connect(250);
                 if (client.IsConnected)
                 {
                     SmbLog.Info($"Connected to an already running instance hosting a pipe with name {PipeName}", null, LogCategory.OneGuiPerUser);

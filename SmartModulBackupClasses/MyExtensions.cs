@@ -80,9 +80,17 @@ namespace SmartModulBackupClasses
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static string FixPathForSFTP(this string path)
+        public static string NormalizePath(this string path)
         {
-            return path.Replace('\\', '/');
+            if (path == null)
+                return path;
+            if (path.Length == 0)
+                return path;
+
+            path = path.Replace('\\', '/');
+            if (path[0] == '/')
+                return path.Substring(1);
+            return path;
         }
 
         public static void DoForEach<T>(this IEnumerable<T> enumerable, Action<T> action)

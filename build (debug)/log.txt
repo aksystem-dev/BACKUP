@@ -162,3 +162,2003 @@ System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.
 System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
 2020-07-19 01:13:09.2091 GuiServiceClient: Chyba v TestConnection()
 System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 01:23:09.2096 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 01:33:09.2486 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 01:43:09.2436 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 01:53:09.2601 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 02:03:09.2583 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 02:13:09.2603 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 02:23:09.2712 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 02:33:09.2851 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 02:43:09.2902 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 02:53:09.3036 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 03:03:09.3051 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 03:13:09.3048 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 03:23:09.3054 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 03:33:09.3197 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 03:43:09.3223 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 03:53:09.3320 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 04:03:09.3238 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 04:13:09.3354 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 04:23:09.3369 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 04:33:09.3366 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 04:43:09.3365 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 04:53:09.3492 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 05:03:09.3723 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 05:13:09.3513 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 05:23:09.3504 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 05:33:09.3504 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 05:43:09.3509 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 05:53:09.3515 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 06:03:09.3523 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 06:13:09.3526 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 06:23:09.3558 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 06:33:09.3524 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 06:43:09.3534 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 06:53:09.3656 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 07:03:09.3664 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 07:13:09.3705 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 07:23:09.3670 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 07:33:09.3721 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 07:43:09.3712 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 07:53:09.3674 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 08:03:09.3811 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 08:13:09.3860 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 08:23:09.4016 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 08:33:09.4126 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 08:43:09.4135 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 08:53:09.4150 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 09:03:09.4292 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 09:13:09.4346 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 09:23:09.4480 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 09:33:09.4449 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 09:43:09.4477 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 09:53:09.4443 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 10:03:09.4502 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 10:13:09.4494 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 10:23:09.4670 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 10:33:09.4799 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 10:43:09.4799 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 10:53:09.4756 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 11:03:09.4816 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 11:13:09.5254 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 12:06:03.1260 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:06:03.1706 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:06:03.1706 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:06:04.3202 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:06:04.3202 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:11:36.8476 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:11:36.9084 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:11:36.9084 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:11:38.0116 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:11:38.0146 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:11:45.0010 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:14:15.8872 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:14:15.9359 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:14:15.9373 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:14:17.0071 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:14:17.0071 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:14:24.3631 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:14:24.5793 GUI: problÈm p¯i poËÌt·nÌ z·loh
+System.ArgumentException Metoda Set vlastnosti nebyla nalezena.    v System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, BindingFlags invokeAttr, Binder binder, Object[] index, CultureInfo culture)
+   v System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, Object[] index)
+   v SmartModulBackupClasses.Reflector.ShallowMirror[T](T source, T target, Func`2 propertyFilter, Func`2 fieldFilter) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 42
+   v SmartModulBackupClasses.Reflector.UpdateCollectionByCompare[T](ICollection`1 target, IEnumerable`1 source, Func`3 instanceComparator) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 95
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<_loadAsync>d__29.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 197
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<LoadAsync>d__28.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 103
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v smart_modul_BACKUP.HomePage.<countBackups>d__33.MoveNext() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 189
+2020-07-19 12:14:28.1002 GUI: Neoöet¯en· v˝jimka v GUI
+System.ArgumentException Metoda Set vlastnosti nebyla nalezena.    v System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, BindingFlags invokeAttr, Binder binder, Object[] index, CultureInfo culture)
+   v System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, Object[] index)
+   v SmartModulBackupClasses.Reflector.ShallowMirror[T](T source, T target, Func`2 propertyFilter, Func`2 fieldFilter) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 42
+   v SmartModulBackupClasses.Reflector.UpdateCollectionByCompare[T](ICollection`1 target, IEnumerable`1 source, Func`3 instanceComparator) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 95
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<_loadAsync>d__29.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 197
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<LoadAsync>d__28.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 103
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v smart_modul_BACKUP.BackupsPage.<page_loaded>d__40.MoveNext() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\BackupsPage.xaml.cs:¯·dek 158
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   v System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2020-07-19 12:16:49.9876 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:16:50.0374 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:16:50.0374 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:16:51.1481 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:16:51.1481 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:17:25.0507 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:17:25.0916 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:17:25.0916 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:17:26.1577 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:17:26.1577 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:17:32.7769 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:17:33.0132 GUI: problÈm p¯i poËÌt·nÌ z·loh
+System.ArgumentException Metoda Set vlastnosti nebyla nalezena.    v System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, BindingFlags invokeAttr, Binder binder, Object[] index, CultureInfo culture)
+   v System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, Object[] index)
+   v SmartModulBackupClasses.Reflector.ShallowMirror[T](T source, T target, Func`2 propertyFilter, Func`2 fieldFilter) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 46
+   v SmartModulBackupClasses.Reflector.UpdateCollectionByCompare[T](ICollection`1 target, IEnumerable`1 source, Func`3 instanceComparator) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 99
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<_loadAsync>d__29.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 197
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<LoadAsync>d__28.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 103
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v smart_modul_BACKUP.HomePage.<countBackups>d__33.MoveNext() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 189
+2020-07-19 12:17:35.8303 GUI: Neoöet¯en· v˝jimka v GUI
+System.ArgumentException Metoda Set vlastnosti nebyla nalezena.    v System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, BindingFlags invokeAttr, Binder binder, Object[] index, CultureInfo culture)
+   v System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, Object[] index)
+   v SmartModulBackupClasses.Reflector.ShallowMirror[T](T source, T target, Func`2 propertyFilter, Func`2 fieldFilter) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 46
+   v SmartModulBackupClasses.Reflector.UpdateCollectionByCompare[T](ICollection`1 target, IEnumerable`1 source, Func`3 instanceComparator) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 99
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<_loadAsync>d__29.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 197
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<LoadAsync>d__28.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 103
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v smart_modul_BACKUP.BackupsPage.<page_loaded>d__40.MoveNext() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\BackupsPage.xaml.cs:¯·dek 158
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   v System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2020-07-19 12:18:34.7933 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:18:34.8372 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:18:34.8372 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:18:35.9117 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:18:35.9117 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:18:42.4829 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:18:42.7491 GUI: problÈm p¯i poËÌt·nÌ z·loh
+System.Reflection.TargetInvocationException CÌl vyvol·nÌ zp˘sobil v˝jimku.    v System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   v System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+   v System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   v System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, Object[] index)
+   v SmartModulBackupClasses.Reflector.ShallowMirror[T](T source, T target, Func`2 propertyFilter, Func`2 fieldFilter) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 46
+   v SmartModulBackupClasses.Reflector.UpdateCollectionByCompare[T](ICollection`1 target, IEnumerable`1 source, Func`3 instanceComparator) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 99
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<_loadAsync>d__29.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 197
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<LoadAsync>d__28.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 103
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v smart_modul_BACKUP.HomePage.<countBackups>d__33.MoveNext() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 189
+2020-07-19 12:18:43.8945 GUI: Neoöet¯en· v˝jimka v GUI
+System.Reflection.TargetInvocationException CÌl vyvol·nÌ zp˘sobil v˝jimku.    v System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   v System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+   v System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   v System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, Object[] index)
+   v SmartModulBackupClasses.Reflector.ShallowMirror[T](T source, T target, Func`2 propertyFilter, Func`2 fieldFilter) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 46
+   v SmartModulBackupClasses.Reflector.UpdateCollectionByCompare[T](ICollection`1 target, IEnumerable`1 source, Func`3 instanceComparator) v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Reflector.cs:¯·dek 99
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<_loadAsync>d__29.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 197
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<LoadAsync>d__28.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 103
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v smart_modul_BACKUP.BackupsPage.<page_loaded>d__40.MoveNext() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\BackupsPage.xaml.cs:¯·dek 158
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   v System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2020-07-19 12:20:10.8349 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:20:10.8791 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:20:10.8791 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:20:11.9345 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:20:11.9365 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:20:17.9911 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:21:32.6956 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:21:32.7335 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:21:32.7335 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:21:33.8173 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:21:33.8173 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:21:39.2432 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:22:32.0963 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:22:32.1342 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:22:32.1342 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:22:33.1904 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:22:33.1904 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:22:38.6251 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:23:03.5342 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:23:03.5811 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:23:03.5811 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:23:04.6482 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:23:04.6482 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:23:09.1013 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:27:22.1452 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:27:22.1851 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:27:22.1851 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:27:23.3408 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:27:23.3437 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:27:28.8695 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:28:50.4534 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:28:50.4909 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:28:50.4909 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:28:51.5512 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:28:51.5512 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:28:57.1876 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:29:15.0050 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:29:15.0439 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:29:15.0439 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:29:16.1822 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:29:16.1822 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:29:21.1176 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:30:26.9874 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:30:27.0363 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:30:27.0363 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:30:28.0915 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:30:28.0924 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:30:33.3094 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:32:37.8573 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:32:37.9072 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:32:37.9072 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:32:38.9812 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:32:38.9832 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:32:44.8560 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:36:53.4518 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:36:53.4987 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:36:53.4987 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:36:54.5784 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:36:54.5784 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:37:04.2395 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:37:47.7220 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:37:47.7628 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:37:47.7628 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:37:48.8670 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:37:48.8670 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:37:53.0568 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:39:03.1643 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:39:03.2141 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:39:03.2141 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:39:04.3860 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:39:04.3899 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:39:08.4013 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:39:16.3382 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 12:41:25.0172 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:41:25.0582 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:41:25.0582 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:41:26.1310 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:41:26.1310 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:41:31.3447 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:49:22.2514 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:49:22.2953 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:49:22.2963 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:49:23.3551 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:49:23.3551 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:49:34.4308 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:50:00.1183 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 12:50:00.1601 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 12:50:00.1601 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 12:50:01.2265 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 12:50:01.2265 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 12:50:10.8933 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 12:50:20.8634 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 13:03:01.8373 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 13:03:01.8632 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 13:03:01.8632 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 13:03:02.8598 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 13:03:02.8598 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 13:03:04.0136 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 13:03:31.2070 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 13:10:50.3570 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 13:10:50.4063 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 13:10:50.4063 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 13:10:50.4063 OneGuiPerUser: Connected to an already running instance hosting a pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 13:10:50.4122 OneGuiPerUser: Connection received on SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 13:10:50.9129 OneGuiPerUser: OneGuiPerUser Init() returning
+
+2020-07-19 13:11:29.6010 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 13:13:42.9197 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 13:16:31.4937 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 13:16:31.5206 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 13:16:31.5206 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 13:16:32.5162 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 13:16:32.5162 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 13:16:34.6074 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 13:53:05.4980 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 13:53:05.5368 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 13:53:05.5368 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 13:53:06.5810 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 13:53:06.5810 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 13:54:43.1745 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 13:54:43.2054 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 13:54:43.2054 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 13:54:44.2455 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 13:54:44.2455 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 13:54:47.9280 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 13:55:44.2784 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 13:55:44.3084 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 13:55:44.3084 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 13:55:45.3527 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 13:55:45.3527 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 13:55:49.4365 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 13:58:49.1481 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 13:58:49.1761 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 13:58:49.1761 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 13:58:50.2260 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 13:58:50.2260 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 13:58:54.1152 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 14:00:34.6228 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 14:00:34.6497 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 14:00:34.6497 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 14:00:35.6408 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 14:00:35.6408 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 14:00:36.7799 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 14:04:18.6072 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 14:04:18.6341 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 14:04:18.6341 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 14:04:19.6248 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 14:04:19.6248 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 14:04:20.7766 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 14:05:41.4224 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 14:07:32.7811 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 14:07:32.8090 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 14:07:32.8090 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 14:07:33.8123 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 14:07:33.8123 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 14:07:34.9861 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 14:08:36.3788 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 14:08:52.9316 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 14:08:52.9585 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 14:08:52.9585 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 14:08:53.9522 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 14:08:53.9522 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 14:08:55.1235 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 14:12:52.4830 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 14:13:22.9957 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 14:13:23.0227 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 14:13:23.0227 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 14:13:24.0153 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 14:13:24.0153 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 14:13:25.1787 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 15:32:34.2406 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 15:32:34.3712 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 15:32:34.3712 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 15:32:35.3739 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 15:32:35.3739 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 15:32:38.6387 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 15:35:20.8928 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 15:35:20.9177 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 15:35:20.9177 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 15:35:21.9216 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 15:35:21.9216 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 15:35:24.6922 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 15:39:05.7753 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 15:39:54.5357 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 15:39:54.5627 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 15:39:54.5627 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 15:39:55.5623 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 15:39:55.5623 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 15:39:56.8072 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 15:42:19.5414 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 15:42:19.5683 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 15:42:19.5683 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 15:42:20.5619 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 15:42:20.5619 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 15:42:21.8090 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 15:43:49.0306 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 15:43:49.0575 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 15:43:49.0575 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 15:43:50.0631 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 15:43:50.0631 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 15:43:51.3103 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 15:48:32.9710 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 15:48:51.1341 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 15:48:51.1660 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 15:48:51.1660 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 15:48:52.2112 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 15:48:52.2112 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 15:48:54.5977 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 15:48:57.6704 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 15:49:00.4129 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 15:49:00.4439 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 15:49:00.4439 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 15:49:01.4371 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 15:49:01.4371 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 15:49:02.6475 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 15:56:59.0206 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 15:56:59.1962 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 15:56:59.1962 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 15:57:00.1869 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 15:57:00.1869 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 15:57:01.4662 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 15:57:32.6541 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 15:58:21.9012 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 15:58:21.9281 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 15:58:21.9281 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 15:58:22.9209 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 15:58:22.9209 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 15:58:24.2183 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 16:04:12.6999 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 16:08:37.4766 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 16:08:37.5048 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 16:08:37.5048 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 16:08:38.4999 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 16:08:38.4999 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 16:08:39.8484 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 16:11:23.3628 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 16:11:23.3897 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 16:11:23.3897 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 16:11:24.3910 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 16:11:24.3910 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 16:11:25.6900 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 16:18:17.8868 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 16:18:17.9137 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 16:18:17.9137 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 16:18:17.9137 OneGuiPerUser: Connected to an already running instance hosting a pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 16:18:17.9197 OneGuiPerUser: Connection received on SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 16:18:18.4200 OneGuiPerUser: OneGuiPerUser Init() returning
+
+2020-07-19 16:20:13.8135 GuiServiceClient: Chyba v TestConnection()
+System.ObjectDisposedException K uvolnÏnÈmu objektu nelze p¯istupovat.
+N·zev objektu: System.ServiceModel.Channels.ServiceChannel 
+Server stack trace: 
+   v System.ServiceModel.Channels.CommunicationObject.ThrowIfDisposedOrNotOpen()
+   v System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   v System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   v System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   v System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   v smart_modul_BACKUP.ServiceInterface.ISmartModulBackupInterface.ImStillHere()
+   v smart_modul_BACKUP.ServiceInterface.SmartModulBackupInterfaceClient.ImStillHere() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Connected Services\ServiceInterface\Reference.cs:¯·dek 224
+   v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 16:20:41.0981 GuiServiceClient: Chyba v TestConnection()
+System.ObjectDisposedException K uvolnÏnÈmu objektu nelze p¯istupovat.
+N·zev objektu: System.ServiceModel.Channels.ServiceChannel 
+Server stack trace: 
+   v System.ServiceModel.Channels.CommunicationObject.ThrowIfDisposedOrNotOpen()
+   v System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   v System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   v System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   v System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   v smart_modul_BACKUP.ServiceInterface.ISmartModulBackupInterface.ImStillHere()
+   v smart_modul_BACKUP.ServiceInterface.SmartModulBackupInterfaceClient.ImStillHere() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Connected Services\ServiceInterface\Reference.cs:¯·dek 224
+   v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 16:28:06.4511 GuiServiceClient: Chyba v TestConnection()
+System.ObjectDisposedException K uvolnÏnÈmu objektu nelze p¯istupovat.
+N·zev objektu: System.ServiceModel.Channels.ServiceChannel 
+Server stack trace: 
+   v System.ServiceModel.Channels.CommunicationObject.ThrowIfDisposedOrNotOpen()
+   v System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   v System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   v System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   v System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   v smart_modul_BACKUP.ServiceInterface.ISmartModulBackupInterface.ImStillHere()
+   v smart_modul_BACKUP.ServiceInterface.SmartModulBackupInterfaceClient.ImStillHere() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Connected Services\ServiceInterface\Reference.cs:¯·dek 224
+   v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 16:31:44.3457 GuiServiceClient: Chyba v TestConnection()
+System.ObjectDisposedException K uvolnÏnÈmu objektu nelze p¯istupovat.
+N·zev objektu: System.ServiceModel.Channels.ServiceChannel 
+Server stack trace: 
+   v System.ServiceModel.Channels.CommunicationObject.ThrowIfDisposedOrNotOpen()
+   v System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   v System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   v System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   v System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   v smart_modul_BACKUP.ServiceInterface.ISmartModulBackupInterface.ImStillHere()
+   v smart_modul_BACKUP.ServiceInterface.SmartModulBackupInterfaceClient.ImStillHere() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Connected Services\ServiceInterface\Reference.cs:¯·dek 224
+   v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 16:38:06.4623 GuiServiceClient: Chyba v TestConnection()
+System.ObjectDisposedException K uvolnÏnÈmu objektu nelze p¯istupovat.
+N·zev objektu: System.ServiceModel.Channels.ServiceChannel 
+Server stack trace: 
+   v System.ServiceModel.Channels.CommunicationObject.ThrowIfDisposedOrNotOpen()
+   v System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   v System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   v System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   v System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   v smart_modul_BACKUP.ServiceInterface.ISmartModulBackupInterface.ImStillHere()
+   v smart_modul_BACKUP.ServiceInterface.SmartModulBackupInterfaceClient.ImStillHere() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Connected Services\ServiceInterface\Reference.cs:¯·dek 224
+   v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 16:48:06.4615 GuiServiceClient: Chyba v TestConnection()
+System.ObjectDisposedException K uvolnÏnÈmu objektu nelze p¯istupovat.
+N·zev objektu: System.ServiceModel.Channels.ServiceChannel 
+Server stack trace: 
+   v System.ServiceModel.Channels.CommunicationObject.ThrowIfDisposedOrNotOpen()
+   v System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   v System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   v System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   v System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   v smart_modul_BACKUP.ServiceInterface.ISmartModulBackupInterface.ImStillHere()
+   v smart_modul_BACKUP.ServiceInterface.SmartModulBackupInterfaceClient.ImStillHere() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Connected Services\ServiceInterface\Reference.cs:¯·dek 224
+   v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 16:58:06.4677 GuiServiceClient: Chyba v TestConnection()
+System.ObjectDisposedException K uvolnÏnÈmu objektu nelze p¯istupovat.
+N·zev objektu: System.ServiceModel.Channels.ServiceChannel 
+Server stack trace: 
+   v System.ServiceModel.Channels.CommunicationObject.ThrowIfDisposedOrNotOpen()
+   v System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   v System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   v System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   v System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   v smart_modul_BACKUP.ServiceInterface.ISmartModulBackupInterface.ImStillHere()
+   v smart_modul_BACKUP.ServiceInterface.SmartModulBackupInterfaceClient.ImStillHere() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Connected Services\ServiceInterface\Reference.cs:¯·dek 224
+   v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 17:08:06.1061 GuiServiceClient: Chyba v TestConnection()
+System.ObjectDisposedException K uvolnÏnÈmu objektu nelze p¯istupovat.
+N·zev objektu: System.ServiceModel.Channels.ServiceChannel 
+Server stack trace: 
+   v System.ServiceModel.Channels.CommunicationObject.ThrowIfDisposedOrNotOpen()
+   v System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   v System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   v System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   v System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   v System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   v smart_modul_BACKUP.ServiceInterface.ISmartModulBackupInterface.ImStillHere()
+   v smart_modul_BACKUP.ServiceInterface.SmartModulBackupInterfaceClient.ImStillHere() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Connected Services\ServiceInterface\Reference.cs:¯·dek 224
+   v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 17:39:17.2792 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 17:39:17.3251 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 17:39:17.3251 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 17:39:18.3279 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 17:39:18.3279 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 17:39:24.0753 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 17:47:06.5218 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-19 17:49:42.9637 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 17:49:43.0016 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-19 17:49:43.0016 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-19 17:49:43.9997 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-19 17:49:43.9997 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-19 17:49:46.0955 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 17:49:48.1845 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 58
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-19 17:50:00.5947 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-19 17:50:04.1120 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-19 17:50:06.1825 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 58
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 16:25:55.5000 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 16:25:55.5738 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 16:25:55.5738 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 16:25:56.5731 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 16:25:56.5731 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 16:26:15.3900 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 16:26:17.4320 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 16:26:20.2480 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 16:26:22.1148 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 16:26:24.1594 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 16:26:30.7597 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 16:26:32.7709 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 16:29:19.4428 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 16:34:04.7083 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 16:34:04.7332 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 16:34:04.7332 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 16:34:05.7282 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 16:34:05.7282 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 16:34:08.7470 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 16:34:10.7930 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 16:35:29.7391 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 16:35:29.7640 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 16:35:29.7640 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 16:35:30.7600 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 16:35:30.7600 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 16:35:34.5329 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 16:35:36.5774 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 16:37:16.2767 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 16:37:16.3036 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 16:37:16.3036 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 16:37:17.3061 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 16:37:17.3061 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 16:37:21.0785 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 16:37:22.7863 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 16:37:24.8473 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 17:31:16.9682 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 17:31:16.9952 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 17:31:16.9952 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 17:31:17.9929 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 17:31:17.9929 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 17:31:22.1312 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 17:31:24.1953 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 17:31:26.2508 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 17:37:31.5367 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 17:37:31.5616 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 17:37:31.5616 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 17:37:32.5561 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 17:37:32.5561 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 17:37:36.1896 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 17:37:38.2383 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 17:40:02.8854 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 17:51:40.5369 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 17:51:40.5801 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 17:51:40.5801 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 17:51:41.5713 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 17:51:41.5713 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 17:51:43.1360 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 17:52:02.8043 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 17:54:07.8148 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 17:54:09.9614 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 17:54:37.8203 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 18:01:08.4177 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 18:04:09.3652 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 18:14:09.3663 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 19:10:50.5790 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 19:11:01.3364 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 19:11:01.3633 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 19:11:01.3633 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 19:11:02.3537 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 19:11:02.3537 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 19:11:03.6623 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 19:11:20.9321 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 19:11:59.7050 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 19:12:18.6347 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 19:12:18.6606 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 19:12:18.6606 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 19:12:19.6662 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 19:12:19.6662 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 19:12:23.3458 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 19:12:38.7529 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 19:18:00.0106 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 19:18:00.0106 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 19:19:11.2336 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 19:20:53.9652 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 19:20:54.6468 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 19:20:54.6468 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 19:21:13.7219 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 19:21:13.7219 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 19:21:18.3286 SFTP: SftpUploaderFactory: failed to get SftpUploader from web plan, returning null...
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v SmartModulBackupClasses.SftpUploaderFactory.GetInstance() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploaderFactory.cs:¯·dek 32
+2020-07-20 19:21:18.3286 SFTP: SftpUploaderFactory: failed to get SftpUploader from web plan, returning null...
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v SmartModulBackupClasses.SftpUploaderFactory.GetInstance() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploaderFactory.cs:¯·dek 32
+2020-07-20 19:21:18.3286 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 19:21:18.3286 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-20 19:21:37.3900 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 19:27:33.8736 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 19:27:33.9006 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 19:27:33.9006 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 19:27:34.8996 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 19:27:34.8996 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 19:27:37.7262 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 19:31:40.1480 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 19:38:32.4896 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 19:38:32.6238 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 19:38:32.6238 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 19:38:33.6187 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 19:38:33.6187 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 19:38:37.6233 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 19:44:57.6033 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 19:44:57.6508 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 19:44:57.6508 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 19:44:58.6501 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 19:44:58.6501 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 19:45:02.0010 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 19:55:01.4141 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 19:57:29.9383 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 19:57:29.9633 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 19:57:29.9633 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 19:57:30.9617 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 19:57:30.9617 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 19:57:33.2819 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 20:00:19.8940 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 20:02:03.4279 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 20:02:43.8551 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 20:06:56.7866 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-20 20:06:56.8135 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-20 20:06:56.8135 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-20 20:06:57.8055 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-20 20:06:57.8055 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-20 20:07:01.3802 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 20:07:11.9130 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 20:13:26.8582 BackupInfoManager: ProblÈm p¯i nahr·v·nÌ info o z·loze do webovÈ aplikace
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v SmartModulBackupClasses.WebApi.SmbApiClient.<PostAsync>d__53.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 193
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   v SmartModulBackupClasses.WebApi.SmbApiClient.<AddBackupAsync>d__71.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 415
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<saveBkApi>d__37.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 400
+2020-07-20 20:13:26.8582 BackupInfoManager: ProblÈm p¯i nahr·v·nÌ info o z·loze do webovÈ aplikace
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v SmartModulBackupClasses.WebApi.SmbApiClient.<PostAsync>d__53.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 193
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   v SmartModulBackupClasses.WebApi.SmbApiClient.<AddBackupAsync>d__71.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 415
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<saveBkApi>d__37.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 400
+2020-07-20 20:13:26.8582 BackupInfoManager: ProblÈm p¯i nahr·v·nÌ info o z·loze do webovÈ aplikace
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v SmartModulBackupClasses.WebApi.SmbApiClient.<PostAsync>d__53.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 193
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   v SmartModulBackupClasses.WebApi.SmbApiClient.<AddBackupAsync>d__71.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 415
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<saveBkApi>d__37.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 400
+2020-07-20 20:13:34.3082 BackupInfoManager: ProblÈm p¯i nahr·v·nÌ info o z·loze do webovÈ aplikace
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v SmartModulBackupClasses.WebApi.SmbApiClient.<PostAsync>d__53.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 193
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   v SmartModulBackupClasses.WebApi.SmbApiClient.<AddBackupAsync>d__71.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 415
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<saveBkApi>d__37.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 400
+2020-07-20 20:13:34.3082 BackupInfoManager: ProblÈm p¯i nahr·v·nÌ info o z·loze do webovÈ aplikace
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v SmartModulBackupClasses.WebApi.SmbApiClient.<PostAsync>d__53.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 193
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   v SmartModulBackupClasses.WebApi.SmbApiClient.<AddBackupAsync>d__71.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 415
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<saveBkApi>d__37.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 400
+2020-07-20 20:13:34.3082 BackupInfoManager: ProblÈm p¯i nahr·v·nÌ info o z·loze do webovÈ aplikace
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v SmartModulBackupClasses.WebApi.SmbApiClient.<PostAsync>d__53.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 193
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   v SmartModulBackupClasses.WebApi.SmbApiClient.<AddBackupAsync>d__71.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 415
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<saveBkApi>d__37.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 400
+2020-07-20 20:13:34.3082 BackupInfoManager: ProblÈm p¯i nahr·v·nÌ info o z·loze do webovÈ aplikace
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v SmartModulBackupClasses.WebApi.SmbApiClient.<PostAsync>d__53.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 193
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   v SmartModulBackupClasses.WebApi.SmbApiClient.<AddBackupAsync>d__71.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\WebApi\SmbApiClient.cs:¯·dek 415
+--- Konec trasov·nÌ z·sobnÌku z p¯edchozÌho mÌsta, ze kterÈho byla vyvol·na v˝jimka ---
+   v System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   v System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   v System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   v SmartModulBackupClasses.Managers.BackupInfoManager.<saveBkApi>d__37.MoveNext() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\Managers\BackupInfoManager.cs:¯·dek 400
+2020-07-20 20:14:09.7787 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from web plan
+
+2020-07-20 20:14:11.0915 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 20:14:11.0915 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 20:17:00.6004 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 20:27:00.7487 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 20:37:00.6227 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 20:47:00.6810 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 20:57:00.6488 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 21:07:00.6543 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 21:17:00.6601 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 21:27:00.7568 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 21:37:00.8037 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 21:47:00.9581 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 21:57:00.8014 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 22:07:00.8023 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 22:17:00.8223 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 22:27:00.8454 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 22:37:00.8178 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 22:47:00.9966 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 22:57:00.9181 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 23:07:00.9247 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 23:17:00.8209 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 23:27:00.8329 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 23:34:40.4290 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-20 23:35:08.0199 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-20 23:35:09.8194 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-21 13:39:37.6009 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 13:39:37.7405 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 13:39:37.7405 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 13:39:38.7428 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 13:39:38.7428 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 13:39:55.5049 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 13:39:57.5597 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 13:50:57.1490 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 13:50:57.4053 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 13:50:57.4053 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 13:50:58.4081 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 13:50:58.4081 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 13:51:06.1272 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 13:51:08.2823 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 13:51:55.3294 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 13:51:57.3331 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 13:52:13.6953 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 13:52:15.6979 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 13:53:10.9684 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-21 14:08:04.0437 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:08:04.1382 GUI: Neoöet¯en· v˝jimka p¯i spouötÏnÌ GUI
+System.FormatException VstupnÌ ¯etÏzec nem· spr·vn˝ form·t.    v System.Globalization.TimeSpanFormat.FormatCustomized(TimeSpan value, String format, DateTimeFormatInfo dtfi)
+   v System.Globalization.TimeSpanFormat.Format(TimeSpan value, String format, IFormatProvider formatProvider)
+   v smart_modul_BACKUP.App.Setup() v D:\Projects\smart modul BACKUP\smart modul BACKUP\App.xaml.cs:¯·dek 101
+   v smart_modul_BACKUP.App.OnAppStart(Object sender, StartupEventArgs e) v D:\Projects\smart modul BACKUP\smart modul BACKUP\App.xaml.cs:¯·dek 71
+2020-07-21 14:08:46.6770 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:08:46.7877 GUI: Neoöet¯en· v˝jimka p¯i spouötÏnÌ GUI
+System.FormatException VstupnÌ ¯etÏzec nem· spr·vn˝ form·t.    v System.Globalization.TimeSpanFormat.FormatCustomized(TimeSpan value, String format, DateTimeFormatInfo dtfi)
+   v System.Globalization.TimeSpanFormat.Format(TimeSpan value, String format, IFormatProvider formatProvider)
+   v smart_modul_BACKUP.App.Setup() v D:\Projects\smart modul BACKUP\smart modul BACKUP\App.xaml.cs:¯·dek 101
+   v smart_modul_BACKUP.App.OnAppStart(Object sender, StartupEventArgs e) v D:\Projects\smart modul BACKUP\smart modul BACKUP\App.xaml.cs:¯·dek 71
+2020-07-21 14:09:38.4995 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:14:54.7162 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:14:54.7437 GuiSetup: Config setup time: 00:00:03.695
+
+2020-07-21 14:14:54.7544 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:14:54.7544 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:14:55.8078 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:14:55.8078 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:14:55.8078 GuiSetup: OneGuiPerUser setup time: 00:00:01.055
+
+2020-07-21 14:14:55.8638 GuiSetup: Api setup time: 00:00:00.050
+
+2020-07-21 14:14:55.9056 GuiSetup: NotifyIcon setup time: 00:00:00.092
+
+2020-07-21 14:14:57.2093 GuiSetup: AvailableDbs setup time: 00:00:01.303
+
+2020-07-21 14:14:57.2093 GuiSetup: Sftp setup time: 00:00:00.001
+
+2020-07-21 14:14:57.3638 GuiSetup: ServiceState setup time: 00:00:00.151
+
+2020-07-21 14:14:57.5695 GuiSetup: BackupRuleLoader setup time: 00:00:00.205
+
+2020-07-21 14:14:57.5695 GuiSetup: BackupInfoManager setup time: 00:00:00.007
+
+2020-07-21 14:14:57.5695 GuiSetup: SETUP TIME: 00:00:06.529
+
+2020-07-21 14:14:58.4979 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 14:15:00.6728 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 14:28:03.1676 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:28:03.1935 GuiSetup: Config setup time: 00:00:00.180
+
+2020-07-21 14:28:03.1935 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:28:03.1935 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:28:03.4401 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:28:03.4401 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:28:03.4401 GuiSetup: OneGuiPerUser setup time: 00:00:00.258
+
+2020-07-21 14:28:03.4587 GuiSetup: Api setup time: 00:00:00.003
+
+2020-07-21 14:28:03.4936 GuiSetup: NotifyIcon setup time: 00:00:00.038
+
+2020-07-21 14:28:03.4936 GuiSetup: AvailableDbs setup time: 00:00:00.001
+
+2020-07-21 14:28:03.4936 GuiSetup: Sftp setup time: 00:00:00.001
+
+2020-07-21 14:28:05.2913 GuiSetup: ServiceState setup time: 00:00:01.795
+
+2020-07-21 14:28:05.3202 GuiSetup: BackupRuleLoader setup time: 00:00:00.028
+
+2020-07-21 14:28:05.3202 GuiSetup: BackupInfoManager setup time: 00:00:00.004
+
+2020-07-21 14:28:05.3202 GuiSetup: SETUP TIME: 00:00:02.313
+
+2020-07-21 14:28:25.4098 GUI: Neoöet¯en· v˝jimka v GUI
+System.Windows.Markup.XamlParseException Vyvol·nÌ konstruktoru pro typ smart_modul_BACKUP.MainWindow, kter˝ odpovÌd· zadan˝m omezenÌm vazby, vyvolalo v˝jimku. »Ìslo ¯·dku 6 a pozice na ¯·dku 9.    v System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
+   v System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
+   v System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
+   v System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
+   v System.Windows.Application.LoadBamlStreamWithSyncInfo(Stream stream, ParserContext pc)
+   v System.Windows.Application.DoStartup()
+   v System.Windows.Application.<.ctor>b__1_0(Object unused)
+   v System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   v System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+2020-07-21 14:29:20.8619 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:29:20.9028 GuiSetup: Config setup time: 00:00:00.605
+
+2020-07-21 14:29:20.9028 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:29:20.9078 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:29:21.2114 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:29:21.2114 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:29:21.2114 GuiSetup: OneGuiPerUser setup time: 00:00:00.309
+
+2020-07-21 14:29:21.2391 GuiSetup: Api setup time: 00:00:00.021
+
+2020-07-21 14:29:21.2880 GuiSetup: NotifyIcon setup time: 00:00:00.071
+
+2020-07-21 14:29:21.2880 GuiSetup: AvailableDbs setup time: 00:00:00.001
+
+2020-07-21 14:29:21.2880 GuiSetup: Sftp setup time: 00:00:00.001
+
+2020-07-21 14:29:21.4848 GuiSetup: ServiceState setup time: 00:00:00.188
+
+2020-07-21 14:29:21.7368 GuiSetup: BackupRuleLoader setup time: 00:00:00.251
+
+2020-07-21 14:29:21.7368 GuiSetup: BackupInfoManager setup time: 00:00:00.008
+
+2020-07-21 14:29:21.7368 GuiSetup: SETUP TIME: 00:00:01.449
+
+2020-07-21 14:29:57.0240 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:29:57.0591 GuiSetup: Config setup time: 00:00:00.500
+
+2020-07-21 14:29:57.0591 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:29:57.0591 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:29:57.3466 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:29:57.3466 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:29:57.3466 GuiSetup: OneGuiPerUser setup time: 00:00:00.289
+
+2020-07-21 14:29:57.3945 GuiSetup: Api setup time: 00:00:00.039
+
+2020-07-21 14:29:57.4180 GuiSetup: NotifyIcon setup time: 00:00:00.063
+
+2020-07-21 14:29:57.4180 GuiSetup: AvailableDbs setup time: 00:00:00.000
+
+2020-07-21 14:29:57.4180 GuiSetup: Sftp setup time: 00:00:00.001
+
+2020-07-21 14:29:58.7978 GuiSetup: ServiceState setup time: 00:00:01.374
+
+2020-07-21 14:29:59.0258 GuiSetup: BackupRuleLoader setup time: 00:00:00.228
+
+2020-07-21 14:29:59.0340 GuiSetup: BackupInfoManager setup time: 00:00:00.007
+
+2020-07-21 14:29:59.0340 GuiSetup: SETUP TIME: 00:00:02.478
+
+2020-07-21 14:30:45.9017 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:30:45.9496 GuiSetup: Config setup time: 00:00:00.763
+
+2020-07-21 14:30:45.9496 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:30:45.9496 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:30:46.2819 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:30:46.2843 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:30:46.2843 GuiSetup: OneGuiPerUser setup time: 00:00:00.335
+
+2020-07-21 14:30:46.3188 GuiSetup: Api setup time: 00:00:00.024
+
+2020-07-21 14:30:46.3714 GuiSetup: NotifyIcon setup time: 00:00:00.077
+
+2020-07-21 14:30:46.3714 GuiSetup: AvailableDbs setup time: 00:00:00.001
+
+2020-07-21 14:30:46.3774 GuiSetup: Sftp setup time: 00:00:00.002
+
+2020-07-21 14:30:51.4074 GuiSetup: ServiceState setup time: 00:00:03.541
+
+2020-07-21 14:30:51.6345 GuiSetup: BackupRuleLoader setup time: 00:00:00.226
+
+2020-07-21 14:30:51.6345 GuiSetup: BackupInfoManager setup time: 00:00:00.007
+
+2020-07-21 14:30:51.6345 GuiSetup: SETUP TIME: 00:00:06.457
+
+2020-07-21 14:30:52.2836 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 14:31:06.5229 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 14:31:23.2335 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:31:23.2854 GuiSetup: Config setup time: 00:00:00.789
+
+2020-07-21 14:31:23.2854 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:31:23.2854 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:31:23.6106 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:31:23.6126 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:31:23.6126 GuiSetup: OneGuiPerUser setup time: 00:00:00.327
+
+2020-07-21 14:31:23.6743 GuiSetup: Api setup time: 00:00:00.052
+
+2020-07-21 14:31:23.7538 GuiSetup: NotifyIcon setup time: 00:00:00.131
+
+2020-07-21 14:31:23.7538 GuiSetup: AvailableDbs setup time: 00:00:00.001
+
+2020-07-21 14:31:23.7538 GuiSetup: Sftp setup time: 00:00:00.002
+
+2020-07-21 14:31:25.2710 GuiSetup: ServiceState setup time: 00:00:01.510
+
+2020-07-21 14:31:25.5143 GuiSetup: BackupRuleLoader setup time: 00:00:00.243
+
+2020-07-21 14:31:25.5225 GuiSetup: BackupInfoManager setup time: 00:00:00.007
+
+2020-07-21 14:31:25.5225 GuiSetup: SETUP TIME: 00:00:03.028
+
+2020-07-21 14:31:26.2964 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 14:35:26.4606 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:35:26.4905 GuiSetup: Config setup time: 00:00:00.578
+
+2020-07-21 14:35:26.4905 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:35:26.4905 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:35:26.7823 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:35:26.7833 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:35:26.7833 GuiSetup: OneGuiPerUser setup time: 00:00:00.293
+
+2020-07-21 14:35:26.8133 GuiSetup: Api setup time: 00:00:00.022
+
+2020-07-21 14:35:26.8553 GuiSetup: NotifyIcon setup time: 00:00:00.065
+
+2020-07-21 14:35:26.8553 GuiSetup: AvailableDbs setup time: 00:00:00.001
+
+2020-07-21 14:35:26.8611 GuiSetup: Sftp setup time: 00:00:00.002
+
+2020-07-21 14:35:27.0479 GuiSetup: ServiceState setup time: 00:00:00.185
+
+2020-07-21 14:35:27.3277 GuiSetup: BackupRuleLoader setup time: 00:00:00.279
+
+2020-07-21 14:35:27.3367 GuiSetup: BackupInfoManager setup time: 00:00:00.008
+
+2020-07-21 14:35:27.3367 GuiSetup: SETUP TIME: 00:00:01.427
+
+2020-07-21 14:35:28.0811 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 14:37:25.5103 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:37:25.5402 GuiSetup: Config setup time: 00:00:00.531
+
+2020-07-21 14:37:25.5402 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:37:25.5402 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:37:25.8311 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:37:25.8311 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:37:25.8311 GuiSetup: OneGuiPerUser setup time: 00:00:00.291
+
+2020-07-21 14:37:25.8564 GuiSetup: Api setup time: 00:00:00.019
+
+2020-07-21 14:37:25.9023 GuiSetup: NotifyIcon setup time: 00:00:00.065
+
+2020-07-21 14:37:25.9023 GuiSetup: AvailableDbs setup time: 00:00:00.001
+
+2020-07-21 14:37:25.9083 GuiSetup: Sftp setup time: 00:00:00.002
+
+2020-07-21 14:37:26.0650 GuiSetup: ServiceState setup time: 00:00:00.156
+
+2020-07-21 14:37:26.3145 GuiSetup: BackupRuleLoader setup time: 00:00:00.248
+
+2020-07-21 14:37:26.3145 GuiSetup: BackupInfoManager setup time: 00:00:00.007
+
+2020-07-21 14:37:26.3145 GuiSetup: SETUP TIME: 00:00:01.314
+
+2020-07-21 14:37:27.0738 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 14:37:29.2825 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 14:37:42.8915 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-21 14:38:01.5865 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:38:01.6208 GuiSetup: Config setup time: 00:00:00.527
+
+2020-07-21 14:38:01.6208 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:38:01.6268 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:38:01.9439 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:38:01.9439 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:38:01.9439 GuiSetup: OneGuiPerUser setup time: 00:00:00.326
+
+2020-07-21 14:38:01.9848 GuiSetup: Api setup time: 00:00:00.028
+
+2020-07-21 14:38:02.0375 GuiSetup: NotifyIcon setup time: 00:00:00.081
+
+2020-07-21 14:38:02.0375 GuiSetup: AvailableDbs setup time: 00:00:00.000
+
+2020-07-21 14:38:02.0375 GuiSetup: Sftp setup time: 00:00:00.001
+
+2020-07-21 14:38:02.2309 GuiSetup: ServiceState setup time: 00:00:00.188
+
+2020-07-21 14:38:02.5520 GuiSetup: BackupRuleLoader setup time: 00:00:00.320
+
+2020-07-21 14:38:02.5520 GuiSetup: BackupInfoManager setup time: 00:00:00.007
+
+2020-07-21 14:38:02.5520 GuiSetup: SETUP TIME: 00:00:01.468
+
+2020-07-21 14:38:03.4556 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 14:38:05.1037 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-21 14:38:05.6849 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 14:38:48.5274 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:38:48.5593 GuiSetup: Config setup time: 00:00:00.466
+
+2020-07-21 14:38:48.5593 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:38:48.5593 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:38:48.8469 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:38:48.8469 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:38:48.8469 GuiSetup: OneGuiPerUser setup time: 00:00:00.289
+
+2020-07-21 14:38:48.8769 GuiSetup: Api setup time: 00:00:00.022
+
+2020-07-21 14:38:48.9210 GuiSetup: NotifyIcon setup time: 00:00:00.067
+
+2020-07-21 14:38:48.9210 GuiSetup: AvailableDbs setup time: 00:00:00.000
+
+2020-07-21 14:38:48.9248 GuiSetup: Sftp setup time: 00:00:00.001
+
+2020-07-21 14:38:50.7718 GuiSetup: ServiceState setup time: 00:00:01.845
+
+2020-07-21 14:38:51.1491 GuiSetup: BackupRuleLoader setup time: 00:00:00.377
+
+2020-07-21 14:38:51.1620 GuiSetup: BackupInfoManager setup time: 00:00:00.011
+
+2020-07-21 14:38:51.1620 GuiSetup: SETUP TIME: 00:00:03.071
+
+2020-07-21 14:38:51.8631 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 14:38:54.0171 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 14:39:04.6409 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:39:04.6715 GuiSetup: Config setup time: 00:00:00.486
+
+2020-07-21 14:39:04.6715 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:39:04.6734 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:39:04.9706 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:39:04.9706 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:39:04.9706 GuiSetup: OneGuiPerUser setup time: 00:00:00.301
+
+2020-07-21 14:39:05.0109 GuiSetup: Api setup time: 00:00:00.031
+
+2020-07-21 14:39:05.0653 GuiSetup: NotifyIcon setup time: 00:00:00.086
+
+2020-07-21 14:39:05.0653 GuiSetup: AvailableDbs setup time: 00:00:00.001
+
+2020-07-21 14:39:05.0653 GuiSetup: Sftp setup time: 00:00:00.004
+
+2020-07-21 14:39:06.5585 GuiSetup: ServiceState setup time: 00:00:01.486
+
+2020-07-21 14:39:06.9135 GuiSetup: BackupRuleLoader setup time: 00:00:00.354
+
+2020-07-21 14:39:06.9242 GuiSetup: BackupInfoManager setup time: 00:00:00.010
+
+2020-07-21 14:39:06.9242 GuiSetup: SETUP TIME: 00:00:02.742
+
+2020-07-21 14:39:07.7950 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 14:39:09.9478 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 14:39:18.2185 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:39:18.2464 GuiSetup: Config setup time: 00:00:00.475
+
+2020-07-21 14:39:18.2464 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:39:18.2464 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:39:18.5497 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:39:18.5497 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:39:18.5497 GuiSetup: OneGuiPerUser setup time: 00:00:00.304
+
+2020-07-21 14:39:18.5875 GuiSetup: Api setup time: 00:00:00.032
+
+2020-07-21 14:39:18.6353 GuiSetup: NotifyIcon setup time: 00:00:00.080
+
+2020-07-21 14:39:18.6353 GuiSetup: AvailableDbs setup time: 00:00:00.000
+
+2020-07-21 14:39:18.6353 GuiSetup: Sftp setup time: 00:00:00.002
+
+2020-07-21 14:40:23.0562 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 14:40:23.1080 GuiSetup: Config setup time: 00:00:00.564
+
+2020-07-21 14:40:23.1112 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 14:40:23.1112 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 14:40:23.4393 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 14:40:23.4393 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 14:40:23.4393 GuiSetup: OneGuiPerUser setup time: 00:00:00.333
+
+2020-07-21 14:40:23.4823 GuiSetup: Api setup time: 00:00:00.031
+
+2020-07-21 14:40:23.5470 GuiSetup: NotifyIcon setup time: 00:00:00.096
+
+2020-07-21 14:40:23.5490 GuiSetup: AvailableDbs setup time: 00:00:00.001
+
+2020-07-21 14:40:23.5490 GuiSetup: Sftp setup time: 00:00:00.002
+
+2020-07-21 14:40:29.3328 GuiSetup: ServiceState setup time: 00:00:05.777
+
+2020-07-21 14:40:29.5476 GuiSetup: BackupRuleLoader setup time: 00:00:00.214
+
+2020-07-21 14:40:29.5546 GuiSetup: BackupInfoManager setup time: 00:00:00.006
+
+2020-07-21 14:40:29.5546 GuiSetup: SETUP TIME: 00:00:07.012
+
+2020-07-21 14:40:31.2636 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 14:40:33.3952 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 14:40:37.0147 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-21 16:53:18.0271 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 16:53:18.1023 GuiSetup: Config setup time: 00:00:00.245
+
+2020-07-21 16:53:18.1023 OneGuiPerUser: OneGuiPerUser init
+
+2020-07-21 16:53:18.1023 OneGuiPerUser: Creating named pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti
+
+2020-07-21 16:53:18.3454 OneGuiPerUser: An already running instance not found; I will become the pipe host
+
+2020-07-21 16:53:18.3454 OneGuiPerUser: Pipe with name SMB_GUI_LAPTOP-2F5QK6O6_marti opened
+
+2020-07-21 16:53:18.3454 GuiSetup: OneGuiPerUser setup time: 00:00:00.244
+
+2020-07-21 16:53:18.3454 GuiSetup: Api setup time: 00:00:00.004
+
+2020-07-21 16:53:18.3922 GuiSetup: NotifyIcon setup time: 00:00:00.042
+
+2020-07-21 16:53:18.3922 GuiSetup: AvailableDbs setup time: 00:00:00.000
+
+2020-07-21 16:53:18.3922 GuiSetup: Sftp setup time: 00:00:00.001
+
+2020-07-21 16:53:22.4978 Default: Aplikace spuötÏna, naËtena konfigurace pro logov·nÌ
+
+2020-07-21 16:53:22.5278 GuiSetup: Config setup time: 00:00:00.195
+
+2020-07-21 16:53:22.5278 GuiSetup: OneGuiPerUser setup time: 00:00:00.000
+
+2020-07-21 16:53:22.5378 GuiSetup: Api setup time: 00:00:00.005
+
+2020-07-21 16:53:22.5607 GuiSetup: NotifyIcon setup time: 00:00:00.028
+
+2020-07-21 16:53:22.5607 GuiSetup: AvailableDbs setup time: 00:00:00.000
+
+2020-07-21 16:53:22.5607 GuiSetup: Sftp setup time: 00:00:00.001
+
+2020-07-21 16:53:23.3598 GuiSetup: ServiceState setup time: 00:00:00.795
+
+2020-07-21 16:53:23.3947 GuiSetup: BackupRuleLoader setup time: 00:00:00.035
+
+2020-07-21 16:53:23.3947 GuiSetup: BackupInfoManager setup time: 00:00:00.004
+
+2020-07-21 16:53:23.3947 GuiSetup: SETUP TIME: 00:00:01.069
+
+2020-07-21 16:53:23.9452 SFTP: SftpUploaderFactory: returning SftpUploader(192.168.0.171,22,tester,********) from config
+
+2020-07-21 16:53:26.0073 GUI: problÈm p¯i zjiöùov·nÌ mnoûstvÌ dat uloûen˝ch na serveru
+System.Net.Sockets.SocketException Nemohlo b˝t vytvo¯eno û·dnÈ p¯ipojenÌ, protoûe cÌlov˝ poËÌtaË je aktivnÏ odmÌtl    v Renci.SshNet.Abstractions.SocketAbstraction.Connect(IPEndPoint remoteEndpoint, TimeSpan connectTimeout)
+   v Renci.SshNet.Session.SocketConnect(String host, Int32 port)
+   v Renci.SshNet.Session.Connect()
+   v Renci.SshNet.BaseClient.Connect()
+   v SmartModulBackupClasses.SftpUploader.Connect() v D:\Projects\smart modul BACKUP\SmartModulBackupClasses\SftpUploader.cs:¯·dek 57
+   v smart_modul_BACKUP.HomePage.measureSftpFolder() v D:\Projects\smart modul BACKUP\smart modul BACKUP\Pages\HomePage.xaml.cs:¯·dek 157
+2020-07-21 17:03:23.2079 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-21 17:13:23.2058 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-21 17:23:23.2069 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-21 17:30:35.3592 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35
+2020-07-21 17:33:23.2212 GuiServiceClient: Chyba v TestConnection()
+System.NullReferenceException Odkaz na objekt nenÌ nastaven na instanci objektu.    v smart_modul_BACKUP.WCF.SmartModulBackupCallbackHandler.TestConnection() v D:\Projects\smart modul BACKUP\smart modul BACKUP\WCF\SmartModulBackupCallbackHandler.cs:¯·dek 35

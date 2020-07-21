@@ -58,23 +58,36 @@ namespace smart_modul_BACKUP_service
                 throw new InvalidOperationException("BackupTimeline neběží, nelze jí tedy zastavit, z logiky věci přece.");
         }
 
+        /// <summary>
+        /// Zastaví BackupTimeline, odstraní BackupTasky daného pravidla, naplánuje je znovu, a znovu spustí BackupTimeline.
+        /// </summary>
+        /// <param name="rule"></param>
         public void RescheduleRule(BackupRule rule)
         {
             lock (this)
             {
+                //zastavit timeline
                 if (Running)
                     stop();
 
                 try
                 {
-                    _tasks.RemoveAll(bkt => bkt.Rule.LocalID == rule.LocalID);
-                    _tasks.AddRange(rule.GetBackupTasksInTimeSpan(DateTime.Now, End));
+                    var now = DateTime.Now;
+
+                    //odstranit BackupTasky, které
+                    //   a) jsou k danému pravidlu
+                    //   b) už byly spuštěny
+                    _tasks.RemoveAll(bkt => bkt.Rule.LocalID == rule.LocalID || bkt.ScheduledStart < now);
+
+                    //znovu naplánovat BackupTasky daného pravidla
+                    _tasks.AddRange(rule.GetBackupTasksInTimeSpan(now, End));
                 }
                 catch (Exception ex)
                 {
                     SmbLog.Error($"Problém při přeplánování pravidla {rule.Name}", ex, LogCategory.BackupTimeline);
                 }
 
+                //znovu spustit BackupTimeline
                 if (!Running)
                     start(_tasks, End);
             }
@@ -117,7 +130,7 @@ namespace smart_modul_BACKUP_service
                 _tokenSource = new CancellationTokenSource();
 
                 //spustit cyklus na novém vlákně
-                _loopThread = new Thread(Loop);
+                _loopThread = new Thread(loop);
                 _loopThread.Start();
             }
             else
@@ -125,7 +138,7 @@ namespace smart_modul_BACKUP_service
         }
 
         //tahle metoda se bude spouštět na jiném vlákně a postupně vyhodnocovat backuptasky
-        private void Loop()
+        private void loop()
         {
             foreach (var backup in _tasks)
             {

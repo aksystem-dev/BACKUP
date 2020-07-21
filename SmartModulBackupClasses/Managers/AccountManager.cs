@@ -73,7 +73,7 @@ namespace SmartModulBackupClasses.Managers
         /// <summary>
         /// Info o aktivním plánu
         /// </summary>
-        public PlanXml PlanInfo => HelloInfo.ActivePlan;
+        public PlanXml PlanInfo => HelloInfo?.ActivePlan;
 
         /// <summary>
         /// Info o tomto klientovi

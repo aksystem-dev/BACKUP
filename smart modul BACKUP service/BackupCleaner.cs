@@ -150,7 +150,7 @@ namespace smart_modul_BACKUP_service
             //zde kváknem jestli jsme změnili AvailableLocally nebo AvailableRemotely, ať víme, jestli updatovat záznam
             bool availabilityChanged = false;
 
-            if (bk.AvailableLocally)
+            if (bk.AvailableLocally && bk.MadeOnThisComputer)
             {
                 //pokud záloha tvrdí, že existuje na tomto PC, ale přitom nikoliv, vysvětlíme jí, jak se věci mají
                 if (!bk.DoesLocalFileExist())
@@ -183,11 +183,11 @@ namespace smart_modul_BACKUP_service
                 }
             }
 
-            if (bk.AvailableRemotely && sftp != null)
+            if (bk.AvailableRemotely && sftp != null && bk.AvailableOnCurrentSftpServer)
             {
                 try
                 {
-                    //pokud záloha tvrdí, že je dostupná přes sftp, ale není, vysvětlíme jí, jak se věci mají
+                    //pokud záloha tvrdí, že je dostupná přes aktuální sftp, ale není, vysvětlíme jí, jak se věci mají
                     if (!bk.DoesRemoteFileExist(sftp.client))
                     {
                         SmbLog.Info("Záloha tvrdí, že je dostupná vzdáleně, ale není, vysvětluji jí to", category: LogCategory.BackupCleaner);
