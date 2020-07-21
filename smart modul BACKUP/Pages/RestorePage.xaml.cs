@@ -120,7 +120,7 @@ namespace smart_modul_BACKUP
                     progress.Completed += async (obj, args) =>
                     {
                         await Task.Delay(2000);
-                        App.Current.Dispatcher.Invoke(() =>
+                        App.dispatch(() =>
                             Backup.InProgress.Remove(progress));
                     };
                 }

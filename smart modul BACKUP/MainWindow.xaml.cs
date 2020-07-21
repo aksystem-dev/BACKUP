@@ -82,7 +82,7 @@ namespace smart_modul_BACKUP
 
         private void ShowMyself()
         {
-            Dispatcher.Invoke(() =>
+            App.dispatch(() =>
             {
                 Show();
                 Activate();
@@ -140,6 +140,8 @@ namespace smart_modul_BACKUP
 
         private void window_closing(object sender, CancelEventArgs e)
         {
+            var trace = new StackTrace();
+
             //uložit konfiguraci
             saveCfg();
             Manager.Get<ServiceState>().Reload();

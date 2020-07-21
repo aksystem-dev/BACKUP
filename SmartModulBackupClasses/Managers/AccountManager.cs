@@ -133,8 +133,8 @@ namespace SmartModulBackupClasses.Managers
         {
             try
             {
-                //pokud používáme aplikaci offline, na přihlašování se vykašleme
-                if (config.Online == false)
+                //pokud je WebConfig null nebo pokud používáme aplikaci offline, na přihlašování se vykašleme
+                if (config == null || config.Online == false)
                 {
                     Api = null;
                     HelloInfo = null;

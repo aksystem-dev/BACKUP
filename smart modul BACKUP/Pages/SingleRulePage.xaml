@@ -36,7 +36,7 @@
                     </Button>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Background="{x:Null}" Foreground="White" BorderBrush="White"
+                                 Background="White" Foreground="Black" BorderBrush="{StaticResource Blue-1}" BorderThickness="2"
                                  HorizontalAlignment="Left"
                                  FontSize="30" x:Name="txt_rulename"
                                  Margin="10,10,10,0" />

@@ -19,6 +19,7 @@ using SmartModulBackupClasses.Managers;
 using SmartModulBackupClasses.WebApi;
 using smart_modul_BACKUP_service.Managers;
 using smart_modul_BACKUP_service.BackupExe;
+using System.Reflection;
 
 namespace smart_modul_BACKUP_service
 {
@@ -55,6 +56,8 @@ namespace smart_modul_BACKUP_service
 
         public SmartModulBackupService()
         {
+            //Thread.Sleep(10000);
+
             //nastavit statický odkaz na tuto instanci
             Utils.Service = this;
 
@@ -112,14 +115,18 @@ namespace smart_modul_BACKUP_service
 
                 DumbLogger.Log("Služba smart modul BACKUP spuštěna!!");
 
-                //cd do složky, kam chceme 
-                //TODO: zařídit, aby se tato složka buďto:
-                //  - dala nastavit
-                //  - byla v umístění .exe služby a GUI
-                string cd = "C:\\smart modul BACKUP";
-                if (!Directory.Exists(cd)) Directory.CreateDirectory(cd);
+                ////cd do složky, kam chceme 
+                ////TODO: zařídit, aby se tato složka buďto:
+                ////  - dala nastavit
+                ////  - byla v umístění .exe služby a GUI
+                //string cd = "C:\\smart modul BACKUP";
+                //if (!Directory.Exists(cd)) Directory.CreateDirectory(cd);
+                //Directory.SetCurrentDirectory(cd);
+                //DumbLogger.Log($"Aktuální adresa: {cd}");
+
+                //pracujeme ve složce, kde je exe služby (ve stejné by mělo být exe GUI)
+                string cd = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
                 Directory.SetCurrentDirectory(cd);
-                DumbLogger.Log($"Aktuální adresa: {cd}");
 
                 //Manager umožňuje
                 //  - uchovávat instance užitečných tříd a pak je dostávat podle typu (SetSingleton<T>, Get<T>)
@@ -313,7 +320,7 @@ namespace smart_modul_BACKUP_service
         /// <param name="cfg"></param>
         public static void updateApi(ConfigManager cfg)
         {
-            Manager.Get<AccountManager>().LoginWithAsync(cfg.Config.WebCfg).Wait();
+            Manager.Get<AccountManager>().LoginWithAsync(cfg?.Config?.WebCfg).Wait();
         }
     }
 }

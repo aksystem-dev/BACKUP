@@ -1,4 +1,5 @@
-﻿using smart_modul_BACKUP.Managers;
+﻿using Microsoft.Win32;
+using smart_modul_BACKUP.Managers;
 using SmartModulBackupClasses;
 using SmartModulBackupClasses.Managers;
 using SmartModulBackupClasses.WebApi;
@@ -9,6 +10,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -50,7 +52,17 @@ namespace smart_modul_BACKUP
         /// <param name="a"></param>
         public static void dispatch(Action a)
         {
-            Application.Current.Dispatcher.InvokeAsync(a);
+            Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                try
+                {
+                    a();
+                }
+                catch (Exception ex)
+                {
+                    SmbLog.Error("Problém při Invokování delegáta", ex, LogCategory.GUI);
+                }
+            });
         }
 
         private void OnAppStart(object sender, StartupEventArgs e)
@@ -58,9 +70,11 @@ namespace smart_modul_BACKUP
             ARGS = e.Args;
 
             //přemístit se do složky obsahující potřebné soubory
-            string cd = "C:\\smart modul BACKUP";
-            if (!Directory.Exists(cd)) Directory.CreateDirectory(cd);
-            Directory.SetCurrentDirectory(cd);
+            //string cd = "C:\\smart modul BACKUP";
+            //if (!Directory.Exists(cd)) Directory.CreateDirectory(cd);
+            //Directory.SetCurrentDirectory(cd);
+
+            //GUI pracuje ve složce, v níž se nachází jeho exe
 
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
@@ -94,62 +108,60 @@ namespace smart_modul_BACKUP
 
         private void Setup()
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            SetupConfig(); //nastaví ConfigManager
-            stopwatch.Stop();
-            SmbLog.Debug($"Config setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
+            //vzhledem k tomu že je možné, že budeme otevírat nějaká okna ještě než se dostane na 
+            //MainWindow, musíme říct aplikaci, aby se automaticky nezavírala
+            //více info na https://stackoverflow.com/questions/3702785/wpf-application-exits-immediately-when-showing-a-dialog-before-startup
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-            stopwatch.Restart();
             SetupGuicom(); //nastaví OneGuiPerUser
-            stopwatch.Stop();
-            SmbLog.Debug($"OneGuiPerUser setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
 
-            var apiTask = Task.Run(async () =>
+            //spustit ConfigManager
+            var cfg_man = Manager.SetSingleton(new ConfigManager()).Load();
+            SmbLog.Configure(cfg_man.Config.Logging, SmbAssembly.Gui);
+            SmbLog.Info("Aplikace spuštěna, načtena konfigurace pro logování");
+
+            var service = Manager.SetSingleton(new ServiceState());
+            //service.Setup();
+
+            //pokud je toto první spuštění aplikace
+            if (cfg_man.Config.FirstGuiRun)
             {
-                var asyncStopwatch = new Stopwatch();
-                asyncStopwatch.Start();
-                var result = await SetupApiAsync(); //na pozadí začne nastavovat webové api
-                asyncStopwatch.Stop();
-                SmbLog.Debug($"Api setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
-                return result;
-            });
+                //potřebujeme administrátorská oprávnění
+                if (!Utils.AmIAdmin())
+                    Utils.RestartAsAdmin(new string[] { });
 
-            stopwatch.Restart();
+                //otevřeme "průvodce instalací"
+                var setup_window = new Windows.Setup();
+                setup_window.ShowDialog();
+            }
+            else
+                //pokud jsme aplikaci již v minulosti spustili, použijeme standardní
+                //metodu SetupWithMessageBoxes pro připojení ke službě.
+                service.SetupWithMessageBoxes(false, "smartModulBACKUP_service.exe");
+
+            var apiTask = Task.Run(SetupApiAsync);
+
+            try
+            {
+                Utils.SetAutoRun(); //nastavit, aby se GUI automaticky spouštělo po přihlášení
+            }
+            catch { }
+
             SetupNotifyIcon(); //vytvořit NotifyIcon
-            stopwatch.Stop();
-            SmbLog.Debug($"NotifyIcon setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
-
-            stopwatch.Restart();
             SetupAvailableDbs(); //nastavit AvailableDbLoader
-            stopwatch.Stop();
-            SmbLog.Debug($"AvailableDbs setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
-
-            stopwatch.Restart();
             SetupSftp(); //nastavit SftpUploaderFactory
-            stopwatch.Stop();
-            SmbLog.Debug($"Sftp setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
-
             Manager.SetSingleton(new InProgress()); //nastavit InProgress
 
-            if (!apiTask.Result) //počkat si na apiTask; pokud vrátí false, ukázat login okno
-                ShowLogin(true);
-
-            stopwatch.Restart();
-            SetupService(); //nastavit ServiceState
-            stopwatch.Stop();
-            SmbLog.Debug($"ServiceState setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
-
-            stopwatch.Restart();
+            apiTask.Wait(); //počkat na task
+            
             SetupRules(); //nastavit BackupRuleLoader
-            stopwatch.Stop();
-            SmbLog.Debug($"BackupRuleLoader setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
-
-            stopwatch.Restart();
             SetupBackups(); //nastavit BackupInfoManager
-            stopwatch.Stop();
-            SmbLog.Debug($"BackupInfoManager setup time: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
+
+            //po vyhodnocení metody Setup (v níž se mohou otevírat dialogová okna) můžeme
+            //zase nastavit ShutdownMode tak, aby se aplikace vypla pokud se vypne MainWindow
+            ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
+
         private static void SetupGuicom()
         {
             var guicom = Manager.SetSingleton(new OneGuiPerUser());
@@ -160,12 +172,12 @@ namespace smart_modul_BACKUP
             }
 
         }
-        private static void SetupConfig()
-        {
-            var cfg_man = Manager.SetSingleton(new ConfigManager()).Load();
-            SmbLog.Configure(cfg_man.Config.Logging, SmbAssembly.Gui);
-            SmbLog.Info("Aplikace spuštěna, načtena konfigurace pro logování");
-        }
+
+        /// <summary>
+        /// Nastaví, aby se tento program automaticky spouštěl po přihlášení uživatele do PC
+        /// (upravením registru)
+        /// </summary>
+
 
         /// <summary>
         /// Přidá SmbWebApi do Manageru
@@ -181,22 +193,24 @@ namespace smart_modul_BACKUP
 
             var config = Manager.Get<ConfigManager>().Config;
 
-            if (config.WebCfg == null)
-            {
-                //pokud nemáme info o připojení k API, pravděpodobně se jedná o první spuštění aplikace
-                //vrátíme proto false, čímž volající metodě sdělíme, že chceme otevřít dialogové okno pro přihlášení
-                return false;
-            }
-            else
-            {
-                //TryLoginWithAsync vrátí true, pokud buďto:
-                //   a) používáme aplikaci offline
-                //   b) používáme aplikaci online a úspěšně jsme se připojili na api
-                //ale vrátí false, pokud se něco nezdaří
-                //pokud se tedy něco nezdaří, vrátíme false, čímž se otevře login okno, jinak vrátíme true, čímž 
-                //se nestane nic
-                return await account.TryLoginWithAsync(config.WebCfg);
-            }
+            return await account.TryLoginWithAsync(config.WebCfg);
+
+            //if (config.WebCfg == null)
+            //{
+            //    //pokud nemáme info o připojení k API, pravděpodobně se jedná o první spuštění aplikace
+            //    //vrátíme proto false, čímž volající metodě sdělíme, že chceme otevřít dialogové okno pro přihlášení
+            //    return await account.TryLoginWithAsync(config.WebCfg);
+            //}
+            //else
+            //{
+            //    //TryLoginWithAsync vrátí true, pokud buďto:
+            //    //   a) používáme aplikaci offline
+            //    //   b) používáme aplikaci online a úspěšně jsme se připojili na api
+            //    //ale vrátí false, pokud se něco nezdaří
+            //    //pokud se tedy něco nezdaří, vrátíme false, čímž se otevře login okno, jinak vrátíme true, čímž 
+            //    //se nestane nic
+            //    return await account.TryLoginWithAsync(config.WebCfg);
+            //}
         }
         private static void SetupNotifyIcon()
         {

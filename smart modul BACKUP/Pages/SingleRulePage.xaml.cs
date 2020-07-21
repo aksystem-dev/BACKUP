@@ -31,8 +31,8 @@ namespace smart_modul_BACKUP
 
             InitializeComponent();
 
-            txt_rulename.IsEnabled = add;
-            txt_rulename.BorderThickness = add ? new Thickness(2) : new Thickness(0);
+            //txt_rulename.IsEnabled = add;
+            //txt_rulename.BorderThickness = add ? new Thickness(2) : new Thickness(0);
         }
 
         /// <summary>

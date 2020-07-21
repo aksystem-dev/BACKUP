@@ -19,6 +19,11 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         public bool LazyLoad { get; set; } = true;
 
+        /// <summary>
+        /// Zdali existuje soubor s konfigurací.
+        /// </summary>
+        public bool ConfigFileExists => File.Exists(Const.CFG_FILE);
+
         public ConfigManager() { }
 
         public Config Config

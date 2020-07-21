@@ -1,4 +1,5 @@
-﻿using SmartModulBackupClasses;
+﻿using Microsoft.Win32;
+using SmartModulBackupClasses;
 using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
@@ -37,10 +38,17 @@ namespace smart_modul_BACKUP
             {
                 if (path == null && dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                     return false;
+                path = path ?? dialog.FileName;
+                if (!File.Exists(path))
+                {
+                    MessageBox.Show("Exe služby neexistuje, nemohu jí nainstalovat.", "Chyba",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
 
                 try
                 {
-                    ManagedInstallerClass.InstallHelper(new string[] { dialog.FileName });
+                    ManagedInstallerClass.InstallHelper(new string[] { path });
                     return true;
                 }
                 catch (Exception e)
@@ -55,13 +63,32 @@ namespace smart_modul_BACKUP
             }
         }
 
+        private static bool? _amIAdmin = null;
+
+        /// <summary>
+        /// Nastaví, aby se GUI automaticky spouštělo (pomocí registru "SOFTWARE\Microsoft\Windows\CurrentVersion\Run")
+        /// </summary>
+        public static void SetAutoRun()
+        {
+            //nastavit registr tak, aby se GUI automaticky spouštělo po spuštění
+            var rk = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            string exe = Assembly.GetExecutingAssembly().Location;
+            if ((string)rk.GetValue("SMB_GUI") != exe)
+                rk.SetValue("SMB GUI", exe);
+            rk.Close();
+        }
+
         /// <summary>
         /// Zdali jsme administrátoři
         /// </summary>
         /// <returns></returns>
         public static bool AmIAdmin()
         {
-            return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+            if (_amIAdmin.HasValue)
+                return _amIAdmin.Value;
+
+            _amIAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+            return _amIAdmin.Value;
         }
 
         /// <summary>

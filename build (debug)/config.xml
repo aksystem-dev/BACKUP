@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Config xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <FirstGuiRun>false</FirstGuiRun>
+  <Connection>
+    <Server />
+    <IntegratedSecurity>false</IntegratedSecurity>
+    <Username />
+    <Password>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAd2G83lhpdEyuVqwPzTqucAQAAAACAAAAAAAQZgAAAAEAACAAAAA4fmQXqvMfYo2dMs72AQqlKKgOQb61exrh/2HYKuGZzgAAAAAOgAAAAAIAACAAAABdDvQe5wdJSkcJl/BQl9HA9pkP+TlTD+ul2dyXFej9QhAAAABUgyKG+LwhlADq4Rsi9msgQAAAAEwTXQYFocb866pGVNskwnrhPy+2pRSDMQxxyjWGcdU+laroSnj6v54iBmqwfkszG1CSw16SO627Z4kbFbpiYZQ=</Password>
+  </Connection>
+  <SFTP>
+    <Host>192.168.0.171</Host>
+    <Port>22</Port>
+    <Username>tester</Username>
+    <Password>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAd2G83lhpdEyuVqwPzTqucAQAAAACAAAAAAAQZgAAAAEAACAAAABrHhknGhoNVWg71LsNPGElXLMhy/BU3kSaP7XShT8ZIgAAAAAOgAAAAAIAACAAAACvi0ixdYei3zLnOi3V0Ru5grizX0YE55m0RjlWoO9nJyAAAAAr37Cn5kPgCSYbos1diGbBjUofY/safesgJfTUNZaaEEAAAADZ3+HBpYgG94mRjsjceBL1tpbJMWKgJVvc0aFf+eYoaVLZCGbHK5Z/ReR5EiuMkJxni6wVlIQug/RLWLdXGoM3</Password>
+    <Directory>SMB Backups 2</Directory>
+  </SFTP>
+  <WebCfg>
+    <Username />
+    <Password>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAd2G83lhpdEyuVqwPzTqucAQAAAACAAAAAAAQZgAAAAEAACAAAAD1fFHZUUPHd5N0ILhv/kw9xRbBxkeYaIl6Z7uHeFyiwAAAAAAOgAAAAAIAACAAAAA0Jvvy6Z39pQssrlaYEhrAVgN1azhX/nqC83a1wtPsKxAAAABJNlivwHUHCkym7txhXxvPQAAAAP8SwUvOG9IULbi7y20DlXH63UCG1LFXNbVevec7oV3irQi0YJMROfQpI4QsyRaNp0q2XrK4j34v5UUzPOYzXC0=</Password>
+    <Online>false</Online>
+  </WebCfg>
+  <LocalBackupDirectory>D:\SMB Backups 2</LocalBackupDirectory>
+  <UseShadowCopy>false</UseShadowCopy>
+  <Logging>
+    <Categories>
+      <ConfigureLogCategory category="Default" level="Info" />
+      <ConfigureLogCategory category="BackupTask" level="Info" />
+      <ConfigureLogCategory category="RestoreTask" level="Info" />
+      <ConfigureLogCategory category="WebApi" level="Info" />
+      <ConfigureLogCategory category="Files" level="Info" />
+      <ConfigureLogCategory category="BackupInfoManager" level="Info" />
+      <ConfigureLogCategory category="BackupRuleLoader" level="Info" />
+      <ConfigureLogCategory category="SFTP" level="Info" />
+      <ConfigureLogCategory category="GUI" level="Info" />
+      <ConfigureLogCategory category="Service" level="Info" />
+      <ConfigureLogCategory category="BackupCleaner" level="Info" />
+      <ConfigureLogCategory category="BackupTimeline" level="Info" />
+      <ConfigureLogCategory category="FolderObserver" level="Info" />
+      <ConfigureLogCategory category="GuiServiceClient" level="Info" />
+      <ConfigureLogCategory category="OneGuiPerUser" level="Info" />
+      <ConfigureLogCategory category="ServiceHost" level="Info" />
+      <ConfigureLogCategory category="RuleScheduler" level="Info" />
+      <ConfigureLogCategory category="SQL" level="Info" />
+      <ConfigureLogCategory category="ShadowCopy" level="Info" />
+      <ConfigureLogCategory category="GuiSetup" level="Info" />
+      <ConfigureLogCategory category="GuiAvailableDbLoad" level="Info" />
+    </Categories>
+    <Targets>
+      <EventLogTarget level="Trace" usedByService="true" usedByGui="false" clearOnStart="false" />
+      <FileLogTarget level="Info" usedByService="false" usedByGui="true" clearOnStart="false" filename="log.txt" />
+    </Targets>
+  </Logging>
+</Config>

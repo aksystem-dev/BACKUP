@@ -18,6 +18,8 @@ namespace SmartModulBackupClasses
     {
         private bool unsavedChanges;
 
+        public bool FirstGuiRun { get; set; } = true;
+
         /// <summary>
         /// Jestli došlo v tomto objektu nebo v některém z jeho potomků ke změně vlastnosti.
         /// </summary>
@@ -49,10 +51,11 @@ namespace SmartModulBackupClasses
 
         private bool useShadowCopy = false;
         private string remoteBackupDirectory = "Backups";
-        private string localBackupDirectory = "Backups";
+        private string localBackupDirectory = null;
         private DatabaseConfig connection = new DatabaseConfig();
         private SftpConfig sFTP = new SftpConfig();
-        private WebConfig webCfg;
+        private WebConfig webCfg = new WebConfig();
+        private EmailConfig emailConfig = new EmailConfig();
 
         public Config()
         {
@@ -136,6 +139,24 @@ namespace SmartModulBackupClasses
                     value.PropertyChanged += Config_PropertyChanged;
 
                 webCfg = value;
+            }
+        }
+
+        public EmailConfig EmailConfig
+        {
+            get => emailConfig;
+            set
+            {
+                if (value == emailConfig)
+                    return;
+
+                if (emailConfig != null)
+                    emailConfig.PropertyChanged -= Config_PropertyChanged;
+
+                if (value != null)
+                    value.PropertyChanged += Config_PropertyChanged;
+
+                emailConfig = value;
             }
         }
 

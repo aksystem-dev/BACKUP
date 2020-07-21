@@ -22,9 +22,9 @@ namespace smart_modul_BACKUP
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void _b_ch() =>
-            App.Current.Dispatcher.InvokeAsync(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Backups))));
+            App.dispatch(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Backups))));
         private void _r_ch() =>
-            App.Current.Dispatcher.InvokeAsync(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Restores))));
+            App.dispatch(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Restores))));
 
         /// <summary>
         /// Pokud záloha se stejným id již je na seznamu, updatuje ji; jinak ji tam přidá
@@ -47,7 +47,7 @@ namespace smart_modul_BACKUP
                         found.Errors.Add(backup.Errors[i]);
                 }
 
-                App.Current.Dispatcher.InvokeAsync(() => found.Refresh());
+                App.dispatch(() => found.Refresh());
                 return found;
             }
             else
@@ -81,7 +81,7 @@ namespace smart_modul_BACKUP
                         found.Errors.Add(restore.Errors[i]);
                 }
 
-                App.Current.Dispatcher.InvokeAsync(() => found.Refresh());
+                App.dispatch(() => found.Refresh());
                 return found;
             }
             else

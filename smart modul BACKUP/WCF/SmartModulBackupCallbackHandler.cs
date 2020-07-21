@@ -20,7 +20,7 @@ namespace smart_modul_BACKUP.WCF
     class SmartModulBackupCallbackHandler : ISmartModulBackupInterfaceCallback
     {
         public event Action OnServiceDisconnected;
-        public SmartModulBackupInterfaceClient client;
+        private SmartModulBackupInterfaceClient client => Manager.Get<ServiceState>()?.Client;
 
         private InProgress inProgress => Manager.Get<InProgress>();
         private BackupInfoManager backups => Manager.Get<BackupInfoManager>();

@@ -35,20 +35,6 @@ namespace smart_modul_BACKUP
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(PathTextbox), new PropertyMetadata(""));
 
-
-
-
-        //public bool Directories
-        //{
-        //    get { return (bool)GetValue(DirectoriesProperty); }
-        //    set { SetValue(DirectoriesProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for Directories.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty DirectoriesProperty =
-        //    DependencyProperty.Register("Directories", typeof(bool), typeof(PathTextbox), new PropertyMetadata(false));
-
-
         public DialogType PathDialogType
         {
             get { return (DialogType)GetValue(PathDialogTypeProperty); }

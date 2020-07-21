@@ -26,9 +26,14 @@ namespace smart_modul_BACKUP
 
         private ServiceConnectionState _state = ServiceConnectionState.NotInitialized;
 
+        private WCF.SmartModulBackupCallbackHandler _callbackHandler = null;
+
         private void propChanged(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            App.dispatch(() =>
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            });
         }
 
         /// <summary>
@@ -43,6 +48,7 @@ namespace smart_modul_BACKUP
                     return;
 
                 _state = value;
+
                 propChanged(nameof(State));
                 propChanged(nameof(IsServiceRunning));
             }
@@ -72,10 +78,40 @@ namespace smart_modul_BACKUP
             return ServiceController.GetServices().FirstOrDefault(f => f.ServiceName == "smart modul BACKUP service");
         }
 
+        public void Setup()
+        {
+            State = ServiceConnectionState.NotInstalled;
+            serviceController = GetService();
+            if (serviceController == null)
+                return;
+
+            State = ServiceConnectionState.NotRunning;
+            while (serviceController.Status == ServiceControllerStatus.StartPending)
+                Thread.Sleep(500);
+            if (serviceController.Status != ServiceControllerStatus.Running)
+                return;
+
+            State = ServiceConnectionState.NotConnected;
+
+            try
+            {
+                connect();
+            }
+            catch (Exception ex)
+            {
+                SmbLog.Error("Problém při spouštění ServiceState", ex, LogCategory.GuiServiceClient);
+                return;
+            }
+
+            State = ServiceConnectionState.Connected;
+            return;
+        }
+
         /// <summary>
-        /// Pokusí se připojit ke službě a interaguje přitom s uživatelem pomocí MessageBoxů.
+        /// Pokusí se připojit ke službě a interaguje přitom s uživatelem pomocí MessageBoxů. Umožňuje tak
+        /// službu nainstalovat, spustit, apod.
         /// </summary>
-        public void SetupWithMessageBoxes(bool installAndRun = false)
+        public void SetupWithMessageBoxes(bool installAndRun = false, string installExe = null)
         {
             bool admin = Utils.AmIAdmin();
 
@@ -100,7 +136,7 @@ namespace smart_modul_BACKUP
                     if (!admin)
                         Utils.RestartAsAdmin(new string[] { "-autorun", "-force" });
 
-                    if (!Utils.InstallService())
+                    if (!Utils.InstallService(installExe))
                         return;
 
                     serviceController = GetService();
@@ -141,8 +177,7 @@ namespace smart_modul_BACKUP
                 {
                     try
                     {
-                        serviceController.Start();
-                        serviceController.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromMilliseconds(10000));
+                        startService();
                     }
                     catch (Exception e)
                     {
@@ -169,19 +204,11 @@ namespace smart_modul_BACKUP
                 }
             }
 
-            State = ServiceConnectionState.NotConnected;
-
             //zde se k službě pokusíme připojit.
             while (true)
                 try
                 {
-                    var callback = new WCF.SmartModulBackupCallbackHandler() { client = Client };
-                    callback.OnServiceDisconnected += Callback_OnServiceDisconnected;
-                    var context = new InstanceContext(callback);
-
-                    Client = new ServiceInterface.SmartModulBackupInterfaceClient(context);
-                    //client.Open();
-                    Client.Connect();
+                    connect();
 
                     break;
                 }
@@ -195,8 +222,48 @@ namespace smart_modul_BACKUP
                     else
                         return;
                 }
+        }
+
+        private bool startService()
+        {
+            if (serviceController.Status == ServiceControllerStatus.Running)
+                return true;
+
+            serviceController.Start();
+            serviceController.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromMilliseconds(10000));
+            if (serviceController.Status == ServiceControllerStatus.Running)
+            {
+                State = ServiceConnectionState.NotConnected;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void connect()
+        {
+            _callbackHandler = new WCF.SmartModulBackupCallbackHandler();
+            _callbackHandler.OnServiceDisconnected += Callback_OnServiceDisconnected;
+            var context = new InstanceContext(_callbackHandler);
+
+            Client = new ServiceInterface.SmartModulBackupInterfaceClient(context);
+            Client.Connect();
 
             State = ServiceConnectionState.Connected;
+        }
+
+        public bool TryConnect()
+        {
+            try
+            {
+                connect();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                SmbLog.Error("Chyba při připojování ke službě přes WCF", ex, LogCategory.GuiServiceClient);
+                return false;
+            }
         }
 
         /// <summary>

@@ -4,7 +4,8 @@
              xmlns:local="clr-namespace:smart_modul_BACKUP"
              xmlns:s="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml"
-             Startup="OnAppStart" Exit="OnAppExit">
+             Startup="OnAppStart" Exit="OnAppExit"
+             ShutdownMode="OnMainWindowClose">
     
     <Application.Resources>
         <ResourceDictionary>
