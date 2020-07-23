@@ -65,7 +65,7 @@ namespace smart_modul_BACKUP_service.WCF
         public void Reload()
         {
             logInfo("Přijat příkaz přes WCF: Reload()");
-            serviceRef.Load();
+            serviceRef.PeriodicLoad();
         }
 
         public void Disconnect()

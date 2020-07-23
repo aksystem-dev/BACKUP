@@ -216,7 +216,10 @@ namespace smart_modul_BACKUP_service.BackupExe
             try
             {
                 Directory.CreateDirectory(TEMP_DIR); //složka pro ukládání dočasných dat; ujistit se, že existuje
-                temp_instance_dir = Path.Combine(TEMP_DIR, "backup" + Directory.GetDirectories(TEMP_DIR).Length.ToString());
+
+                //složka pro toto konkrétní vyhodnocení
+                temp_instance_dir = Path.Combine(TEMP_DIR, Guid.NewGuid().ToString());
+
                 Directory.CreateDirectory(temp_instance_dir); //vytvořit složku pro toto vyhodnocení
                 return true;
             }
@@ -582,18 +585,23 @@ namespace smart_modul_BACKUP_service.BackupExe
             await saveInfo();
             updateLastExecutionInfo();
 
+            //odeslat mail o záloze
+            Manager.Get<SmbMailer>()?.ReportBackupAsync(B_Obj);
+
+            //odpojení od serverů, vyčištění stínových kopií, odstranění dočasných souborů
             disconnectSftp();
             disconnectSql();
             cleanUpVss();
             deleteTempFolder();
 
+            //logování
             if (B_Obj.Success)
                 logInfo($"Pravidlo {Rule.Name} úspěšně uplatněno.");
             else
                 SmbLog.Warn($"Během vyhodnocování pravidla {Rule.Name} došlo k chybám.", null, LogCategory.BackupTask);
 
+            //update progresu
             Progress?.Update("HOTOVO", 1);
-            //Utils.GUIS.CompleteBackup(Progress, B_Obj.LocalID);
         }
 
         private async Task<bool> saveInfo()

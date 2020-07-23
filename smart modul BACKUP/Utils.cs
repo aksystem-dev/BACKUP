@@ -65,18 +65,6 @@ namespace smart_modul_BACKUP
 
         private static bool? _amIAdmin = null;
 
-        /// <summary>
-        /// Nastaví, aby se GUI automaticky spouštělo (pomocí registru "SOFTWARE\Microsoft\Windows\CurrentVersion\Run")
-        /// </summary>
-        public static void SetAutoRun()
-        {
-            //nastavit registr tak, aby se GUI automaticky spouštělo po spuštění
-            var rk = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            string exe = Assembly.GetExecutingAssembly().Location;
-            if ((string)rk.GetValue("SMB_GUI") != exe)
-                rk.SetValue("SMB GUI", exe);
-            rk.Close();
-        }
 
         /// <summary>
         /// Zdali jsme administrátoři
@@ -89,6 +77,20 @@ namespace smart_modul_BACKUP
 
             _amIAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
             return _amIAdmin.Value;
+        }
+
+
+        /// <summary>
+        /// Nastaví, aby se GUI automaticky spouštělo (pomocí registru "SOFTWARE\Microsoft\Windows\CurrentVersion\Run")
+        /// </summary>
+        public static void SetAutoRun()
+        {
+            //nastavit registr tak, aby se GUI automaticky spouštělo po spuštění
+            var rk = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            string exe = $"\"{Assembly.GetExecutingAssembly().Location}\" -hidden";
+            if ((string)rk.GetValue("SMB GUI") != exe)
+                rk.SetValue("SMB GUI", exe);
+            rk.Close();
         }
 
         /// <summary>

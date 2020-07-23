@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Projects\smart modul BACKUP\smart modul BACKUP\App.xaml
-231178911973
+24-1420251653
 
-5438078670
-25248851465
-Colors.xaml;Controls\LabelAnything.xaml;Controls\PathTextbox.xaml;Controls\ProgressBarView.xaml;Controls\ToggleOnOff.xaml;Images.xaml;Pages\BackupsPage.xaml;Pages\ConfigPage.xaml;Controls\LabelPasswordBox.xaml;Controls\LabelTextBox.xaml;MainWindow.xaml;Controls\RuleControl.xaml;Pages\DbsPage.xaml;Pages\HomePage.xaml;Pages\RestorePage.xaml;Pages\RulePage.xaml;Pages\SingleRulePage.xaml;Styles.xaml;Windows\InputDialog.xaml;Windows\LoginWindow.xaml;Windows\RestoreWindow.xaml;Windows\Setup.xaml;Windows\YesNoDialog.xaml;
+57963378050
+291977732209
+Colors.xaml;Controls\LabelAnything.xaml;Controls\PathTextbox.xaml;Controls\ProgressBarView.xaml;Controls\ToggleOnOff.xaml;Images.xaml;Pages\BackupsPage.xaml;Pages\ConfigPage.xaml;Controls\LabelPasswordBox.xaml;Controls\LabelTextBox.xaml;MainWindow.xaml;Controls\RuleControl.xaml;Pages\DbsPage.xaml;Pages\HomePage.xaml;Pages\RestorePage.xaml;Pages\RulePage.xaml;Pages\SingleRulePage.xaml;Styles.xaml;Windows\InputDialog.xaml;Windows\LoginWindow.xaml;Windows\RestoreResponseWindow.xaml;Windows\RestoreWindow.xaml;Windows\Setup.xaml;Windows\YesNoDialog.xaml;
 
 False
 

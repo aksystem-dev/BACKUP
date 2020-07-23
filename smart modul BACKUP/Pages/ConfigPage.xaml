@@ -6,9 +6,10 @@
       xmlns:debug="clr-namespace:System.Diagnostics;assembly=WindowsBase"
       xmlns:local="clr-namespace:smart_modul_BACKUP"
       xmlns:model="clr-namespace:SmartModulBackupClasses;assembly=SmartModulBackupClasses"
+      xmlns:m="clr-namespace:smart_modul_BACKUP.Models"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
-      d:DesignHeight="1000" d:DesignWidth="800"
+      d:DesignHeight="1500" d:DesignWidth="800"
       d:DataContext="{d:DesignInstance Type=model:Config}"
       x:Name="window"
       Title="ConfigPage"
@@ -25,6 +26,16 @@
                 </x:Array>
             </local:EnumConverter.Values>
         </local:EnumConverter>
+        <local:EnumConverter x:Key="conv_acct_state">
+            <local:EnumConverter.Values>
+                <x:Array Type="{x:Type sys:String}">
+                    <sys:String>Nepřihlášen</sys:String>
+                    <sys:String>Došlo k chybě</sys:String>
+                    <sys:String>Přihlášen</sys:String>
+                </x:Array>
+            </local:EnumConverter.Values>
+        </local:EnumConverter>
+        <local:NotConverter x:Key="conv_not" />
     </Page.Resources>
 
     <ScrollViewer>
@@ -72,7 +83,58 @@
                 <CheckBox Margin="10" Content="POUŽÍVAT SHADOW COPY PRO ZÁLOHOVÁNÍ SOUBORŮ" IsChecked="{Binding UseShadowCopy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
 
-            <StackPanel Style="{StaticResource Block}" Margin="15,15,15,15" Orientation="Vertical"
+            <StackPanel Style="{StaticResource Block}">
+                <Label Content="NASTAVENÍ E-MAILŮ" Style="{StaticResource Header}" />
+                
+                <CheckBox HorizontalAlignment="Center" Content="POSÍLAT E-MAILY PŘI CHYBÁCH" Margin="10"
+                          IsChecked="{Binding Path=EmailConfig.SendErrors, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <local:LabelTextBox LabelText="SMTP SERVER"
+                                    Text="{Binding Path=EmailConfig.SmtpHost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <local:LabelTextBox LabelText="SMTP PORT"
+                                    Text="{Binding Path=EmailConfig.SmtpPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <local:LabelTextBox LabelText="SMTP ADRESA ODESÍLATELE" 
+                                    Text="{Binding Path=EmailConfig.FromAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <local:LabelPasswordBox x:Name="PasswordSMTP" LabelText="SMTP HESLO: "
+                                        Margin="0,0,0,0" />
+                <CheckBox HorizontalAlignment="Center" Content="DŮVĚŘOVAT VŠEM CERTIFIKÁTŮM" Margin="10"
+                          IsChecked="{Binding Path=EmailConfig.TrustAllCertificates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel Margin="10">
+                    <DockPanel HorizontalAlignment="Stretch" LastChildFill="False" Background="{StaticResource Gray1}">
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" 
+                               Content="PŘÍJEMCI" FontWeight="Bold"
+                               DockPanel.Dock="Left" />
+                        <Button Padding="5" Margin="5" Click="click_add_emailReceiver" Content="PŘIDAT"
+                                DockPanel.Dock="Right" />
+                        <Button Padding="5" Margin="5" Click="click_remove_emailReceiver" Content="ODEBRAT"
+                                DockPanel.Dock="Right" />
+                    </DockPanel>
+                    <ItemsControl x:Name="ic_emails_toAdresses" ItemsSource="{Binding ElementName=window, Path=ToAddresses}"
+                                  Background="{StaticResource Gray3}" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type m:ObservableString}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Content="" Grid.Column="0" Checked="on_email_checked" Unchecked="on_email_unchecked"
+                                              VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" />
+                                    <TextBox HorizontalAlignment="Stretch" Margin="5" Grid.Column="1"
+                                         Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </Grid>
+
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <Button Padding="5" HorizontalAlignment="Stretch" Click="TestSMTP" x:Name="btn_testmail"
+                        IsEnabled="{Binding ElementName=window, Path=TestingSmtp, Converter={StaticResource conv_not}}">
+                    <Label Content="ODESLAT TESTOVACÍ MAIL" HorizontalAlignment="Center" FontSize="16"/>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource Block}" Orientation="Vertical"
                         HorizontalAlignment="Stretch">
                 <Label Content="SLUŽBA" Style="{StaticResource Header}" />
 
@@ -81,6 +143,16 @@
                             Click="click_cleanup_backups" />
                     <Button Width="200" Height="40" VerticalAlignment="Center" Content="VYPNOUT SLUŽBU"
                             IsEnabled="{Binding ElementName=window, Path=service.IsServiceRunning}" Click="btn_click_turnServiceOff" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource Block}" Margin="15">
+                <Label Content="ÚČET" Style="{StaticResource Header}" />
+                <Label Content="{Binding ElementName=window, Path=Plan_Man.State, Converter={StaticResource conv_acct_state}}"
+                       ContentStringFormat="STAV: {0}" Margin="10,10,10,0" />
+                <StackPanel HorizontalAlignment="Center" Margin="0" Orientation="Horizontal">
+                    <Button x:Name="btn_login" Content="PŘIHLÁSIT" Click="click_login" Margin="0,5,5,5" Padding="10" />
+                    <Button x:Name="btn_logout" Content="ODHLÁSIT" Click="click_logout" Margin="0,5,0,5" Padding="10" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>

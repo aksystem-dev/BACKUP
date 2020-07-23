@@ -35,7 +35,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\build %28debug%29\</OutputPath>
+    <OutputPath>C:\smart modul BACKUP\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -60,6 +60,7 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.5\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="MailKit, Version=2.8.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b" />
     <Reference Include="MimeKit, Version=2.9.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
       <HintPath>..\packages\MimeKit.2.9.1\lib\net47\MimeKit.dll</HintPath>
     </Reference>
@@ -123,6 +124,7 @@
     <Compile Include="Converters\ByteSizeToStringConverter.cs" />
     <Compile Include="Converters\ChooseConverter.cs" />
     <Compile Include="Converters\EnumConverter.cs" />
+    <Compile Include="Converters\NotEqualsVisibilityConverter.cs" />
     <Compile Include="Converters\NotConverter.cs" />
     <Compile Include="Converters\NotNullConverter.cs" />
     <Compile Include="Converters\ServiceStatusConverter.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="InProgress.cs" />
     <Compile Include="Managers\AvailableDbLoader.cs" />
     <Compile Include="Models\AvailableDatabase.cs" />
+    <Compile Include="Models\ObservableString.cs" />
     <Compile Include="Models\ProgBarsTag.cs" />
     <Compile Include="Models\BackupSourceModel.cs" />
     <Compile Include="Models\Database.cs" />
@@ -179,6 +182,9 @@
     </Compile>
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RestoreResponseWindow.xaml.cs">
+      <DependentUpon>RestoreResponseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\RestoreWindow.xaml.cs">
       <DependentUpon>RestoreWindow.xaml</DependentUpon>
@@ -278,6 +284,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\RestoreResponseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\RestoreWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -348,12 +358,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SmartModulBackupClasses\SmartModulBackupClasses.csproj">
-      <Project>{0c04b084-ecda-46e6-bc1c-3494f7198665}</Project>
-      <Name>SmartModulBackupClasses</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +410,12 @@
     <Resource Include="Img\fail.png" />
     <Resource Include="Img\ok.png" />
     <Resource Include="Img\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartModulBackupClasses\SmartModulBackupClasses.csproj">
+      <Project>{0c04b084-ecda-46e6-bc1c-3494f7198665}</Project>
+      <Name>SmartModulBackupClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

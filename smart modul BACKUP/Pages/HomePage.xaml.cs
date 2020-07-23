@@ -122,16 +122,11 @@ namespace smart_modul_BACKUP
                 pan_plan.Visibility = Visibility.Collapsed;
                 pan_customSftp.Visibility = Visibility.Visible;
 
-                btn_login.Visibility = Visibility.Visible;
-                btn_logout.Visibility = Visibility.Collapsed;
             }
             else
             {
                 pan_plan.Visibility = Visibility.Visible;
                 pan_customSftp.Visibility = Visibility.Collapsed;
-
-                btn_login.Visibility = Visibility.Collapsed;
-                btn_logout.Visibility = Visibility.Visible;
             }
         }
 
@@ -203,23 +198,6 @@ namespace smart_modul_BACKUP
             }
         }
 
-        //když klikneme na "přihlásit", 
-        private void click_login(object sender, RoutedEventArgs e)
-        {
-            App.ShowLogin(false); //zobrazit login okno
 
-            //načíst informace, které se změnou stavu přihlášení mohly změnit
-            Task.Run(async () =>
-            {
-                Manager.Get<BackupRuleLoader>().Load();
-                await Manager.Get<BackupInfoManager>().LoadAsync();
-            });
-        }
-
-        //když klikneme na "odhlásit", 
-        private void click_logout(object sender, RoutedEventArgs e)
-        {
-            App.Logout();
-        }
     }
 }

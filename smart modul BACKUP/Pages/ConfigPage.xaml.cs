@@ -1,8 +1,11 @@
 ﻿using Renci.SshNet;
 using SmartModulBackupClasses;
+using SmartModulBackupClasses.Mails;
 using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -16,7 +19,7 @@ namespace smart_modul_BACKUP
     /// <summary>
     /// Interakční logika pro ConfigPage.xaml
     /// </summary>
-    public partial class ConfigPage : Page
+    public partial class ConfigPage : Page, INotifyPropertyChanged
     {
         ConfigManager cfg_man;
 
@@ -30,26 +33,47 @@ namespace smart_modul_BACKUP
 
             InitializeComponent();
             DataContext = cfg_man.Config;
-            LoadConfigToPasswords();
+            LoadConfig();
             Loaded += ConfigPage_Loaded;
         }
 
         private void ConfigPage_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadConfigToPasswords();   
+            LoadConfig();
+
+
+            if (Plan_Man.State == LoginState.Offline)
+            {
+                btn_login.Visibility = Visibility.Visible;
+                btn_logout.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                btn_login.Visibility = Visibility.Collapsed;
+                btn_logout.Visibility = Visibility.Visible;
+            }
+        }
+
+        //ukládání konfigurace při odnatčení stránky pořešeno v MainWindow.xaml.cs
+        private void page_unloaded(object sender, RoutedEventArgs e)
+        {
         }
 
         /// <summary>
-        /// Nastavit obsah PasswordBoxů na hesla v konfiguraci
+        /// Nastavit obsah PasswordBoxů na hesla v konfiguraci, a další funkce
         /// </summary>
-        public void LoadConfigToPasswords()
+        public void LoadConfig()
         {
             PasswordSFTP.SetPassword(cfg_man.Config.SFTP.Password.Value);
             PasswordSQL.SetPassword(cfg_man.Config.Connection.Password.Value);
+            PasswordSMTP.SetPassword(cfg_man.Config.EmailConfig.Password.Value);
+
+            ToAddresses.Clear();
+            cfg_man.Config.EmailConfig.ToAddresses.ForEach(str => ToAddresses.Add(new Models.ObservableString(str)));
         }
 
         /// <summary>
-        /// Nastavit hesla v konfiguraci podle PasswordBoxů
+        /// Nastavit hesla v konfiguraci podle PasswordBoxů a další funkce
         /// </summary>
         public void UpdateConfig()
         {
@@ -57,6 +81,10 @@ namespace smart_modul_BACKUP
             {
                 cfg_man.Config.SFTP.Password.Value = PasswordSFTP.GetPassword();
                 cfg_man.Config.Connection.Password.Value = PasswordSQL.GetPassword();
+                cfg_man.Config.EmailConfig.Password.Value = PasswordSMTP.GetPassword();
+
+                cfg_man.Config.EmailConfig.ToAddresses.Clear();
+                cfg_man.Config.EmailConfig.ToAddresses.AddRange(ToAddresses.Select(str => str.Value));
             }
         }
 
@@ -121,14 +149,6 @@ namespace smart_modul_BACKUP
             btn_testsftp.IsEnabled = true;
         }
 
-        // Ukládání konfigurace je pořešeno v MainWindow.xaml.cs, metoda saveCfg
-        private void page_unloaded(object sender, RoutedEventArgs e)
-        {
-            //UpdateConfig();
-            //if (cfg_man.Config.UnsavedChanges)
-            //    cfg_man.Save();
-        }
-
         /// <summary>
         /// Předat službě požadavek na pročištění záloh (použitím BackupCleaner).
         /// </summary>
@@ -159,6 +179,126 @@ namespace smart_modul_BACKUP
                 else
                     MessageBox.Show("Službu se nepodařilo vypnout.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        /// <summary>
+        /// Většina věcí se binduje přímo na Config, ale na seznam e-mailových adres se udržuje vlastní
+        /// ObservableCollection, které se teprve po zavření aplikuje na EmailConfig.ToAdresses
+        /// </summary>
+        public ObservableCollection<Models.ObservableString> ToAddresses { get; set; }
+            = new ObservableCollection<Models.ObservableString>();
+
+        private void click_add_emailReceiver(object sender, RoutedEventArgs e)
+        {
+            ToAddresses.Add(new Models.ObservableString(""));
+        }
+
+        private void click_remove_emailReceiver(object sender, RoutedEventArgs e)
+        {
+            foreach (var i in checkedEmailIndexes)
+                ToAddresses.RemoveAt(i);
+
+            checkedEmailIndexes.Clear();
+
+            
+        }
+
+        HashSet<int> checkedEmailIndexes = new HashSet<int>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Přidá index checkboxu v itemscontrolu na seznam checkedEmailIndexes. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void on_email_checked(object sender, RoutedEventArgs e)
+        {
+            var element = sender as FrameworkElement;
+            for (int i = 0; i < ic_emails_toAdresses.Items.Count; i++)
+            {
+                if (element.IsDescendantOf(ic_emails_toAdresses.ItemContainerGenerator.ContainerFromIndex(i)))
+                {
+                    checkedEmailIndexes.Add(i);
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Odstraní index checkboxu v itemscontrolu ze seznamu checkedEmailIndexes. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void on_email_unchecked(object sender, RoutedEventArgs e)
+        {
+            var element = sender as FrameworkElement;
+            for (int i = 0; i < ic_emails_toAdresses.Items.Count; i++)
+            {
+                if (element.IsDescendantOf(ic_emails_toAdresses.ItemContainerGenerator.ContainerFromIndex(i)))
+                {
+                    checkedEmailIndexes.Remove(i);
+                    return;
+                }
+            }
+        }
+
+        //když klikneme na "přihlásit", 
+        private void click_login(object sender, RoutedEventArgs e)
+        {
+            App.ShowLogin(false); //zobrazit login okno
+
+            //načíst informace, které se změnou stavu přihlášení mohly změnit
+            Task.Run(async () =>
+            {
+                Manager.Get<BackupRuleLoader>().Load();
+                await Manager.Get<BackupInfoManager>().LoadAsync();
+            });
+        }
+
+        //když klikneme na "odhlásit", 
+        private void click_logout(object sender, RoutedEventArgs e)
+        {
+            App.Logout();
+        }
+
+        private bool _testingSmtp = false;
+        public bool TestingSmtp
+        {
+            get => _testingSmtp;
+            set
+            {
+                _testingSmtp = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TestingSmtp)));
+            }
+        }
+
+        private async void TestSMTP(object sender, RoutedEventArgs e)
+        {
+            if (TestingSmtp)
+                return;
+
+            TestingSmtp = true;
+
+            var config = cfg_man.Config.EmailConfig.Copy();
+            config.ToAddresses.Clear();
+            config.ToAddresses.AddRange(ToAddresses.Select(str => str.Value));
+
+            var mailer = new Mailer();
+
+            var result = await mailer.SendDumbEachAsync(new Mail()
+            {
+                Content = "Toto je testovací mail (smart modul BACKUP)",
+                Html = false,
+                Subject = "Testovací mail"
+            }, cfg: config);
+
+            if (result.Success)
+                MessageBox.Show("Odeslání mailu bylo úspěšné!", "Test", MessageBoxButton.OK, MessageBoxImage.Information);
+            else
+                MessageBox.Show($"Odeslání mailu se nezdařilo.", "Test", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            TestingSmtp = false;
         }
     }
 }

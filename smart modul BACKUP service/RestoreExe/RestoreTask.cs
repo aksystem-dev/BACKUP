@@ -112,10 +112,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
             Thread.Sleep(1500);
 
             response = new RestoreResponse(Info) { Success = SuccessLevel.EverythingWorked };
-
-            Directory.CreateDirectory(TEMP_DIR);
-            temp_instance_dir = Path.Combine(TEMP_DIR, "restore" + Directory.GetDirectories(TEMP_DIR).Length.ToString());
-            Directory.CreateDirectory(temp_instance_dir);
+            createTempDir();
 
             if (Info.location == BackupLocation.SFTP)
                 if (!getSftp()) goto finish;
@@ -140,10 +137,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
             Thread.Sleep(1500);
 
             response = new RestoreResponse(Info) { Success = SuccessLevel.EverythingWorked };
-
-            Directory.CreateDirectory(TEMP_DIR);
-            temp_instance_dir = Path.Combine(TEMP_DIR, "restore" + Directory.GetDirectories(TEMP_DIR).Length.ToString());
-            Directory.CreateDirectory(temp_instance_dir);
+            createTempDir();
 
             if (Info.location == BackupLocation.SFTP)
                 if (!getSftp()) goto finish;
@@ -159,9 +153,19 @@ namespace smart_modul_BACKUP_service.RestoreExe
             foreach (var src in Info.sources)
                 restoreLocalSourceFromTempLocation(src);
 
-        finish:
+            finish:
             finishRestore();
             return response;
+        }
+
+        /// <summary>
+        /// Vytvoří složku pro tuto konkrétní obnovu a nastaví temp_instance_dir.
+        /// </summary>
+        private void createTempDir()
+        {
+            Directory.CreateDirectory(TEMP_DIR);
+            temp_instance_dir = Path.Combine(TEMP_DIR, Guid.NewGuid().ToString());
+            Directory.CreateDirectory(temp_instance_dir);
         }
 
         private void finishRestore()

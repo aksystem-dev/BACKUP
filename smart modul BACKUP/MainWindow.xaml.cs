@@ -110,18 +110,16 @@ namespace smart_modul_BACKUP
             if (page != null)
             {
                 //pokud odnačítáme ConfigPage, musíme uložit hesla a konfiguraci
-                if (frame.Content is ConfigPage cfgpg)
-                {
+                if (frame.Content is ConfigPage)
                     saveCfg();
-                }
 
                 frame.Navigate(page);
             }
         }
 
-        /// <summary>
-        /// uložit konfig
-        /// </summary>
+        ///// <summary>
+        ///// uložit konfig
+        ///// </summary>
         public void saveCfg()
         {
             configPage.UpdateConfig();
@@ -129,7 +127,7 @@ namespace smart_modul_BACKUP
 
             try
             {
-                _ = Manager.Get<ServiceState>().Client.ReloadConfigAsync();
+                Manager.Get<ServiceState>().Client.ReloadConfigAsync();
             }
             catch { }
         }
@@ -142,8 +140,10 @@ namespace smart_modul_BACKUP
         {
             var trace = new StackTrace();
 
-            //uložit konfiguraci
-            saveCfg();
+            //uložit konfiguraci, pokud je otevřená ConfigPage
+            if (frame.Content is ConfigPage)
+                saveCfg();
+
             Manager.Get<ServiceState>().Reload();
 
             if (cancelClose)

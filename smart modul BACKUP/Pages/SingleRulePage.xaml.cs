@@ -42,11 +42,15 @@ namespace smart_modul_BACKUP
         /// <param name="e"></param>
         private void btn_click_back(object sender, RoutedEventArgs e)
         {
+            txt_rulename.Text = txt_rulename.Text.Trim();
+
             //porychtovat potenciální problémy s názvem pravidla
             if (rule.Name == "")
                 MessageBox.Show("Pravidlo musí mít název.");
             else if (add && rules.Any(r => r.Name == rule.Name))
                 MessageBox.Show("Pravidlo s takovým názvem již existuje.");
+            else if (!rule.Name.All(ch => char.IsLetterOrDigit(ch) || ch == ' '))
+                MessageBox.Show("Název pravidla může obsahovat pouze písmena, čísla a mezery.");
 
             //pokud má pravidlo validní název, umožnit uživateli opustit stránku a uložit pravidlo (page_unloaded)
             else

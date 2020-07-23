@@ -14,22 +14,22 @@ namespace SmartModulBackupClasses
         /// <summary>
         /// cesta k zip souboru zálohy
         /// </summary>
-        public string zip_path;
+        public string zip_path { get; set; }
 
         /// <summary>
         /// seznam zdrojů pro obnovu
         /// </summary>
-        public SavedSource[] sources;
+        public SavedSource[] sources { get; set; }
 
         /// <summary>
         /// umístění onoho zipu
         /// </summary>
-        public BackupLocation location;
+        public BackupLocation location { get; set; }
 
         /// <summary>
         /// id příslušné zálohy
         /// </summary>
-        public int backupID;
+        public int backupID { get; set; }
 
         public int GetID() => ID;
 

@@ -16,3 +16,6 @@ D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBacku
 D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.dll
 D:\Projects\smart modul BACKUP\SmartModulBackupClasses\obj\Debug\SmartModulBackupClasses.pdb
 D:\Projects\smart modul BACKUP\build (debug)\SmartModulBackupClasses.dll.config
+C:\smart modul BACKUP\SmartModulBackupClasses.dll.config
+C:\smart modul BACKUP\SmartModulBackupClasses.dll
+C:\smart modul BACKUP\SmartModulBackupClasses.pdb

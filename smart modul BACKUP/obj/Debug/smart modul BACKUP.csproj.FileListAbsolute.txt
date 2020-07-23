@@ -170,3 +170,8 @@ D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\LoginWindow.
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\LoginWindow.baml
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\Setup.g.cs
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\Setup.baml
+C:\smart modul BACKUP\smart modul BACKUP.exe.config
+C:\smart modul BACKUP\smart modul BACKUP.exe
+C:\smart modul BACKUP\smart modul BACKUP.pdb
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\RestoreResponseWindow.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\RestoreResponseWindow.baml

@@ -16,162 +16,53 @@ namespace SmartModulBackupClasses
     /// </summary>
     public class Config : INotifyPropertyChanged
     {
-        private bool unsavedChanges;
-
         public bool FirstGuiRun { get; set; } = true;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
-        /// Jestli došlo v tomto objektu nebo v některém z jeho potomků ke změně vlastnosti.
+        /// Zahlásí, že se změnily všechny vlastnosti, ať na to GUI zareaguje
         /// </summary>
-        [XmlIgnore]
-        public bool UnsavedChanges
+        /// <param name="invoker"></param>
+        public void AllPropertiesChanged(Action<Action> invoker = null)
         {
-            get => unsavedChanges;
-            set
+            if (PropertyChanged == null)
+                return;
+
+            invoker = invoker ?? new Action<Action>(a => a());
+            var dgate = PropertyChanged;
+
+            foreach (var prop in GetType().GetProperties())
             {
-                if (value == unsavedChanges)
-                    return;
-
-                unsavedChanges = value;
-
-                //pokud to nastavujem na false, chceme to nastavit i u potomků
-                if (value == false)
-                {
-                    if (Connection != null)
-                        connection.UnsavedChanges = value;
-                    if (SFTP != null)
-                        SFTP.UnsavedChanges = value;
-                    if (WebCfg != null)
-                        WebCfg.UnsavedChanges = value;
-                }
-
-                propChanged(nameof(UnsavedChanges));
+                if (prop.GetMethod != null && prop.GetMethod.IsPublic)
+                    invoker(() => dgate(this, new PropertyChangedEventArgs(prop.Name)));
             }
-        }
 
-        private bool useShadowCopy = false;
-        private string remoteBackupDirectory = "Backups";
-        private string localBackupDirectory = null;
-        private DatabaseConfig connection = new DatabaseConfig();
-        private SftpConfig sFTP = new SftpConfig();
-        private WebConfig webCfg = new WebConfig();
-        private EmailConfig emailConfig = new EmailConfig();
-
-        public Config()
-        {
-            PropertyChanged += Config_PropertyChanged;
-        }
-
-        /// <summary>
-        /// Zpracovává PropertyChanged událost tohoto objektu a jeho potomků (DatabaseConfig Conneciton,
-        /// SftpConfig SFTP, WebConfig WebCfg)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Config_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName != nameof(UnsavedChanges))
-                UnsavedChanges = true;
-        }
-
-        private void propChanged(string prop)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            Connection.AllPropertiesChanged();
+            SFTP.AllPropertiesChanged();
+            WebCfg.AllPropertiesChanged();
+            EmailConfig.AllPropertiesChanged();
         }
 
         /// <summary>
         /// Info o připojení k SQL databázi.
         /// </summary>
-        public DatabaseConfig Connection
-        {
-            get => connection;
-            set
-            {
-                if (value == connection)
-                    return;
-
-                if (connection != null)
-                    connection.PropertyChanged -= Config_PropertyChanged;
-
-                if (value != null)
-                    value.PropertyChanged += Config_PropertyChanged;
-
-                connection = value;
-            }
-        }
+        public DatabaseConfig Connection { get; set; } = new DatabaseConfig();
 
         /// <summary>
         /// Info o připojení k SFTP serveru.
         /// </summary>
-        public SftpConfig SFTP
-        {
-            get => sFTP;
-            set
-            {
-                if (value == sFTP)
-                    return;
-
-                if (sFTP != null)
-                    sFTP.PropertyChanged -= Config_PropertyChanged;
-
-                if (value != null)
-                    value.PropertyChanged += Config_PropertyChanged;
-
-                sFTP = value;
-            }
-        }
+        public SftpConfig SFTP { get; set; } = new SftpConfig();
 
         /// <summary>
         /// Info o připojení k webovému API.
         /// </summary>
-        public WebConfig WebCfg
-        {
-            get => webCfg; 
-            set
-            {
-                if (value == webCfg)
-                    return;
+        public WebConfig WebCfg { get; set; } = new WebConfig();
 
-                if (webCfg != null)
-                    webCfg.PropertyChanged -= Config_PropertyChanged;
+        public EmailConfig EmailConfig { get; set; } = new EmailConfig();
 
-                if (value != null)
-                    value.PropertyChanged += Config_PropertyChanged;
+        public string LocalBackupDirectory { get; set; } = null;
 
-                webCfg = value;
-            }
-        }
-
-        public EmailConfig EmailConfig
-        {
-            get => emailConfig;
-            set
-            {
-                if (value == emailConfig)
-                    return;
-
-                if (emailConfig != null)
-                    emailConfig.PropertyChanged -= Config_PropertyChanged;
-
-                if (value != null)
-                    value.PropertyChanged += Config_PropertyChanged;
-
-                emailConfig = value;
-            }
-        }
-
-        public string LocalBackupDirectory
-        {
-            get => localBackupDirectory;
-            set
-            {
-                if (value == localBackupDirectory)
-                    return;
-
-                localBackupDirectory = value;
-                propChanged(nameof(LocalBackupDirectory));
-            }
-        }
         //public string RemoteBackupDirectory
         //{
         //    get => remoteBackupDirectory;
@@ -184,22 +75,9 @@ namespace SmartModulBackupClasses
         //        propChanged(nameof(RemoteBackupDirectory));
         //    }
         //}
-        public bool UseShadowCopy
-        {
-            get => useShadowCopy;
-            set
-            {
-                if (value == useShadowCopy)
-                    return;
-
-                useShadowCopy = value;
-                propChanged(nameof(UseShadowCopy));
-            }
-        }
+        public bool UseShadowCopy { get; set; } = false;
 
         public LoggingConfig Logging { get; set; } = null;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Načte třídu konfigurace z textu XML.
@@ -212,7 +90,6 @@ namespace SmartModulBackupClasses
             Config cfg;
             using (StringReader reader = new StringReader(text))
                 cfg = ser.Deserialize(reader) as Config;
-            cfg.UnsavedChanges = false;
             return cfg;
         }
 

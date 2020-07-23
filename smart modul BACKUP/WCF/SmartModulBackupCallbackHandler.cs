@@ -196,6 +196,13 @@ namespace smart_modul_BACKUP.WCF
                         Bubble.Show($"Obnova se nepovedla.", icon: ToolTipIcon.Error);
                         break;
                 }
+
+                //otevřít okno se zprávou o obnově
+                App.dispatch(() =>
+                {
+                    var win = new RestoreResponseWindow(response);
+                    win.Show();
+                });
             }
             catch (Exception ex)
             {

@@ -34,7 +34,7 @@ namespace smart_modul_BACKUP_service
         /// </summary>
         public static TimeSpan _scheduleInterval = new TimeSpan(0, 10, 0);
 
-        const bool wait = false;
+        const bool WAIT_ON_START = false;
 
         /// <summary>
         /// Časovač využívaný pro reload (načítání konfigurace, pravidel, plánování záloh, apod);
@@ -107,7 +107,7 @@ namespace smart_modul_BACKUP_service
             try
             {
                 //pokud je konstanta wait == true, počkat 10 vteřin, aby se mohly napojit debugovací nástroje
-                if (wait)
+                if (WAIT_ON_START)
                     Thread.Sleep(10000);
 
                 //když dojde k výjimce, vypsat ji do eventlogu
@@ -140,6 +140,8 @@ namespace smart_modul_BACKUP_service
                 Manager.SetSingleton(new AccountManager()); //AccountManager - umožňuje získávat info o plánu
                 Manager.SetSingleton(new RuleScheduler()); //RuleScheduler - plánuje pravidla
                 Manager.SetSingleton(new BackupCleaner()); //BackupCleaner - odstraňuje staré zálohy
+                Manager.SetSingleton(new Mailer()); //Mailer - umožňuje posílat maily
+                Manager.SetSingleton(new SmbMailer()); //SmbMailer - umožňuje generovat a posílat maily specifické pro smart modul BACKUP
                 observer = Manager.SetSingleton(new FolderObserver());
 
                 ////Vytvořit Backuper - ten se stará o samotné zálohy
@@ -175,7 +177,7 @@ namespace smart_modul_BACKUP_service
                 host.Closed += (_, __) => SmbLog.Warn("WCF služba ukončena?", null, LogCategory.ServiceHost);
                 host.Faulted += (_, __) => SmbLog.Error("Došlo k chybě při komunikaci s GUI", null, LogCategory.ServiceHost);
 
-                Load();
+                PeriodicLoad();
 
                 timer = new System.Timers.Timer();
                 timer.Elapsed += Timer_Elapsed;
@@ -248,10 +250,13 @@ namespace smart_modul_BACKUP_service
 
             timer.Interval = _scheduleInterval.TotalMilliseconds;
 
-            Load();
+            PeriodicLoad();
         }
 
-        public void Load()
+        /// <summary>
+        /// Metoda, která načte všechny důležité věci. Měla by se volat pravidelně.
+        /// </summary>
+        public void PeriodicLoad()
         {
             //zastavit časovou osu
             if (timeline.Running)
@@ -284,6 +289,9 @@ namespace smart_modul_BACKUP_service
 
             //ověřit, zdali jsme stále připojeni k GUI
             Utils.GUIS.TestConnection();
+
+            //odeslat maily k odeslání
+            Manager.Get<Mailer>()?.SendPendingEmailsAsync();
         }
 
         protected override void OnStop()

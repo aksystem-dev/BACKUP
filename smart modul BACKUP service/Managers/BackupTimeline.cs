@@ -1,5 +1,6 @@
 ﻿using smart_modul_BACKUP_service.BackupExe;
 using SmartModulBackupClasses;
+using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -167,6 +168,17 @@ namespace smart_modul_BACKUP_service
                         //pokud jsme to v mezičase zrušili, utečem z cyklu
                         if (_tokenSource.Token.IsCancellationRequested)
                             break;
+
+                        //pokud se už toto pravidlo vyhodnocuje, musíme na to zareagovat
+                        if (BackupTask.IsRuleExecuting(backup.Rule.LocalID))
+                        {
+                            //pokud je souběžné spuštění pravidla zakázané, nebudem ho spouštět
+                            if (backup.Rule.DisableConcurrentExecution)
+                                continue;
+                            //jinak pouze pošleme e-mail s upozorněním
+                            else
+                                _ = Manager.Get<SmbMailer>().NotifyConcurrentExecution(backup.Rule);
+                        }
 
                         //jinak pokračujeme spuštěním daného pravidla:
                         backup.Execute();

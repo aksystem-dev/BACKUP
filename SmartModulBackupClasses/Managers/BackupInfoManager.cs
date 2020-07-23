@@ -27,6 +27,11 @@ namespace SmartModulBackupClasses.Managers
         private List<Backup> backups = new List<Backup>();
 
         /// <summary>
+        /// Defaultní filtr pro filtrování načtených záloh. Defaultně projdou všechny zálohy.
+        /// </summary>
+        public Func<Backup, bool> DefaultFilter { get; set; } = new Func<Backup, bool>(bk => true);
+
+        /// <summary>
         /// Seznam všech načtených záloh.
         /// </summary>
         public Backup[] Backups
@@ -94,13 +99,14 @@ namespace SmartModulBackupClasses.Managers
         ///     (lokální, pokud UseApi => webové api, pokud UseSftp => sftp server) 
         ///     nechybělo žádné info, které není na jiném zdroji
         /// </param>
+        /// <param name="filter">Tímto se budou filtrovat načtené zálohy. Pokud null, načtou se všechny.</param>
         /// <returns></returns>
-        public async Task LoadAsync(bool sync = true)
+        public async Task LoadAsync(bool sync = true, Func<Backup, bool> filter = null)
         {
             bool entered = semaphore.WaitOne(Patience);
             try
             {
-                await _loadAsync(sync);
+                await _loadAsync(sync, filter);
             }
             finally
             {
@@ -114,7 +120,7 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         /// <param name="sync">pokud true, budou se doplňovat chybějící informace na všechny zvolené strany (lokálně / api / sftp)</param>
         /// <returns></returns>
-        private async Task _loadAsync(bool sync = true)
+        private async Task _loadAsync(bool sync = true, Func<Backup, bool> filter = null)
         {
             var newBackups = new List<Backup>();
 
@@ -198,8 +204,12 @@ namespace SmartModulBackupClasses.Managers
             await Task.WhenAll(apiTasks);
             await Task.WhenAll(localTasks);
 
-            //nastavit pole backups podle newBackups
-            backups.UpdateCollectionByCompare(newBackups, (b1, b2) => b1.LocalID == b2.LocalID);
+            filter = filter ?? DefaultFilter;
+
+            //nastavit pole backups podle fitrovaného newBackups
+            backups.UpdateCollectionByCompare(
+                newBackups.Where(filter),
+                (b1, b2) => b1.LocalID == b2.LocalID);
 
             //kváknem že se změnila data, aby na to mohlo reagovat třeba UI
             arrayChanged();

@@ -19,6 +19,9 @@ namespace SmartModulBackupClasses
         [DataMember]
         public List<Error> Errors { get; set; } = new List<Error>();
 
+        [DataMember]
+        public BackupState CurrentState { get; set; } = BackupState.Initializing;
+
         public event Action AfterUpdateCalled;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -40,5 +43,22 @@ namespace SmartModulBackupClasses
 
 
         public object TAG;
+    }
+
+    public enum BackupState
+    {
+        Initializing,
+        RunningProcesses,
+        ConnectingSftp,
+        ConnectingSql,
+        CreatingVss,
+        BackupSource,
+        ZipBackup,
+        SftpUpload,
+        MovingToLocalFolder,
+        Cancelling,
+        Finishing,
+        OneToOneLocalBackup,
+        OneToOneRemoteBackup
     }
 }

@@ -113,6 +113,11 @@ namespace SmartModulBackupClasses
         [DefaultValue(true)]
         public bool OneToOneDelete { get; set; } = true;
 
+        /// <summary>
+        /// Pokud true, pravidlo se nespustí tak, aby běželo víckrát najednou
+        /// </summary>
+        public bool DisableConcurrentExecution { get; set; } = false;
+
         public void SaveSelf()
         {
             XmlSerializer ser = new XmlSerializer(typeof(BackupRule));

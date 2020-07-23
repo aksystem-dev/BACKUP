@@ -61,6 +61,11 @@ namespace SmartModulBackupClasses.Managers
         public SmbApiClient Api { get; private set; }
 
         /// <summary>
+        /// Zdali jsme připojeni k webu
+        /// </summary>
+        public bool Connected => State == LoginState.LoginSuccessful;
+
+        /// <summary>
         /// Stav připojení k api
         /// </summary>
         public LoginState State { get; private set; }
@@ -71,12 +76,12 @@ namespace SmartModulBackupClasses.Managers
         public Exception LoginException { get; private set; }
 
         /// <summary>
-        /// Info o aktivním plánu
+        /// Info o aktivním plánu. Null, pokud nejsme připojeni na web nebo žádný plán není aktivní.
         /// </summary>
         public PlanXml PlanInfo => HelloInfo?.ActivePlan;
 
         /// <summary>
-        /// Info o tomto klientovi
+        /// Info o tomto klientovi. null, pokud nejsme připojeni na web
         /// </summary>
         public HelloResponse HelloInfo { get; private set; }
 

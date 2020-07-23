@@ -137,7 +137,7 @@ namespace smart_modul_BACKUP
             else
                 //pokud jsme aplikaci již v minulosti spustili, použijeme standardní
                 //metodu SetupWithMessageBoxes pro připojení ke službě.
-                service.SetupWithMessageBoxes(false, "smartModulBACKUP_service.exe");
+                service.SetupWithMessageBoxes(autoRun, "smartModulBACKUP_service.exe");
 
             var apiTask = Task.Run(SetupApiAsync);
 
@@ -243,8 +243,14 @@ namespace smart_modul_BACKUP
         private static void SetupBackups()
         {
             var man = Manager.SetSingleton(new BackupInfoManager());
+
+            //aby mohlo GUI odpovídat na PropertyChanged událost, musí se nastavit invokující delegát
             man.PropertyChangedDispatchHandler = dispatch;
-            man.LoadAsync();
+
+            //do GUI chceme načítat pouze informace o zálohách, které jsou dostupné
+            man.DefaultFilter = bk => bk.AvailableOnCurrentSftpServer || bk.AvailableOnThisComputer;
+
+            _ = man.LoadAsync();
         }
 
 

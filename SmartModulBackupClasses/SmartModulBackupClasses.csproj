@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\build %28debug%29\</OutputPath>
+    <OutputPath>C:\smart modul BACKUP\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -71,7 +71,11 @@
     <Compile Include="Config\EmailConfig.cs" />
     <Compile Include="Config\LoggingConfig.cs" />
     <Compile Include="IHashable.cs" />
+    <Compile Include="Mails\Mail.cs" />
+    <Compile Include="Mails\MailCallbackArgs.cs" />
+    <Compile Include="Mails\MailFile.cs" />
     <Compile Include="Managers\Mailer.cs" />
+    <Compile Include="Managers\SmbMailer.cs" />
     <Compile Include="OneToOneBackupStatus.cs" />
     <Compile Include="Reflector.cs" />
     <Compile Include="Rules\BackupConfig.cs" />

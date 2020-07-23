@@ -56,7 +56,8 @@ namespace SmartModulBackupClasses
         SQL,
         ShadowCopy,
         GuiSetup,
-        GuiAvailableDbLoad
+        GuiAvailableDbLoad,
+        Emails
     }
 
     public class LogTargetCollection 

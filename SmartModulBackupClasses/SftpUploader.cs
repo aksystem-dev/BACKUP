@@ -55,6 +55,7 @@ namespace SmartModulBackupClasses
         {
             if (!client.IsConnected)
                 client.Connect();
+
         }
 
         /// <summary>
@@ -128,7 +129,7 @@ namespace SmartModulBackupClasses
         /// </summary>
         /// <param name="localSource"></param>
         /// <param name="remoteDestination"></param>
-        public void UploadFile(string localSource, string remoteDestination)
+        public long UploadFile(string localSource, string remoteDestination, Action<ulong> uploadCallback = null)
         {
             logTrace($"UploadFile({localSource}, {remoteDestination})");
 
@@ -136,7 +137,10 @@ namespace SmartModulBackupClasses
             CreateDirectory(remoteDestination.PathMoveUp());
 
             using (var stream = File.OpenRead(localSource))
-                client.UploadFile(stream, remoteDestination, true);
+            {
+                client.UploadFile(stream, remoteDestination, true, uploadCallback);
+                return stream.Length;
+            }
         }
 
         ///// <summary>
@@ -178,7 +182,7 @@ namespace SmartModulBackupClasses
         /// </summary>
         /// <param name="localSource"></param>
         /// <param name="remoteDestination"></param>
-        public void UploadDirectory(string localSource, string remoteDestination, FolderUploadBehavior behavior, Func<FileInfo, bool> filter = null)
+        public long UploadDirectory(string localSource, string remoteDestination, FolderUploadBehavior behavior, Func<FileInfo, bool> filter = null, Action<ulong> uploadCallback = null)
         {
             //ověřit, že existuje lokální složka
             if (!Directory.Exists(localSource))
@@ -201,6 +205,9 @@ namespace SmartModulBackupClasses
                 behavior = FolderUploadBehavior.AddKeep;
             }
 
+            //množství bytů, které jsme již nahráli
+            long uploaded = 0;
+
             //projít všechny soubory v lokální složce
             foreach(var path in Directory.GetFileSystemEntries(localSource))
             {
@@ -208,16 +215,28 @@ namespace SmartModulBackupClasses
                 {
                     var fname = Path.GetFileName(path);
                     var remote_path = Path.Combine(remoteDestination, fname).NormalizePath();
+
+                    //je-li to složka
                     if (Directory.Exists(path))
                     {
-                        UploadDirectory(path, remote_path, behavior, filter);
+                        //sub_callback je jako uploadCallback, akorát se k parametru přičte již nahrané množství dat (uploaded)
+                        var sub_callback = uploadCallback != null ? new Action<ulong>(ul => uploadCallback((ulong)uploaded + ul)) : null;
+
+                        //rekurzivně zavolat tuto funkci
+                        uploaded += UploadDirectory(path, remote_path, behavior, filter, sub_callback);
                     }
-                    else if (File.Exists(path) && filter == null || filter(new FileInfo(path)))
+                    //je-li to soubor
+                    else if (File.Exists(path) && (filter == null || filter(new FileInfo(path))))
                     {
+                        //info o vzdáleném souboru
                         var remote_info = client.Exists(remote_path) ? client.Get(remote_path) : null;
 
+                        //pokud vzdálený soubor neexistuje nebo [pokud existuje a máme ho přepsat]
                         if (remote_info == null || (remote_info.IsRegularFile && behavior == FolderUploadBehavior.AddOverwrite))
-                            UploadFile(path, remote_path);
+                        {
+                            var sub_callback = uploadCallback != null ? new Action<ulong>(ul => uploadCallback((ulong)uploaded + ul)) : null;
+                            uploaded += UploadFile(path, remote_path, sub_callback);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -228,6 +247,8 @@ namespace SmartModulBackupClasses
 
             if (problems.Any())
                 throw new AggregateException(problems);
+
+            return uploaded;
         }
 
         /// <summary>

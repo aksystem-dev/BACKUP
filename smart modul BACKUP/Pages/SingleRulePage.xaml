@@ -31,7 +31,7 @@
         <Border Style="{StaticResource Top}" Grid.Row="0">
             <DockPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" DockPanel.Dock="Left">
-                    <Button Click="btn_click_back" ToolTip="ZPĚT">
+                    <Button Click="btn_click_back" ToolTip="ULOŽIT A ODEJÍT">
                         <Image Source="{StaticResource back}" />
                     </Button>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">

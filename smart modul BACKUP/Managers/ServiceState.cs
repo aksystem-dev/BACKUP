@@ -92,7 +92,7 @@ namespace smart_modul_BACKUP
                 return;
 
             State = ServiceConnectionState.NotConnected;
-
+            
             try
             {
                 connect();
@@ -134,7 +134,10 @@ namespace smart_modul_BACKUP
                         return;
 
                     if (!admin)
+                    {
+                        SmbLog.Info("Restartuji GUI jako správce, abych mohl nainstalovat službu.", null, LogCategory.GUI);
                         Utils.RestartAsAdmin(new string[] { "-autorun", "-force" });
+                    }
 
                     if (!Utils.InstallService(installExe))
                         return;
@@ -170,7 +173,10 @@ namespace smart_modul_BACKUP
                     return;
 
                 if (!admin)
+                {
+                    SmbLog.Info("Restartuji GUI jako správce, abych mohl spustit službu.", null, LogCategory.GUI);
                     Utils.RestartAsAdmin(new string[] { "-autorun", "-force" });
+                }
 
                 //pokud služba neběží a uživatel přitakal, pokusíme se jí spustit
                 while (true)

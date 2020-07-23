@@ -9,124 +9,58 @@ namespace SmartModulBackupClasses
 {
     public class EmailConfig : INotifyPropertyChanged
     {
-        private bool _sendErrors;
-        private string _fromAddress;
-        private string _smtpHost;
-        private int _smtpPort;
-        private Pwd _password;
-        private bool _trustAllCertificates;
-
-        private void propChanged(string prop)
+        public void AllPropertiesChanged(Action<Action> invoker = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            if (PropertyChanged == null)
+                return;
+
+            invoker = invoker ?? new Action<Action>(a => a());
+            var dgate = PropertyChanged;
+
+            foreach (var prop in GetType().GetProperties())
+            {
+                if (prop.GetMethod != null && prop.GetMethod.IsPublic)
+                    invoker(() => dgate(this, new PropertyChangedEventArgs(prop.Name)));
+            }
         }
+
 
         /// <summary>
         /// Zdali je povoleno odesílání chyb přes e-mail.
         /// </summary>
-        public bool SendErrors
-        {
-            get => _sendErrors;
-            set
-            {
-                if (value == _sendErrors)
-                    return;
-
-                _sendErrors = value;
-                propChanged(nameof(SendErrors));
-            }
-        }
+        public bool SendErrors { get; set; } = false;
 
         /// <summary>
         /// Adresa, z níž posílámě maily.
         /// </summary>
-        public string FromAddress
-        {
-            get => _fromAddress;
-            set
-            {
-                if (value == _fromAddress)
-                    return;
+        public string FromAddress { get; set; } = "";
 
-                _fromAddress = value;
-                propChanged(nameof(FromAddress));
-            }
-        }
+        public List<string> ToAddresses { get; set; } = new List<string>();
 
         /// <summary>
         /// SMTP server.
         /// </summary>
-        public string SmtpHost
-        {
-            get => _smtpHost;
-            set
-            {
-                if (value == _smtpHost)
-                    return;
-
-                _smtpHost = value;
-                propChanged(nameof(SmtpHost));
-            }
-        }
+        public string SmtpHost { get; set; } = "";
 
         /// <summary>
         /// Port pro SMTP.
         /// </summary>
-        public int SmtpPort
-        {
-            get => _smtpPort;
-            set
-            {
-                if (value == _smtpPort)
-                    return;
-
-                _smtpPort = value;
-                propChanged(nameof(SmtpPort));
-            }
-        }
+        public int SmtpPort { get; set; } = 0;
 
         /// <summary>
         /// Heslo pro SMTP.
         /// </summary>
-        public Pwd Password
-        {
-            get => _password;
-            set
-            {
-                if (_password == value)
-                    return;
-
-                if (_password == null)
-                    _password.PropertyChanged -= pwd_propChanged;
-
-                if (value != null)
-                    value.PropertyChanged += pwd_propChanged;
-
-                _password = value;
-            }
-        }
-
-        private void pwd_propChanged(object sender, PropertyChangedEventArgs e)
-        {
-            propChanged(nameof(Password));
-        }
+        public Pwd Password { get; set; } = new Pwd();
 
         /// <summary>
         /// Jestli důvěřovat všem certifikátům.
         /// </summary>
-        public bool TrustAllCertificates
-        {
-            get => _trustAllCertificates;
-            set
-            {
-                if (_trustAllCertificates == value)
-                    return;
-
-                _trustAllCertificates = value;
-                propChanged(nameof(TrustAllCertificates));
-            }
-        }
-
+        public bool TrustAllCertificates { get; set; } = false;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public EmailConfig Copy()
+        {
+            return MemberwiseClone() as EmailConfig;
+        }
     }
 }

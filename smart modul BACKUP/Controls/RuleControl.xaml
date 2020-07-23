@@ -149,6 +149,8 @@
                 </StackPanel>
             </Border>
 
+            <CheckBox HorizontalAlignment="Center" Margin="10" Content="ZAKÁZAT VÍCENÁSOBNÉ SPUŠTĚNÍ"
+                      IsChecked="{Binding Path=DisableConcurrentExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
         <!--<Label Content="ZDROJE ZÁLOHY" Style="{StaticResource h1}" />-->

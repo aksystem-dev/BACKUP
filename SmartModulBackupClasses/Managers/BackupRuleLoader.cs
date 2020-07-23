@@ -45,6 +45,10 @@ namespace SmartModulBackupClasses.Managers
             handler.Invoke(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rules))));
         }
 
+        /// <summary>
+        /// Zavolá OnRuleUpdated pomocí UI_Dispatcheru.
+        /// </summary>
+        /// <param name="updated"></param>
         private void invokeRuleUpdated(BackupRule updated)
         {
             var handler = UI_Dispatcher ?? new Action<Action>(a => a());

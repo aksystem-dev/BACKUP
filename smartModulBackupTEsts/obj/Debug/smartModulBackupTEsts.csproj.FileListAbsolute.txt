@@ -23,3 +23,11 @@ D:\Projects\smart modul BACKUP\smartModulBackupTEsts\obj\Debug\smartModulBackupT
 D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\SmartModulBackupClasses.dll.config
 D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\NLog.dll
 D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\NLog.xml
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\MimeKit.dll
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\MailKit.dll
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\BouncyCastle.Crypto.dll
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\MimeKit.pdb
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\MimeKit.xml
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\MailKit.pdb
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\MailKit.xml
+D:\Projects\smart modul BACKUP\smartModulBackupTEsts\bin\Debug\BouncyCastle.Crypto.xml
