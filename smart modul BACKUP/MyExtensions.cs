@@ -80,5 +80,8 @@ namespace smart_modul_BACKUP
             foreach (T i in enumerable)
                 action(i);
         }
+
+        public static bool IsIn<T>(this T me, params T[] values)
+            => values.Contains(me);
     }
 }

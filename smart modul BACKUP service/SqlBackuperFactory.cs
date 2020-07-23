@@ -17,7 +17,7 @@ namespace smart_modul_BACKUP_service
 
         public SqlBackuper GetInstance()
         {
-            return new SqlBackuper(Manager.Get<ConfigManager>().Config.Connection.GetConnectionString(1000));
+            return new SqlBackuper(Manager.Get<ConfigManager>().Config.Connection.GetConnectionString(10));
         }
     }
 }

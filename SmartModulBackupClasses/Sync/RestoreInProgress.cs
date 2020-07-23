@@ -17,9 +17,13 @@ namespace SmartModulBackupClasses
         public event Action AfterUpdateCalled;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void Update(string msg, float progress)
+        [DataMember]
+        public RestoreState CurrentState { get; set; } = RestoreState.Starting;
+
+        public void Update(RestoreState state, float progress, string msg = "")
         {
-            CurrentTask = msg;
+            CurrentState = state;
+            Parameter = msg;
             Progress = progress;
             AfterUpdateCalled?.Invoke();
         }
@@ -32,5 +36,17 @@ namespace SmartModulBackupClasses
 
         public event EventHandler Completed;
         public void Complete() => Completed?.Invoke(this, null);
+    }
+
+    public enum RestoreState
+    {
+        Starting,
+        ConnectingSftp,
+        ConnectingSql,
+        DownloadingZip,
+        ExtractingZip,
+        RestoringSources,
+        Finishing,
+        Done
     }
 }

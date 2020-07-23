@@ -27,6 +27,7 @@ namespace smart_modul_BACKUP
         public RulePage rulePage { get; private set; }
         public ConfigPage configPage { get; private set; }
         public BackupsPage backupsPage { get; private set; }
+        public AboutPage aboutPage { get; private set; }
 
         public object lastPage { get; private set; } = null;
 
@@ -50,6 +51,7 @@ namespace smart_modul_BACKUP
             rulePage = new RulePage();
             configPage = new ConfigPage();
             backupsPage = new BackupsPage();
+            aboutPage = new AboutPage();
 
             //nastavit tlačítka na navigaci
             buttons.Add(btn_home, homePage);
@@ -57,6 +59,7 @@ namespace smart_modul_BACKUP
             //buttons.Add(btn_dbs, new Uri("Pages\\DbsPage.xaml", UriKind.Relative));
             buttons.Add(btn_config, configPage);
             buttons.Add(btn_backups, backupsPage);
+            buttons.Add(btn_about, aboutPage);
 
             //až se okno zavře, uložit konfiguraci a pravidla
             Closed += MainWindow_Closed;
@@ -170,20 +173,6 @@ namespace smart_modul_BACKUP
 
             cancelClose = false;
             Close();
-        }
-
-        private void RetryConnection(object sender, RoutedEventArgs e)
-        {
-            var service = Manager.Get<ServiceState>();
-            if (service == null)
-                MessageBox.Show("Došlo k nějaké podivné chybě, příteli");
-
-            if (service.State == ServiceConnectionState.Connected)
-                service.Disconnect();
-
-            var state = service.State;
-            service.SetupWithMessageBoxes(
-                state == ServiceConnectionState.NotInstalled || state == ServiceConnectionState.NotRunning);
         }
 
         private void AllNavButtonsSetChecked(bool value)

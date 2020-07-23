@@ -175,3 +175,5 @@ C:\smart modul BACKUP\smart modul BACKUP.exe
 C:\smart modul BACKUP\smart modul BACKUP.pdb
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\RestoreResponseWindow.g.cs
 D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Windows\RestoreResponseWindow.baml
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\AboutPage.g.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\Pages\AboutPage.baml

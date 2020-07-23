@@ -25,10 +25,11 @@ namespace SmartModulBackupClasses
         public event Action AfterUpdateCalled;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void Update(string msg, float progress)
+        public void Update(BackupState current, float progress, string msg = "")
         {
+            CurrentState = current;
             Progress = progress;
-            CurrentTask = msg;
+            Parameter = msg;
             AfterUpdateCalled?.Invoke();
         }
 
@@ -52,13 +53,13 @@ namespace SmartModulBackupClasses
         ConnectingSftp,
         ConnectingSql,
         CreatingVss,
-        BackupSource,
+        BackupSources,
         ZipBackup,
         SftpUpload,
         MovingToLocalFolder,
         Cancelling,
         Finishing,
-        OneToOneLocalBackup,
-        OneToOneRemoteBackup
+        OneToOneBackups,
+        Done
     }
 }

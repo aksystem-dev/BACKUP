@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,8 +27,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -45,7 +46,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\smart modul BACKUP release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -55,6 +56,21 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>6429C779F17907224347FB03279D504F5D4194CF</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>smart modul BACKUP_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
@@ -120,13 +136,17 @@
       <DependentUpon>ToggleOnOff.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\AnyVisibilityConverter.cs" />
+    <Compile Include="Converters\BackupProgressConverter.cs" />
     <Compile Include="Converters\BackupSourceColorConverter.cs" />
+    <Compile Include="Converters\BackupStateConverter.cs" />
     <Compile Include="Converters\ByteSizeToStringConverter.cs" />
     <Compile Include="Converters\ChooseConverter.cs" />
     <Compile Include="Converters\EnumConverter.cs" />
     <Compile Include="Converters\NotEqualsVisibilityConverter.cs" />
     <Compile Include="Converters\NotConverter.cs" />
     <Compile Include="Converters\NotNullConverter.cs" />
+    <Compile Include="Converters\RestoreProgressConverter.cs" />
+    <Compile Include="Converters\RestoreStateConverter.cs" />
     <Compile Include="Converters\ServiceStatusConverter.cs" />
     <Compile Include="Converters\TrueBoldConverter.cs" />
     <Compile Include="Handy.cs" />
@@ -142,6 +162,9 @@
     <Compile Include="Managers\ServiceState.cs" />
     <Compile Include="MyExtensions.cs" />
     <Compile Include="OneGuiPerUser.cs" />
+    <Compile Include="Pages\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\BackupsPage.xaml.cs">
       <DependentUpon>BackupsPage.xaml</DependentUpon>
     </Compile>
@@ -217,6 +240,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Images.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -341,6 +368,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="smart modul BACKUP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -348,7 +376,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 a x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -412,6 +440,10 @@
     <Resource Include="Img\warning.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\smart modul BACKUP service\smart modul BACKUP service.csproj">
+      <Project>{b831cda9-1748-4382-8847-8a60a604a72c}</Project>
+      <Name>smart modul BACKUP service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SmartModulBackupClasses\SmartModulBackupClasses.csproj">
       <Project>{0c04b084-ecda-46e6-bc1c-3494f7198665}</Project>
       <Name>SmartModulBackupClasses</Name>

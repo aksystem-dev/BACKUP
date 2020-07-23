@@ -158,7 +158,8 @@ namespace smart_modul_BACKUP
         {
             try
             {
-                await Manager.Get<ServiceState>().Client.CleanupBackupsAsync();
+                await Task.Run(Manager.Get<ServiceState>().Client.CleanupBackups);
+                MessageBox.Show("Zálohy byly pročištěny.");
             }
             catch { }
         }
@@ -168,18 +169,38 @@ namespace smart_modul_BACKUP
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_click_turnServiceOff(object sender, RoutedEventArgs e)
+        private async void btn_click_turnServiceOff(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show(
                 "Když je služba vypnutá, apikace smart modul BACKUP nemůže vytvářet zálohy. Opravdu ji chcete vypnout?",
                 "Otázka", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                if (service.StopService())
+                if (await service.StopService())
                     MessageBox.Show("Služba byla vypnuta.");
                 else
                     MessageBox.Show("Službu se nepodařilo vypnout.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
+        private async void RetryConnection(object sender, RoutedEventArgs e)
+        {
+            var service = Manager.Get<ServiceState>();
+            if (service == null)
+                MessageBox.Show("Došlo k nějaké podivné chybě, příteli");
+
+            await Task.Run(() =>
+            {
+                if (service.State == ServiceConnectionState.Connected)
+                    service.Disconnect();
+
+                var state = service.State;
+                service.SetupWithMessageBoxes(
+                    state == ServiceConnectionState.NotInstalled || state == ServiceConnectionState.NotRunning,
+                    App.SERVICE_FNAME);
+            });
+        }
+
 
         /// <summary>
         /// Většina věcí se binduje přímo na Config, ale na seznam e-mailových adres se udržuje vlastní

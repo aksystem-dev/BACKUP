@@ -36,6 +36,8 @@ namespace smart_modul_BACKUP
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public IEnumerable<Backup> BksToShow => BkMan.LocalBackups.Take(_shownBkCount).Where
+
         /// <summary>
         /// Zobrazení se bude bindovat na BkMan.LocalBackups
         /// </summary>
@@ -113,6 +115,9 @@ namespace smart_modul_BACKUP
 
         #endregion
 
+        //kolik záloh ukázat
+        private int _shownBkCount = 10;
+
         public BackupsPage()
         {
             InitializeComponent();
@@ -148,11 +153,12 @@ namespace smart_modul_BACKUP
         private bool _backup_certainPassed(Backup b) => !CertainDateEnabled || b.EndDateTime.Date == CertainDate || b.StartDateTime.Date == CertainDate;
         private bool _backup_minPassed(Backup b) => !MinDateEnabled || b.EndDateTime.Date >= MinDate;
         private bool _backup_maxPassed(Backup b) => !MaxDateEnabled || b.StartDateTime.Date <= MaxDate;
+        private bool _backup_allPassed(Backup b) => _backup_certainPassed(b) && _backup_minPassed(b) && _backup_maxPassed(b);
 
         private void savedBackupsFilter(object sender, FilterEventArgs e)
         {
             var b = e.Item as Backup;
-            e.Accepted = _backup_certainPassed(b) && _backup_minPassed(b) && _backup_maxPassed(b);
+            e.Accepted = _backup_allPassed();
         }
 
         private void btn_click_restore(object sender, RoutedEventArgs e)

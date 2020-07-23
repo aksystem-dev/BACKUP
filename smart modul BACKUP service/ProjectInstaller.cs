@@ -15,5 +15,15 @@ namespace smart_modul_BACKUP_service
         {
             InitializeComponent();
         }
+
+        public override void Install(IDictionary stateSaver)
+        {
+            base.Install(stateSaver);
+        }
+
+        private void serviceInstaller1_AfterInstall(object sender, InstallEventArgs e)
+        {
+
+        }
     }
 }

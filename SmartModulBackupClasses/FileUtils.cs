@@ -120,25 +120,23 @@ namespace SmartModulBackupClasses
         /// <param name="dir">Cesta ke složce</param>
         /// <param name="recursive">Zdali zahrnout i obsah podsložek a podpodsložek a podpodpodsložek a tak dál</param>
         /// <returns></returns>
-        public static Dictionary<string, FileSystemInfo> ListDir(string dir, bool recursive)
+        public static Dictionary<string, FileSystemInfo> ListDir(string dir, bool recursive, bool normalize = false)
         {
             var to_return = new Dictionary<string, FileSystemInfo>();
 
             //projít všechny věci ve složce
-            foreach(var path in Directory.GetFileSystemEntries(dir).Select(p => p.NormalizePath()))
+            foreach(var path in (Directory.GetFiles(dir).Union(Directory.GetDirectories(dir))))
             {
-                path.NormalizePath();
-
                 //nejprve zkusíme, jestli je to složka
                 FileSystemInfo info = new DirectoryInfo(path);
                 if (info.Exists) //je-li to složka
                 {
-                    to_return.Add(path, info); //přidat to do slovníku
+                    to_return.Add(normalize ? path.NormalizePath() : path, info); //přidat to do slovníku
 
                     //pokud recursive == true, přidat do slovníku i obsah této složky
                     if (recursive)
                     {
-                        foreach (var pair in ListDir(path, true))
+                        foreach (var pair in ListDir(path, true, normalize))
                             to_return.Add(pair.Key, pair.Value);
                     }
 
@@ -149,7 +147,7 @@ namespace SmartModulBackupClasses
                 info = new FileInfo(path);
                 if (info.Exists) //je-li to soubor
                 {
-                    to_return.Add(path, info); //přidat ho do slovníku
+                    to_return.Add(normalize ? path.NormalizePath() : path, info); //přidat ho do slovníku
                     continue;
                 }
             }
@@ -175,7 +173,7 @@ namespace SmartModulBackupClasses
             Directory.CreateDirectory(destination);
 
             //získat slovník s obsahem cílové složky
-            var dest_dict = ListDir(destination, false);
+            var dest_dict = ListDir(destination, false, true);
 
             bool alles_gute = true; //jestli vše proběhlo bez chyb
 

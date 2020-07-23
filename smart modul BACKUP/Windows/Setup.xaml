@@ -8,12 +8,7 @@
         Title="smart modul BACKUP - Průvodce instalací" Height="300" Width="500" ResizeMode="NoResize"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
-        <local:ServiceStatusConverter x:Key="conv_serviceStatus"
-                                      NotInitializedText="Inicializace..."
-                                      NotInstalledText="Instaluji službu..."
-                                      NotRunningText="Spouštím službu..."
-                                      NotConnectedText="Připojuji se ke službě..."
-                                      ConnectedText="Vše hotovo!" />
+        <local:ServiceStatusConverter x:Key="conv_serviceStatus" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>

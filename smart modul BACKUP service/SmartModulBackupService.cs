@@ -71,6 +71,7 @@ namespace smart_modul_BACKUP_service
             //evlog.Clear();
 
             DumbLogger.eventLog = evlog;
+            SMB_Log.OnLog += SMB_Log_OnLog;
         }
 
         /// <summary>
@@ -272,7 +273,11 @@ namespace smart_modul_BACKUP_service
             var cfg = Manager.Get<ConfigManager>().Load();
             updateApi(cfg);
             Manager.Get<BackupRuleLoader>().Load();
-            SMB_Utils.Sync(() => Manager.Get<BackupInfoManager>().LoadAsync());
+            var bkman = Manager.Get<BackupInfoManager>();
+            SMB_Utils.Sync(async () =>
+            {
+                await bkman.LoadAsync();
+            });
 
             //naplánovat pravidla
             DateTime plan_till = load_called + _scheduleInterval;

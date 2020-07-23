@@ -34,12 +34,13 @@ namespace smart_modul_BACKUP
         public BackupInProgress SetBackup(BackupInProgress backup)
         {
             var found = _backups.FirstOrDefault(f => f.ProgressId == backup.ProgressId);
+
+            if (ReferenceEquals(backup, found))
+                return backup;
+
             if (found != null)
             {
-                //foreach(var prop in typeof(BackupInProgress).GetProperties())
-                //    prop.SetValue(found, prop.GetValue(backup));
-                found.CurrentTask = backup.CurrentTask;
-                found.Progress = backup.Progress;
+                Reflector.ShallowMirror(backup, found);
                 
                 if (backup.Errors.Count > found.Errors.Count)
                 {
@@ -68,13 +69,14 @@ namespace smart_modul_BACKUP
         public RestoreInProgress SetRestore(RestoreInProgress restore)
         {
             var found = _restores.FirstOrDefault(f => f.ProgressId == restore.ProgressId);
+
+            if (ReferenceEquals(restore, found))
+                return restore;
+
             if (found != null)
             {
-                //foreach (var prop in typeof(RestoreInProgress).GetProperties())
-                //    prop.SetValue(found, prop.GetValue(restore));
+                Reflector.ShallowMirror(restore, found);
 
-                found.Progress = restore.Progress;
-                found.CurrentTask = restore.CurrentTask;
                 if (restore.Errors.Count > found.Errors.Count)
                 {
                     for (int i = found.Errors.Count - 1; i < restore.Errors.Count; i++)
@@ -82,6 +84,7 @@ namespace smart_modul_BACKUP
                 }
 
                 App.dispatch(() => found.Refresh());
+
                 return found;
             }
             else

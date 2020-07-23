@@ -36,7 +36,7 @@ namespace smart_modul_BACKUP.Windows
         async void DoSetup()
         {
             tabControl.SelectedIndex = 0;
-            await Task.Run(() => service.SetupWithMessageBoxes(true, "smartModulBACKUP_service.exe"));
+            await Task.Run(() => service.SetupWithMessageBoxes(true, App.SERVICE_FNAME));
 
             if (service.State != ServiceConnectionState.Connected)
                 Environment.Exit(0);

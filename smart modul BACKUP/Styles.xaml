@@ -13,17 +13,19 @@
     </Style>
 
     <Style TargetType="local:LabelTextBox">
-        <Setter Property="LabelWidth" Value="150" />
+        <Setter Property="LabelWidth" Value="200" />
     </Style>
 
     <Style TargetType="local:LabelPasswordBox">
-        <Setter Property="LabelWidth" Value="150" />
+        <Setter Property="LabelWidth" Value="200" />
     </Style>
 
     <Style TargetType="StackPanel" x:Key="Block">
         <Setter Property="Background" Value="{StaticResource Gray2}" />
         <Setter Property="Margin" Value="15,15,15,0" />
     </Style>
+    
+    
 
     <Style TargetType="ListBoxItem">
         <Setter Property="OverridesDefaultStyle" Value="True" />

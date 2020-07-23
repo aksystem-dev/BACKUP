@@ -11,7 +11,7 @@ namespace SmartModulBackupClasses
     public class ProgressMonitor
     {
         [DataMember]
-        public string CurrentTask { get; set; }
+        public string Parameter { get; set; }
         [DataMember]
         public float Progress { get; set; }
         [DataMember]

@@ -47,6 +47,9 @@
         <local:AnyVisibilityConverter x:Key="anyVis" />
 
         <local:ByteSizeToStringConverter x:Key="byteSize" />
+
+        <local:RestoreProgressConverter x:Key="conv_rProgress" />
+        <local:RestoreStateConverter x:Key="conv_rState" />
     </Page.Resources>
 
     <Grid>
@@ -116,7 +119,7 @@
         </Border>
 
         <ScrollViewer x:Name="scroll_viewer" Grid.Row="1">
-            <ItemsControl ItemsSource="{Binding Source={StaticResource savedBackupsSource}}" Margin="0,0,0,15">
+            <ItemsControl x:Name="ic_bks" ItemsSource="{Binding Source={StaticResource savedBackupsSource}}" Margin="0,0,0,15">
                 <ItemsControl.ItemTemplate>
                     
                     <DataTemplate DataType="{x:Type smb:Backup}">
@@ -137,8 +140,17 @@
                             </Border>
                             <ItemsControl ItemsSource="{Binding Path=InProgress}" DockPanel.Dock="Bottom">
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type smb:ProgressMonitor}">
-                                        <local:ProgressBarView Model="{Binding}" Margin="10" Text="PROBÍHAJÍCÍ OBNOVA" />
+                                    <DataTemplate DataType="{x:Type smb:RestoreInProgress}">
+                                        <local:ProgressBarView Margin="10" Text="PROBÍHAJÍCÍ OBNOVA"
+                                                               Label1="{Binding Path=CurrentState, Converter={StaticResource conv_rState}}"
+                                                               Label2="{Binding Path=Parameter}">
+                                            <local:ProgressBarView.Progress>
+                                                <MultiBinding Converter="{StaticResource conv_rProgress}">
+                                                    <Binding Path="CurrentState" />
+                                                    <Binding Path="Progress" />
+                                                </MultiBinding>
+                                            </local:ProgressBarView.Progress>
+                                        </local:ProgressBarView>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

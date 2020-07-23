@@ -12,6 +12,11 @@
       Title="RulePage"
       KeepAlive="True">
 
+    <Page.Resources>
+        <local:BackupProgressConverter x:Key="conv_bkProgress" />
+        <local:BackupStateConverter x:Key="conv_bkState" />
+    </Page.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -71,8 +76,17 @@
                                 </Border>
                                 <ItemsControl ItemsSource="{Binding Path=InProgress}">
                                     <ItemsControl.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type smb:ProgressMonitor}">
-                                            <local:ProgressBarView Model="{Binding}" Text="PROBÍHÁ ZÁLOHA" Margin="5" />
+                                        <DataTemplate DataType="{x:Type smb:BackupInProgress}">
+                                            <local:ProgressBarView Text="PROBÍHÁ ZÁLOHA" Margin="5"
+                                                                   Label1="{Binding Path=CurrentState, Converter={StaticResource conv_bkState}}"
+                                                                   Label2="{Binding Path=Parameter}">
+                                                <local:ProgressBarView.Progress>
+                                                    <MultiBinding Converter="{StaticResource conv_bkProgress}">
+                                                        <Binding Path="CurrentState" />
+                                                        <Binding Path="Progress" />
+                                                    </MultiBinding>
+                                                </local:ProgressBarView.Progress>
+                                            </local:ProgressBarView>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>

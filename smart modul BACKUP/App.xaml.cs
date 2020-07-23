@@ -46,6 +46,8 @@ namespace smart_modul_BACKUP
         /// </summary>
         public static bool startHidden => ARGS.Contains("-hidden");
 
+        public const string SERVICE_FNAME = "smartModulBACKUP_service.exe";
+
         /// <summary>
         /// Umožňuje volat funkce ve vlákně GUI z jiných vláken.
         /// </summary>
@@ -67,6 +69,7 @@ namespace smart_modul_BACKUP
 
         private void OnAppStart(object sender, StartupEventArgs e)
         {
+            //Thread.Sleep(10000);
             ARGS = e.Args;
 
             //přemístit se do složky obsahující potřebné soubory
@@ -82,6 +85,7 @@ namespace smart_modul_BACKUP
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
+                
                 Setup();
                 stopwatch.Stop();
                 SmbLog.Debug($"SETUP TIME: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
@@ -137,7 +141,7 @@ namespace smart_modul_BACKUP
             else
                 //pokud jsme aplikaci již v minulosti spustili, použijeme standardní
                 //metodu SetupWithMessageBoxes pro připojení ke službě.
-                service.SetupWithMessageBoxes(autoRun, "smartModulBACKUP_service.exe");
+                service.SetupWithMessageBoxes(autoRun, App.SERVICE_FNAME);
 
             var apiTask = Task.Run(SetupApiAsync);
 
@@ -229,10 +233,6 @@ namespace smart_modul_BACKUP
         private static void SetupSftp()
         {
             Manager.SetTransient(new SftpUploaderFactory());
-        }
-        private static void SetupService()
-        {
-            Manager.SetSingleton(new ServiceState()).SetupWithMessageBoxes(App.autoRun);
         }
         private static void SetupRules()
         {

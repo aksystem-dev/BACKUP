@@ -136,6 +136,7 @@ namespace SmartModulBackupClasses.Managers
 
             //také je možné, že jsou informace uložené na sftp;
             SftpUploader sftp = UseSftp ? Manager.Get<SftpUploader>() : null;
+
             if (sftp != null)
             {
                 listTasks.Add(Task.Run(async () =>
@@ -144,6 +145,7 @@ namespace SmartModulBackupClasses.Managers
                         sftpResults = await listBksSftp(sftp);
                 }));
             }
+
 
             //a konečně jsou také uložené lokálně
             listTasks.Add(Task.Run(async () => localResults = await listBksLocal()));
@@ -166,9 +168,10 @@ namespace SmartModulBackupClasses.Managers
 
                 //pokud byla vytvořena na tomto počítači, přidáme ji pouze, pokud jsme už nepřidali nějakou se stejným localID
                 return !newBackups.Any(exbk => exbk.LocalID == bk.LocalID);
+            
             });
 
-            newBackups.AddRange(sftpResults.Where(canAdd)); 
+            newBackups.AddRange(sftpResults.Where(canAdd));
             newBackups.AddRange(localResults.Where(canAdd));
 
             List<Task> sftpTasks = new List<Task>();
@@ -203,6 +206,8 @@ namespace SmartModulBackupClasses.Managers
             await Task.WhenAll(sftpTasks).ContinueWith(task => sftp?.Disconnect(false));
             await Task.WhenAll(apiTasks);
             await Task.WhenAll(localTasks);
+
+            SmbLog.Info("Zz");
 
             filter = filter ?? DefaultFilter;
 
@@ -361,8 +366,9 @@ namespace SmartModulBackupClasses.Managers
                 var folder = SMB_Utils.GetRemoteBkinfosPath();
                 sftpUploader.CreateDirectory(folder);
                 var sftp = sftpUploader.client;
+                
                 var bk_list_async = sftp.BeginListDirectory(folder, null, null);
-                var files = await Task.Factory.FromAsync(bk_list_async, sftp.EndListDirectory);
+                var files = await Task.Factory.FromAsync(bk_list_async, sftp.EndListDirectory);                
                 foreach(var file in files)
                 {
                     var content = sftp.ReadAllText(file.FullName);

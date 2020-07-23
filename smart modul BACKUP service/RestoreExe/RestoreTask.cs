@@ -5,6 +5,7 @@ using SmartModulBackupClasses;
 using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -106,7 +107,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
         private RestoreResponse restoreFolder()
         {
-            progress?.Update("STARTUJI OBNOVU", 0);
+            progress?.Update(RestoreState.Starting, 0);
             logInfo("Obnova složky započata;");
 
             Thread.Sleep(1500);
@@ -120,9 +121,14 @@ namespace smart_modul_BACKUP_service.RestoreExe
             if (Info.sources.Any(src => src.type == BackupSourceType.Database))
                 getSql();
 
-            progress?.Update("OBNOVUJI ZDROJE", 0.55f);
+            float src_count = Info.sources.Length;
+            int i = 0;
             foreach (var src in Info.sources)
+            {
+                progress?.Update(RestoreState.RestoringSources, i / src_count, src.sourcepath);
                 restoreLocalSourceFromPermanentLocation(src);
+                i++;
+            }
 
         finish:
             finishRestore();
@@ -131,7 +137,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
         private RestoreResponse restoreZip()
         {
-            progress?.Update("STARTUJI OBNOVU", 0);
+            progress?.Update(RestoreState.Starting, 0);
             logInfo("Obnova zipu započata.");
 
             Thread.Sleep(1500);
@@ -149,9 +155,16 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
             if (!unZip()) goto finish;
 
-            progress?.Update("OBNOVUJI ZDROJE", 0.55f);
+            progress?.Update(RestoreState.RestoringSources, 0);
+
+            float src_count = Info.sources.Length;
+            int i = 0;
             foreach (var src in Info.sources)
+            {
+                progress?.Update(RestoreState.RestoringSources, i / src_count, src.sourcepath);
                 restoreLocalSourceFromTempLocation(src);
+                i++;
+            }
 
             finish:
             finishRestore();
@@ -170,6 +183,8 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
         private void finishRestore()
         {
+            progress?.Update(RestoreState.Finishing, 0);
+
             disconnectSftp();
             disconnectSql();
             removeTempDir();
@@ -177,14 +192,14 @@ namespace smart_modul_BACKUP_service.RestoreExe
             if (response.errors.Any() && response.Success == SuccessLevel.EverythingWorked)
                 response.Success = SuccessLevel.SomeErrors;
 
-            progress?.Update("HOTOVO", 1);
+            progress?.Update(RestoreState.Done, 0);
         }
 
         private bool getSftp()
         {
             try
             {
-                progress?.Update("PŘIPOJUJI SE K SFTP", 0.05f);
+                progress?.Update(RestoreState.ConnectingSftp, 0f);
                 sftp = Manager.Get<SftpUploader>();
                 sftp.Connect();
                 return true;
@@ -202,7 +217,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
         {
             try
             {
-                progress?.Update("PŘIPOJUJI SE K SQL", 0.1f);
+                progress?.Update(RestoreState.ConnectingSql, 0f);
                 sql = Manager.Get<SqlBackuper>();
                 sql.Open();
                 return true;
@@ -237,13 +252,31 @@ namespace smart_modul_BACKUP_service.RestoreExe
             {
                 logInfo("Stahuji zip ze serveru");
 
-                progress?.Update("STAHUJI ZIP ZE SERVERU", 0.15f);
+                progress?.Update(RestoreState.DownloadingZip, 0, "0 %");
 
                 zip_path = Path.Combine(temp_instance_dir, Path.GetFileName(Info.zip_path));
 
                 try
                 {
-                    sftp.DownloadFile(Info.zip_path, zip_path);
+                    float full_size = sftp.client.Get(Info.zip_path.NormalizePath()).Length;
+
+                    //průběžně budeme posílat GUI info o tom, kolik bytů již bylo staženo.
+                    //nechceme to ale posílat moc často, takže to ohlídáme pomocí Stopwatch.
+                    Stopwatch progress_interval_limiter = new Stopwatch();
+                    progress_interval_limiter.Start();
+
+                    //stáhnout zip ze serveru, průběžně přitom updatovat progress
+                    sftp.DownloadFile(Info.zip_path, zip_path, ul =>
+                    {
+                        if (progress_interval_limiter.ElapsedMilliseconds > Const.UPDATE_GUI_SFTP_UPLOAD_MIN_MS_INTERVAL)
+                        {
+                            float part = ul / full_size;
+                            progress?.Update(RestoreState.DownloadingZip, part, $"{Math.Ceiling(part * 100)} %");
+                            progress_interval_limiter.Restart();
+                        }
+                    });
+
+                    progress_interval_limiter.Stop();
                     return true;
                 }
                 catch (SftpPathNotFoundException ex)
@@ -265,7 +298,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
         {
             try
             {
-                progress?.Update("ROZBALUJI ZIP", 0.35f);
+                progress?.Update(RestoreState.ExtractingZip, 0);
                 src_dir = Path.Combine(temp_instance_dir, "unzipped");
                 ZipFile.ExtractToDirectory(zip_path, src_dir);
                 return true;
@@ -421,7 +454,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
             try
             {
-                progress?.Update("ODPOJUJI SE OD SFTP", 0.8f);
+                //progress?.Update("ODPOJUJI SE OD SFTP", 0.8f);
                 if (sftp.IsConnected)
                     sftp.Disconnect();
                 sftp.Dispose();
@@ -440,7 +473,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
             try
             {
-                progress?.Update("ODPOJUJI SE OD SQL", 0.85f);
+                //progress?.Update("ODPOJUJI SE OD SQL", 0.85f);
                 if (sql.connection.State == System.Data.ConnectionState.Open)
                     sql.Close();
                 sql.connection.Dispose();
@@ -455,7 +488,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
 
         private bool removeTempDir()
         {
-            progress?.Update("ODSTRAŇUJI ZBYTKY", 0.9f);
+            //progress?.Update("ODSTRAŇUJI ZBYTKY", 0.9f);
 
             if (!Directory.Exists(temp_instance_dir)) return true;
 

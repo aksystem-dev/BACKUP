@@ -182,7 +182,9 @@ namespace SmartModulBackupClasses
         /// </summary>
         /// <param name="localSource"></param>
         /// <param name="remoteDestination"></param>
-        public long UploadDirectory(string localSource, string remoteDestination, FolderUploadBehavior behavior, Func<FileInfo, bool> filter = null, Action<ulong> uploadCallback = null)
+        public long UploadDirectory(string localSource, string remoteDestination,
+            FolderUploadBehavior behavior, Func<FileInfo, bool> filter = null,
+            Action<ulong> uploadCallback = null)
         {
             //ověřit, že existuje lokální složka
             if (!Directory.Exists(localSource))
@@ -256,16 +258,17 @@ namespace SmartModulBackupClasses
         /// </summary>
         /// <param name="localSource"></param>
         /// <param name="remoteDestination"></param>
-        public void UploadDirectoryDiff(string localSource, string remoteDestination, bool delete = false)
+        public DiffDirUploadResult UploadDirectoryDiff(string localSource, string remoteDestination, bool delete = false,
+            Action<ulong> uploadCallback = null)
         {
             logTrace($"UploadDirectoryDiff({localSource}, {remoteDestination})");
-
-            remoteDestination = remoteDestination.NormalizePath();
-            localSource = localSource.NormalizePath();
 
             //ověřit, že existuje lokální složka
             if (!Directory.Exists(localSource))
                 throw new DirectoryNotFoundException("Lokální složka neexistuje.");
+
+            remoteDestination = remoteDestination.NormalizePath();
+            //localSource = localSource.NormalizePath();
 
             //pokud dojde k problému, plesknem ho zde
             List<Exception> problems = new List<Exception>();
@@ -287,6 +290,10 @@ namespace SmartModulBackupClasses
             var seen_dest_paths = delete ? new HashSet<string>() : null;
 
             //SEM SE VRÁTIT!!!
+
+            //množství bytů, které jsme již nahráli (nebo přeskočili)
+            long uploaded = 0;
+            long uploaded_with_skipping = 0;
 
             //projít všechny soubory v lokální složce
             foreach (var pair in FileUtils.ListDir(localSource, false))
@@ -324,9 +331,11 @@ namespace SmartModulBackupClasses
                             }
 
                         //rekurzivně zavolat tuto metodu pro porychtování podadresáře
-                        UploadDirectoryDiff(local_path, remote_path, delete);
+                        var subresult = UploadDirectoryDiff(local_path, remote_path, delete, uploadCallback);
+                        uploaded += subresult.uploadedSize;
+                        uploaded_with_skipping += subresult.uploadedWithSkippingSize;
                     }
-                    else if (local_info is FileInfo)
+                    else if (local_info is FileInfo f_info)
                     {
                         bool do_upload = false; //zde uložíme, jestli chceme cílový soubor přepsat zdrojovým
 
@@ -349,7 +358,15 @@ namespace SmartModulBackupClasses
                             do_upload = true;
 
                         if (do_upload)
-                            UploadFile(local_path, remote_path);
+                        {
+                            var sub_callback = uploadCallback != null ?
+                                new Action<ulong>(ul => uploadCallback((ulong)uploaded_with_skipping + ul)) : null;
+                            long len = UploadFile(local_path, remote_path, sub_callback);
+                            uploaded += len;
+                            uploaded_with_skipping += len;
+                        }
+                        else
+                            uploaded_with_skipping += f_info.Length;
                     }
                 }
                 catch (Exception ex)
@@ -391,15 +408,17 @@ namespace SmartModulBackupClasses
 
             if (problems.Any())
                 throw new AggregateException(problems);
+
+            return new DiffDirUploadResult(uploaded_with_skipping, uploaded);
         }
 
 
 
-        public void DownloadFile(string remoteSource, string localDestionation)
+        public void DownloadFile(string remoteSource, string localDestionation, Action<ulong> downloadCallback = null)
         {
             remoteSource = remoteSource.NormalizePath();
             using (var writer = File.Create(localDestionation))
-                client.DownloadFile(remoteSource, writer);
+                client.DownloadFile(remoteSource, writer, downloadCallback);
         }
 
         /// <summary>
@@ -618,5 +637,17 @@ namespace SmartModulBackupClasses
         /// konflikty se vyřeší tak, že se soubor na serveru přepíše nahraným souborem.
         /// </summary>
         AddOverwrite
+    }
+
+    public struct DiffDirUploadResult
+    {
+        public long uploadedWithSkippingSize;
+        public long uploadedSize;
+
+        public DiffDirUploadResult(long totalSize, long uploadedSize)
+        {
+            this.uploadedWithSkippingSize = totalSize;
+            this.uploadedSize = uploadedSize;
+        }
     }
 }

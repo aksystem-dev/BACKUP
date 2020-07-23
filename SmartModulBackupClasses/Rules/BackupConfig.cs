@@ -25,6 +25,11 @@ namespace SmartModulBackupClasses
         /// <returns></returns>
         public bool ShouldDelete(Backup bk, int index)
         {
+            //zálohy 1:1 nechceme nikdá odstraňovat automaticky
+            if (bk.BackupType == BackupRuleType.OneToOne)
+                return false;
+
+            //zálohu chceme odstranit, pokud je jich víc něž MaxBackups
             if (index >= MaxBackups)
                 return true;
 

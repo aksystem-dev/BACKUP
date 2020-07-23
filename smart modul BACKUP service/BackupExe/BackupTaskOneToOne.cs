@@ -2,6 +2,7 @@
 using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace smart_modul_BACKUP_service.BackupExe
         /// <returns></returns>
         private async Task backupOneToOne()
         {
-            Progress?.Update("INICIALIZACE", 0);
+            Progress?.Update(BackupState.Initializing, 0);
 
             cfg = Manager.Get<ConfigManager>().Config;
 
@@ -51,18 +52,20 @@ namespace smart_modul_BACKUP_service.BackupExe
             await Manager.Get<BackupInfoManager>().AddQuietlyAsync(B_Obj);
 
             if (IsCancelled) goto finish;
-            Progress?.Update("SPOUŠTÍM PROCESY", 0.05f);
+            Progress?.Update(BackupState.RunningProcesses, 0);
             if (!runProcesses()) goto finish;
 
             if (IsCancelled) goto finish;
-            Progress?.Update("PŘIPOJUJI SFTP", 0.15f);
+            Progress?.Update(BackupState.ConnectingSftp, 0);
             connectSftp();
 
             if (IsCancelled) goto finish;
-            Progress?.Update("VYTVÁŘÍM SHADOW COPY", 0.25f);
+            Progress?.Update(BackupState.CreatingVss, 0);
             vss();
 
-            Progress?.Update("ZÁLOHUJI ZDROJE", 0.35f);
+            float src_total = (float)Rule.Sources.Directories.Count();
+            int curr = 0;
+
             foreach (var src in Rule.Sources.Directories.Where(f => f.enabled))
             {
                 logInfo($"Jdu na zdroj {src.id}");
@@ -82,17 +85,18 @@ namespace smart_modul_BACKUP_service.BackupExe
 
                 if (Rule.LocalBackups.enabled)
                 {
-                    if(!backupOneToOneLocalDir(src.path))
+                    Progress?.Update(BackupState.OneToOneBackups, curr / src_total, $"LOKÁLNÍ ZÁLOHA ZDROJE {src.path}");
+                    if (!backupOneToOneLocalDir(src.path))
                     {
                         success = false;
                         saved.ErrorDetail += "Vyskytly se problémy při zálohování do lokálního úložiště.\n";
                     }
-
                 }
 
                 if (Rule.RemoteBackups.enabled)
                 {
-                    if(!backupOneToOneSftp(src.path))
+                    Progress?.Update(BackupState.OneToOneBackups, curr / src_total, $"VZDÁLENÁ ZÁLOHA ZDROJE {src.path}");
+                    if (!backupOneToOneSftp(src.path, curr / src_total, (curr + 1) / src_total))
                     {
                         success = false;
                         saved.Error += "Vyskytly se problémy při zálohování do vzdáleného úložiště.\n";
@@ -122,6 +126,8 @@ namespace smart_modul_BACKUP_service.BackupExe
                 {
                     error("problém při měření velikosti složky", ex);
                 }
+
+                curr++;
             }
 
         finish:
@@ -129,7 +135,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             if (IsCancelled)
                 error("Záloha byla zrušena.");
 
-            Progress?.Update(IsCancelled ? "RUŠÍM ZÁLOHU" : "UKONČUJI ZÁLOHU", 0.8f);
+            Progress?.Update(IsCancelled ? BackupState.Cancelling : BackupState.Finishing, 0);
             await finishBackup();
         }
 
@@ -152,15 +158,33 @@ namespace smart_modul_BACKUP_service.BackupExe
             return copied_all;
         }
 
-        private bool backupOneToOneSftp(string src)
+        private bool backupOneToOneSftp(string src, float pg_from, float pg_to)
         {
             try
             {
                 string root = Path.GetPathRoot(src);
                 string dest = Path.Combine(B_Obj.RemotePath, Path.GetFileName(src));
                 logInfo($"Záloha 1:1 sftp: {src} >> {dest}");
-                sftp.UploadDirectoryDiff(shadowCopies.ContainsKey(root) ? shadowCopies[root].GetShadowPath(src) : src,
-                    dest, Rule.OneToOneDelete);
+
+                //cesta, z které nahráváme (podle toho, jestli shadow copy nebo ne)
+                string path = shadowCopies.ContainsKey(root) ? shadowCopies[root].GetShadowPath(src) : src; 
+
+                float tot_size = (float)FileUtils.GetDirSize(path);
+
+                //průběžně budeme posílat GUI info o tom, kolik bytů již bylo staženo.
+                //nechceme to ale posílat moc často, takže to ohlídáme pomocí Stopwatch.
+                Stopwatch progress_interval_limiter = new Stopwatch();
+
+                sftp.UploadDirectoryDiff(path, dest, Rule.OneToOneDelete, ul =>
+                {
+                    if (progress_interval_limiter.ElapsedMilliseconds > Const.UPDATE_GUI_SFTP_UPLOAD_MIN_MS_INTERVAL)
+                    {
+                        Progress?.Update(BackupState.OneToOneBackups, SMB_Utils.Lerp(pg_from, pg_to, ul / tot_size),
+                            $"VZDÁLENÁ ZÁLOHA ZDROJE {path}");
+                        progress_interval_limiter.Restart();
+                    }
+                });
+                progress_interval_limiter.Stop();
                 return true;
             }
             catch (Exception ex)

@@ -22,7 +22,11 @@ namespace SmartModulBackupClasses
         public static string GetComputerId()
         {
             if (pc_id == null)
-                pc_id = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "ProductId", null).ToString();
+            {
+                var base_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                var cv_key = base_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
+                pc_id = cv_key.GetValue("ProductId").ToString();
+            } 
             return pc_id;
         }
 

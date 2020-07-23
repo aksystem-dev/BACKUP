@@ -13,25 +13,24 @@ namespace smart_modul_BACKUP
     /// </summary>
     public class ServiceStatusConverter : IValueConverter
     {
-        public string ConnectedText { get; set; }
-        public string NotConnectedText { get; set; }
-        public string NotRunningText { get; set; }
-        public string NotInstalledText { get; set; }
-        public string NotInitializedText { get; set; }
+        private readonly static Dictionary<ServiceConnectionState, string> NAMES = new Dictionary<ServiceConnectionState, string>()
+        {
+            { ServiceConnectionState.Connected, "SLUŽBA PŘIPOJENA" },
+            { ServiceConnectionState.Connecting, "SLUŽBA SE PŘIPOJUJE" },
+            { ServiceConnectionState.Installing, "SLUŽBA SE INSTALUJE" },
+            { ServiceConnectionState.NotConnected, "SLUŽBA BĚŽÍ, ALE NENÍ PŘIPOJENA" },
+            { ServiceConnectionState.NotInitialized, "STAV SLUŽBY NENÍ ZNÁM" },
+            { ServiceConnectionState.NotRunning, "SLUŽBA NEBĚŽÍ" },
+            { ServiceConnectionState.Starting, "SLUŽBA SE SPOUŠTÍ" },
+            { ServiceConnectionState.Uninstalling, "SLUŽBA SE ODINSTALOVÁVÁ" },
+            { ServiceConnectionState.NotInstalled, "SLUŽBA NENÍ NAINSTALOVÁNA" },
+            { ServiceConnectionState.Stopping, "SLUŽBA SE VYPÍNÁ" }
+        };
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var state = (ServiceConnectionState)value;
-
-            switch(state)
-            {
-                case ServiceConnectionState.Connected: return ConnectedText;
-                case ServiceConnectionState.NotConnected: return NotConnectedText;
-                case ServiceConnectionState.NotRunning: return NotRunningText;
-                case ServiceConnectionState.NotInstalled: return NotInstalledText;
-                case ServiceConnectionState.NotInitialized: return NotInitializedText;
-                default: return "Ajta krajta...";
-            }
+            return NAMES[state];
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

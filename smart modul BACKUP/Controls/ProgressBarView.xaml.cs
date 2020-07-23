@@ -21,14 +21,15 @@ namespace smart_modul_BACKUP
     /// </summary>
     public partial class ProgressBarView : UserControl
     {
-        public ProgressMonitor Model
+
+        public float Progress
         {
-            get { return (ProgressMonitor)GetValue(ModelProperty); }
-            set { SetValue(ModelProperty, value); }
+            get { return (float)GetValue(ProgressProperty); }
+            set { SetValue(ProgressProperty, value); }
         }
 
-        public static readonly DependencyProperty ModelProperty =
-            DependencyProperty.Register("Model", typeof(ProgressMonitor), typeof(ProgressBarView), new PropertyMetadata(null));
+        public static readonly DependencyProperty ProgressProperty =
+            DependencyProperty.Register("Progress", typeof(float), typeof(ProgressBarView), new PropertyMetadata(0f));
 
 
         public string Text
@@ -39,6 +40,27 @@ namespace smart_modul_BACKUP
 
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(ProgressBarView), new PropertyMetadata(""));
+
+
+
+        public string Label1
+        {
+            get { return (string)GetValue(Label1Property); }
+            set { SetValue(Label1Property, value); }
+        }
+
+        public static readonly DependencyProperty Label1Property =
+            DependencyProperty.Register("Label1", typeof(string), typeof(ProgressBarView), new PropertyMetadata(""));
+
+        public string Label2
+        {
+            get { return (string)GetValue(Label2Property); }
+            set { SetValue(Label2Property, value); }
+        }
+
+        public static readonly DependencyProperty Label2Property =
+            DependencyProperty.Register("Label2", typeof(string), typeof(ProgressBarView), new PropertyMetadata(""));
+
 
 
 

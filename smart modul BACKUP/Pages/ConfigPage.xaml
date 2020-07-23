@@ -35,6 +35,38 @@
                 </x:Array>
             </local:EnumConverter.Values>
         </local:EnumConverter>
+        <local:EnumConverter x:Key="conv_serviceButtonContent">
+            <local:EnumConverter.Values>
+                <x:Array Type="{x:Type sys:String}">
+                    <sys:String>PŘIPOJIT</sys:String>
+                    <sys:String>INSTALOVAT</sys:String>
+                    <sys:String>INSTALUJE SE</sys:String>
+                    <sys:String>ODSINTALOVÁVÁ SE</sys:String>
+                    <sys:String>SPUSTIT</sys:String>
+                    <sys:String>SPOUŠTÍ SE</sys:String>
+                    <sys:String>PŘIPOJIT</sys:String>
+                    <sys:String>PŘIPOJUJE SE</sys:String>
+                    <sys:String>PŘIPOJIT ZNOVU</sys:String>
+                    <sys:String>VYPÍNÁ SE</sys:String>
+                </x:Array>
+            </local:EnumConverter.Values>
+        </local:EnumConverter>
+        <local:EnumConverter x:Key="conv_serviceButtonEnabled">
+            <local:EnumConverter.Values>
+                <x:Array Type="{x:Type sys:Object}">
+                    <sys:Boolean>True</sys:Boolean>
+                    <sys:Boolean>True</sys:Boolean>
+                    <sys:Boolean>False</sys:Boolean>
+                    <sys:Boolean>False</sys:Boolean>
+                    <sys:Boolean>True</sys:Boolean>
+                    <sys:Boolean>False</sys:Boolean>
+                    <sys:Boolean>True</sys:Boolean>
+                    <sys:Boolean>False</sys:Boolean>
+                    <sys:Boolean>True</sys:Boolean>
+                    <sys:Boolean>False</sys:Boolean>
+                </x:Array>
+            </local:EnumConverter.Values>
+        </local:EnumConverter>
         <local:NotConverter x:Key="conv_not" />
     </Page.Resources>
 
@@ -75,12 +107,14 @@
                 <Label Content="NASTAVENÍ ZÁLOHOVÁNÍ" Style="{StaticResource Header}" />
                 <!--<local:LabelTextBox LabelText="LOKÁLNÍ ÚLOŽIŠTĚ: "
                                 Text="{Binding Path=LocalBackupDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
-                <local:LabelAnything LabelWidth="150" LabelText="LOKÁLNÍ ÚLOŽIŠTĚ:">
+                <local:LabelAnything LabelText="LOKÁLNÍ ÚLOŽIŠTĚ:">
                     <local:PathTextbox Text="{Binding Path=LocalBackupDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PathDialogType="FolderBrowser" />
                 </local:LabelAnything>
                 <!--<local:LabelTextBox LabelText="SLOŽKA NA SERVERU: "
                                     Text="{Binding Path=RemoteBackupDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" /> -->
-                <CheckBox Margin="10" Content="POUŽÍVAT SHADOW COPY PRO ZÁLOHOVÁNÍ SOUBORŮ" IsChecked="{Binding UseShadowCopy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <CheckBox Margin="10" Content="POUŽÍVAT SHADOW COPY PRO ZÁLOHOVÁNÍ SOUBORŮ" 
+                          HorizontalAlignment="Center"
+                          IsChecked="{Binding UseShadowCopy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
 
             <StackPanel Style="{StaticResource Block}">
@@ -140,9 +174,15 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Width="200" Height="40" VerticalAlignment="Center" Content="PROČISTIT ZÁLOHY"
+                            IsEnabled="{Binding ElementName=window, Path=service.IsServiceConnected}" 
                             Click="click_cleanup_backups" />
                     <Button Width="200" Height="40" VerticalAlignment="Center" Content="VYPNOUT SLUŽBU"
-                            IsEnabled="{Binding ElementName=window, Path=service.IsServiceRunning}" Click="btn_click_turnServiceOff" />
+                            IsEnabled="{Binding ElementName=window, Path=service.IsServiceRunning}"
+                            Click="btn_click_turnServiceOff" />
+                    <Button Width="200" Height="40" VerticalAlignment="Center" 
+                            Content="{Binding ElementName=window, Path=service.State, Converter={StaticResource conv_serviceButtonContent}}"
+                            IsEnabled="{Binding ElementName=window,Path=service.State, Converter={StaticResource conv_serviceButtonEnabled}}"
+                            Click="RetryConnection" />
                 </StackPanel>
             </StackPanel>
 

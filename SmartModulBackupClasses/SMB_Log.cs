@@ -36,7 +36,7 @@ namespace SmartModulBackupClasses
             exStr.AppendLine($"Metoda: {meth.DeclaringType.FullName + "." + meth.Name + "()"}, číslo řádku volajícího log: {calling.GetFileLineNumber()}");
             exStr.AppendLine($"Výjimčí blekot: {ex.Message}");
             exStr.AppendLine($"Stack trace: {ex.StackTrace}");
-            OnLog.Invoke(new LogArgs()
+            OnLog?.Invoke(new LogArgs()
             {
                 Message = exStr.ToString(),
                 Level = level,

@@ -51,13 +51,12 @@ namespace smart_modul_BACKUP
 
                 propChanged(nameof(State));
                 propChanged(nameof(IsServiceRunning));
+                propChanged(nameof(IsServiceConnected));
             }
         }
 
-        public bool IsServiceRunning
-        {
-            get => State == ServiceConnectionState.NotConnected || State == ServiceConnectionState.Connected;
-        }
+        public bool IsServiceRunning => serviceController?.Status == ServiceControllerStatus.Running;
+        public bool IsServiceConnected => State == ServiceConnectionState.Connected;
 
         /// <summary>
         /// Odkaz na SmartModulBackupInterfaceClient pro komunikaci s WCF službou
@@ -120,33 +119,48 @@ namespace smart_modul_BACKUP
 
             State = ServiceConnectionState.NotInstalled;
 
+            //pokud jsme admini, zjistit cestu k .exe služby
+            string alreadyInstalledExe = null;
+            if (admin)
+                alreadyInstalledExe = Utils.GetServiceInstalledPath();
+
             //pokud jsme ServiceController nenašli, pravděpodobně to znamená, že služba není nainstalována
             //zeptat se uživatele jestli nainstalovat
             if (serviceController == null)
             {
                 while (true)
                 {
+                    //pokud installAndRun == false, zeptat se uživatele, jestli službu nainstalovat
                     installAndRun = installAndRun ||
                         MessageBox.Show("Služba smart modul BACKUP není nainstalována.\n\nNainstalovat službu?",
                                 "Problém", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
 
+                    //pokud uživatel odpoví, že ne, vypadnout z funkce
                     if (!installAndRun)
                         return;
 
+                    //pokud nejsem admin, říct si o adminova oprávnění
                     if (!admin)
                     {
                         SmbLog.Info("Restartuji GUI jako správce, abych mohl nainstalovat službu.", null, LogCategory.GUI);
                         Utils.RestartAsAdmin(new string[] { "-autorun", "-force" });
                     }
 
+                    //změnit stav na instalaci
+                    State = ServiceConnectionState.Installing;
+
+                    //pokud se instalace nepovede, vrátit
                     if (!Utils.InstallService(installExe))
                         return;
 
+                    //získat odkaz na službu
                     serviceController = GetService();
 
+                    //pokud jsme jej úspěšně získali, můžem pokračovat
                     if (serviceController != null)
                         break;
 
+                    //jinak se zeptat uživatele co a jak
                     if (MessageBox.Show("Nainstalovanou službu nemohu najít. Instalovat znovu?", "Problém",
                         MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                         continue;
@@ -154,12 +168,36 @@ namespace smart_modul_BACKUP
                         break;
                 }
             }
+            //pokud jsme našli ServiceController a služba je nainstalována jinde, než má být
+            else if(admin && alreadyInstalledExe.Trim('"') != Path.GetFullPath(installExe))
+            {
+                bool reinstall = MessageBox.Show("Na tomto systému už existuje instalace služby smart modul BACKUP. Pro vytvoření nové instalace je třeba jí odstranit.\n\nMám to provést?",
+                    "Problém", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+
+                if (reinstall)
+                {
+                    State = ServiceConnectionState.Uninstalling;
+                    if (!Utils.InstallService(alreadyInstalledExe.Trim('"'), true))
+                        return;
+
+                    State = ServiceConnectionState.Installing;
+                    if (!Utils.InstallService(installExe))
+                        return;
+                }
+                else
+                    return;
+            }
 
             State = ServiceConnectionState.NotRunning;
 
             //pokud se služba spouští, počkat, až se spustí
-            while (serviceController.Status == ServiceControllerStatus.StartPending)
-                Thread.Sleep(500);
+            if (serviceController.Status == ServiceControllerStatus.StartPending)
+            {
+                State = ServiceConnectionState.Starting;
+
+                do Thread.Sleep(500);
+                while (serviceController.Status == ServiceControllerStatus.StartPending);
+            }
 
             //pokud služba není spuštěna, zeptat se uživatele, jestli jí spustit
             //a spustit jí, pokud odpověď zní ano
@@ -183,6 +221,7 @@ namespace smart_modul_BACKUP
                 {
                     try
                     {
+                        State = ServiceConnectionState.Starting;
                         startService();
                     }
                     catch (Exception e)
@@ -248,6 +287,8 @@ namespace smart_modul_BACKUP
 
         private void connect()
         {
+            State = ServiceConnectionState.Connecting;
+
             _callbackHandler = new WCF.SmartModulBackupCallbackHandler();
             _callbackHandler.OnServiceDisconnected += Callback_OnServiceDisconnected;
             var context = new InstanceContext(_callbackHandler);
@@ -350,14 +391,22 @@ namespace smart_modul_BACKUP
         /// Vypne službu.
         /// </summary>
         /// <returns></returns>
-        public bool StopService()
+        public async Task<bool> StopService()
         {
             if (!serviceController.CanStop)
                 return false;
 
             try
             {
-                serviceController.Stop();
+                State = ServiceConnectionState.Stopping;
+
+                await Task.Run(() =>
+                {
+                    serviceController.Stop();
+                    serviceController.WaitForStatus(ServiceControllerStatus.Stopped);
+                });
+
+                State = ServiceConnectionState.NotRunning;
                 return true;
             }
             catch
@@ -372,10 +421,54 @@ namespace smart_modul_BACKUP
 
     public enum ServiceConnectionState
     {
+        /// <summary>
+        /// Instance ServiceState není inicializována.
+        /// </summary>
         NotInitialized,
+
+        /// <summary>
+        /// Služba není nainstalována
+        /// </summary>
         NotInstalled,
+        
+        /// <summary>
+        /// Služba se instaluje
+        /// </summary>
+        Installing,
+
+        /// <summary>
+        /// Služba se odinstalovává
+        /// </summary>
+        Uninstalling,
+
+        /// <summary>
+        /// Služba neběží
+        /// </summary>
         NotRunning,
+
+        /// <summary>
+        /// služba se spouští
+        /// </summary>
+        Starting,
+
+        /// <summary>
+        /// Služba je spuštěna, ale není připojena
+        /// </summary>
         NotConnected,
-        Connected
+
+        /// <summary>
+        /// Služba se připojuje
+        /// </summary>
+        Connecting,
+
+        /// <summary>
+        /// Služba je připojena
+        /// </summary>
+        Connected,
+
+        /// <summary>
+        /// Služba se vypíná
+        /// </summary>
+        Stopping
     }
 }

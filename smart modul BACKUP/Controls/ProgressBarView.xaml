@@ -14,12 +14,16 @@
         </Grid.RowDefinitions>
         
         <ProgressBar Grid.Row="0" Maximum="1" 
-                     local:ProgressBarSmoother.SmoothValue="{Binding ElementName=root, Path=Model.Progress}" />
+                     local:ProgressBarSmoother.SmoothValue="{Binding ElementName=root, Path=Progress}" />
 
         <DockPanel Grid.Row="1">
-            <Label HorizontalAlignment="Right" DockPanel.Dock="Right" Margin="5" 
-                   Foreground="{Binding Foreground, ElementName=root}" Content="{Binding ElementName=root, Path=Model.CurrentTask}" />
-            <Label HorizontalAlignment="Left" DockPanel.Dock="Left" Content="{Binding ElementName=root, Path=Text}" />
+            <StackPanel Orientation="Vertical" DockPanel.Dock="Right">
+                <Label HorizontalAlignment="Right" Margin="5,5,5,0" 
+                       Foreground="{Binding Foreground, ElementName=root}" Content="{Binding ElementName=root, Path=Label1}" />
+                <Label HorizontalAlignment="Right" Margin="5,0,5,5" FontSize="10"
+                       Foreground="{Binding Foreground, ElementName=root}" Content="{Binding ElementName=root, Path=Label2}" />
+            </StackPanel>
+            <Label HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" DockPanel.Dock="Left" Content="{Binding ElementName=root, Path=Text}" />
         </DockPanel>
     </Grid>
 </UserControl>

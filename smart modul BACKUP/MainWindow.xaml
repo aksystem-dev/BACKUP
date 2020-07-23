@@ -9,18 +9,8 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Window.Resources>
-        <local:ServiceStatusConverter x:Key="serviceRunning"
-                                      ConnectedText="Služba připojena"
-                                      NotConnectedText="Služba nepřipojena"
-                                      NotRunningText="Služba neběží"
-                                      NotInstalledText="Služba není nainstalována"
-                                      NotInitializedText="Stav služby neznámý" />
-        <local:ServiceStatusConverter x:Key="serviceButton"
-                                      ConnectedText="OPAKOVAT"
-                                      NotConnectedText="PŘIPOJIT"
-                                      NotRunningText="SPUSTIT"
-                                      NotInstalledText="NAINSTALOVAT"
-                                      NotInitializedText="PŘIPOJIT" />
+        <local:ServiceStatusConverter x:Key="serviceRunning" />
+        <local:ServiceStatusConverter x:Key="serviceButton" />
     </Window.Resources>
 
     <DockPanel>
@@ -39,8 +29,6 @@
             <DockPanel>
                 <Label Content="{Binding Path=service.State, Converter={StaticResource serviceRunning}}" 
                      Foreground="White" HorizontalAlignment="Left"/>
-                <Button HorizontalAlignment="Right" Content="{Binding Path=service.State, Converter={StaticResource serviceButton}}"
-                        Padding="3" Margin="0" Click="RetryConnection" />
             </DockPanel>
         </Border>
 
@@ -58,7 +46,9 @@
                                        Style="{StaticResource NavButton}" Click="nav" />
                 <local:ButtonWithState x:Name="btn_config" Content="NASTAVENÍ" 
                                        Style="{StaticResource NavButton}" Click="nav" />
-                
+                <local:ButtonWithState x:Name="btn_about" Content="O APLIKACI"
+                                       Style="{StaticResource NavButton}" Click="nav" />
+
             </StackPanel>
             
             

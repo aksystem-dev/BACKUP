@@ -57,7 +57,7 @@ namespace smart_modul_BACKUP_service.BackupExe
         /// <returns></returns>
         private async Task backupFull()
         {
-            Progress?.Update("INICIALIZACE", 0);
+            Progress?.Update(BackupState.Initializing, 0);
 
             cfg = Manager.Get<ConfigManager>().Config;
 
@@ -83,7 +83,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             if (IsCancelled) goto finish;
 
             //spustit procesy, které se mají vyhodnotit před spuštěním tohoto pravidla
-            Progress?.Update("SPOUŠTÍM PROCESY", 0.05f);
+            Progress?.Update(BackupState.RunningProcesses, 0);
             if (!runProcesses())
                 //runProcesses vrátí false, pokud dojde k závěru, že toto pravidlo by se nemělo vyhodnotit
                 //tj. pokud je pravidlo nakonfigurováno tak, že se nesmí spustit pokud se určitý proces
@@ -97,33 +97,37 @@ namespace smart_modul_BACKUP_service.BackupExe
             //připojit se přes SFTP na server s daty
             //   (connectSftp je chytrej, takže to udělá pouze, pokud to je třeba)
             if (IsCancelled) goto finish;
-            Progress?.Update("PŘIPOJUJI SFTP", 0.15f);
+            Progress?.Update(BackupState.ConnectingSftp, 0);
             connectSftp();
 
             //připojit se přes SQL na databázi
             //   (connectSql je chytrej, takže to udělá pouze, pokud to je třeba)
             if (IsCancelled) goto finish;
-            Progress?.Update("PŘIPOJUJI SQL", 0.2f);
+            Progress?.Update(BackupState.ConnectingSql, 0);
             connectSql();
 
             //vytvořit shadow copy
             //   (vss je chytrej, takže to udělá pouze, pokud jsou Shadow Copy povoleny)
             if (IsCancelled) goto finish;
-            Progress?.Update("VYTVÁŘÍM SHADOW COPY", 0.25f);
+            Progress?.Update(BackupState.CreatingVss, 0);
             vss();
-
-            Progress?.Update("ZÁLOHUJI ZDROJE", 0.35f);
 
             //vytvořit složku, kam se budou zálohocat jednotlivé zdroje
             string bk_dir = Path.Combine(temp_instance_dir, "dir");
             Directory.CreateDirectory(bk_dir);
 
+            //průběh zálohování zdrojů - inicializovat proměnné
+            float src_count = Rule.Sources.All.Count;
+            int curr = 0;
+
             //projít povolené zdroje a provést jejich zálohu
             foreach(var src in Rule.Sources.All.Where(s => s.enabled))
             {
                 if (IsCancelled) goto finish;
+                Progress?.Update(BackupState.BackupSources, curr / src_count, src.path);
                 var saved = backupSource(src, bk_dir);
                 B_Obj.Sources.Add(saved);
+                curr++;
             }
 
             if (IsCancelled) goto finish;
@@ -135,7 +139,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             //pokud se pravidlo má zazipovat,
             if (Rule.Zip)
             {
-                Progress?.Update("ZIPUJI ZÁLOHU", 0.5f);
+                Progress?.Update(BackupState.ZipBackup, 0);
                 if (!zip(bk_dir, out bk_path)) //do bk_path se narve cesta k zip souboru
                     goto finish; //pokud se nezdaří, vykašlem se na to
             }
@@ -158,7 +162,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             //pokud jsou povoleny zálohy přes sftp, nahrát bk_path na sftp
             if (Rule.RemoteBackups.enabled)
             {
-                Progress?.Update("NAHRÁVÁM PŘES SFTP", 0.6f);
+                Progress?.Update(BackupState.SftpUpload, 0f);
                 uploadFile(bk_path, bk_fname);
             }
 
@@ -167,7 +171,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             //pokud jsou povoleny zálohy lokální, přesunout bk_path do cílové složky
             if (Rule.LocalBackups.enabled)
             {
-                Progress?.Update("PŘESOUVÁM DO MÍSTNÍ SLOŽKY", 0.7f);
+                Progress?.Update(BackupState.MovingToLocalFolder, 0.7f);
                 saveFile(bk_path, bk_fname);
             }
 
@@ -178,7 +182,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             if (IsCancelled)
                 error("Záloha byla zrušena.");
 
-            Progress?.Update(IsCancelled ? "RUŠÍM ZÁLOHU" : "UKONČUJI ZÁLOHU", 0.8f);
+            Progress?.Update(IsCancelled ? BackupState.Cancelling : BackupState.Finishing, 0.8f);
             await finishBackup();
         }
 
@@ -531,11 +535,45 @@ namespace smart_modul_BACKUP_service.BackupExe
                 string remote_path = Path.Combine(SMB_Utils.GetRemoteBackupPath(), Rule.Name, fname);
 
                 logInfo($"Nahrávám {src} přes sftp do {remote_path}");
+                Progress?.Update(BackupState.SftpUpload, 0);
+
+
+                //průběžně budeme posílat GUI info o tom, kolik bytů již bylo staženo.
+                //nechceme to ale posílat moc často, takže to ohlídáme pomocí Stopwatch.
+                Stopwatch progress_interval_limiter = new Stopwatch();
+                progress_interval_limiter.Start();
 
                 if (Rule.Zip)
-                    sftp.UploadFile(src, remote_path);
+                {
+                    float total_length = (float)new FileInfo(src).Length;
+
+                    sftp.UploadFile(src, remote_path, ul =>
+                    {
+                        if (progress_interval_limiter.ElapsedMilliseconds > Const.UPDATE_GUI_SFTP_UPLOAD_MIN_MS_INTERVAL)
+                        {
+                            float part = ul / total_length;
+                            Progress?.Update(BackupState.SftpUpload, part, $"{Math.Ceiling(part * 100)} %");
+                            progress_interval_limiter.Restart();
+                        }
+                    });
+                    
+                }
                 else
-                    sftp.UploadDirectory(src, remote_path, FolderUploadBehavior.ReplaceWhole);
+                {
+                    float total_length = (float)FileUtils.GetDirSize(src);
+
+                    sftp.UploadDirectory(src, remote_path, FolderUploadBehavior.ReplaceWhole, null, ul =>
+                    {
+                        if (progress_interval_limiter.ElapsedMilliseconds > Const.UPDATE_GUI_SFTP_UPLOAD_MIN_MS_INTERVAL)
+                        {
+                            float part = ul / total_length;
+                            Progress?.Update(BackupState.SftpUpload, part, $"{Math.Ceiling(part * 100)} %");
+                            progress_interval_limiter.Restart();
+                        }
+                    });
+                }
+
+                progress_interval_limiter.Stop();
 
                 B_Obj.AvailableRemotely = true;
                 B_Obj.RemotePath = remote_path;
@@ -601,7 +639,7 @@ namespace smart_modul_BACKUP_service.BackupExe
                 SmbLog.Warn($"Během vyhodnocování pravidla {Rule.Name} došlo k chybám.", null, LogCategory.BackupTask);
 
             //update progresu
-            Progress?.Update("HOTOVO", 1);
+            Progress?.Update(BackupState.Done, 0);
         }
 
         private async Task<bool> saveInfo()

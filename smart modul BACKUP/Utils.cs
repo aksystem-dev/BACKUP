@@ -2,6 +2,7 @@
 using SmartModulBackupClasses;
 using SmartModulBackupClasses.Managers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration.Install;
 using System.Diagnostics;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
+using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,12 +22,20 @@ namespace smart_modul_BACKUP
         static ServiceState service => Manager.Get<ServiceState>();
         static InProgress inProgress => Manager.Get<InProgress>();
 
+        public static string GetServiceInstalledPath()
+        {
+            var rk = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Services\smart modul BACKUP service");
+            if (rk == null)
+                return null;
+            return (string)rk.GetValue("ImagePath");
+        }
+
         /// <summary>
         /// Pokusí se nainstalovat službu. Pokud nedostane parametr cesta, zeptá se uživatele skrze openfiledialog.
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool InstallService(string path = null)
+        public static bool InstallService(string path = null, bool uninstall = false)
         {
             var dialog = path == null ? new System.Windows.Forms.OpenFileDialog()
             {
@@ -41,20 +51,28 @@ namespace smart_modul_BACKUP
                 path = path ?? dialog.FileName;
                 if (!File.Exists(path))
                 {
-                    MessageBox.Show("Exe služby neexistuje, nemohu jí nainstalovat.", "Chyba",
+                    MessageBox.Show("Nenalezeno exe služby, nemohu jí nainstalovat.", "Chyba",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
 
                 try
                 {
-                    ManagedInstallerClass.InstallHelper(new string[] { path });
+                    var assembly = Assembly.LoadFrom(path);
+                    var installer = new AssemblyInstaller(assembly, null);
+                    installer.UseNewContext = true;
+                    var state = new Hashtable();
+                    if (uninstall)
+                        installer.Uninstall(state);
+                    else
+                        installer.Install(state);
+
                     return true;
                 }
                 catch (Exception e)
                 {
                     if (MessageBox.Show(
-                        $"Instalace služby se nezdařila\n\n{e.Message}\n\nZkusit znovu?",
+                        $"{(uninstall ? "Odinstalace" : "Instalace")} služby se nezdařila\n\n{e.Message}\n\nZkusit znovu?",
                         "Chyba", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                         continue;
                     else
@@ -62,6 +80,11 @@ namespace smart_modul_BACKUP
                 }
             }
         }
+
+        //public static AssemblyInstaller GetServiceInstaller()
+        //{
+        //    var installer = new AssemblyInstaller(Assembly.LoadFrom()
+        //}
 
         private static bool? _amIAdmin = null;
 
@@ -157,6 +180,15 @@ namespace smart_modul_BACKUP
             {
                 Manager.Get<BackupRuleLoader>().Delete(rule.LocalID);
             }
+        }
+
+        /// <summary>
+        /// Získá info o verzi.
+        /// </summary>
+        public static FileVersionInfo GetVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            return FileVersionInfo.GetVersionInfo(assembly.Location);
         }
     }
 }

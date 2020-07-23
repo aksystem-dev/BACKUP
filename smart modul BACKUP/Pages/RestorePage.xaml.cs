@@ -31,7 +31,8 @@ namespace smart_modul_BACKUP
         public RestorePage(Backup backupToRestore)
         {
             Backup = backupToRestore;
-            localPath = Path.GetFullPath(Backup.LocalPath);
+
+            localPath = Backup.LocalPath;
 
             //převést zdroje na SelectedSavedSource
             foreach (var src in Backup.Sources.Where(f => f.filename != null))
@@ -61,7 +62,7 @@ namespace smart_modul_BACKUP
             //Backup.CheckLocalAvailibility();
             if (Backup.AvailableOnThisComputer)
                 rbt_local.IsChecked = true;
-            else if (Backup.AvailableRemotely)
+            else if (Backup.AvailableOnCurrentSftpServer)
                 rbt_remote.IsChecked = true;
             else
             {
