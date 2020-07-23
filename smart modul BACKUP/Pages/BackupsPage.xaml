@@ -16,13 +16,13 @@
         <local:ChooseConverter x:Key="anoNe"
                                FalseText="ne"
                                TrueText="ano" />
-        <CollectionViewSource x:Key="savedBackupsSource"
+        <!--<CollectionViewSource x:Key="savedBackupsSource"
                               x:Name="savedBackupsSource"
                               Filter="savedBackupsFilter">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="EndDateTime" Direction="Descending" />
             </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
+        </CollectionViewSource>-->
 
         <local:EnumConverter x:Key="successToolTip">
             <local:EnumConverter.Values>
@@ -118,8 +118,9 @@
             </DockPanel>
         </Border>
 
-        <ScrollViewer x:Name="scroll_viewer" Grid.Row="1">
-            <ItemsControl x:Name="ic_bks" ItemsSource="{Binding Source={StaticResource savedBackupsSource}}" Margin="0,0,0,15">
+        <ScrollViewer x:Name="scroll_viewer" Grid.Row="1" ScrollChanged="on_scrolled">
+            <!--<ItemsControl x:Name="ic_bks" ItemsSource="{Binding Source={StaticResource savedBackupsSource}}" Margin="0,0,0,15">-->
+            <ItemsControl x:Name="ic_bks" ItemsSource="{Binding ElementName=page, Path=BksToShow}" Margin="0,0,0,15">
                 <ItemsControl.ItemTemplate>
                     
                     <DataTemplate DataType="{x:Type smb:Backup}">

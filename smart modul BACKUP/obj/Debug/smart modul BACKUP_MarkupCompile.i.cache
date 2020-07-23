@@ -1,0 +1,20 @@
+﻿smart modul BACKUP
+
+
+winexe
+C#
+.cs
+D:\Projects\smart modul BACKUP\smart modul BACKUP\obj\Debug\
+smart_modul_BACKUP
+none
+false
+DEBUG;TRACE
+D:\Projects\smart modul BACKUP\smart modul BACKUP\App.xaml
+251401687427
+
+63-1034476013
+30952017197
+Colors.xaml;Controls\LabelAnything.xaml;Controls\PathTextbox.xaml;Controls\ProgressBarView.xaml;Controls\ToggleOnOff.xaml;Images.xaml;Pages\AboutPage.xaml;Pages\BackupsPage.xaml;Pages\ConfigPage.xaml;Controls\LabelPasswordBox.xaml;Controls\LabelTextBox.xaml;MainWindow.xaml;Controls\RuleControl.xaml;Pages\DbsPage.xaml;Pages\HomePage.xaml;Pages\RestorePage.xaml;Pages\RulePage.xaml;Pages\SingleRulePage.xaml;Styles.xaml;Windows\InputDialog.xaml;Windows\LoginWindow.xaml;Windows\RestoreResponseWindow.xaml;Windows\RestoreWindow.xaml;Windows\Setup.xaml;Windows\YesNoDialog.xaml;
+
+True
+

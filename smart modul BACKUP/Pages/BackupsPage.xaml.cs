@@ -25,7 +25,7 @@ namespace smart_modul_BACKUP
     /// </summary>
     public partial class BackupsPage : Page, INotifyPropertyChanged
     {
-        private readonly CollectionViewSource cvs;
+        //private readonly CollectionViewSource cvs;
 
         private bool _certainDateEnabled = false;
         private bool _minDateEnabled = false;
@@ -36,7 +36,10 @@ namespace smart_modul_BACKUP
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public IEnumerable<Backup> BksToShow => BkMan.LocalBackups.Take(_shownBkCount).Where
+        /// <summary>
+        /// Zdroj pro ItemsSource ic_bks
+        /// </summary>
+        public IEnumerable<Backup> BksToShow => BkMan.LocalBackups.Take(_shownBkCount).Where(_backup_allPassed);
 
         /// <summary>
         /// Zobrazení se bude bindovat na BkMan.LocalBackups
@@ -44,6 +47,7 @@ namespace smart_modul_BACKUP
         public BackupInfoManager BkMan { get; set; }
 
         private void change(params string[] property) => property.ForEach(f => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(f)));
+        private void updateView() => change(nameof(BksToShow));
 
         #region FILTRY DLE DATA
 
@@ -54,7 +58,8 @@ namespace smart_modul_BACKUP
             {
                 _certainDateEnabled = value;
                 change(nameof(CertainDateEnabled), nameof(MinDateEnabled), nameof(MaxDateEnabled));
-                cvs.View.Refresh();
+                //cvs.View.Refresh();
+                updateView();
             }
         }
 
@@ -65,7 +70,8 @@ namespace smart_modul_BACKUP
             {
                 _minDateEnabled = value;
                 change(nameof(MinDateEnabled));
-                cvs.View.Refresh();
+                //cvs.View.Refresh();
+                updateView();
             }
         }
 
@@ -76,7 +82,8 @@ namespace smart_modul_BACKUP
             {
                 _maxDateEnabled = value;
                 change(nameof(MaxDateEnabled));
-                cvs.View.Refresh();
+                //cvs.View.Refresh();
+                updateView();
             }
         }
 
@@ -87,7 +94,8 @@ namespace smart_modul_BACKUP
             {
                 _certainDate = value;
                 change(nameof(CertainDate));
-                cvs.View.Refresh();
+                //cvs.View.Refresh();
+                updateView();
             }
         }
 
@@ -98,7 +106,8 @@ namespace smart_modul_BACKUP
             {
                 _minDate = value;
                 change(nameof(MinDate));
-                cvs.View.Refresh();
+                //cvs.View.Refresh();
+                updateView();
             }
         }
 
@@ -109,7 +118,8 @@ namespace smart_modul_BACKUP
             {
                 _maxDate = value;
                 change(nameof(MaxDate));
-                cvs.View.Refresh();
+                //cvs.View.Refresh();
+                updateView();
             }
         }
 
@@ -121,11 +131,11 @@ namespace smart_modul_BACKUP
         public BackupsPage()
         {
             InitializeComponent();
-            cvs = Resources["savedBackupsSource"] as CollectionViewSource;
+            //cvs = Resources["savedBackupsSource"] as CollectionViewSource;
             BkMan = Manager.Get<BackupInfoManager>();
 
-            if (BkMan != null)
-                cvs.Source = BkMan.Backups;
+            //if (BkMan != null)
+                //cvs.Source = BkMan.Backups;
 
             //když se změní načtené zálohy, updatovat zobrazení
             BkMan.PropertyChanged += BkMan_PropertyChanged;
@@ -145,8 +155,10 @@ namespace smart_modul_BACKUP
             //zajímá nás IEnumerable s názvem "LocalBackups"
             if (e.PropertyName == "LocalBackups")
             {
-                cvs.Source = BkMan.LocalBackups; //nastavíme nový zdroj
-                cvs.View.Refresh(); //updatujeme cvs
+                //cvs.Source = BkMan.LocalBackups; //nastavíme nový zdroj
+                //cvs.View.Refresh(); //updatujeme cvs
+
+                updateView(); //updatujeme zobrazení
             }
         }
 
@@ -158,7 +170,7 @@ namespace smart_modul_BACKUP
         private void savedBackupsFilter(object sender, FilterEventArgs e)
         {
             var b = e.Item as Backup;
-            e.Accepted = _backup_allPassed();
+            e.Accepted = _backup_allPassed(b);
         }
 
         private void btn_click_restore(object sender, RoutedEventArgs e)
@@ -186,6 +198,25 @@ namespace smart_modul_BACKUP
 
             //and finally, we raise the event on the parent ScrollViewer.
             scroll_viewer.RaiseEvent(args);
+        }
+
+        private void on_scrolled(object sender, ScrollChangedEventArgs e)
+        {
+            if (ic_bks.Items.Count == 0)
+                return;
+
+            var last_bk_panel = ic_bks.ItemContainerGenerator.ContainerFromIndex(ic_bks.Items.Count - 1) as FrameworkElement;
+
+            if (last_bk_panel == null)
+                return;
+
+            //pokud zaskrolujeme dolů, chceme načíst dalších 10 záloh
+            if (scroll_viewer.ScrollableHeight - scroll_viewer.VerticalOffset <= scroll_viewer.ViewportHeight + 100
+                && _shownBkCount < BkMan.LocalBackups.Count())
+            {
+                _shownBkCount += 10;
+                updateView();
+            }
         }
     }
 }
