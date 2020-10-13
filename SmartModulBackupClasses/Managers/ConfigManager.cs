@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses.Managers
 {
+    /// <summary>
+    /// Načítá a poskytuje přístup ke konfiguraci
+    /// </summary>
     public class ConfigManager : INotifyPropertyChanged
     {
         private Config _config = null;
@@ -33,7 +36,7 @@ namespace SmartModulBackupClasses.Managers
                 if (_config == null)
                 {
                     if (LazyLoad)
-                        Load();
+                        Load(out _);
                     else
                         throw new InvalidOperationException("Config ještě nebyl načten.");
                 }
@@ -50,12 +53,18 @@ namespace SmartModulBackupClasses.Managers
         /// Načíst config
         /// </summary>
         /// <returns></returns>
-        public ConfigManager Load()
+        public ConfigManager Load(out bool createdNew)
         {
             if (File.Exists(Const.CFG_FILE))
+            {
+                createdNew = false;
                 _config = Config.FromXML(File.ReadAllText(Const.CFG_FILE));
+            }
             else
+            {
+                createdNew = true;
                 _config = new Config();
+            }
             _config.Loaded();
             return this;
         }

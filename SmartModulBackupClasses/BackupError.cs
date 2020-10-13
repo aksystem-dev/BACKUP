@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Představuje chybu při záloze
+    /// </summary>
     public class BackupError
     {
         public string Message { get; set; }

@@ -299,6 +299,8 @@ namespace smart_modul_BACKUP
             if (TestingSmtp)
                 return;
 
+            UpdateConfig();
+
             TestingSmtp = true;
 
             var config = cfg_man.Config.EmailConfig.Copy();
@@ -320,6 +322,18 @@ namespace smart_modul_BACKUP
                 MessageBox.Show($"Odeslání mailu se nezdařilo.", "Test", MessageBoxButton.OK, MessageBoxImage.Error);
 
             TestingSmtp = false;
+        }
+
+        private async void SyncSFTP(object sender, RoutedEventArgs e)
+        {
+            btn_syncsftp.IsEnabled = false;
+            UpdateConfig();
+            try
+            {
+                await Manager.Get<BackupInfoManager>().LoadAsync(true, downloadSftp: true);
+            }
+            catch { }
+            btn_syncsftp.IsEnabled = true;
         }
     }
 }

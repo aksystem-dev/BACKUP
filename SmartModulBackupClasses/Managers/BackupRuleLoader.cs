@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses.Managers
 {
+    /// <summary>
+    /// Spravuje zálohovací pravidla
+    /// </summary>
     public class BackupRuleLoader : INotifyPropertyChanged
     {
         const string deleteSave = "rules_to_delete.txt";
@@ -61,11 +64,11 @@ namespace SmartModulBackupClasses.Managers
         /// <returns>Odkaz na tento objekt</returns>
         public BackupRuleLoader Load()
         {
-            var newRuleList = new List<BackupRule>();
+            var newRuleList = new List<BackupRule>(); // seznam načtených pravidel
 
-            var rulesLocal = loadFromFiles().ToList();
+            var rulesLocal = loadFromFiles().ToList(); //lokálně uložená pravidla
 
-            try //může dojít k chybě v api, proto try
+            try //může dojít k chybě v api (např. pokud k api vůbec nejsme připojeni), proto try
             {
                 var rulesWeb = client.GetBackupRules();
 
@@ -81,14 +84,14 @@ namespace SmartModulBackupClasses.Managers
                         //pokud má lokální pravidlo datum změny po webové verzi, znamená to, že byly provedeny lokální změny
                         if (l_rule.LastEdit > w_rule.LastEdit)
                         {
-                            newRuleList.Add(l_rule);
+                            newRuleList.Add(l_rule); //přidat pravidlo do seznamu
                             apiQueue.Enqueue(() => client.UpdateRulesAsync(l_rule)); //musíme o tom informovat server
                         }
                         //pokud jsme změnili pravidlo na webu a zároveň je zapnuté stahování updatovaných pravidel
                         else if (l_rule.LastEdit < w_rule.LastEdit && Download)
                         {
                             w_rule.path = l_rule.path;
-                            newRuleList.Add(w_rule);
+                            newRuleList.Add(w_rule); //přidat pravidlo do seznamu
                             w_rule.SaveSelf();
                         }
                         //jinak by měla být webová verze shodná s lokální, takže prostě přidáme l_rule na seznam
@@ -105,7 +108,7 @@ namespace SmartModulBackupClasses.Managers
                         else if (Download)
                         {
                             w_rule.path = Path.Combine(folder, w_rule.Name + ".xml");
-                            newRuleList.Add(w_rule);
+                            newRuleList.Add(w_rule); //přidat pravidlo do seznamu
 
                             //nastavit downloaded na serveru, ať víme, že pravidlo již bylo staženo
                             apiQueue.Enqueue(() => client.ConfirmRulesAsync(w_rule.LocalID)); 
@@ -133,7 +136,7 @@ namespace SmartModulBackupClasses.Managers
                     //jinak ho prostě přidáme a informujeme server o novém pravidlu
                     else
                     {
-                        newRuleList.Add(l_rule);
+                        newRuleList.Add(l_rule); //přidat pravidlo do seznamu
                         apiQueue.Enqueue(() => client.UpdateRulesAsync(l_rule));
                         l_rule.Uploaded = true;
                     }
@@ -142,11 +145,11 @@ namespace SmartModulBackupClasses.Managers
             //pokud dojde k chybě při komunikaci s webem (nebo nějaké jiné chybě), prostě vezmeme jen lokální pravidla
             catch (Exception ex) 
             {
-                if (!(ex is NullReferenceException))
+                if (!(ex is NullReferenceException)) //NullReferenceException znamená, že k api nejsme připojeni, a to se nepočítá jako chyba
                     SmbLog.Error("Chyba při načítání pravidel z webové aplikace. Načítám pouze lokálně uložená pravidla.", ex, LogCategory.BackupRuleLoader);
 
                 newRuleList.Clear();
-                newRuleList.AddRange(rulesLocal);
+                newRuleList.AddRange(rulesLocal); // přidat lokálně načtený pravidla do seznamu
             }
 
             //updatovat stávající seznam podle nového seznamu

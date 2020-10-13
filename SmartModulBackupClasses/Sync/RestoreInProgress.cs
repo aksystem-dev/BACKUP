@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Umožňuje synchronizaci informací o probíhající obnově mezi GUI a službou
+    /// </summary>
     [DataContract]
     public class RestoreInProgress : ProgressMonitor, INotifyPropertyChanged
     {

@@ -1,5 +1,8 @@
 ﻿namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Typ zdroje dat pro zálohu
+    /// </summary>
     public enum BackupSourceType
     {
         /// <summary>

@@ -89,6 +89,7 @@ namespace smart_modul_BACKUP_service.WCF
 
         public BackupInProgress DoSingleBackup(string ruleXml)
         {
+
             //BackupRule rule = Manager.Get<BackupRuleLoader>().Get(ruleId);
             var rule = BackupRule.LoadFromXmlStr(ruleXml);
 
@@ -137,7 +138,7 @@ namespace smart_modul_BACKUP_service.WCF
         {
             try
             {
-                Manager.Get<ConfigManager>().Load();
+                Manager.Get<ConfigManager>().Load(out _);
                 SmartModulBackupService.updateApi(Manager.Get<ConfigManager>());
             }
             catch { }
@@ -150,7 +151,7 @@ namespace smart_modul_BACKUP_service.WCF
         {
             try
             {
-                Manager.Get<ConfigManager>().Load();
+                Manager.Get<ConfigManager>().Load(out _);
             }
             catch { }
         }

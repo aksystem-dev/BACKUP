@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Base class pro RestoreInProgress a BackupInProgress
+    /// </summary>
     [DataContract]
     public class ProgressMonitor
     {

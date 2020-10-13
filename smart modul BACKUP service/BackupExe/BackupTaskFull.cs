@@ -646,6 +646,7 @@ namespace smart_modul_BACKUP_service.BackupExe
         {
             try
             {
+                logInfo("ukládám info o záloze");
                 B_Obj.EndDateTime = DateTime.Now;
                 await Manager.Get<BackupInfoManager>().AddAsync(B_Obj);
                 return true;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses
 {
+    [Obsolete]
     interface IInfoLoader<T>
     {
         T[] GetInfos();

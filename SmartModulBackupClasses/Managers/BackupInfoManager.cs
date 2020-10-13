@@ -62,7 +62,7 @@ namespace SmartModulBackupClasses.Managers
         }
 
         public bool UseApi { get; set; } = true;
-        public bool UseSftp { get; set; } = false;
+        public bool UseSftp { get; set; } = true;
 
         /// <summary>
         /// Pokud se tato třída využívá ve WPF, sem dejte něco jako Application.Current.Dispatcher.InvokeAsync;
@@ -101,12 +101,12 @@ namespace SmartModulBackupClasses.Managers
         /// </param>
         /// <param name="filter">Tímto se budou filtrovat načtené zálohy. Pokud null, načtou se všechny.</param>
         /// <returns></returns>
-        public async Task LoadAsync(bool sync = true, Func<Backup, bool> filter = null)
+        public async Task LoadAsync(bool sync = true, Func<Backup, bool> filter = null, bool downloadSftp = false)
         {
             bool entered = semaphore.WaitOne(Patience);
             try
             {
-                await _loadAsync(sync, filter);
+                await _loadAsync(sync, filter, downloadSftp);
             }
             finally
             {
@@ -120,7 +120,7 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         /// <param name="sync">pokud true, budou se doplňovat chybějící informace na všechny zvolené strany (lokálně / api / sftp)</param>
         /// <returns></returns>
-        private async Task _loadAsync(bool sync = true, Func<Backup, bool> filter = null)
+        private async Task _loadAsync(bool sync = true, Func<Backup, bool> filter = null, bool downloadSftp = false)
         {
             var newBackups = new List<Backup>();
 
@@ -135,7 +135,7 @@ namespace SmartModulBackupClasses.Managers
                 listTasks.Add(Task.Run(async () => apiResults = await listBksApi()));
 
             //také je možné, že jsou informace uložené na sftp;
-            SftpUploader sftp = UseSftp ? Manager.Get<SftpUploader>() : null;
+            SftpUploader sftp = downloadSftp ? Manager.Get<SftpUploader>() : null;
 
             if (sftp != null)
             {
@@ -174,6 +174,13 @@ namespace SmartModulBackupClasses.Managers
             newBackups.AddRange(sftpResults.Where(canAdd));
             newBackups.AddRange(localResults.Where(canAdd));
 
+            filter = filter ?? DefaultFilter;
+
+            //nastavit pole backups podle fitrovaného newBackups
+            backups.UpdateCollectionByCompare(
+                newBackups.Where(filter),
+                (b1, b2) => b1.LocalID == b2.LocalID);
+
             List<Task> sftpTasks = new List<Task>();
             List<Task> apiTasks = new List<Task>();
             List<Task> localTasks = new List<Task>();
@@ -193,7 +200,7 @@ namespace SmartModulBackupClasses.Managers
                     //pokud UseSftp == true
                     //a zároveň narazíme na zálohu, která byla nahrána na aktuální SFTP server ale nebylo o ní nahráno info,
                     //nahrajeme jí tam
-                    if (UseSftp && !sftpResults.Any(f => f.LocalID == bk.LocalID) && sftp?.IsConnected == true)
+                    if (downloadSftp && !sftpResults.Any(f => f.LocalID == bk.LocalID) && sftp?.IsConnected == true)
                         sftpTasks.Add(saveBkSftp(bk, sftp));
 
                     //pokud info o záloze není uloženo lokálně, uložíme ho
@@ -208,13 +215,6 @@ namespace SmartModulBackupClasses.Managers
             await Task.WhenAll(localTasks);
 
             SmbLog.Info("Zz");
-
-            filter = filter ?? DefaultFilter;
-
-            //nastavit pole backups podle fitrovaného newBackups
-            backups.UpdateCollectionByCompare(
-                newBackups.Where(filter),
-                (b1, b2) => b1.LocalID == b2.LocalID);
 
             //kváknem že se změnila data, aby na to mohlo reagovat třeba UI
             arrayChanged();
@@ -363,7 +363,7 @@ namespace SmartModulBackupClasses.Managers
             {
                 List<Backup> found = new List<Backup>();
 
-                var folder = SMB_Utils.GetRemoteBkinfosPath();
+                var folder = SMB_Utils.GetRemoteBkinfosPath().NormalizePath();
                 sftpUploader.CreateDirectory(folder);
                 var sftp = sftpUploader.client;
                 
@@ -371,6 +371,9 @@ namespace SmartModulBackupClasses.Managers
                 var files = await Task.Factory.FromAsync(bk_list_async, sftp.EndListDirectory);                
                 foreach(var file in files)
                 {
+                    if (file.Name == "." || file.Name == "..")
+                        continue;
+
                     var content = sftp.ReadAllText(file.FullName);
                     try
                     {
@@ -381,7 +384,7 @@ namespace SmartModulBackupClasses.Managers
 
                 return found;
             }
-            catch
+            catch (Exception ex)
             {
                 return Enumerable.Empty<Backup>();
             }       
@@ -434,12 +437,12 @@ namespace SmartModulBackupClasses.Managers
                     return false;
             }
 
-            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.BkInfoNameStr());
+            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.BkInfoNameStr()).NormalizePath();
             return await Task.Run<bool>(() =>
             {
                 try
                 {
-                    sftp.CreateDirectory(SMB_Utils.GetRemoteBkinfosPath());
+                    sftp.CreateDirectory(SMB_Utils.GetRemoteBkinfosPath().NormalizePath());
                     using (var writer = new StreamWriter(sftp.client.Create(fpath)))
                         writer.Write(bk.ToXml());
                     return true;

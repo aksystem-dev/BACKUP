@@ -10,6 +10,9 @@ using System.Diagnostics;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Funkce pro práci se soubory
+    /// </summary>
     public static class FileUtils
     {
         private static void logError(string error, Exception ex = null)

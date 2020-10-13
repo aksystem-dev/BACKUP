@@ -51,6 +51,11 @@ namespace smart_modul_BACKUP
             MainWindow.main.ShowPage(new SingleRulePage(newrule, true));
         }
 
+        /// <summary>
+        /// jednorázová záloha
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void singleBackup(object sender, RoutedEventArgs e)
         {
             BackupRule Rule = (sender as FrameworkElement).DataContext as BackupRule;
@@ -68,6 +73,11 @@ namespace smart_modul_BACKUP
             }
         }
 
+        /// <summary>
+        /// odstranění pravidla
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteRule(object sender, RoutedEventArgs e)
         {
             BackupRule Rule = (sender as FrameworkElement).DataContext as BackupRule;
@@ -78,6 +88,11 @@ namespace smart_modul_BACKUP
             Utils.DeleteRule(Rule);
         }
 
+        /// <summary>
+        /// rozkliknutí pravidla
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ruleClick(object sender, RoutedEventArgs e)
         {
             var rule = (sender as FrameworkElement)?.DataContext as BackupRule;
@@ -85,7 +100,13 @@ namespace smart_modul_BACKUP
                 MainWindow.main.ShowPage(new SingleRulePage(rule));
         }
 
-
+        /// <summary>
+        /// Pokud se u pravidla přepne zapnuto / vypnuto, chceme ho updatovat.
+        /// BackupRuleLoader by měl mít na události OnRuleUpdated pověšeno volání
+        /// služby přes WCF, aby se změna konfigurace pravidla ihned projevila.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rule_toggled(object sender, EventArgs e)
         {
             var rule = (sender as FrameworkElement)?.DataContext as BackupRule;

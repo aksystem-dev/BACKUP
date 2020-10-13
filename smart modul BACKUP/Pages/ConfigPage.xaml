@@ -101,6 +101,9 @@
                 <Button Padding="5" HorizontalAlignment="Stretch" Click="TestSFTP" x:Name="btn_testsftp" >
                     <Label Content="TEST PŘIPOJENÍ" HorizontalAlignment="Center" FontSize="16"/>
                 </Button>
+                <Button Padding="5" HorizontalAlignment="Stretch" Click="SyncSFTP" x:Name="btn_syncsftp" >
+                    <Label Content="SYNCHRONIZOVAT INFO O ZÁLOHÁCH PŘES SFTP" HorizontalAlignment="Center" FontSize="16"/>
+                </Button>
             </StackPanel>
 
             <StackPanel Style="{StaticResource Block}">

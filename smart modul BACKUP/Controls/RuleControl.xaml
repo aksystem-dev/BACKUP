@@ -157,7 +157,7 @@
 
         <StackPanel Style="{StaticResource Block}">
             <Label Style="{StaticResource Header}" Content="PROCESY PŘED SPUŠTĚNÍM" />
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Padding="5" Margin="5" Click="click_add_process" Content="PŘIDAT" />
                 <Button Padding="5" Margin="5" Click="click_remove_processes" Content="ODEBRAT" />
             </StackPanel>

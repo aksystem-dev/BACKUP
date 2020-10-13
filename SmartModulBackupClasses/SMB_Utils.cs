@@ -64,9 +64,6 @@ namespace SmartModulBackupClasses
                 return Path.Combine(pm.SftpInfo.Directory, GetComputerId(), "bkinfos");
         }
 
-        public static string GetRemotBackupsPath()
-            => Path.Combine(GetRemoteBackupPath(), "Backups");
-
         /// <summary>
         /// Vrátí název souboru
         /// </summary>
@@ -279,6 +276,9 @@ namespace SmartModulBackupClasses
         public static string GetSftpHash()
         {
             var info = GetSftpConnection();
+
+            if (info == null) return null;
+
             var builder = new StringBuilder();
             
             builder.AppendLine(info.Host);

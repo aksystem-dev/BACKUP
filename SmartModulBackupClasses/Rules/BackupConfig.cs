@@ -2,6 +2,9 @@
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Konfigurace konkrétního typu zálohy
+    /// </summary>
     public class BackupConfig
     {
         /// <summary>

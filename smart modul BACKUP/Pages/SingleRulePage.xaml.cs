@@ -36,24 +36,31 @@ namespace smart_modul_BACKUP
         }
 
         /// <summary>
-        /// Zpět
+        /// jestli pravidlo lze uložit
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_click_back(object sender, RoutedEventArgs e)
+        /// <returns></returns>
+        private bool can_save()
         {
             txt_rulename.Text = txt_rulename.Text.Trim();
-
-            //porychtovat potenciální problémy s názvem pravidla
             if (rule.Name == "")
                 MessageBox.Show("Pravidlo musí mít název.");
             else if (add && rules.Any(r => r.Name == rule.Name))
                 MessageBox.Show("Pravidlo s takovým názvem již existuje.");
             else if (!rule.Name.All(ch => char.IsLetterOrDigit(ch) || ch == ' '))
                 MessageBox.Show("Název pravidla může obsahovat pouze písmena, čísla a mezery.");
+            else return true;
+            return false;
+        }
 
+        /// <summary>
+        /// Zpět
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_click_back(object sender, RoutedEventArgs e)
+        {
             //pokud má pravidlo validní název, umožnit uživateli opustit stránku a uložit pravidlo (page_unloaded)
-            else
+            if (can_save())
                 MainWindow.main.Back();
         }
 
@@ -66,7 +73,7 @@ namespace smart_modul_BACKUP
         {
             BackupRule Rule = DataContext as BackupRule;
 
-            if (Rule == null)
+            if (Rule == null || !can_save())
                 return;
 
             try

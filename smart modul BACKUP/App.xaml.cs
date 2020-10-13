@@ -69,13 +69,13 @@ namespace smart_modul_BACKUP
 
         private void OnAppStart(object sender, StartupEventArgs e)
         {
+            
             //Thread.Sleep(10000);
             ARGS = e.Args;
 
-            //přemístit se do složky obsahující potřebné soubory
-            //string cd = "C:\\smart modul BACKUP";
-            //if (!Directory.Exists(cd)) Directory.CreateDirectory(cd);
-            //Directory.SetCurrentDirectory(cd);
+            //přemístit se do složky, kde je exe
+            string exe = Assembly.GetExecutingAssembly().Location;
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(exe));
 
             //GUI pracuje ve složce, v níž se nachází jeho exe
 
@@ -85,7 +85,6 @@ namespace smart_modul_BACKUP
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
-                
                 Setup();
                 stopwatch.Stop();
                 SmbLog.Debug($"SETUP TIME: {stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff")}", null, LogCategory.GuiSetup);
@@ -120,9 +119,15 @@ namespace smart_modul_BACKUP
             SetupGuicom(); //nastaví OneGuiPerUser
 
             //spustit ConfigManager
-            var cfg_man = Manager.SetSingleton(new ConfigManager()).Load();
+            var cfg_man = Manager.SetSingleton(new ConfigManager()).Load(out bool new_config);
             SmbLog.Configure(cfg_man.Config.Logging, SmbAssembly.Gui);
-            SmbLog.Info("Aplikace spuštěna, načtena konfigurace pro logování");
+            SmbLog.Info("Aplikace spuštěna, načtena konfigurace pro logování", null, LogCategory.GUI);
+            SmbLog.Info($"Aktuální adresář: {Directory.GetCurrentDirectory()}", null, LogCategory.GUI);
+
+            if (new_config)
+                SmbLog.Info("Vytvořena nová instance objektu Config");
+            else
+                SmbLog.Info("Config úspěšně načten");
 
             var service = Manager.SetSingleton(new ServiceState());
             //service.Setup();
@@ -130,6 +135,8 @@ namespace smart_modul_BACKUP
             //pokud je toto první spuštění aplikace
             if (cfg_man.Config.FirstGuiRun)
             {
+                SmbLog.Info("První spuštění GUI, zobrazuji instalační okno", null, LogCategory.GUI);
+
                 //potřebujeme administrátorská oprávnění
                 if (!Utils.AmIAdmin())
                     Utils.RestartAsAdmin(new string[] { });
@@ -247,8 +254,8 @@ namespace smart_modul_BACKUP
             //aby mohlo GUI odpovídat na PropertyChanged událost, musí se nastavit invokující delegát
             man.PropertyChangedDispatchHandler = dispatch;
 
-            //do GUI chceme načítat pouze informace o zálohách, které jsou dostupné
-            man.DefaultFilter = bk => bk.AvailableOnCurrentSftpServer || bk.AvailableOnThisComputer;
+            //zálohy, které nejsou dostupné ani na serveru ani lokálně a zároveň jsou starší než jeden den nechceme načítat
+            man.DefaultFilter = bk => bk.AvailableOnCurrentSftpServer || bk.AvailableOnThisComputer || bk.EndDateTime.AddDays(1) > DateTime.Now;
 
             _ = man.LoadAsync();
         }
@@ -284,17 +291,17 @@ namespace smart_modul_BACKUP
         /// </summary>
         public static void Logout()
         {
-            //updatovat konfiguraci
-            var cfg_man = Manager.Get<ConfigManager>();
-            cfg_man.Config.WebCfg.Online = false;
-            cfg_man.Save();
-
-            var _account = Manager.Get<AccountManager>();
-            _ = _account.Api.DeactivateAsync();
-
             try
             {
-                _account.TryLoginWithAsync(cfg_man.Config.WebCfg).Wait();
+                //updatovat konfiguraci
+                var cfg_man = Manager.Get<ConfigManager>();
+                cfg_man.Config.WebCfg.Online = false;
+                cfg_man.Save();
+
+                var _account = Manager.Get<AccountManager>();
+                _ = _account.Api?.DeactivateAsync();
+
+                _account.LoginWithAsync(cfg_man.Config.WebCfg).Wait();
             }
             catch (Exception ex)
             {

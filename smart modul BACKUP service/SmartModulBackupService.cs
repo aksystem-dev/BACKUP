@@ -133,7 +133,7 @@ namespace smart_modul_BACKUP_service
                 //  - uchovávat instance užitečných tříd a pak je dostávat podle typu (SetSingleton<T>, Get<T>)
                 //  - vytvářet nové instance užitečných tříd vždy, když si o ní řekneme (SetTransient<T>, Get<T>)
 
-                var loggingConfig = Manager.SetSingleton(new ConfigManager()).Load().Config.Logging; //pracuje s config.xml
+                var loggingConfig = Manager.SetSingleton(new ConfigManager()).Load(out _).Config.Logging; //pracuje s config.xml
                 SmbLog.Configure(loggingConfig, SmbAssembly.Service); //nastavit logger
                 SmbLog.Info("Načtena konfigurace pro logování");
                 Manager.SetTransient(new SqlBackuperFactory()); //SqlBackuper využívaný na SQL zálohy
@@ -270,7 +270,7 @@ namespace smart_modul_BACKUP_service
             observer.Clear();
 
             //znovu načíst důležitou konfiguraci
-            var cfg = Manager.Get<ConfigManager>().Load();
+            var cfg = Manager.Get<ConfigManager>().Load(out _);
             updateApi(cfg);
             Manager.Get<BackupRuleLoader>().Load();
             var bkman = Manager.Get<BackupInfoManager>();
@@ -333,7 +333,11 @@ namespace smart_modul_BACKUP_service
         /// <param name="cfg"></param>
         public static void updateApi(ConfigManager cfg)
         {
-            Manager.Get<AccountManager>().LoginWithAsync(cfg?.Config?.WebCfg).Wait();
+            try
+            {
+                Manager.Get<AccountManager>().LoginWithAsync(cfg?.Config?.WebCfg).Wait();
+            }
+            catch { }
         }
     }
 }

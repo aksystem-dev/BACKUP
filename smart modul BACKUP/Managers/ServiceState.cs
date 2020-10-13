@@ -193,6 +193,7 @@ namespace smart_modul_BACKUP
             //pokud se služba spouští, počkat, až se spustí
             if (serviceController.Status == ServiceControllerStatus.StartPending)
             {
+                SmbLog.Info("Spuštění gui: služba startuje, čekám na ní", null, LogCategory.GUI);
                 State = ServiceConnectionState.Starting;
 
                 do Thread.Sleep(500);
@@ -352,7 +353,7 @@ namespace smart_modul_BACKUP
             if (this.State == ServiceConnectionState.Connected)
                 try
                 {
-                    Client.Reload();
+                    Client.ReloadAsync();
                 }
                 catch (Exception ex)
                 {
@@ -406,12 +407,29 @@ namespace smart_modul_BACKUP
                     serviceController.WaitForStatus(ServiceControllerStatus.Stopped);
                 });
 
-                State = ServiceConnectionState.NotRunning;
                 return true;
             }
             catch
             {
                 return false;
+            }
+            finally
+            {
+                //nastavit State tak, aby odpovídal stavu služby
+
+                if (serviceController.Status == ServiceControllerStatus.Stopped)
+                    State = ServiceConnectionState.NotRunning;
+                else if (serviceController.Status == ServiceControllerStatus.Running)
+                {
+                    if (IsServiceConnected)
+                        State = ServiceConnectionState.Connected;
+                    else
+                        State = ServiceConnectionState.NotConnected;
+                }
+                else
+                    State = ServiceConnectionState.NotInitialized;
+                
+                
             }
         }
 

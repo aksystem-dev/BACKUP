@@ -3,6 +3,9 @@ using System.Xml.Serialization;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Zdroj pro zálohu
+    /// </summary>
     public class BackupSource : INotifyPropertyChanged
     {
         private bool _enabled = false;

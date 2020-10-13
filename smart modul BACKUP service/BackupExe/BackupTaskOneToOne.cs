@@ -66,6 +66,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             float src_total = (float)Rule.Sources.Directories.Count();
             int curr = 0;
 
+            //projít zdroje
             foreach (var src in Rule.Sources.Directories.Where(f => f.enabled))
             {
                 logInfo($"Jdu na zdroj {src.id}");
@@ -83,6 +84,7 @@ namespace smart_modul_BACKUP_service.BackupExe
 
                 bool success = true;
 
+                //lokální záloha zdroje
                 if (Rule.LocalBackups.enabled)
                 {
                     Progress?.Update(BackupState.OneToOneBackups, curr / src_total, $"LOKÁLNÍ ZÁLOHA ZDROJE {src.path}");
@@ -93,6 +95,7 @@ namespace smart_modul_BACKUP_service.BackupExe
                     }
                 }
 
+                //vzdálená záloha zdroje
                 if (Rule.RemoteBackups.enabled)
                 {
                     Progress?.Update(BackupState.OneToOneBackups, curr / src_total, $"VZDÁLENÁ ZÁLOHA ZDROJE {src.path}");

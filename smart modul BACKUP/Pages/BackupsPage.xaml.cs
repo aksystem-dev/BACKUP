@@ -39,7 +39,10 @@ namespace smart_modul_BACKUP
         /// <summary>
         /// Zdroj pro ItemsSource ic_bks
         /// </summary>
-        public IEnumerable<Backup> BksToShow => BkMan.LocalBackups.Take(_shownBkCount).Where(_backup_allPassed);
+        public IEnumerable<Backup> BksToShow => BkMan.Backups
+            .OrderByDescending(bk => bk.EndDateTime)
+            .Where(_backup_allPassed)
+            .Take(_shownBkCount);
 
         /// <summary>
         /// Zobrazení se bude bindovat na BkMan.LocalBackups
@@ -153,7 +156,7 @@ namespace smart_modul_BACKUP
                 return;
 
             //zajímá nás IEnumerable s názvem "LocalBackups"
-            if (e.PropertyName == "LocalBackups")
+            if (e.PropertyName == "Backups")
             {
                 //cvs.Source = BkMan.LocalBackups; //nastavíme nový zdroj
                 //cvs.View.Refresh(); //updatujeme cvs
@@ -182,7 +185,7 @@ namespace smart_modul_BACKUP
 
         private async void page_loaded(object sender, RoutedEventArgs e)
         {
-            await BkMan.LoadAsync();
+            await Task.Run(() => BkMan.LoadAsync());
         }
 
         private void mousewheel(object sender, MouseWheelEventArgs e)

@@ -4,6 +4,9 @@ using System.Xml.Serialization;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Představuje uložený zdroj pro určitou zálohu
+    /// </summary>
     public class SavedSource : ICloneable
     {
         public SavedSource()

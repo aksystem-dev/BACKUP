@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Nějaké konstantní hodnoty
+    /// </summary>
     public static class Const
     {
         public const int UPDATE_GUI_SFTP_UPLOAD_MIN_MS_INTERVAL = 250;

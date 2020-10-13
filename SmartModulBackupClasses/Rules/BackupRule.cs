@@ -14,6 +14,9 @@ using System.Xml.Serialization;
 
 namespace SmartModulBackupClasses
 {
+    /// <summary>
+    /// Zálohovací pravidlo
+    /// </summary>
     public class BackupRule
     {
         /// <summary>
