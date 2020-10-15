@@ -11,6 +11,107 @@ using System.Threading.Tasks;
 
 namespace SmartModulBackupClasses.Managers
 {
+    public class BackupInfoLoadOptions
+    {
+        /// <summary>
+        /// zdali se mají stahovat informace ze SFTP serveru
+        /// </summary>
+        public bool DownloadSFTP { get; set; }
+
+        /// <summary>
+        /// Zdali se mají nahrávat informace na SFTP server
+        /// </summary>
+        public bool UploadSFTP { get; set; }
+
+        /// <summary>
+        /// zdali se mají stahovat informace z webové aplikace
+        /// </summary>
+        public bool DownloadApi { get; set; }
+
+        /// <summary>
+        /// Zdali se mají nahrávat informace na webovou aplikaci
+        /// </summary>
+        public bool UploadApi { get; set; }
+
+        /// <summary>
+        /// pokud DownloadApi == false, vrátí false. Jinak vrátí, zdali jsme připojeni k api.
+        /// </summary>
+        public bool ShouldDownloadApi
+        {
+            get
+            {
+                if (!DownloadApi)
+                    return false;
+
+                var aman = Manager.Get<AccountManager>();
+                return aman.Connected;
+            }
+        }
+
+        /// <summary>
+        /// pokud DownloadApi == false, vrátí false. Jinak vrátí, zdali jsme připojeni k api.
+        /// </summary>
+        public bool ShouldUploadApi
+        {
+            get
+            {
+                if (!UploadApi)
+                    return false;
+
+                var aman = Manager.Get<AccountManager>();
+                return aman.Connected;
+            }
+        }
+
+        /// <summary>
+        /// funkce, podle níž se bude filtrovat, které zálohy se načtou
+        /// </summary>
+        public Func<Backup, bool> BackupFilter { get; set; }
+
+        /// <summary>
+        /// funkce, podle níž se bude filtrovat, z kterých klientů se budou
+        /// stahovat zálohy přes SFTP (pouze, pokud UseSftp == true)
+        /// </summary>
+        public Func<PC_Info, bool> SftpClientFilter { get; set; }
+
+        /// <summary>
+        ///  pokud true, metoda se postará o to, aby na žádném ze zdrojů 
+        ///     (lokální, pokud UseApi => webové api, pokud UseSftp => sftp server) 
+        ///     nechybělo žádné info, které není na jiném zdroji
+        /// </summary>
+        public bool Sync { get; set; }
+
+        /// <summary>
+        /// zkopíruje tuto instanci
+        /// </summary>
+        /// <returns></returns>
+        public BackupInfoLoadOptions Copy()
+        {
+            return new BackupInfoLoadOptions()
+            {
+                BackupFilter = BackupFilter,
+                SftpClientFilter = SftpClientFilter,
+                Sync = Sync,
+                DownloadApi = DownloadApi,
+                DownloadSFTP = DownloadSFTP,
+                UploadApi = UploadApi,
+                UploadSFTP = UploadApi        
+            };
+        }
+
+        /// <summary>
+        /// vrátí upravenou kopii této instance
+        /// </summary>
+        /// <param name="change"></param>
+        /// <returns></returns>
+        public BackupInfoLoadOptions With(Action<BackupInfoLoadOptions> change)
+        {
+            var instance = this.Copy();
+            change(instance);
+            return instance;
+        }
+    }
+
     /// <summary>
     /// Spravuje informace o proběhnutých zálohách
     /// </summary>
@@ -24,7 +125,26 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         public int Patience { get; set; } = 2000;
 
-        private List<Backup> backups = new List<Backup>();
+        /// <summary>
+        /// seznam načtených záloh
+        /// </summary>
+        private List<Backup> _backups = new List<Backup>();
+
+        /// <summary>
+        /// nastavení, které se použije při stahování informací, pakliže nejsou jiné informace
+        /// dány při volání fce; toto nastavení se také používá při operacích jako Add,
+        /// Delete, ...
+        /// </summary>
+        public BackupInfoLoadOptions DefaultOptions = new BackupInfoLoadOptions()
+        {
+            UploadApi = true,
+            UploadSFTP = true,
+            DownloadApi = false,
+            DownloadSFTP = false,
+            Sync = true,
+            BackupFilter = new Func<Backup, bool>(bk => true),
+            SftpClientFilter = new Func<PC_Info, bool>(pc => pc.IsThis)
+        };
 
         /// <summary>
         /// Defaultní filtr pro filtrování načtených záloh. Defaultně projdou všechny zálohy.
@@ -36,7 +156,7 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         public Backup[] Backups
         {
-            get => backups.ToArray();
+            get => _backups.ToArray();
         }
 
         /// <summary>
@@ -47,7 +167,7 @@ namespace SmartModulBackupClasses.Managers
             get
             {
                 var pc_id = SMB_Utils.GetComputerId();
-                return Backups.Where(f => f.ComputerId == pc_id);
+                return _backups.Where(f => f.ComputerId == pc_id);
             }
         }
 
@@ -61,8 +181,6 @@ namespace SmartModulBackupClasses.Managers
             plans = Manager.Get<AccountManager>();
         }
 
-        public bool UseApi { get; set; } = true;
-        public bool UseSftp { get; set; } = true;
 
         /// <summary>
         /// Pokud se tato třída využívá ve WPF, sem dejte něco jako Application.Current.Dispatcher.InvokeAsync;
@@ -87,26 +205,17 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         private Semaphore semaphore = new Semaphore(1, 1, "SMB_BackupInfoManager_Semaphore");
 
-        /// <summary>
-        /// Načte info:
-        /// <para>   a) ze xml souborů v Const.BK_INFOS_FOLDER</para>
-        /// <para>   b) pokud UseApi => z webového api (to vrátí všechny zálohy na aktuálním plánu, čili mohou být i z jiných
-        ///     PC; pro filtr záloh jen z tohoto PC použijte LocalBackups)</para>
-        /// <para>   c) pokud UseSftp => z SFTP serveru, kde mohou také být uloženy informace o zálohách v .xml formátu</para>
-        /// </summary>
-        /// <param name="sync">
-        ///     pokud true, metoda se postará o to, aby na žádném ze zdrojů 
-        ///     (lokální, pokud UseApi => webové api, pokud UseSftp => sftp server) 
-        ///     nechybělo žádné info, které není na jiném zdroji
-        /// </param>
-        /// <param name="filter">Tímto se budou filtrovat načtené zálohy. Pokud null, načtou se všechny.</param>
-        /// <returns></returns>
-        public async Task LoadAsync(bool sync = true, Func<Backup, bool> filter = null, bool downloadSftp = false)
+        public async Task LoadAsync()
+        {
+            await LoadAsync(DefaultOptions);
+        }
+
+        public async Task LoadAsync(BackupInfoLoadOptions options)
         {
             bool entered = semaphore.WaitOne(Patience);
             try
             {
-                await _loadAsync(sync, filter, downloadSftp);
+                await _loadAsync(options);
             }
             finally
             {
@@ -120,7 +229,7 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         /// <param name="sync">pokud true, budou se doplňovat chybějící informace na všechny zvolené strany (lokálně / api / sftp)</param>
         /// <returns></returns>
-        private async Task _loadAsync(bool sync = true, Func<Backup, bool> filter = null, bool downloadSftp = false)
+        private async Task _loadAsync(BackupInfoLoadOptions options)
         {
             var newBackups = new List<Backup>();
 
@@ -131,18 +240,18 @@ namespace SmartModulBackupClasses.Managers
             List<Task> listTasks = new List<Task>();
 
             //používáme-li api, stáhnem z něj informace o zálohách
-            if (UseApi)
+            if (options.ShouldDownloadApi)
                 listTasks.Add(Task.Run(async () => apiResults = await listBksApi()));
 
             //také je možné, že jsou informace uložené na sftp;
-            SftpUploader sftp = downloadSftp ? Manager.Get<SftpUploader>() : null;
+            SftpUploader sftp = options.DownloadSFTP ? Manager.Get<SftpUploader>() : null;
 
             if (sftp != null)
             {
                 listTasks.Add(Task.Run(async () =>
                 {
                     if ((await sftp?.TryConnectAsync(2000)) == true)
-                        sftpResults = await listBksSftp(sftp);
+                        sftpResults = await listBksSftp(sftp, options.SftpClientFilter);
                 }));
             }
 
@@ -174,37 +283,43 @@ namespace SmartModulBackupClasses.Managers
             newBackups.AddRange(sftpResults.Where(canAdd));
             newBackups.AddRange(localResults.Where(canAdd));
 
-            filter = filter ?? DefaultFilter;
-
             //nastavit pole backups podle fitrovaného newBackups
-            backups.UpdateCollectionByCompare(
-                newBackups.Where(filter),
-                (b1, b2) => b1.LocalID == b2.LocalID);
+            _backups.UpdateCollectionByCompare(
+                newBackups.Where(options.BackupFilter),
+                (b1, b2) =>
+                {
+                    if (!b1.MadeOnThisComputer)
+                        return false;
+                    return b1.LocalID == b2.LocalID;
+                });
 
             List<Task> sftpTasks = new List<Task>();
             List<Task> apiTasks = new List<Task>();
             List<Task> localTasks = new List<Task>();
 
-            if (sync)
+            if (options.Sync)
             { 
                 //máme tři zdroje informací o zálohách - api, sftp a lokální soubory. Chceme, aby na všech zdrojích
                 //byly všechny zálohy. o to se postaráme zde
-                foreach (var bk in LocalBackups) 
+                foreach (var bk in Backups) 
                 {
-                    //pokud UseApi == true
-                    //a zároveň narazíme na zálohu, která byla vytvořena k aktuálnímu plánu, ale webové api o ni neví,
-                    //nahrajeme jí tam
-                    if (UseApi && !apiResults.Any(f => f.LocalID == bk.LocalID) && client != null && bk.UploadedToCurrentPlan)
-                        apiTasks.Add(saveBkApi(bk));
+                    if (bk.MadeOnThisComputer) //na SFTP a API nahráváme jen zálohy, které jsme si sami vytvořili
+                    {
+                        //pokud stahujen zálohu i s Api
+                        //a zároveň narazíme na zálohu, která byla vytvořena k aktuálnímu plánu, ale webové api o ni neví,
+                        //nahrajeme jí tam
+                        if (options.ShouldDownloadApi && !apiResults.Any(f => f.LocalID == bk.LocalID) && client != null && bk.UploadedToCurrentPlan)
+                            apiTasks.Add(saveBkApi(bk));
 
-                    //pokud UseSftp == true
-                    //a zároveň narazíme na zálohu, která byla nahrána na aktuální SFTP server ale nebylo o ní nahráno info,
-                    //nahrajeme jí tam
-                    if (downloadSftp && !sftpResults.Any(f => f.LocalID == bk.LocalID) && sftp?.IsConnected == true)
-                        sftpTasks.Add(saveBkSftp(bk, sftp));
+                        //pokud stahujem zálohu i ze SFTP
+                        //a zároveň narazíme na zálohu, která byla nahrána na aktuální SFTP server ale nebylo o ní nahráno info,
+                        //nahrajeme jí tam
+                        if (options.DownloadSFTP && !sftpResults.Any(f => f.LocalID == bk.LocalID) && sftp?.IsConnected == true)
+                            sftpTasks.Add(saveBkSftp(bk, sftp));
+                    }
 
                     //pokud info o záloze není uloženo lokálně, uložíme ho
-                    if (!localResults.Any(f => f.LocalID == bk.LocalID))
+                    if (!bk.MadeOnThisComputer || !localResults.Any(f => f.LocalID == bk.LocalID))
                         localTasks.Add(saveBkLocally(bk));
                 }
             }
@@ -229,16 +344,16 @@ namespace SmartModulBackupClasses.Managers
             bool entered = semaphore.WaitOne(Patience);
             try
             {
-                if (!backups.Contains(bk))
+                if (!_backups.Contains(bk))
                 {
                     bk.LocalID = ++ID;
-                    backups.Add(bk);
+                    _backups.Add(bk);
                 }
 
                 List<Task> tasks = new List<Task>();
-                if (UseApi && client != null)
+                if (DefaultOptions.ShouldUploadApi && client != null)
                     tasks.Add(saveBkApi(bk));
-                if (UseSftp)
+                if (DefaultOptions.UploadSFTP)
                     tasks.Add(saveBkSftp(bk));
                 tasks.Add(saveBkLocally(bk));
                 await Task.WhenAll(tasks);
@@ -267,7 +382,7 @@ namespace SmartModulBackupClasses.Managers
                 try
                 {
                     bk.LocalID = ++ID;
-                    backups.Add(bk);
+                    _backups.Add(bk);
                 }
                 finally
                 {
@@ -286,11 +401,11 @@ namespace SmartModulBackupClasses.Managers
             bool entered = semaphore.WaitOne(Patience);
             try
             {
-                backups.RemoveAll(b => b.LocalID == bk.LocalID);
+                _backups.RemoveAll(b => b.LocalID == bk.LocalID);
 
                 var del_local = deleteBkLocally(bk);
-                var del_sftp = UseSftp ? deleteBkSftp(bk, sftp) : Task.CompletedTask;
-                var del_api = UseApi ? deleteBkApi(bk) : Task.CompletedTask;
+                var del_sftp = DefaultOptions.UploadSFTP ? deleteBkSftp(bk, sftp) : Task.CompletedTask;
+                var del_api = DefaultOptions.ShouldUploadApi ? deleteBkApi(bk) : Task.CompletedTask;
 
                 await Task.WhenAll(del_local, del_sftp, del_api);
             }
@@ -314,13 +429,13 @@ namespace SmartModulBackupClasses.Managers
             bool entered = semaphore.WaitOne(Patience);
             try
             {
-                var ind = backups.FindIndex(b => b.LocalID == bk.LocalID);
-                if (ind >= 0 && backups[ind] != bk)
-                    backups[ind] = bk;
+                var ind = _backups.FindIndex(b => b.LocalID == bk.LocalID);
+                if (ind >= 0 && _backups[ind] != bk)
+                    _backups[ind] = bk;
 
                 var del_local = updateBkLocally(bk);
-                var del_sftp = UseSftp ? updateBkSftp(bk, sftp) : Task.CompletedTask;
-                var del_api = UseApi ? updateBkApi(bk) : Task.CompletedTask;
+                var del_sftp = DefaultOptions.UploadSFTP ? updateBkSftp(bk, sftp) : Task.CompletedTask;
+                var del_api = DefaultOptions.ShouldUploadApi ? updateBkApi(bk) : Task.CompletedTask;
 
                 await Task.WhenAll(del_local, del_sftp, del_api);
             }
@@ -357,37 +472,78 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         /// <param name="sftp">tato metoda nevolá connect</param>
         /// <returns></returns>
-        private async Task<IEnumerable<Backup>> listBksSftp(SftpUploader sftpUploader)
+        private async Task<IEnumerable<Backup>> listBksSftp(SftpUploader sftpUploader, Func<PC_Info, bool> filter)
         {
+            List<Backup> found = new List<Backup>();
             try
             {
-                List<Backup> found = new List<Backup>();
-
-                var folder = SMB_Utils.GetRemoteBkinfosPath().NormalizePath();
-                sftpUploader.CreateDirectory(folder);
-                var sftp = sftpUploader.client;
-                
-                var bk_list_async = sftp.BeginListDirectory(folder, null, null);
-                var files = await Task.Factory.FromAsync(bk_list_async, sftp.EndListDirectory);                
-                foreach(var file in files)
+                //projít všechny PC na serveru
+                foreach (var info in SftpMetadataManager.GetPCInfos(sftpUploader))
                 {
-                    if (file.Name == "." || file.Name == "..")
+                    if (!filter(info)) //pokud toto PC neodpovídá filtru, kašlat naň
                         continue;
 
-                    var content = sftp.ReadAllText(file.FullName);
-                    try
+                    //získat všechny soubory ve složce
+                    var files = sftpUploader.ListDir(SMB_Utils.GetRemoteBkinfosPath(info.RemoteFolderName).NormalizePath(),
+                        false, file => file.IsRegularFile); 
+
+                    foreach (var file in files.Select(pair => pair.Value)) //projít je
                     {
-                        found.Add(Backup.DeXml(content));
+                        try
+                        {
+                            //vytáhnout text ze souboru, deserializovati jej a přidat do seznamu pro vrácení
+                            var xml = sftpUploader.client.ReadAllText(file.FullName);
+                            var deserialized = Backup.DeXml(xml);
+                            found.Add(deserialized);
+                        }
+                        catch (Exception ex)
+                        {
+                            SmbLog.Debug($"Nepodařilo se načíst soubor s informacemi o záloze přes SFTP\ncesta: \"{file.FullName}\"", ex, LogCategory.BackupInfoManager);
+                        }
+
                     }
-                    catch { }
                 }
 
                 return found;
             }
             catch (Exception ex)
             {
+                SmbLog.Error("Nepodařilo se stáhnout info o zálohách ze sftp.", ex, LogCategory.BackupInfoManager);
                 return Enumerable.Empty<Backup>();
-            }       
+            }
+
+            //následuje zastaralý kód, který vracel jen info o zálohách z aktuálního PC
+            //kód byl nahrazen kódem, který umí vracet i info o zálohách z jiných PC
+
+            //try
+            //{
+            //    List<Backup> found = new List<Backup>();
+
+            //    var folder = SMB_Utils.GetRemoteBkinfosPath().NormalizePath();
+            //    sftpUploader.CreateDirectory(folder);
+            //    var sftp = sftpUploader.client;
+                
+            //    var bk_list_async = sftp.BeginListDirectory(folder, null, null);
+            //    var files = await Task.Factory.FromAsync(bk_list_async, sftp.EndListDirectory);                
+            //    foreach(var file in files)
+            //    {
+            //        if (file.Name == "." || file.Name == "..")
+            //            continue;
+
+            //        var content = sftp.ReadAllText(file.FullName);
+            //        try
+            //        {
+            //            found.Add(Backup.DeXml(content));
+            //        }
+            //        catch { }
+            //    }
+
+            //    return found;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Enumerable.Empty<Backup>();
+            //}       
         }
 
         private async Task<IEnumerable<Backup>> listBksLocal()
@@ -638,7 +794,7 @@ namespace SmartModulBackupClasses.Managers
             get
             {
                 if (!File.Exists(idpath))
-                    return backups.Any() ? backups.Max(f => f.LocalID) : 1;
+                    return LocalBackups.Any() ? LocalBackups.Max(f => f.LocalID) : 1;
                 else
                 {
                     try
@@ -651,12 +807,12 @@ namespace SmartModulBackupClasses.Managers
                             File.SetAttributes(idpath, FileAttributes.Hidden);
                         }
 
-                        int val2 = backups.Any() ? backups.Max(f => f.LocalID) : 1;
+                        int val2 = LocalBackups.Any() ? LocalBackups.Max(f => f.LocalID) : 1;
                         return Math.Max(val1, val2);
                     }
                     catch
                     {
-                        return backups.Any() ? backups.Max(f => f.LocalID) : 1;
+                        return LocalBackups.Any() ? LocalBackups.Max(f => f.LocalID) : 1;
                     }
                 }
             }

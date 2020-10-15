@@ -42,7 +42,20 @@ namespace smart_modul_BACKUP_service.RestoreExe
             if (State != TaskState.NotStartedYet)
                 throw new InvalidOperationException("Tento task již byl spuštěn, nelze ho spustit znovu");
 
-            bkToRestore = Manager.Get<BackupInfoManager>().LocalBackups.FirstOrDefault(b => b.LocalID == Info.backupID);
+            var bakman = Manager.Get<BackupInfoManager>();
+            bakman.LoadAsync().Wait();
+            bkToRestore = bakman.Backups.FirstOrDefault(b =>
+            {
+                //berem pouze ty, které jsou z daného PC
+                if (b.ComputerId != (Info.pcId ?? SMB_Utils.GetComputerId()))
+                    return false;
+
+                return b.LocalID == Info.backupID;
+            });
+
+            if (bkToRestore == null)
+                throw new NullReferenceException("Záloha nenalezena!");
+
             progress = Utils.InProgress.NewRestore();
             progress.AfterUpdateCalled += () => Utils.GUIS.UpdateRestore(progress);
             Utils.GUIS.StartRestore(progress);

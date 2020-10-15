@@ -1,4 +1,5 @@
 ﻿using SmartModulBackupClasses;
+using SmartModulBackupClasses.WCF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace smart_modul_BACKUP_service.WCF
         //BackupInProgress DoSingleBackup(int rule);
 
         [OperationContract]
+        [FaultContract(typeof(CommonFault))]
         RestoreInProgress Restore(Restore restoreInfo);
 
         [OperationContract]

@@ -31,6 +31,11 @@ namespace SmartModulBackupClasses
         /// </summary>
         public int backupID { get; set; }
 
+        /// <summary>
+        /// id PC, k němuž záloha patří (pokud null, bere se toto PC)
+        /// </summary>
+        public string pcId { get; set; }
+
         public int GetID() => ID;
 
         public int ID;

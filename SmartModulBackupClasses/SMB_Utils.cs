@@ -21,12 +21,12 @@ namespace SmartModulBackupClasses
         /// <returns></returns>
         public static string GetComputerId()
         {
-            if (pc_id == null)
+            if (pc_id == null) //líná inicializace
             {
                 var base_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
                 var cv_key = base_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
                 pc_id = cv_key.GetValue("ProductId").ToString();
-            } 
+            }
             return pc_id;
         }
 
@@ -39,33 +39,98 @@ namespace SmartModulBackupClasses
         }
 
         /// <summary>
-        /// Vrátí cestu na sftp serveru, kam se mají ukládat zálohy z tohoto pc
+        /// Vrátí kořenovou složku na SFTP, kam všechny počítače ukládají svá data.
+        /// </summary>
+        /// <returns></returns>
+        public static string RemoteSharedDirectory 
+        {
+            get
+            {
+                var pm = Manager.Get<AccountManager>();
+                if (pm.State == LoginState.Offline)
+                    return Manager.Get<ConfigManager>().Config.SFTP.Directory;
+                else
+                    return pm.SftpInfo.Directory;
+            }
+        }
+
+        /// <summary>
+        /// Cesta ke vzdálené složce patřící TOMUTO PC
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRemotePCDirectory()
+        {
+            return Path.Combine(RemoteSharedDirectory, GetComputerId());
+        }
+
+        /// <summary>
+        /// vrátí cestu ke vzdálené složce patřící pc s DANÝM názvem složky
+        /// </summary>
+        /// <param name="pcFolder"></param>
+        /// <returns></returns>
+        public static string GetRemotePCDirectory(string pcFolder)
+        {
+            return Path.Combine(RemoteSharedDirectory, pcFolder);
+        }
+
+
+        /// <summary>
+        /// Vrátí cestu na sftp serveru, kam se mají ukládat zálohy z TOHOTO pc
         /// </summary>
         /// <returns></returns>
         public static string GetRemoteBackupPath()
         {
-            var pm = Manager.Get<AccountManager>();
-            if (pm.State == LoginState.Offline)
-                return Path.Combine(Manager.Get<ConfigManager>().Config.SFTP.Directory, GetComputerId(), "Backups");
-            else
-                return Path.Combine(pm.SftpInfo.Directory, GetComputerId(), "Backups");
+            return Path.Combine(GetRemotePCDirectory(), Const.REMOTE_DIR_BACKUPS);
         }
 
         /// <summary>
-        /// Vrátí cestu na sftp serveru, kam se mají ukládat info o zálohách z tohoto pc
+        /// Vrátí cestu na sftp serveru, kam se mají ukládat zálohy z DANÉHO pc
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRemoteBackupPath(string pcFolder)
+        {
+            return Path.Combine(GetRemotePCDirectory(pcFolder), Const.REMOTE_DIR_BACKUPS);
+        }
+
+        /// <summary>
+        /// Vrátí cestu na sftp serveru, kam se mají ukládat info o zálohách z TOHOTO pc
         /// </summary>
         /// <returns></returns>
         public static string GetRemoteBkinfosPath()
         {
-            var pm = Manager.Get<AccountManager>();
-            if (pm.State == LoginState.Offline)
-                return Path.Combine(Manager.Get<ConfigManager>().Config.SFTP.Directory, GetComputerId(), "bkinfos");
-            else
-                return Path.Combine(pm.SftpInfo.Directory, GetComputerId(), "bkinfos");
+            return Path.Combine(GetRemotePCDirectory(), Const.BK_INFOS_FOLDER);
         }
 
         /// <summary>
-        /// Vrátí název souboru
+        /// Vrátí cestu na sftp serveru, kam se mají ukládat info o zálohách z DANÉHO pc
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRemoteBkinfosPath(string pcFolder)
+        {
+            return Path.Combine(GetRemotePCDirectory(pcFolder), Const.BK_INFOS_FOLDER);
+        }
+
+        /// <summary>
+        /// vrátí vzdálenou cestu k souboru s informacemi o TOMTO klientovi
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRemotePCinfoPath()
+        {
+            return Path.Combine(GetRemotePCDirectory(), Const.REMOTE_PC_INFO);
+        }
+
+        /// <summary>
+        /// vrátí vzdálenou cestu k souboru s informacemi o DANÉM klientovi
+        /// </summary>
+        /// <param name="pcFolder"></param>
+        /// <returns></returns>
+        public static string GetRemotePCinfoPath(string pcFolder)
+        {
+            return Path.Combine(GetRemotePCDirectory(pcFolder), Const.REMOTE_PC_INFO);
+        }
+
+        /// <summary>
+        /// Vrátí název souboru, pod kterým by se toto mělo uložit
         /// </summary>
         /// <param name="bk"></param>
         /// <returns></returns>

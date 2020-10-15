@@ -91,6 +91,7 @@
     <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
+    <Reference Include="smartModulBACKUP_service, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
@@ -221,6 +222,9 @@
     <Compile Include="Windows\Setup.xaml.cs">
       <DependentUpon>Setup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\SftpSyncSelectWindow.xaml.cs">
+      <DependentUpon>SftpSyncSelectWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\YesNoDialog.xaml.cs">
       <DependentUpon>YesNoDialog.xaml</DependentUpon>
     </Compile>
@@ -328,6 +332,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\SftpSyncSelectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\YesNoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -362,6 +370,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServiceInterface\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceInterface\item4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServiceInterface\SmartModulBackupInterface.wsdl" />

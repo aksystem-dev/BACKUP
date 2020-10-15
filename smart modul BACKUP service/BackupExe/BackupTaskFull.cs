@@ -278,6 +278,7 @@ namespace smart_modul_BACKUP_service.BackupExe
         /// <returns>Zdali je vše v poho.</returns>
         private bool connectSftp()
         {
+            //pokud toto pravidlo má povolené vzdálené zálohy, připojit se na sftp; jinak ne
             if (Rule.RemoteBackups.enabled && Rule.RemoteBackups.MaxBackups > 0)
             {
                 logInfo("Připojuji se k SFTP serveru");
@@ -285,6 +286,14 @@ namespace smart_modul_BACKUP_service.BackupExe
                 {
                     sftp = Manager.Get<SftpUploader>();
                     sftp.Connect();
+
+                    //po připojení k sftp tam zkusit nahrát info o tomto PC
+                    try { SftpMetadataManager.SetMyInfo(sftp); }
+                    catch (Exception ex)
+                    {
+                        logError($"Nepodařilo se nahrát info o tomto PC na server", ex);
+                    }
+
                     logInfo("Úspěšně připojeno k SFTP serveru");
 
                     return true;
@@ -596,16 +605,22 @@ namespace smart_modul_BACKUP_service.BackupExe
         /// <returns></returns>
         private bool saveFile(string src, string fname)
         {
-            string rule_folder = Path.Combine(cfg.LocalBackupDirectory, Rule.Name);
-            Directory.CreateDirectory(rule_folder);
-            string this_bk_path = Path.GetFullPath(Path.Combine(rule_folder, fname));
-
             try
             {
+                string rule_folder = Path.Combine(cfg.LocalBackupDirectory, Rule.Name);
+                Directory.CreateDirectory(rule_folder);
+                string this_bk_path = Path.GetFullPath(Path.Combine(rule_folder, fname));
+
                 if (Rule.Zip)
+                {
+                    logInfo($"přesouvám soubor {src} do umístění {this_bk_path}");
                     File.Move(src, this_bk_path);
+                }
                 else
+                {
+                    logInfo($"přesouvám adresář {src} do umístění {this_bk_path}");
                     Directory.Move(src, this_bk_path);
+                }
 
                 B_Obj.AvailableLocally = true;
                 B_Obj.LocalPath = this_bk_path;

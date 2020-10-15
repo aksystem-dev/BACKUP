@@ -116,15 +116,6 @@ namespace smart_modul_BACKUP_service
 
                 DumbLogger.Log("Služba smart modul BACKUP spuštěna!!");
 
-                ////cd do složky, kam chceme 
-                ////TODO: zařídit, aby se tato složka buďto:
-                ////  - dala nastavit
-                ////  - byla v umístění .exe služby a GUI
-                //string cd = "C:\\smart modul BACKUP";
-                //if (!Directory.Exists(cd)) Directory.CreateDirectory(cd);
-                //Directory.SetCurrentDirectory(cd);
-                //DumbLogger.Log($"Aktuální adresa: {cd}");
-
                 //pracujeme ve složce, kde je exe služby (ve stejné by mělo být exe GUI)
                 string cd = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
                 Directory.SetCurrentDirectory(cd);

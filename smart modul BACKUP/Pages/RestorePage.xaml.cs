@@ -1,9 +1,11 @@
 ﻿using SmartModulBackupClasses;
+using SmartModulBackupClasses.WCF;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -80,6 +82,7 @@ namespace smart_modul_BACKUP
             {
                 ID = service.RestoresInProgress.Any() ? service.RestoresInProgress.Max(f => f.ID) + 1 : 0,
                 backupID = Backup.LocalID,
+                pcId = Backup.ComputerId,
                 location = rbt_local.IsChecked == true ? BackupLocation.Local : BackupLocation.SFTP,
                 zip_path = rbt_local.IsChecked == true ? localPath : Backup.RemotePath
             };
@@ -125,10 +128,15 @@ namespace smart_modul_BACKUP
                             Backup.InProgress.Remove(progress));
                     };
                 }
+                catch (FaultException<CommonFault> ex)
+                {
+                    SmbLog.Error("výjimka při spouštění obnovy z GUI", ex, LogCategory.GUI);
+                    MessageBox.Show($"Došlo k chybě {ex.Detail.Message}", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 catch (Exception ex)
                 {
                     SmbLog.Error("výjimka při spouštění obnovy z GUI", ex, LogCategory.GUI);
-                    MessageBox.Show("Došlo k chybě.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Došlo k chybě {ex.Message}", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             MainWindow.main.Back();

@@ -330,10 +330,30 @@ namespace smart_modul_BACKUP
             UpdateConfig();
             try
             {
-                await Manager.Get<BackupInfoManager>().LoadAsync(true, downloadSftp: true);
+                //vytvořit a otevřít okno, kde si uživatel vybere, z kterých klientů chce stáhnout data
+                var win = new Windows.SftpSyncSelectWindow(SftpMetadataManager.GetPCInfos());
+                if (win.ShowDialog() == false)
+                    return;
+
+                //vytvořit hashset s vybranými počítači
+                var selectedPCs = win.SelectedPCs.ToHashSet();
+
+                var man = Manager.Get<BackupInfoManager>();
+                var opt = man.DefaultOptions.With(options =>
+                {
+                    options.DownloadSFTP = true;
+                    options.SftpClientFilter = selectedPCs.Contains;
+                });
+                await man.LoadAsync(opt);
             }
-            catch { }
-            btn_syncsftp.IsEnabled = true;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Nepovedlo se to. \n {ex.Message}");
+            }
+            finally
+            {
+                btn_syncsftp.IsEnabled = true;
+            }
         }
     }
 }

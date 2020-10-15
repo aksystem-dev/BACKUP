@@ -5,6 +5,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:ProgressMonitor">
         <xs:sequence>
+          <xs:element minOccurs="0" name="CurrentState" type="tns:BackupState" />
           <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfError" />
           <xs:element minOccurs="0" name="RuleId" type="xs:int" />
           <xs:element minOccurs="0" name="RuleName" nillable="true" type="xs:string" />
@@ -15,12 +16,30 @@
   <xs:element name="BackupInProgress" nillable="true" type="tns:BackupInProgress" />
   <xs:complexType name="ProgressMonitor">
     <xs:sequence>
-      <xs:element minOccurs="0" name="CurrentTask" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Parameter" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Progress" type="xs:float" />
       <xs:element minOccurs="0" name="ProgressId" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ProgressMonitor" nillable="true" type="tns:ProgressMonitor" />
+  <xs:simpleType name="BackupState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Initializing" />
+      <xs:enumeration value="RunningProcesses" />
+      <xs:enumeration value="ConnectingSftp" />
+      <xs:enumeration value="ConnectingSql" />
+      <xs:enumeration value="CreatingVss" />
+      <xs:enumeration value="BackupSources" />
+      <xs:enumeration value="ZipBackup" />
+      <xs:enumeration value="SftpUpload" />
+      <xs:enumeration value="MovingToLocalFolder" />
+      <xs:enumeration value="Cancelling" />
+      <xs:enumeration value="Finishing" />
+      <xs:enumeration value="OneToOneBackups" />
+      <xs:enumeration value="Done" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BackupState" nillable="true" type="tns:BackupState" />
   <xs:complexType name="ArrayOfError">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Error" type="tns:Error" />
@@ -44,6 +63,7 @@
       <xs:element minOccurs="0" name="ID" type="xs:int" />
       <xs:element minOccurs="0" name="backupID" type="xs:int" />
       <xs:element minOccurs="0" name="location" type="tns:BackupLocation" />
+      <xs:element minOccurs="0" name="pcId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="sources" nillable="true" type="tns:ArrayOfSavedSource" />
       <xs:element minOccurs="0" name="zip_path" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -93,12 +113,26 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:ProgressMonitor">
         <xs:sequence>
+          <xs:element minOccurs="0" name="CurrentState" type="tns:RestoreState" />
           <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfError" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="RestoreInProgress" nillable="true" type="tns:RestoreInProgress" />
+  <xs:simpleType name="RestoreState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Starting" />
+      <xs:enumeration value="ConnectingSftp" />
+      <xs:enumeration value="ConnectingSql" />
+      <xs:enumeration value="DownloadingZip" />
+      <xs:enumeration value="ExtractingZip" />
+      <xs:enumeration value="RestoringSources" />
+      <xs:enumeration value="Finishing" />
+      <xs:enumeration value="Done" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RestoreState" nillable="true" type="tns:RestoreState" />
   <xs:complexType name="ArrayOfBackupInProgress">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="BackupInProgress" nillable="true" type="tns:BackupInProgress" />

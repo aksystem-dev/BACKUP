@@ -80,16 +80,27 @@ namespace SmartModulBackupClasses
             }
         }
 
-        public Dictionary<string, SftpFile> ListDir(SftpFile dir, bool recursive)
+        /// <summary>
+        /// vrací obsah dané složky (soubory a složky) na serveru jakožto slovník (cesta, informace).
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <param name="recursive"></param>
+        /// <returns></returns>
+        public Dictionary<string, SftpFile> ListDir(SftpFile dir, bool recursive, Func<SftpFile, bool> filter = null)
         {
             if (!dir.IsDirectory)
                 throw new ArgumentException("parametr dir musí být složka");
+
+            filter = filter ?? new Func<SftpFile, bool>(f => true);
 
             var to_return = new Dictionary<string, SftpFile>();
 
             //projít obsah vzdálené složky
             foreach (var entry in client.ListDirectory(dir.FullName))
             {
+                //pokud aktuální soubor nesplňuje filtr, tak tento soubor přeskočíme
+                if (!filter(entry))
+                    continue;                
                 //přidat normální soubory
                 if (entry.IsRegularFile)
                     to_return.Add(entry.FullName.NormalizePath(), entry);
@@ -111,8 +122,17 @@ namespace SmartModulBackupClasses
             return to_return;
         }
 
-        public Dictionary<string, SftpFile> ListDir(string dir, bool recursive)
+        /// <summary>
+        /// vrací obsah dané složky na serveru (soubory a složky) jakožto slovník (cesta, informace).
+        /// Pokud daná složka neexistuje, vrací prázdný slovník.
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <param name="recursive"></param>
+        /// <returns></returns>
+        public Dictionary<string, SftpFile> ListDir(string dir, bool recursive, Func<SftpFile, bool> filter = null)
         {
+            dir = dir.NormalizePath();
+
             //pokud na serveru složka dir neexistuje, vrátit prázdný slovník
             if (!client.Exists(dir))
                 return new Dictionary<string, SftpFile>();
@@ -121,7 +141,7 @@ namespace SmartModulBackupClasses
             if (!entry.IsDirectory)
                 return new Dictionary<string, SftpFile>();
 
-            return ListDir(entry, recursive);
+            return ListDir(entry, recursive, filter);
         }
 
         /// <summary>
@@ -505,7 +525,7 @@ namespace SmartModulBackupClasses
             List<Exception> problems = new List<Exception>();
 
             var files = client.ListDirectory(remoteDirectory);
-            foreach (var file in files)
+            foreach (var file in files) //projít soubory a složky uvnitř této složky
             {
                 //tyhle srandy se nevztahují k fyzickým souborům, tudíž je ignorujem
                 if (file.Name == "." || file.Name == "..")
@@ -516,7 +536,7 @@ namespace SmartModulBackupClasses
                     if (file.IsRegularFile)
                         file.Delete();
                     else if (file.IsDirectory)
-                        DeleteDirectory(file.FullName);
+                        DeleteDirectory(file.FullName); //rekurze
                 }
                 catch (Exception ex)
                 {
@@ -550,7 +570,7 @@ namespace SmartModulBackupClasses
 
 
         /// <summary>
-        /// Vytvoří složku
+        /// Vytvoří složku, popř. i složky, které k ní vedou
         /// </summary>
         /// <param name="remoteDestination"></param>
         public void CreateDirectory(string remoteDestination)

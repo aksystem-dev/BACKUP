@@ -76,8 +76,10 @@
     <Compile Include="Mails\MailCallbackArgs.cs" />
     <Compile Include="Mails\MailFile.cs" />
     <Compile Include="Managers\Mailer.cs" />
+    <Compile Include="Managers\SftpMetadataManager.cs" />
     <Compile Include="Managers\SmbMailer.cs" />
     <Compile Include="OneToOneBackupStatus.cs" />
+    <Compile Include="PC_Info.cs" />
     <Compile Include="Reflector.cs" />
     <Compile Include="Rules\BackupConfig.cs" />
     <Compile Include="BackupError.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="SftpUploaderFactory.cs" />
     <Compile Include="SMB_Utils.cs" />
     <Compile Include="TaskQueue.cs" />
+    <Compile Include="WCF\CommonFault.cs" />
     <Compile Include="WebApi\ActivateRequest.cs" />
     <Compile Include="WebApi\ApiResponse.cs" />
     <Compile Include="WebApi\BaseRequest.cs" />

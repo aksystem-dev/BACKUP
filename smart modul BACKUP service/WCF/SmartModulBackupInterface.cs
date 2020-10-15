@@ -2,6 +2,7 @@
 using smart_modul_BACKUP_service.RestoreExe;
 using SmartModulBackupClasses;
 using SmartModulBackupClasses.Managers;
+using SmartModulBackupClasses.WCF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,7 +110,19 @@ namespace smart_modul_BACKUP_service.WCF
             //});
 
             var task = new RestoreTask(restoreInfo);
-            return task.Start();
+
+            try
+            {
+                return task.Start();
+            }
+            catch (Exception ex)
+            {
+                throw new FaultException<CommonFault>(new CommonFault()
+                {
+                    Message = ex.Message,
+                    Type = ex.GetType().Name
+                });
+            }
         }
 
         /// <summary>

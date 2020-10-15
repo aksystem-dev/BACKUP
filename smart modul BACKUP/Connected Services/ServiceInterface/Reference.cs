@@ -34,6 +34,7 @@ namespace smart_modul_BACKUP.ServiceInterface {
         System.Threading.Tasks.Task<SmartModulBackupClasses.BackupInProgress> DoSingleBackupAsync(string ruleXml);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/Restore", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/RestoreResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(SmartModulBackupClasses.WCF.CommonFault), Action="http://tempuri.org/ISmartModulBackupInterface/RestoreCommonFaultFault", Name="CommonFault", Namespace="http://schemas.datacontract.org/2004/07/SmartModulBackupClasses.WCF")]
         SmartModulBackupClasses.RestoreInProgress Restore(SmartModulBackupClasses.Restore restoreInfo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISmartModulBackupInterface/Restore", ReplyAction="http://tempuri.org/ISmartModulBackupInterface/RestoreResponse")]
