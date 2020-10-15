@@ -129,13 +129,7 @@ namespace SmartModulBackupClasses
             return Path.Combine(GetRemotePCDirectory(pcFolder), Const.REMOTE_PC_INFO);
         }
 
-        /// <summary>
-        /// Vrátí název souboru, pod kterým by se toto mělo uložit
-        /// </summary>
-        /// <param name="bk"></param>
-        /// <returns></returns>
-        public static string BkInfoNameStr(this Backup bk)
-            => bk.RefRuleName + "_" + bk.EndDateTime.ToString("dd-MM-yyyy") + "_" + bk.LocalID + ".xml";
+
 
         public static string PropertiesString(this object obj)
         {

@@ -254,11 +254,44 @@ namespace SmartModulBackupClasses
             }
         }
 
-        public static Backup DeXml(string xml)
+        /// <summary>
+        /// deserializuje info o záloze z xml
+        /// </summary>
+        /// <param name="xml">samotné xml</param>
+        /// <param name="fname">cesta lokálního souboru, odkud bylo xml získáno; pokud nebylo získáno z lokálního souboru, nechat null</param>
+        /// <returns></returns>
+        public static Backup DeXml(string xml, string fname)
         {
             var serializer = new XmlSerializer(typeof(Backup));
-            using(var reader = new StringReader(xml))
-                return serializer.Deserialize(reader) as Backup;            
+            using (var reader = new StringReader(xml))
+            {
+                var obj = serializer.Deserialize(reader) as Backup;
+                obj._filename = fname;
+                return obj;
+            }
+        }
+
+        /// <summary>
+        /// pokud bylo info načteno z lokálního souboru, zde bude cesta k onomu soubru
+        /// </summary>
+        private string _filename = null;
+
+        /// <summary>
+        /// Vrátí název souboru, pod kterým by se toto mělo uložit
+        /// </summary>
+        /// <param name="bk"></param>
+        /// <returns></returns>
+        public string BkInfoNameStr(bool includeComputerID = true)
+        {
+            //pokud toto bylo načteno z lokálního souboru, vrátit cestu k němu
+            if (_filename != null)
+                return _filename;
+
+            //jinak vygenerovat nové jméno
+            if (includeComputerID)
+                return this.RefRuleName + "_" + this.EndDateTime.ToString("dd-MM-yyyy") + "_" + this.LocalID + "_" + this.ComputerId + ".xml";
+            else
+                return this.RefRuleName + "_" + this.EndDateTime.ToString("dd-MM-yyyy") + "_" + this.LocalID + ".xml";
         }
     }
 

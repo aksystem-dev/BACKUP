@@ -493,7 +493,7 @@ namespace SmartModulBackupClasses.Managers
                         {
                             //vytáhnout text ze souboru, deserializovati jej a přidat do seznamu pro vrácení
                             var xml = sftpUploader.client.ReadAllText(file.FullName);
-                            var deserialized = Backup.DeXml(xml);
+                            var deserialized = Backup.DeXml(xml, null);
                             found.Add(deserialized);
                         }
                         catch (Exception ex)
@@ -559,7 +559,7 @@ namespace SmartModulBackupClasses.Managers
                     var content = File.ReadAllText(file);
                     try
                     {
-                        found.Add(Backup.DeXml(content));
+                        found.Add(Backup.DeXml(content, file));
                     }
                     catch { }
                 }
@@ -593,7 +593,7 @@ namespace SmartModulBackupClasses.Managers
                     return false;
             }
 
-            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.BkInfoNameStr()).NormalizePath();
+            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.BkInfoNameStr(false)).NormalizePath();
             return await Task.Run<bool>(() =>
             {
                 try
@@ -629,6 +629,8 @@ namespace SmartModulBackupClasses.Managers
                 try
                 {
                     string xml = bk.ToXml();
+
+                    //název souboru - bude obsahovat ID počítače pouze, pokud záloha nebyla vytvořena na tomto PC
                     string path = Path.Combine(Const.BK_INFOS_FOLDER, bk.BkInfoNameStr());
                     File.WriteAllText(path, xml);
                     return true;
