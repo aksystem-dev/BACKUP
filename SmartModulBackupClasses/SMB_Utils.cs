@@ -17,30 +17,59 @@ namespace SmartModulBackupClasses
         private static readonly Dictionary<ClientIdType, string> _ids
             = new Dictionary<ClientIdType, string>();
 
-        public const ClientIdType CurrentIdType = ClientIdType.ComputerName;
+        public const ClientIdType ID_TYPE_TO_USE = ClientIdType.ComputerName;
 
-        private static string pc_id = null;
+        private static string pc_key = null;
+
         /// <summary>
-        /// Vrátí id k identifikaci počítače. Aktuální implementace spočívá ve čtení registru, který obsahuje produkční id instalace Windows.
+        /// Vrátí aktivační klíč aktuální instalace Windows.
         /// </summary>
         /// <returns></returns>
-        public static string GetComputerId()
+        public static string GetWindowsKey()
         {
-            if (pc_id == null) //líná inicializace
+            if (pc_key == null)
             {
                 var base_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
                 var cv_key = base_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
-                pc_id = cv_key.GetValue("ProductId").ToString();
+                pc_key = cv_key.GetValue("ProductId").ToString();
             }
-            return pc_id;
+
+            return pc_key;
         }
 
+        /// <summary>
+        /// vrátí id tohoto počítače, které by se mělo používat
+        /// </summary>
+        /// <returns></returns>
+        public static string GetComputerId()
+            => GetComputerId(ID_TYPE_TO_USE);
+
+        /// <summary>
+        /// vrátí id tohoto počítače daného typu
+        /// </summary>
+        /// <param name="idType"></param>
+        /// <returns></returns>
         public static string GetComputerId(ClientIdType idType)
         {
+            if (_ids.ContainsKey(idType))
+                return _ids[idType];
 
+            switch (idType)
+            {
+                case ClientIdType.ComputerName:
+                    return _ids[idType] = GetComputerName();
+                case ClientIdType.WindowsKey:
+                    return _ids[idType] = GetWindowsKey();
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         private static string pc_name = null;
+        /// <summary>
+        /// Vrátí název tohoto PC
+        /// </summary>
+        /// <returns></returns>
         public static string GetComputerName()
         {
             if (pc_name == null)
@@ -391,7 +420,14 @@ namespace SmartModulBackupClasses
 
     public enum ClientIdType
     {
+        /// <summary>
+        /// Počítač je identifikován pomocí Windows aktivačního klíče
+        /// </summary>
         WindowsKey,
+
+        /// <summary>
+        /// Počítač je identifikován pomocí názvu počítače
+        /// </summary>
         ComputerName
     }
 }

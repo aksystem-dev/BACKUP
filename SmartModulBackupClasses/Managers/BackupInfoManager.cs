@@ -205,6 +205,8 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         private Semaphore semaphore = new Semaphore(1, 1, "SMB_BackupInfoManager_Semaphore");
 
+        //TODO: přidat metodu FixIDs, která projde zálohy vytvořené na tomto PC a zařídí, aby u všech byl správný typ ID
+
         public async Task LoadAsync()
         {
             await LoadAsync(DefaultOptions);

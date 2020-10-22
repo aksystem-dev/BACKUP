@@ -62,21 +62,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             cfg = Manager.Get<ConfigManager>().Config;
 
             //Vytvořit objekt s informacemi o záloze
-            B_Obj = new Backup()
-            {
-                RefRule = Rule.LocalID,
-                RefRuleName = Rule.Name,
-                BackupType = Rule.RuleType,
-                Errors = new List<BackupError>(),
-                Sources = new List<SavedSource>(),
-                Success = true,
-                StartDateTime = DateTime.Now,
-                ComputerId = SMB_Utils.GetComputerId(),
-                Saved = false,
-                IsZip = Rule.Zip,
-                SftpHash = Rule.RemoteBackups.enabled ? SMB_Utils.GetSftpHash() : null,
-                PlanId = SMB_Utils.GetCurrentPlanId()
-            };
+            B_Obj = Backup.New(Rule);
             await Manager.Get<BackupInfoManager>().AddQuietlyAsync(B_Obj);
 
             //toto se volá pravidelně v místech, kde je bezpečné zrušit zálohu

@@ -32,10 +32,41 @@ namespace SmartModulBackupClasses
         public ObservableCollection<RestoreInProgress> InProgress { get; private set; }
             = new ObservableCollection<RestoreInProgress>();
 
-        public Backup()
-        {
+        [Obsolete("Mělo by být pouze používáno uvnitř třídy Backup / XmlSerializerem. Použij Backup.New()")]
+        public Backup() { }
 
+        public static Backup New(BackupRule rule)
+        {
+            return new Backup()
+            {
+                RefRule = rule.LocalID,
+                RefRuleName = rule.Name,
+                BackupType = rule.RuleType,
+                Errors = new List<BackupError>(),
+                Sources = new List<SavedSource>(),
+                Success = true,
+                StartDateTime = DateTime.Now,
+                IdType = SMB_Utils.ID_TYPE_TO_USE,
+                ComputerId = SMB_Utils.GetComputerId(),
+                Saved = false,
+                IsZip = rule.Zip,
+                SftpHash = rule.RemoteBackups.enabled ? SMB_Utils.GetSftpHash() : null,
+                PlanId = SMB_Utils.GetCurrentPlanId()
+            };
         }
+
+        public static Backup New(BackupRule rule, Action<Backup> setters)
+        {
+            var bk = New(rule);
+            setters(bk);
+            return bk;
+        }
+
+
+        /// <summary>
+        /// typ identifikace počítače (jakého typu je ComputerId)
+        /// </summary>
+        public ClientIdType IdType { get; set; } = ClientIdType.WindowsKey;
 
         /// <summary>
         /// Id počítače, na kterém byla záloha vytvořena.
@@ -44,7 +75,7 @@ namespace SmartModulBackupClasses
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public int GetID() => ID;
+        public int GetID() => LocalID;
 
         /// <summary>
         /// Lokální ID zálohy
@@ -106,7 +137,7 @@ namespace SmartModulBackupClasses
         /// Jestli byla zálohy vytvořena na tomto PC.
         /// </summary>
         [XmlIgnore]
-        public bool MadeOnThisComputer => ComputerId == SMB_Utils.GetComputerId();
+        public bool MadeOnThisComputer => ComputerId == SMB_Utils.GetComputerId(IdType);
 
         /// <summary>
         /// Jestli je záloha dostupná na tomto počítači (to znamená, že jsme na počítači, na kterém byla záloha vytvořena)

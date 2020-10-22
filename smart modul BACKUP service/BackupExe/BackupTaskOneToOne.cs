@@ -29,26 +29,14 @@ namespace smart_modul_BACKUP_service.BackupExe
             //    Manager.Get<BackupInfoManager>().LocalBackups.FirstOrDefault(bk => bk.RefRule == Rule.LocalID)?.StartDateTime ?? new DateTime();
 
             //Vytvořit objekt s informacemi o záloze
-            B_Obj = new Backup()
+            B_Obj = Backup.New(Rule, bk =>
             {
-                RefRule = Rule.LocalID,
-                RefRuleName = Rule.Name,
-                BackupType = Rule.RuleType,
-                Errors = new List<BackupError>(),
-                Sources = new List<SavedSource>(),
-                Success = true,
-                StartDateTime = DateTime.Now,
-                ComputerId = SMB_Utils.GetComputerId(),
-                Saved = false,
-                IsZip = Rule.Zip,
-                OneToOneStatus = new OneToOneBackupStatus(),
-                LocalPath = Path.GetFullPath(Path.Combine(cfg.LocalBackupDirectory, Rule.Name, "OneToOne")),
-                RemotePath = Rule.RemoteBackups.enabled ? Path.Combine(SMB_Utils.GetRemoteBackupPath(), Rule.Name, "OneToOne") : null,
-                AvailableLocally = Rule.LocalBackups.enabled,
-                AvailableRemotely = Rule.RemoteBackups.enabled,
-                SftpHash = Rule.RemoteBackups.enabled ? SMB_Utils.GetSftpHash() : null,
-                PlanId = SMB_Utils.GetCurrentPlanId()
-            };
+                bk.OneToOneStatus = new OneToOneBackupStatus();
+                bk.LocalPath = Path.GetFullPath(Path.Combine(cfg.LocalBackupDirectory, Rule.Name, "OneToOne"));
+                bk.RemotePath = Rule.RemoteBackups.enabled ? Path.Combine(SMB_Utils.GetRemoteBackupPath(), Rule.Name, "OneToOne") : null;
+                bk.AvailableLocally = Rule.LocalBackups.enabled;
+                bk.AvailableRemotely = Rule.RemoteBackups.enabled;
+            });
             await Manager.Get<BackupInfoManager>().AddQuietlyAsync(B_Obj);
 
             if (IsCancelled) goto finish;
