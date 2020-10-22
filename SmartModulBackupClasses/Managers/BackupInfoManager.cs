@@ -288,6 +288,7 @@ namespace SmartModulBackupClasses.Managers
             //localResults obsahují názvy souborů, ale sftpResults a apiResults ne;
             //je proto třeba v newBackups najít zálohy, které nemají název souboru,
             //a pokud existuje stejná záloha v localBackups, tak ho updatovat
+            //(aby bylo možné odstraňování, updatování, apod. daného souboru)
             foreach (var bk in newBackups)
             {
                 var globalID = bk.LocalID + "/" + bk.ComputerId;

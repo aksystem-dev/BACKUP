@@ -14,6 +14,11 @@ namespace SmartModulBackupClasses
 {
     public static class SMB_Utils
     {
+        private static readonly Dictionary<ClientIdType, string> _ids
+            = new Dictionary<ClientIdType, string>();
+
+        public const ClientIdType CurrentIdType = ClientIdType.ComputerName;
+
         private static string pc_id = null;
         /// <summary>
         /// Vrátí id k identifikaci počítače. Aktuální implementace spočívá ve čtení registru, který obsahuje produkční id instalace Windows.
@@ -28,6 +33,11 @@ namespace SmartModulBackupClasses
                 pc_id = cv_key.GetValue("ProductId").ToString();
             }
             return pc_id;
+        }
+
+        public static string GetComputerId(ClientIdType idType)
+        {
+
         }
 
         private static string pc_name = null;
@@ -377,5 +387,11 @@ namespace SmartModulBackupClasses
             return acc.ID;
         }
 
+    }
+
+    public enum ClientIdType
+    {
+        WindowsKey,
+        ComputerName
     }
 }
