@@ -271,9 +271,9 @@ namespace SmartModulBackupClasses.Managers
             //funkce, kterou se budou filtrovat přidané zálohy. 
             Func<Backup, bool> canAdd = new Func<Backup, bool>(bk =>
             {
-                //pokud nebyla vytvořena na tomto počítači, kašlem na to, prostě ji přidáme
-                if (!bk.MadeOnThisComputer) 
-                    return true;
+                //pokud nebyla vytvořena na tomto počítači, kašlem na to, prostě ji přidáme (pokud jsme tedy už ze stejného počítače danou zálohu nepřidali)
+                if (!bk.MadeOnThisComputer)
+                    return !newBackups.Any(exbk => exbk.LocalID == bk.LocalID && exbk.ComputerId == bk.ComputerId);
 
                 //pokud byla vytvořena na tomto počítači, přidáme ji pouze, pokud jsme už nepřidali nějakou se stejným localID
                 return !newBackups.Any(exbk => exbk.LocalID == bk.LocalID);
@@ -282,6 +282,18 @@ namespace SmartModulBackupClasses.Managers
 
             newBackups.AddRange(sftpResults.Where(canAdd));
             newBackups.AddRange(localResults.Where(canAdd));
+
+            var localDictionary = localResults.ToDictionary(b => b.LocalID + "/" + b.ComputerId, b => b);
+
+            //localResults obsahují názvy souborů, ale sftpResults a apiResults ne;
+            //je proto třeba v newBackups najít zálohy, které nemají název souboru,
+            //a pokud existuje stejná záloha v localBackups, tak ho updatovat
+            foreach (var bk in newBackups)
+            {
+                var globalID = bk.LocalID + "/" + bk.ComputerId;
+                if (bk._filename == null && localDictionary.ContainsKey(globalID))
+                    bk._filename = localDictionary[globalID]._filename;
+            }
 
             //nastavit pole backups podle fitrovaného newBackups
             _backups.UpdateCollectionByCompare(

@@ -274,7 +274,8 @@ namespace SmartModulBackupClasses
         /// <summary>
         /// pokud bylo info načteno z lokálního souboru, zde bude cesta k onomu soubru
         /// </summary>
-        private string _filename = null;
+        [XmlIgnore]
+        public string _filename = null;
 
         /// <summary>
         /// Vrátí název souboru, pod kterým by se toto mělo uložit
