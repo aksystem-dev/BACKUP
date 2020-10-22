@@ -34,7 +34,7 @@ namespace smart_modul_BACKUP_service
         /// </summary>
         public static TimeSpan _scheduleInterval = new TimeSpan(0, 10, 0);
 
-        const bool WAIT_ON_START = false;
+        const bool WAIT_ON_START = true;
 
         /// <summary>
         /// Časovač využívaný pro reload (načítání konfigurace, pravidel, plánování záloh, apod);

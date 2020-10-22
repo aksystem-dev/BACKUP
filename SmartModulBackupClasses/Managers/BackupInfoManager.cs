@@ -245,19 +245,20 @@ namespace SmartModulBackupClasses.Managers
 
             //také je možné, že jsou informace uložené na sftp;
             SftpUploader sftp = options.DownloadSFTP ? Manager.Get<SftpUploader>() : null;
-
+            Dictionary<string, string> remoteBkinfoPaths = new Dictionary<string, string>();
             if (sftp != null)
             {
                 listTasks.Add(Task.Run(async () =>
                 {
                     if ((await sftp?.TryConnectAsync(2000)) == true)
-                        sftpResults = await listBksSftp(sftp, options.SftpClientFilter);
+                        sftpResults = await listBksSftp(sftp, options.SftpClientFilter, remoteBkinfoPaths);
                 }));
             }
 
 
             //a konečně jsou také uložené lokálně
-            listTasks.Add(Task.Run(async () => localResults = await listBksLocal()));
+            Dictionary<string, string> localBkinfoPaths = new Dictionary<string, string>();
+            listTasks.Add(Task.Run(async () => localResults = await listBksLocal(localBkinfoPaths)));
 
             //posečkáme, až všechny tři úlohy sklidí ovoce své píle
             await Task.WhenAll(listTasks);
@@ -266,34 +267,34 @@ namespace SmartModulBackupClasses.Managers
             //více záloh se stejným LocalID ze stejného počátače. Nejprve přidáme zálohy z api. Api vrací zálohy
             //nejen z volajícího počítače, ale ze všech počítačů napojených na jeho plán. Potom do toho zamícháme
             //i informace z lokálních souborů a souborů na sftp; ty jsou zaručeně jen z tohoto počítače.
-            newBackups.AddRange(apiResults);
+
+            var added = new HashSet<string>();
 
             //funkce, kterou se budou filtrovat přidané zálohy. 
             Func<Backup, bool> canAdd = new Func<Backup, bool>(bk =>
             {
-                //pokud nebyla vytvořena na tomto počítači, kašlem na to, prostě ji přidáme (pokud jsme tedy už ze stejného počítače danou zálohu nepřidali)
-                if (!bk.MadeOnThisComputer)
-                    return !newBackups.Any(exbk => exbk.LocalID == bk.LocalID && exbk.ComputerId == bk.ComputerId);
+                var hash = bk.UniqueHash;
 
-                //pokud byla vytvořena na tomto počítači, přidáme ji pouze, pokud jsme už nepřidali nějakou se stejným localID
-                return !newBackups.Any(exbk => exbk.LocalID == bk.LocalID);
-            
+                if (added.Contains(hash))
+                    return false;
+
+                added.Add(hash);
+                return true;
             });
 
+            newBackups.AddRange(apiResults);
             newBackups.AddRange(sftpResults.Where(canAdd));
             newBackups.AddRange(localResults.Where(canAdd));
 
-            var localDictionary = localResults.ToDictionary(b => b.LocalID + "/" + b.ComputerId, b => b);
-
-            //localResults obsahují názvy souborů, ale sftpResults a apiResults ne;
-            //je proto třeba v newBackups najít zálohy, které nemají název souboru,
-            //a pokud existuje stejná záloha v localBackups, tak ho updatovat
-            //(aby bylo možné odstraňování, updatování, apod. daného souboru)
+            //nastavit cesty, odkud jsme zálohy vzali
             foreach (var bk in newBackups)
             {
-                var globalID = bk.LocalID + "/" + bk.ComputerId;
-                if (bk._filename == null && localDictionary.ContainsKey(globalID))
-                    bk._filename = localDictionary[globalID]._filename;
+                var hash = bk.UniqueHash;
+
+                if (remoteBkinfoPaths.ContainsKey(hash))
+                    bk._savedBkinfoRemotePath = remoteBkinfoPaths[hash];
+                if (localBkinfoPaths.ContainsKey(hash))
+                    bk._savedBkinfoLocalPath = localBkinfoPaths[hash];
             }
 
             //nastavit pole backups podle fitrovaného newBackups
@@ -485,7 +486,7 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         /// <param name="sftp">tato metoda nevolá connect</param>
         /// <returns></returns>
-        private async Task<IEnumerable<Backup>> listBksSftp(SftpUploader sftpUploader, Func<PC_Info, bool> filter)
+        private async Task<IEnumerable<Backup>> listBksSftp(SftpUploader sftpUploader, Func<PC_Info, bool> filter, Dictionary<string, string> paths)
         {
             List<Backup> found = new List<Backup>();
             try
@@ -508,6 +509,9 @@ namespace SmartModulBackupClasses.Managers
                             var xml = sftpUploader.client.ReadAllText(file.FullName);
                             var deserialized = Backup.DeXml(xml, null);
                             found.Add(deserialized);
+
+                            //zapamatovat si, odkud jsme soubor vzali
+                            paths?.Add(deserialized.UniqueHash, file.FullName);
                         }
                         catch (Exception ex)
                         {
@@ -559,7 +563,7 @@ namespace SmartModulBackupClasses.Managers
             //}       
         }
 
-        private async Task<IEnumerable<Backup>> listBksLocal()
+        private async Task<IEnumerable<Backup>> listBksLocal(Dictionary<string, string> paths)
         {
             return await Task.Run(() =>
             {
@@ -572,7 +576,9 @@ namespace SmartModulBackupClasses.Managers
                     var content = File.ReadAllText(file);
                     try
                     {
-                        found.Add(Backup.DeXml(content, file));
+                        var bk = Backup.DeXml(content, file);
+                        found.Add(bk);
+                        paths.Add(bk.UniqueHash, file); //přidat cestu do slovníku
                     }
                     catch { }
                 }
@@ -606,7 +612,7 @@ namespace SmartModulBackupClasses.Managers
                     return false;
             }
 
-            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.BkInfoNameStr(false)).NormalizePath();
+            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.GenInfoFileName(false)).NormalizePath();
             return await Task.Run<bool>(() =>
             {
                 try
@@ -644,7 +650,7 @@ namespace SmartModulBackupClasses.Managers
                     string xml = bk.ToXml();
 
                     //název souboru - bude obsahovat ID počítače pouze, pokud záloha nebyla vytvořena na tomto PC
-                    string path = Path.Combine(Const.BK_INFOS_FOLDER, bk.BkInfoNameStr());
+                    string path = Path.Combine(Const.BK_INFOS_FOLDER, bk.GenInfoFileName());
                     File.WriteAllText(path, xml);
                     return true;
                 }
@@ -662,7 +668,7 @@ namespace SmartModulBackupClasses.Managers
             {
                 try
                 {
-                    File.Delete(Path.Combine(Const.BK_INFOS_FOLDER, bk.BkInfoNameStr()));
+                    File.Delete(Path.Combine(Const.BK_INFOS_FOLDER, bk.GenInfoFileName()));
                     return true;
                 }
                 catch
@@ -699,7 +705,7 @@ namespace SmartModulBackupClasses.Managers
                     return false;
             }
 
-            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.BkInfoNameStr());
+            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.GenInfoFileName());
             return await Task.Run<bool>(() =>
             {
                 try
@@ -728,7 +734,8 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<bool> updateBkLocally(Backup bk)
         {
-            var path = Path.Combine(Const.BK_INFOS_FOLDER, bk.BkInfoNameStr());
+            var path = Path.Combine(Const.BK_INFOS_FOLDER, bk.GenInfoFileName(true));
+
             return await Task.Run(() =>
             {
                 try
@@ -770,7 +777,7 @@ namespace SmartModulBackupClasses.Managers
                     return false;
             }
 
-            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.BkInfoNameStr());
+            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.GenInfoFileName(false));
             return await Task.Run<bool>(() =>
             {
                 try
@@ -808,8 +815,10 @@ namespace SmartModulBackupClasses.Managers
         {
             //TODO: otestovat FixIDs
 
+            SmbLog.Info("FixIDs zavoláno", null, LogCategory.Service);
+
             //projít zálohy z tohoto PC
-            foreach (var bk in LocalBackups)
+            foreach (var bk in LocalBackups.Where(b => b.IdType != SMB_Utils.ID_TYPE_TO_USE))
             {
                 bk.IdType = SMB_Utils.ID_TYPE_TO_USE; //nastavit aktuální typ id
                 bk.ComputerId = SMB_Utils.GetComputerId(); //nastavit id podle aktuálního typu

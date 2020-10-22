@@ -73,7 +73,7 @@ namespace smart_modul_BACKUP
             //Thread.Sleep(10000);
             ARGS = e.Args;
 
-            //přemístit se do složky, kde je exe
+            //přemístit se do složky, kde je exe služby
             string exe = Assembly.GetExecutingAssembly().Location;
             Directory.SetCurrentDirectory(Path.GetDirectoryName(exe));
 

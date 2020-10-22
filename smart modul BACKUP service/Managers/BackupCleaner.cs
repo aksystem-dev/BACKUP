@@ -118,7 +118,7 @@ namespace smart_modul_BACKUP_service
                 bool deleteLocal = rule.LocalBackups.ShouldDelete(bk, i);
                 bool deleteRemote = rule.RemoteBackups.ShouldDelete(bk, i);
 
-                SmbLog.Debug($"Záloha {bk.BkInfoNameStr()}: deleteLocal = {deleteLocal}, deleteRemote = {deleteRemote}", category: LogCategory.BackupCleaner);
+                SmbLog.Debug($"Záloha {bk.GenInfoFileName()}: deleteLocal = {deleteLocal}, deleteRemote = {deleteRemote}", category: LogCategory.BackupCleaner);
 
                 evaluateBackup(bk, deleteLocal, deleteRemote, bk_man, sftp);
 

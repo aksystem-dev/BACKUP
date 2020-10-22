@@ -96,6 +96,12 @@ namespace SmartModulBackupClasses
         /// </summary>
         public int LocalID { get; set; }
 
+        /// <summary>
+        /// Vrátí hodnotu, která je unikátní pro dané ComputerID a daný LocalID
+        /// </summary>
+        [XmlIgnore]
+        public string UniqueHash => $"{ComputerId}::{LocalID}";
+
         private bool _availableLocally;
 
         /// <summary>
@@ -297,29 +303,62 @@ namespace SmartModulBackupClasses
             using (var reader = new StringReader(xml))
             {
                 var obj = serializer.Deserialize(reader) as Backup;
-                obj._filename = fname;
+                obj._savedBkinfoRemotePath = Path.GetFullPath(fname);
                 return obj;
             }
         }
 
         /// <summary>
-        /// pokud bylo info načteno z lokálního souboru, zde bude cesta k onomu soubru
+        /// pokud je info o této záloze uloženo lokálně, zde je cesta k němu
         /// </summary>
-        [XmlIgnore]
-        public string _filename = null;
+        public string _savedBkinfoLocalPath = null;
 
         /// <summary>
-        /// Vrátí název souboru, pod kterým by se toto mělo uložit
+        /// pokud je info o této záloze uloženo vzdáleně, zde je cesta k němu
         /// </summary>
-        /// <param name="bk"></param>
-        /// <returns></returns>
-        public string BkInfoNameStr(bool includeComputerID = true)
-        {
-            //pokud toto bylo načteno z lokálního souboru, vrátit cestu k němu
-            if (_filename != null)
-                return _filename;
+        public string _savedBkinfoRemotePath = null;
 
-            //jinak vygenerovat nové jméno
+        /// <summary>
+        /// pokud je toto info o záloze uloženo lokálně, vrátit cestu k onomu souboru;
+        /// jinak vrátit cestu, kam by se mělo lokálně uložit
+        /// </summary>
+        /// <returns></returns>
+        public string GetLocalInfoPath()
+        {
+            if (_savedBkinfoLocalPath != null)
+                return _savedBkinfoLocalPath;
+
+            return Path.GetFullPath(
+                Path.Combine(Const.BK_INFOS_FOLDER, GenInfoFileName(true)));
+        }
+
+        /// <summary>
+        /// pokud je toto info o záloze uloženo vzdáleně, vrátit cestu k onomu souboru;
+        /// jinak vrátit cestu, kam by se mělo vzdáleně uožit
+        /// </summary>
+        /// <returns></returns>
+        public string GetRemoteInfoPath()
+        {
+            if (_savedBkinfoRemotePath != null)
+                return _savedBkinfoRemotePath;
+
+            return Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), GenInfoFileName(false));
+        }
+
+        //TODO: remove following commented code
+        ///// <summary>
+        ///// pokud bylo info načteno z lokálního souboru, zde bude cesta k onomu soubru
+        ///// </summary>
+        //[XmlIgnore]
+        //public string _filename = null;
+
+       /// <summary>
+       /// vrátí název souboru, kam by se toto mělo uložit
+       /// </summary>
+       /// <param name="includeComputerID"></param>
+       /// <returns></returns>
+        public string GenInfoFileName(bool includeComputerID = true)
+        {
             if (includeComputerID)
                 return this.RefRuleName + "_" + this.EndDateTime.ToString("dd-MM-yyyy") + "_" + this.LocalID + "_" + this.ComputerId + ".xml";
             else

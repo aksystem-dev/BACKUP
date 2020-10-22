@@ -13,6 +13,8 @@ namespace SmartModulBackupClasses
     /// </summary>
     public class PC_Info
     {
+        //TODO: přidat info o typu ID; při spuštění služby porychtovat
+
         /// <summary>
         /// Název PC
         /// </summary>
