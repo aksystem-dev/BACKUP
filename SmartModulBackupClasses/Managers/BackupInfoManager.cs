@@ -205,8 +205,6 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         private Semaphore semaphore = new Semaphore(1, 1, "SMB_BackupInfoManager_Semaphore");
 
-        //TODO: přidat metodu FixIDs, která projde zálohy vytvořené na tomto PC a zařídí, aby u všech byl správný typ ID
-
         public async Task LoadAsync()
         {
             await LoadAsync(DefaultOptions);
@@ -799,6 +797,31 @@ namespace SmartModulBackupClasses.Managers
                         catch { }
                 }
             });
+        }
+
+        /// <summary>
+        /// Projde zálohy vytvořené na tomto PC a zařídí, aby informace o nich uložené
+        /// (lokálně, na sftp, na webu) používaly aktuální typ id (SMB_Utils.ID_TYPE_TO_USE)
+        /// </summary>
+        /// <returns></returns>
+        public async Task FixIDs()
+        {
+            //TODO: otestovat FixIDs
+
+            //projít zálohy z tohoto PC
+            foreach (var bk in LocalBackups)
+            {
+                bk.IdType = SMB_Utils.ID_TYPE_TO_USE; //nastavit aktuální typ id
+                bk.ComputerId = SMB_Utils.GetComputerId(); //nastavit id podle aktuálního typu
+
+                //updatovat info o záloze lokálně, na sftp, a přes api
+                await Task.WhenAll
+                (
+                                                updateBkLocally(bk),
+                    DefaultOptions.UploadSFTP ? updateBkSftp(bk)     : Task.CompletedTask, 
+                    DefaultOptions.UploadApi  ? updateBkApi(bk)      : Task.CompletedTask
+                );
+            }
         }
 
         private string idpath => Path.Combine(Const.BK_INFOS_FOLDER, "id");

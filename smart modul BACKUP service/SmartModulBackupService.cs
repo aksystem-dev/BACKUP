@@ -169,7 +169,7 @@ namespace smart_modul_BACKUP_service
                 host.Closed += (_, __) => SmbLog.Warn("WCF služba ukončena?", null, LogCategory.ServiceHost);
                 host.Faulted += (_, __) => SmbLog.Error("Došlo k chybě při komunikaci s GUI", null, LogCategory.ServiceHost);
 
-                PeriodicLoad();
+                PeriodicLoad(() => Manager.Get<BackupInfoManager>().FixIDs().Wait());
 
                 timer = new System.Timers.Timer();
                 timer.Elapsed += Timer_Elapsed;
@@ -248,8 +248,9 @@ namespace smart_modul_BACKUP_service
         /// <summary>
         /// Metoda, která načte všechny důležité věci. Měla by se volat pravidelně.
         /// </summary>
-        public void PeriodicLoad()
+        public void PeriodicLoad(Action afterBackupInfosLoaded = null)
         {
+
             //zastavit časovou osu
             if (timeline.Running)
                 timeline.Stop();
@@ -265,10 +266,12 @@ namespace smart_modul_BACKUP_service
             updateApi(cfg);
             Manager.Get<BackupRuleLoader>().Load();
             var bkman = Manager.Get<BackupInfoManager>();
-            SMB_Utils.Sync(async () =>
-            {
-                await bkman.LoadAsync();
-            });
+            bkman.LoadAsync().Wait();
+            //SMB_Utils.Sync(async () =>
+            //{
+            //    await bkman.LoadAsync();
+            //});
+            afterBackupInfosLoaded?.Invoke();
 
             //naplánovat pravidla
             DateTime plan_till = load_called + _scheduleInterval;
