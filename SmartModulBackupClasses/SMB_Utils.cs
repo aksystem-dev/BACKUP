@@ -38,7 +38,7 @@ namespace SmartModulBackupClasses
         }
 
         /// <summary>
-        /// vrátí id tohoto počítače, které by se mělo používat
+        /// vrátí id tohoto počítače, které by se mělo používat (podle ID_TYPE_TO_USE)
         /// </summary>
         /// <returns></returns>
         public static string GetComputerId()

@@ -273,12 +273,15 @@ namespace smart_modul_BACKUP_service.BackupExe
                     sftp = Manager.Get<SftpUploader>();
                     sftp.Connect();
 
-                    //po připojení k sftp tam zkusit nahrát info o tomto PC
-                    try { SftpMetadataManager.SetMyInfo(sftp); }
-                    catch (Exception ex)
-                    {
-                        logError($"Nepodařilo se nahrát info o tomto PC na server", ex);
-                    }
+                    //   následující zakomentovaný kód byl přesunut do startu služby,
+                    //   páč netřeba toto dělat před každou zálohou
+
+                    ////po připojení k sftp tam zkusit nahrát info o tomto PC
+                    //try { SftpMetadataManager.SetMyInfo(sftp); }
+                    //catch (Exception ex)
+                    //{
+                    //    logError($"Nepodařilo se nahrát info o tomto PC na server", ex);
+                    //}
 
                     logInfo("Úspěšně připojeno k SFTP serveru");
 

@@ -13,22 +13,39 @@ namespace SmartModulBackupClasses
     /// </summary>
     public class PC_Info
     {
-        //TODO: přidat info o typu ID; při spuštění služby porychtovat
-
         /// <summary>
         /// Název PC
         /// </summary>
         public string Name { get; set; }
 
+        //private bool ShouldSerializeProductID() => false;
+
+        /// <summary>
+        /// ID počítače (zpravidla shodné s FolderName )
+        /// </summary>
+        //[Obsolete("Použijte ComputerId")]
+        //TODO: zařídit, aby se toto neserializovalo, pouze deserializovalo
+        public string ProductID
+        {
+            get => ComputerId;
+            set => ComputerId = value;
+        }
+
         /// <summary>
         /// ID počítače (zpravidla shodné s FolderName)
         /// </summary>
-        public string ProductID { get; set; }
+        public string ComputerId { get; set; }
+
+        /// <summary>
+        /// typ identifikace PC
+        /// </summary>
+        public ClientIdType IdType { get; set; } = ClientIdType.WindowsKey;
 
         /// <summary>
         /// Co se zobrazí v UI jako název počítače
         /// </summary>
-        public string DisplayName => Name ?? ProductID ?? RemoteFolderName;
+        [XmlIgnore]
+        public string DisplayName => Name ?? ComputerId ?? RemoteFolderName;
 
         /// <summary>
         /// Název složky na SFTP serveru, kam se ukládají data z tohoto PC. <br />
@@ -41,12 +58,15 @@ namespace SmartModulBackupClasses
         /// <summary>
         /// Cesta ke složce na SFTP serveru.
         /// </summary>
+        [XmlIgnore]
         public string RemoteFolderPath => SMB_Utils.GetRemotePCDirectory(RemoteFolderName);
 
         /// <summary>
         /// zdali se jedná o tento PC
         /// </summary>
-        public bool IsThis => this.ProductID == This.ProductID;
+        [XmlIgnore]
+        public bool IsThis => 
+            this.ComputerId == SMB_Utils.GetComputerId(this.IdType);
 
         /// <summary>
         /// Info o tomto PC
@@ -54,7 +74,8 @@ namespace SmartModulBackupClasses
         public static readonly PC_Info This =
             new PC_Info()
             {
-                ProductID = SMB_Utils.GetComputerId(),
+                IdType = SMB_Utils.ID_TYPE_TO_USE,
+                ComputerId = SMB_Utils.GetComputerId(),
                 RemoteFolderName = SMB_Utils.GetComputerId(),
                 Name = SMB_Utils.GetComputerName()
             };
@@ -88,13 +109,13 @@ namespace SmartModulBackupClasses
 
         public override int GetHashCode()
         {
-            return (ProductID ?? RemoteFolderName).GetHashCode();
+            return (ComputerId ?? RemoteFolderName).GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             if (obj is PC_Info pc)
-                return (pc.ProductID ?? RemoteFolderName) == (this.ProductID ?? RemoteFolderName);
+                return (pc.ComputerId ?? RemoteFolderName) == (this.ComputerId ?? RemoteFolderName);
             return false;
         }
     }

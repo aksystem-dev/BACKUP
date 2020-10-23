@@ -297,13 +297,12 @@ namespace SmartModulBackupClasses
         /// <param name="xml">samotné xml</param>
         /// <param name="fname">cesta lokálního souboru, odkud bylo xml získáno; pokud nebylo získáno z lokálního souboru, nechat null</param>
         /// <returns></returns>
-        public static Backup DeXml(string xml, string fname)
+        public static Backup DeXml(string xml)
         {
             var serializer = new XmlSerializer(typeof(Backup));
             using (var reader = new StringReader(xml))
             {
                 var obj = serializer.Deserialize(reader) as Backup;
-                obj._savedBkinfoRemotePath = Path.GetFullPath(fname);
                 return obj;
             }
         }
@@ -311,12 +310,26 @@ namespace SmartModulBackupClasses
         /// <summary>
         /// pokud je info o této záloze uloženo lokálně, zde je cesta k němu
         /// </summary>
+        [XmlIgnore]
         public string _savedBkinfoLocalPath = null;
+
+        /// <summary>
+        /// zdali je info o této záloze uloženo lokálně
+        /// </summary>
+        [XmlIgnore]
+        public bool InfoSavedLocally => _savedBkinfoLocalPath != null;
 
         /// <summary>
         /// pokud je info o této záloze uloženo vzdáleně, zde je cesta k němu
         /// </summary>
+        [XmlIgnore]
         public string _savedBkinfoRemotePath = null;
+
+        /// <summary>
+        /// zdali je info o této záloze uloženo vzdáleně
+        /// </summary>
+        [XmlIgnore]
+        public bool InfoSavedRemotely => _savedBkinfoRemotePath != null;
 
         /// <summary>
         /// pokud je toto info o záloze uloženo lokálně, vrátit cestu k onomu souboru;

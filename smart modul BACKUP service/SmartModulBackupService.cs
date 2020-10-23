@@ -136,22 +136,8 @@ namespace smart_modul_BACKUP_service
                 Manager.SetSingleton(new SmbMailer()); //SmbMailer - umožňuje generovat a posílat maily specifické pro smart modul BACKUP
                 observer = Manager.SetSingleton(new FolderObserver());
 
-                ////Vytvořit Backuper - ten se stará o samotné zálohy
-                //var backuper = new Backuper()
-                //{
-                //    TempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp_dir")
-                //};
-                //Manager.SetSingleton(backuper);
-
                 //Vytvořit BackupTimeline - ta se stará o spouštění záloh ve správné časy
                 timeline = Manager.SetSingleton(new BackupTimeline());
-
-                ////Vytvořit Restorer - ten se stará o obnovy (ty se nespouští automaticky, pouze přímo z GUI)
-                //var restorer = new Restorer()
-                //{
-                //    TempDir = Path.Combine(Directory.GetCurrentDirectory(), "temp_dir_restore")
-                //};
-                //Manager.SetSingleton(restorer);
 
                 Manager.SetSingleton(new BackupInfoManager()); //načítá info o provedených zálohách z lokální složky, webového api, popř. SFTP serveru
                 Manager.SetSingleton(new BackupRuleLoader()); //načítá info o pravidlech, synchronizujíc je s webovým API
@@ -169,8 +155,14 @@ namespace smart_modul_BACKUP_service
                 host.Closed += (_, __) => SmbLog.Warn("WCF služba ukončena?", null, LogCategory.ServiceHost);
                 host.Faulted += (_, __) => SmbLog.Error("Došlo k chybě při komunikaci s GUI", null, LogCategory.ServiceHost);
 
-                PeriodicLoad(() => Manager.Get<BackupInfoManager>().FixIDs().Wait());
+                SftpMetadataManager.SetMyInfo(); //nahrát info o tomto PC na SFTP server
+                Manager.Get<BackupInfoManager>().FixIDsAsync().Wait(); //opravit idy záloh
 
+                //načíst pravidla, zálohy, apod; parametr udává to, co se zavolá po načtení informací o zálohách
+                //v tomto případě procedura pro opravení id již provedených záloh, aby odpovídaly SMB_Utils.ID_TYPE_TO_USE
+                PeriodicLoad();
+
+                //začít časovač, který bude pravidelně reloadovat pravidla apod.
                 timer = new System.Timers.Timer();
                 timer.Elapsed += Timer_Elapsed;
                 timer.Interval = _scheduleInterval.TotalMilliseconds;
@@ -248,7 +240,7 @@ namespace smart_modul_BACKUP_service
         /// <summary>
         /// Metoda, která načte všechny důležité věci. Měla by se volat pravidelně.
         /// </summary>
-        public void PeriodicLoad(Action afterBackupInfosLoaded = null)
+        public void PeriodicLoad(Action<BackupInfoManager> afterBackupInfosLoaded = null)
         {
 
             //zastavit časovou osu
@@ -271,7 +263,7 @@ namespace smart_modul_BACKUP_service
             //{
             //    await bkman.LoadAsync();
             //});
-            afterBackupInfosLoaded?.Invoke();
+            afterBackupInfosLoaded?.Invoke(bkman);
 
             //naplánovat pravidla
             DateTime plan_till = load_called + _scheduleInterval;

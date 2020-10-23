@@ -145,6 +145,75 @@ namespace SmartModulBackupClasses
         }
 
         /// <summary>
+        /// přesune obsah jedné složky do druhé
+        /// </summary>
+        /// <param name="dirFrom"></param>
+        /// <param name="dirTo"></param>
+        /// <param name="override"></param>
+        /// <param name="deleteDirFrom"></param>
+        public void MergeDir(SftpFile dirFrom, SftpFile dirTo, bool @override = false, bool deleteDirFrom = true)
+        {
+            List<Exception> exceptions = new List<Exception>();
+
+            //projít obsah zdrojové složky
+            foreach (var file in ListDir(dirFrom, false).Select(pair => pair.Value))
+            {
+                try
+                {
+                    //cesta k souboru v cílové složce
+                    var targetPath = Path.Combine(dirTo.FullName, file.Name).NormalizePath();
+
+                    //pokud se jedná o soubor
+                    if (file.IsRegularFile)
+                    {
+                        //pokud v cílové složce již soubor existuje
+                        if (client.Exists(targetPath))
+                        {
+                            if (@override) //pokud přepisujem, tak ho smazat
+                                client.Delete(targetPath);
+                            else //jinak odstraňit původní soubor a přeskočit
+                            {
+                                file.Delete();
+                                continue;
+                            }
+                        }
+
+                        file.MoveTo(targetPath); //přesunout soubor
+                    }
+                    else if (file.IsDirectory)
+                    {
+                        CreateDirectory(targetPath);
+                        MergeDir(file, client.Get(targetPath));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SmbLog.Error($"MergeDir chyba", ex);
+                    exceptions.Add(ex);
+                }
+            }
+
+            if (deleteDirFrom && !exceptions.Any())
+                dirFrom.Delete();
+
+            if (exceptions.Count == 1) throw exceptions.First();
+            else if (exceptions.Count > 1) throw new AggregateException(exceptions);
+        }
+
+        /// <summary>
+        /// přesue obsah jedné složky do druhé. Cesty jsou normalizovány v metodě.
+        /// </summary>
+        /// <param name="dirFrom"></param>
+        /// <param name="dirTo"></param>
+        /// <param name="override"></param>
+        /// <param name="deleteDirFrom"></param>
+        public void MergeDir(string dirFrom, string dirTo, bool @override, bool deleteDirFrom)
+        {
+            CreateDirectory(dirTo);
+            MergeDir(client.Get(dirFrom.NormalizePath()), client.Get(dirTo.NormalizePath()), @override, deleteDirFrom);
+        }
+
+        /// <summary>
         /// Nahraje soubor (přepíše ho, pokud již existuje) (vytvoří pro něj složku, pokud neexistuje)
         /// </summary>
         /// <param name="localSource"></param>
@@ -635,6 +704,7 @@ namespace SmartModulBackupClasses
 
         public void Dispose()
         {
+            Disconnect();
             client.Dispose();
         }
     }

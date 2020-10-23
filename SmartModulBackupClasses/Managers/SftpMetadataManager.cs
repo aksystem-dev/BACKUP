@@ -79,17 +79,38 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         public static void SetMyInfo(SftpUploader sftp)
         {
-            var me = PC_Info.This;
-            var meStr = me.ToXML();
+            var me = PC_Info.This; //info o tomto PC
+            var meStr = me.ToXML(); //převést ho na xml
 
-            var dirPath = SMB_Utils.GetRemotePCDirectory().NormalizePath();
-            var filePath = SMB_Utils.GetRemotePCinfoPath().NormalizePath();
+            var dirPath = SMB_Utils.GetRemotePCDirectory().NormalizePath(); //cesta ke složce tohoho PC
+            var filePath = SMB_Utils.GetRemotePCinfoPath().NormalizePath(); //cesta k souboru s informacemi o tomto PC
 
             sftp.CreateDirectory(dirPath); //ujistit se, že existuje složka tohoto PC
 
             //vytvořit na serveru soubor, otevřít ho, napsat doň informace
-            using (var writer = sftp.client.CreateText(filePath)) 
+            using (var writer = sftp.client.CreateText(filePath))
                 writer.Write(meStr);
+
+            //na serveru mohou být další složky patřící tomuto PC z předchozích verzí (např. pokud se změnil typ ID)
+            //v tom případě chceme informace o zálohách z dané složky přesunout do aktuální složky a původní složku s informacemi o zálohách odstranit
+            var myFolders = GetPCInfos(sftp).Where(pc => pc.IsThis);
+            foreach (var folder in myFolders)
+            {
+                //pokud se název složky neshoduje s aktuální
+                if (folder.RemoteFolderPath.NormalizePath() != dirPath.NormalizePath())
+                {
+                    try
+                    {
+                        sftp.MergeDir(SMB_Utils.GetRemoteBkinfosPath(folder.RemoteFolderName), SMB_Utils.GetRemoteBkinfosPath(), false, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        SmbLog.Error($"Došlo k chybě při spojování prošlé složky na serveru", ex, LogCategory.SFTP);
+                    }
+                }
+            }
+
+
         }
 
 

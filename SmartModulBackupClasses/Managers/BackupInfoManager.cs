@@ -162,14 +162,7 @@ namespace SmartModulBackupClasses.Managers
         /// <summary>
         /// Seznam načtených záloh, které byly vytvořeny na tomto počítači.
         /// </summary>
-        public IEnumerable<Backup> LocalBackups
-        {
-            get
-            {
-                var pc_id = SMB_Utils.GetComputerId();
-                return _backups.Where(f => f.ComputerId == pc_id);
-            }
-        }
+        public IEnumerable<Backup> LocalBackups => _backups.Where(bk => bk.MadeOnThisComputer);
 
         SmbApiClient client => Manager.Get<AccountManager>()?.Api;
         readonly ConfigManager config;
@@ -251,7 +244,7 @@ namespace SmartModulBackupClasses.Managers
                 listTasks.Add(Task.Run(async () =>
                 {
                     if ((await sftp?.TryConnectAsync(2000)) == true)
-                        sftpResults = await listBksSftp(sftp, options.SftpClientFilter, remoteBkinfoPaths);
+                        sftpResults = listBksSftp(sftp, options.SftpClientFilter, remoteBkinfoPaths);
                 }));
             }
 
@@ -486,7 +479,7 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         /// <param name="sftp">tato metoda nevolá connect</param>
         /// <returns></returns>
-        private async Task<IEnumerable<Backup>> listBksSftp(SftpUploader sftpUploader, Func<PC_Info, bool> filter, Dictionary<string, string> paths)
+        private IEnumerable<Backup> listBksSftp(SftpUploader sftpUploader, Func<PC_Info, bool> filter, Dictionary<string, string> paths)
         {
             List<Backup> found = new List<Backup>();
             try
@@ -507,7 +500,7 @@ namespace SmartModulBackupClasses.Managers
                         {
                             //vytáhnout text ze souboru, deserializovati jej a přidat do seznamu pro vrácení
                             var xml = sftpUploader.client.ReadAllText(file.FullName);
-                            var deserialized = Backup.DeXml(xml, null);
+                            var deserialized = Backup.DeXml(xml);
                             found.Add(deserialized);
 
                             //zapamatovat si, odkud jsme soubor vzali
@@ -576,9 +569,9 @@ namespace SmartModulBackupClasses.Managers
                     var content = File.ReadAllText(file);
                     try
                     {
-                        var bk = Backup.DeXml(content, file);
+                        var bk = Backup.DeXml(content);
                         found.Add(bk);
-                        paths.Add(bk.UniqueHash, file); //přidat cestu do slovníku
+                        paths?.Add(bk.UniqueHash, Path.GetFullPath(file)); //přidat cestu do slovníku
                     }
                     catch { }
                 }
@@ -612,7 +605,7 @@ namespace SmartModulBackupClasses.Managers
                     return false;
             }
 
-            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.GenInfoFileName(false)).NormalizePath();
+            string fpath = bk.GetRemoteInfoPath();
             return await Task.Run<bool>(() =>
             {
                 try
@@ -650,7 +643,7 @@ namespace SmartModulBackupClasses.Managers
                     string xml = bk.ToXml();
 
                     //název souboru - bude obsahovat ID počítače pouze, pokud záloha nebyla vytvořena na tomto PC
-                    string path = Path.Combine(Const.BK_INFOS_FOLDER, bk.GenInfoFileName());
+                    string path = bk.GetLocalInfoPath();
                     File.WriteAllText(path, xml);
                     return true;
                 }
@@ -668,7 +661,7 @@ namespace SmartModulBackupClasses.Managers
             {
                 try
                 {
-                    File.Delete(Path.Combine(Const.BK_INFOS_FOLDER, bk.GenInfoFileName()));
+                    File.Delete(bk.GetLocalInfoPath());
                     return true;
                 }
                 catch
@@ -705,7 +698,7 @@ namespace SmartModulBackupClasses.Managers
                     return false;
             }
 
-            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.GenInfoFileName());
+            string fpath = bk.GetRemoteInfoPath();
             return await Task.Run<bool>(() =>
             {
                 try
@@ -734,7 +727,7 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<bool> updateBkLocally(Backup bk)
         {
-            var path = Path.Combine(Const.BK_INFOS_FOLDER, bk.GenInfoFileName(true));
+            var path = bk.GetLocalInfoPath();
 
             return await Task.Run(() =>
             {
@@ -777,7 +770,7 @@ namespace SmartModulBackupClasses.Managers
                     return false;
             }
 
-            string fpath = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), bk.GenInfoFileName(false));
+            string fpath = bk.GetRemoteInfoPath();
             return await Task.Run<bool>(() =>
             {
                 try
@@ -789,7 +782,7 @@ namespace SmartModulBackupClasses.Managers
                 }
                 catch (Exception ex)
                 {
-                    SmbLog.Error("Problém při updatování info o záloze na SFTP serveru", ex, LogCategory.BackupInfoManager);
+                    SmbLog.Error($"Problém při updatování info o záloze na SFTP serveru (bkinfo file: '{fpath}')", ex, LogCategory.BackupInfoManager);
                     return false;
                 }
                 finally
@@ -811,25 +804,80 @@ namespace SmartModulBackupClasses.Managers
         /// (lokálně, na sftp, na webu) používaly aktuální typ id (SMB_Utils.ID_TYPE_TO_USE)
         /// </summary>
         /// <returns></returns>
-        public async Task FixIDs()
+        public async Task FixIDsAsync()
         {
-            //TODO: otestovat FixIDs
+            //TODO: zprovoznit
 
-            SmbLog.Info("FixIDs zavoláno", null, LogCategory.Service);
-
-            //projít zálohy z tohoto PC
-            foreach (var bk in LocalBackups.Where(b => b.IdType != SMB_Utils.ID_TYPE_TO_USE))
+            bool entered = semaphore.WaitOne(Patience);
+            try
             {
-                bk.IdType = SMB_Utils.ID_TYPE_TO_USE; //nastavit aktuální typ id
-                bk.ComputerId = SMB_Utils.GetComputerId(); //nastavit id podle aktuálního typu
+                await _fixIDs();
+            }
+            finally
+            {
+                if (entered)
+                    semaphore.Release();
+            }
+        }
 
-                //updatovat info o záloze lokálně, na sftp, a přes api
-                await Task.WhenAll
-                (
-                                                updateBkLocally(bk),
-                    DefaultOptions.UploadSFTP ? updateBkSftp(bk)     : Task.CompletedTask, 
-                    DefaultOptions.UploadApi  ? updateBkApi(bk)      : Task.CompletedTask
-                );
+        private async Task _fixIDs()
+        {
+            SmbLog.Info("_fixIDs zavoláno", null, LogCategory.Service);
+
+            Dictionary<string, string> dict;
+
+            //porychtovat sftp informace o zálohách
+            using (var sftp = Manager.Get<SftpUploader>())
+            {
+                sftp.Connect();
+                dict = new Dictionary<string, string>();
+                foreach (var bk in listBksSftp(sftp, pc => pc.IsThis, dict))
+                {
+                    try
+                    {
+                        if (!bk.MadeOnThisComputer)
+                            continue;
+
+                        if (bk.IdType == SMB_Utils.ID_TYPE_TO_USE)
+                            continue;
+
+                        var hash_cache = bk.UniqueHash;
+                        bk.IdType = SMB_Utils.ID_TYPE_TO_USE;
+                        bk.ComputerId = SMB_Utils.GetComputerId();
+                        bk._savedBkinfoRemotePath = dict[hash_cache];
+
+                        await updateBkSftp(bk, sftp);
+                    }
+                    catch (Exception ex)
+                    {
+                        SmbLog.Error($"Nepovedla se oprava sftp informace o záloze", ex, LogCategory.BackupInfoManager);
+                    }
+                }
+            }
+
+            //porychtovat lokální informace o zálohách
+            dict = new Dictionary<string, string>();
+            foreach (var bk in await listBksLocal(dict))
+            {
+                try
+                {
+                    if (!bk.MadeOnThisComputer)
+                        continue;
+
+                    if (bk.IdType == SMB_Utils.ID_TYPE_TO_USE)
+                        continue;
+
+                    var hash_cache = bk.UniqueHash;
+                    bk.IdType = SMB_Utils.ID_TYPE_TO_USE;
+                    bk.ComputerId = SMB_Utils.GetComputerId();
+                    bk._savedBkinfoLocalPath = dict[hash_cache];
+
+                    await updateBkLocally(bk);
+                }
+                catch (Exception ex)
+                {
+                    SmbLog.Error($"Nepovedla se oprava lokální informace o záloze", ex, LogCategory.BackupInfoManager);
+                }
             }
         }
 
