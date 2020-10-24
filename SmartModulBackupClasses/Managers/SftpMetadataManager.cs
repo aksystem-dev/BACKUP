@@ -117,7 +117,7 @@ namespace SmartModulBackupClasses.Managers
         /// <summary>
         /// nahraje informace o tomto PC na server (používá se Manager.Get SftpUploader)
         /// </summary>
-        public static void SetMyInfo()
+        public static bool SetMyInfo()
         {
             using (var sftp = Manager.Get<SftpUploader>())
             {
@@ -125,6 +125,11 @@ namespace SmartModulBackupClasses.Managers
                 {
                     sftp.Connect();
                     SetMyInfo(sftp);
+                    return true;
+                }
+                catch
+                {
+                    return false;
                 }
                 finally
                 {

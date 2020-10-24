@@ -829,7 +829,9 @@ namespace SmartModulBackupClasses.Managers
             //porychtovat sftp informace o zálohách
             using (var sftp = Manager.Get<SftpUploader>())
             {
-                sftp.Connect();
+                if (!sftp.TryConnect(1000)) //pokud se nám nepodaří připojit, přeskočit SFTP opravy
+                    goto SKIP_SFTP;
+
                 dict = new Dictionary<string, string>();
                 foreach (var bk in listBksSftp(sftp, pc => pc.IsThis, dict))
                 {
@@ -852,8 +854,10 @@ namespace SmartModulBackupClasses.Managers
                     {
                         SmbLog.Error($"Nepovedla se oprava sftp informace o záloze", ex, LogCategory.BackupInfoManager);
                     }
-                }
+                }                
             }
+
+        SKIP_SFTP:
 
             //porychtovat lokální informace o zálohách
             dict = new Dictionary<string, string>();
