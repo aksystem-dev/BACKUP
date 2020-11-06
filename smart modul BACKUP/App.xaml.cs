@@ -150,7 +150,8 @@ namespace smart_modul_BACKUP
                 //metodu SetupWithMessageBoxes pro připojení ke službě.
                 service.SetupWithMessageBoxes(autoRun, App.SERVICE_FNAME);
 
-            var apiTask = Task.Run(SetupApiAsync);
+            var account = Manager.SetSingleton(new AccountManager());
+            var apiTask = Task.Run(() => SetupApiAsync(account));
 
             try
             {
@@ -160,7 +161,7 @@ namespace smart_modul_BACKUP
 
             SetupNotifyIcon(); //vytvořit NotifyIcon
             SetupAvailableDbs(); //nastavit AvailableDbLoader
-            SetupSftp(); //nastavit SftpUploaderFactory
+            SetupSftp(account); //nastavit SftpUploaderFactory
             Manager.SetSingleton(new InProgress()); //nastavit InProgress
 
             apiTask.Wait(); //počkat na task
@@ -194,9 +195,8 @@ namespace smart_modul_BACKUP
         /// Přidá SmbWebApi do Manageru
         /// </summary>
         /// <returns>True, pokud všemu rozumíme, false, pokud nějaké info chybí a je proto třeba otevřít přihlašovací okno</returns>
-        private async Task<bool> SetupApiAsync()
+        private async Task<bool> SetupApiAsync(AccountManager account)
         {
-            var account = Manager.SetSingleton(new AccountManager());
 
             //neboť na PropertyChanged AccountManageru budeme věšet UI funkce a není vyloučeno, 
             //že se bude volat z jiného vlákna, nastavíme ho na dispatch metodu
@@ -237,9 +237,9 @@ namespace smart_modul_BACKUP
             var adl = Manager.SetSingleton(new AvailableDbLoader());
             Task.Run(adl.Load);
         }
-        private static void SetupSftp()
+        private static void SetupSftp(AccountManager accountManager)
         {
-            Manager.SetTransient(new SftpUploaderFactory());
+            Manager.SetTransient(new SftpUploaderFactory(accountManager));
         }
         private static void SetupRules()
         {

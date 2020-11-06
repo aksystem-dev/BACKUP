@@ -51,10 +51,7 @@ namespace smart_modul_BACKUP_service
         {
             var rule_man = Manager.Get<BackupRuleLoader>();
             var bk_man = Manager.Get<BackupInfoManager>();
-            var sftp = Manager.Get<SftpUploader>();
-            if (!sftp.TryConnect(2000))
-                sftp = null;
-
+            var sftp = Manager.Get<SftpUploader>(true);
 
             foreach (var rule in rule_man.Rules)
             {
@@ -66,20 +63,6 @@ namespace smart_modul_BACKUP_service
                 {
                     SmbLog.Error($"Nepodařilo se pročistit zálohy pravidla {rule.Name}", ex, LogCategory.BackupCleaner);
                 }
-            }
-
-            if (sftp != null)
-            {
-                if (sftp.IsConnected)
-                    try
-                    {
-                        sftp.Disconnect();
-                    }
-                    catch (Exception ex)
-                    {
-                        SmbLog.Error($"Nepodařilo se odpojit od SFTP serveru", ex, LogCategory.BackupCleaner);
-                    }
-                sftp.Dispose();
             }
         }
 
@@ -96,15 +79,7 @@ namespace smart_modul_BACKUP_service
             bk_man = bk_man ?? Manager.Get<BackupInfoManager>();
 
             //zde porychtujem sftp připojení, které bude potřeba
-            bool sftpConnected = false;
-            sftp = sftp ?? Manager.Get<SftpUploader>();
-            if (!sftp.IsConnected)
-            {
-                if (!sftp.TryConnect(2000))
-                    sftpConnected = true;
-                else
-                    sftp = null;
-            }
+            sftp = sftp ?? Manager.Get<SftpUploader>(true);
 
             //seznam záloh z tohoto pravidla seřazený sestupně podle data (nejnovější zálohy - první)
             var rel_bks = bk_man.LocalBackups
@@ -124,15 +99,6 @@ namespace smart_modul_BACKUP_service
 
                 i++;
             }
-
-            //odpojit se od sftp, pokud jsme se v této metodě připojili (pokud jsme instanci SftpUploader
-            //již dostali připojenou, bude sftpConnected false, odpojení je v tom případě problém volající metody)
-            if (sftpConnected)
-                try
-                {
-                    sftp.Disconnect();
-                }
-                catch { }
         }
 
         /// <summary>

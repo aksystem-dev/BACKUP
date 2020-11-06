@@ -127,9 +127,9 @@ namespace smart_modul_BACKUP_service
                 var loggingConfig = Manager.SetSingleton(new ConfigManager()).Load(out _).Config.Logging; //pracuje s config.xml
                 SmbLog.Configure(loggingConfig, SmbAssembly.Service); //nastavit logger
                 SmbLog.Info("Načtena konfigurace pro logování");
+                var accountman = Manager.SetSingleton(new AccountManager()); //AccountManager - umožňuje získávat info o plánu
                 Manager.SetTransient(new SqlBackuperFactory()); //SqlBackuper využívaný na SQL zálohy
-                Manager.SetTransient(new SftpUploaderFactory()); //SftpUploader - obaluje SftpClient
-                Manager.SetSingleton(new AccountManager()); //AccountManager - umožňuje získávat info o plánu
+                Manager.SetTransient(new SftpUploaderFactory(accountman)); //SftpUploader - obaluje SftpClient                
                 Manager.SetSingleton(new RuleScheduler()); //RuleScheduler - plánuje pravidla
                 Manager.SetSingleton(new BackupCleaner()); //BackupCleaner - odstraňuje staré zálohy
                 Manager.SetSingleton(new Mailer()); //Mailer - umožňuje posílat maily

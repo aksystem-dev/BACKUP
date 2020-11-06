@@ -126,21 +126,27 @@ namespace SmartModulBackupClasses
 
         /// <summary>
         /// Vrátí objekt daného typu z nastavených typů (pomocí SetSingleton / SetTransient). Pokud typ nebyl nalezen,
-        /// vrátí null pokud throwException == false, nebo vyplivne InvalidOperationException pokud throwException == true
+        /// vrátí null. Pokud se jedná o Transient typ a při jeho instanciaci dojde k výjimce, zařídíse to podle
+        /// catchExceptions - jestliže true, vrátí null, jestliže false, vyhodí výjimku.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Get<T>(bool throwException = false) where T : class
+        public static T Get<T>(bool catchExceptions = false) where T : class
         {
-            var type = typeof(T);
-            if (singletons.ContainsKey(type))
-                return singletons[type] as T;
-            else if (transients.ContainsKey(type))
-                return transients[type]() as T;
-            else
+            try
             {
-                if (throwException)
-                    throw new InvalidOperationException("Daný typ nebyl nalezen.");
+                var type = typeof(T);
+                if (singletons.ContainsKey(type))
+                    return singletons[type] as T;
+                else if (transients.ContainsKey(type))
+                    return transients[type]() as T;
+                else
+                    return null;
+            }
+            catch
+            {
+                if (!catchExceptions)
+                    throw;
                 return null;
             }
         }

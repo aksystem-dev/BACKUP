@@ -19,66 +19,54 @@ namespace SmartModulBackupClasses
         private void logTrace(string message)
             => SmbLog.Trace(message, null, LogCategory.SFTP);
 
-        public SftpClient client { get; private set; }
+        public readonly SftpClient client;
+        private readonly Action _onDisposed;
+
+        //public SftpClient client { get; private set; }
 
         public bool IsConnected => client.IsConnected;
 
-        public SftpUploader(string host, int port, string username, string password)
+        public SftpUploader(SftpClient client, Action onDisposed)
         {
-            client = new SftpClient(host, port, username, password);
+            this.client = client;
+            this.client = client;
+            this._onDisposed = onDisposed;
         }
 
-        /// <summary>
-        /// Pokusí se připojit a vrátí, zdali to bylo úspěšné.
-        /// </summary>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
-        public bool TryConnect(int timeout = 500)
-        {
-            try
-            {
-                var rememberTimeout = client.OperationTimeout;
-                client.OperationTimeout = TimeSpan.FromMilliseconds(timeout);
-                client.Connect();
-                client.OperationTimeout = rememberTimeout;
-                return true;
-            }
-            catch { return false; }
-        }
+        //public async Task<bool> TryConnectAsync(int timeout) => await Task.Run(() => TryConnect(timeout));
 
-        public async Task<bool> TryConnectAsync(int timeout) => await Task.Run(() => TryConnect(timeout));
+        //odteď se děje v SftpUploaderFactory.
+        ///// <summary>
+        ///// Připojí se.
+        ///// </summary>
+        //public void Connect()
+        //{
+        //    if (!client.IsConnected)
+        //        client.Connect();
+        //}
 
-        /// <summary>
-        /// Připojí se.
-        /// </summary>
-        public void Connect()
-        {
-            if (!client.IsConnected)
-                client.Connect();
-
-        }
-
+        //odteď se děje v SftpUploaderFactory po zavolání onDisposed.
         /// <summary>
         /// Odpojí se.
         /// </summary>
         /// <param name="throwException"></param>
         /// <returns></returns>
-        public bool Disconnect(bool throwException = true)
-        {
-            try
-            {
-                if (client.IsConnected)
-                    client.Disconnect();
+        //public bool Disconnect(bool throwException = true)
+        //{
+        //    try
+        //    {
+        //        if (client.IsConnected)
+        //            client.Disconnect();
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                if (throwException)
-                    throw ex;
-                return false;
-            }
-        }
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (throwException)
+        //            throw ex;
+        //        return false;
+        //    }
+        //}
 
         /// <summary>
         /// vrací obsah dané složky (soubory a složky) na serveru jakožto slovník (cesta, informace).
@@ -702,11 +690,17 @@ namespace SmartModulBackupClasses
             return length;
         }
 
+        private bool disposed = false;
         public void Dispose()
         {
-            Disconnect();
-            client.Dispose();
+            if (disposed)
+                return;
+
+            _onDisposed?.Invoke();
+            disposed = true;
         }
+
+        ~SftpUploader() => Dispose();
     }
 
     public enum FolderUploadBehavior

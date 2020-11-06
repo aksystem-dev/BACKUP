@@ -270,19 +270,7 @@ namespace smart_modul_BACKUP_service.BackupExe
                 logInfo("Připojuji se k SFTP serveru");
                 try
                 {
-                    sftp = Manager.Get<SftpUploader>();
-                    sftp.Connect();
-
-                    //   následující zakomentovaný kód byl přesunut do startu služby,
-                    //   páč netřeba toto dělat před každou zálohou
-
-                    ////po připojení k sftp tam zkusit nahrát info o tomto PC
-                    //try { SftpMetadataManager.SetMyInfo(sftp); }
-                    //catch (Exception ex)
-                    //{
-                    //    logError($"Nepodařilo se nahrát info o tomto PC na server", ex);
-                    //}
-
+                    sftp = Manager.Get<SftpUploader>(false);
                     logInfo("Úspěšně připojeno k SFTP serveru");
 
                     return true;
@@ -631,7 +619,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             Manager.Get<SmbMailer>()?.ReportBackupAsync(B_Obj);
 
             //odpojení od serverů, vyčištění stínových kopií, odstranění dočasných souborů
-            disconnectSftp();
+            //disconnectSftp(); - provádí se v SftpUploaderFactory
             disconnectSql();
             cleanUpVss();
             deleteTempFolder();
@@ -673,26 +661,6 @@ namespace smart_modul_BACKUP_service.BackupExe
             {
                 logError("Nepodařilo se nastavit poslední datum vyhodnocení pravidla.", ex);
             }
-        }
-
-        private bool disconnectSftp()
-        {
-            logInfo("Odpojuji se od sftp");
-            if (sftp != null && sftp.IsConnected)
-            {
-                try
-                {
-                    sftp.Disconnect();
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    logError("Problém při odpojování od sftp", ex);
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         private bool disconnectSql()

@@ -1,112 +1,109 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace SmartModulBackupClasses
-{
-    /// <summary>
-    /// Načítá informace z lokálních souborů a zároveň ze souboru přes sftp.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    [Obsolete("Používá se BackupInfoManager a BackupRuleLoader")]
-    public class XmlInfoLoaderSftpMirror<T> : XmlInfoLoader<T> where T : IHaveID
-    {
-        public string RemotePath { get; private set; }
-        public BackupLocation Priority { get; private set; }
-        private SftpUploaderFactory _sftp;
+//namespace SmartModulBackupClasses
+//{
+//    /// <summary>
+//    /// Načítá informace z lokálních souborů a zároveň ze souboru přes sftp.
+//    /// </summary>
+//    /// <typeparam name="T"></typeparam>
+//    [Obsolete("Používá se BackupInfoManager a BackupRuleLoader")]
+//    public class XmlInfoLoaderSftpMirror<T> : XmlInfoLoader<T> where T : IHaveID
+//    {
+//        public string RemotePath { get; private set; }
+//        public BackupLocation Priority { get; private set; }
+//        private SftpUploaderFactory _sftp;
         
-        public XmlInfoLoaderSftpMirror(string localFile, SftpUploaderFactory sftp, 
-            string remoteFile = null, BackupLocation priority = BackupLocation.SFTP) : base(localFile)
-        {
-            RemotePath = remoteFile ?? localFile;
-            Priority = priority;
-            _sftp = sftp;
-        }
+//        public XmlInfoLoaderSftpMirror(string localFile, SftpUploaderFactory sftp, 
+//            string remoteFile = null, BackupLocation priority = BackupLocation.SFTP) : base(localFile)
+//        {
+//            RemotePath = remoteFile ?? localFile;
+//            Priority = priority;
+//            _sftp = sftp;
+//        }
 
-        public override void LoadInfos()
-        {
-            ClearInfos();
+//        public override void LoadInfos()
+//        {
+//            ClearInfos();
 
-            SMB_Log.Log("XmlInfoLoaderSftpMirror.LoadInfos()");
+//            SMB_Log.Log("XmlInfoLoaderSftpMirror.LoadInfos()");
 
-            var sftp = _sftp?.GetInstance();
-            if (sftp?.TryConnect(1000) == false)
-                sftp = null;
+//            var sftp = _sftp?.GetInstance();
+//            if (sftp?.TryConnect(1000) == false)
+//                sftp = null;
 
-            if (sftp == null)
-            {
-                base.LoadInfos();
-                return;
-            }
 
-            try
-            {
-                if (Priority == BackupLocation.SFTP)
-                {
-                    _loadFromSftp(sftp);
-                    _loadInfos(append: true);
-                }
-                else
-                {
-                    _loadInfos(append: true);
-                    _loadFromSftp(sftp);
-                }
-            }
-            catch (Exception e)
-            {
-                SMB_Log.Log($"XmlInfoLoaderSftpMirror.LoadInfos() error: {e.GetType().Name}\n\n{e.Message}");
-                throw e;
-            }
-            finally
-            {
-                sftp.Disconnect();
-                sftp.client.Dispose();
-            }
-        }
 
-        public override void SaveInfos()
-        {
-            base.SaveInfos();
+//            if (sftp == null)
+//            {
+//                base.LoadInfos();
+//                return;
+//            }
 
-            SMB_Log.Log("XmlInfoLoaderSftpMirror.SaveInfos()");
+//            try
+//            {
+//                if (Priority == BackupLocation.SFTP)
+//                {
+//                    _loadFromSftp(sftp);
+//                    _loadInfos(append: true);
+//                }
+//                else
+//                {
+//                    _loadInfos(append: true);
+//                    _loadFromSftp(sftp);
+//                }
+//            }
+//            catch (Exception e)
+//            {
+//                SMB_Log.Log($"XmlInfoLoaderSftpMirror.LoadInfos() error: {e.GetType().Name}\n\n{e.Message}");
+//                throw e;
+//            }
+//        }
 
-            var sftp = _sftp?.GetInstance();
-            if (sftp?.TryConnect(1000) == false)
-                sftp = null;
+//        public override void SaveInfos()
+//        {
+//            base.SaveInfos();
 
-            if (sftp == null)
-                return;
+//            SMB_Log.Log("XmlInfoLoaderSftpMirror.SaveInfos()");
 
-            try
-            {
-                sftp.UploadFile(LocalPath, RemotePath);
-            }
-            catch (Exception e)
-            {
-                SMB_Log.Log($"XmlInfoLoaderSftpMirror.SaveInfos() error: {e.GetType().Name}\n\n{e.Message}");
-                throw e;
-            }
-            finally
-            {
-                sftp.Disconnect();
-                sftp.client.Dispose();
-            }
-        }
+//            var sftp = _sftp?.GetInstance();
+//            if (sftp?.TryConnect(1000) == false)
+//                sftp = null;
 
-        private void _loadFromSftp(SftpUploader sftp)
-        {
-            if (sftp.client.Exists(RemotePath.NormalizePath()))
-            {
-                string text = sftp.client.ReadAllText(RemotePath.NormalizePath());
-                SMB_Log.Log($"XmlInfoLoaderSftpMirror._loadFromSftp(): staženo \"{RemotePath}\":\n\n{text}");
-                _loadInfos(append: true, xml: text);
-            }
-            else
-            {
-                SMB_Log.Log($"XmlInfoLoaderSftpMirror._loadFromSftp(): file {RemotePath} neexistuje");
-            }
-        }
-    }
-}
+//            if (sftp == null)
+//                return;
+
+//            try
+//            {
+//                sftp.UploadFile(LocalPath, RemotePath);
+//            }
+//            catch (Exception e)
+//            {
+//                SMB_Log.Log($"XmlInfoLoaderSftpMirror.SaveInfos() error: {e.GetType().Name}\n\n{e.Message}");
+//                throw e;
+//            }
+//            finally
+//            {
+//                sftp.Disconnect();
+//                sftp.client.Dispose();
+//            }
+//        }
+
+//        private void _loadFromSftp(SftpUploader sftp)
+//        {
+//            if (sftp.client.Exists(RemotePath.NormalizePath()))
+//            {
+//                string text = sftp.client.ReadAllText(RemotePath.NormalizePath());
+//                SMB_Log.Log($"XmlInfoLoaderSftpMirror._loadFromSftp(): staženo \"{RemotePath}\":\n\n{text}");
+//                _loadInfos(append: true, xml: text);
+//            }
+//            else
+//            {
+//                SMB_Log.Log($"XmlInfoLoaderSftpMirror._loadFromSftp(): file {RemotePath} neexistuje");
+//            }
+//        }
+//    }
+//}

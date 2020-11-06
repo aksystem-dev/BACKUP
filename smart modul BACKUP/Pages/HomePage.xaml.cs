@@ -147,9 +147,8 @@ namespace smart_modul_BACKUP
 
             try
             {
-                sftp = Manager.Get<SftpUploader>();
+                sftp = Manager.Get<SftpUploader>(false);
 
-                sftp.Connect();
                 var size = sftp.GetDirSize(plan_man.SftpFolder);
                 ZabraneMistoStr = byteSizeToStringConverter.Convert(size, null, null, null).ToString();
             }
@@ -157,15 +156,6 @@ namespace smart_modul_BACKUP
             {
                 App.dispatch(() => ZabraneMistoStr = "nepodařilo se zjistit");
                 SmbLog.Error("problém při zjišťování množství dat uložených na serveru", ex, LogCategory.GUI);
-            }
-            finally
-            {
-                if (sftp?.IsConnected == true)
-                    try
-                    {
-                        sftp.Disconnect();
-                    }
-                    catch { }
             }
         }
 

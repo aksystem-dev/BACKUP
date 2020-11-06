@@ -58,18 +58,10 @@ namespace SmartModulBackupClasses.Managers
         /// <returns></returns>
         public static IEnumerable<PC_Info> GetPCInfos()
         {
-            using (var sftp = Manager.Get<SftpUploader>())
+            using (var sftp = Manager.Get<SftpUploader>(false))
             {
-                try
-                {
-                    sftp.Connect();
-                    foreach (var pc in GetPCInfos(sftp))
-                        yield return pc;
-                }
-                finally
-                {
-                    sftp.Disconnect();
-                }
+                foreach (var pc in GetPCInfos(sftp))
+                    yield return pc;
             }
         }
 
@@ -77,7 +69,7 @@ namespace SmartModulBackupClasses.Managers
         /// nahraje informace o tomto PC na server (do parametru již připojenou instanci
         /// SftpUploaderu)
         /// </summary>
-        public static void SetMyInfo(SftpUploader sftp)
+        private static void SetMyInfo(SftpUploader sftp)
         {
             var me = PC_Info.This; //info o tomto PC
             var meStr = me.ToXML(); //převést ho na xml
@@ -119,22 +111,16 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         public static bool SetMyInfo()
         {
-            using (var sftp = Manager.Get<SftpUploader>())
+            try
             {
-                try
-                {
-                    sftp.Connect();
+                using (var sftp = Manager.Get<SftpUploader>())
                     SetMyInfo(sftp);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-                finally
-                {
-                    sftp.Disconnect();
-                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                SmbLog.Error("SetMyInfo chyba - ", ex);
+                return false;
             }
         }
 

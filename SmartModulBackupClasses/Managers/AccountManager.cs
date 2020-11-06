@@ -34,6 +34,9 @@ namespace SmartModulBackupClasses.Managers
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler AfterLoginCalled;
         public Action<Action> propertyChangedDispatcher;
+        public event EventHandler StateChanged;
+
+        public AccountManager() { }
 
         private void propsChanged()
         {
@@ -51,7 +54,6 @@ namespace SmartModulBackupClasses.Managers
                 propertyChangedHandler?.Invoke(this, new PropertyChangedEventArgs(nameof(PlanInfo)));
                 propertyChangedHandler?.Invoke(this, new PropertyChangedEventArgs(nameof(SftpInfo)));
                 afterLoginCalledHandler?.Invoke(this, null);
-
             });
         }
 
@@ -65,10 +67,23 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         public bool Connected => State == LoginState.LoginSuccessful;
 
+        private LoginState _state;
+
         /// <summary>
         /// Stav připojení k api
         /// </summary>
-        public LoginState State { get; private set; }
+        public LoginState State
+        {
+            get => _state;
+            set
+            {
+                if (_state != value)
+                {
+                    _state = value;
+                    StateChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
 
         /// <summary>
         /// Pokud se poslední přihlášení nezdařilo, zde je uložena výjimka, k níž došlo

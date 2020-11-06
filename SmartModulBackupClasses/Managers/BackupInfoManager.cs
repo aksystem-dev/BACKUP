@@ -43,7 +43,7 @@ namespace SmartModulBackupClasses.Managers
                 if (!DownloadApi)
                     return false;
 
-                var aman = Manager.Get<AccountManager>();
+                var aman = Manager.Get<AccountManager>(true);
                 return aman.Connected;
             }
         }
@@ -58,7 +58,7 @@ namespace SmartModulBackupClasses.Managers
                 if (!UploadApi)
                     return false;
 
-                var aman = Manager.Get<AccountManager>();
+                var aman = Manager.Get<AccountManager>(false);
                 return aman.Connected;
             }
         }
@@ -164,14 +164,14 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         public IEnumerable<Backup> LocalBackups => _backups.Where(bk => bk.MadeOnThisComputer);
 
-        SmbApiClient client => Manager.Get<AccountManager>()?.Api;
+        SmbApiClient client => Manager.Get<AccountManager>(false)?.Api;
         readonly ConfigManager config;
         readonly AccountManager plans;
 
         public BackupInfoManager()
         {
-            config = Manager.Get<ConfigManager>();
-            plans = Manager.Get<AccountManager>();
+            config = Manager.Get<ConfigManager>(false);
+            plans = Manager.Get<AccountManager>(false);
         }
 
 
@@ -237,14 +237,13 @@ namespace SmartModulBackupClasses.Managers
                 listTasks.Add(Task.Run(async () => apiResults = await listBksApi()));
 
             //také je možné, že jsou informace uložené na sftp;
-            SftpUploader sftp = options.DownloadSFTP ? Manager.Get<SftpUploader>() : null;
+            SftpUploader sftp = options.DownloadSFTP ? Manager.Get<SftpUploader>(false) : null;
             Dictionary<string, string> remoteBkinfoPaths = new Dictionary<string, string>();
             if (sftp != null)
             {
                 listTasks.Add(Task.Run(async () =>
                 {
-                    if ((await sftp?.TryConnectAsync(2000)) == true)
-                        sftpResults = listBksSftp(sftp, options.SftpClientFilter, remoteBkinfoPaths);
+                    sftpResults = listBksSftp(sftp, options.SftpClientFilter, remoteBkinfoPaths);
                 }));
             }
 
@@ -331,8 +330,8 @@ namespace SmartModulBackupClasses.Managers
                 }
             }
 
-            //až budou všechny sftp tasky hotové, chceme se od sftp odpojit
-            await Task.WhenAll(sftpTasks).ContinueWith(task => sftp?.Disconnect(false));
+            //až budou všechny sftp tasky hotové
+            await Task.WhenAll(sftpTasks);
             await Task.WhenAll(apiTasks);
             await Task.WhenAll(localTasks);
 
@@ -596,14 +595,9 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<bool> saveBkSftp(Backup bk, SftpUploader sftp = null)
         {
-            bool disc = false; //jestli se na konci metody odpojit
+            sftp = sftp ?? Manager.Get<SftpUploader>();
             if (sftp == null)
-            {
-                sftp = Manager.Get<SftpUploader>();
-                disc = true;
-                if((await sftp.TryConnectAsync(2000)) != true)
-                    return false;
-            }
+                return false;
 
             string fpath = bk.GetRemoteInfoPath();
             return await Task.Run<bool>(() =>
@@ -619,17 +613,6 @@ namespace SmartModulBackupClasses.Managers
                 {
                     SmbLog.Error("Problém při nahrávání info o záloze na SFTP server", ex, LogCategory.BackupInfoManager);
                     return false;
-                }
-                finally
-                {
-                    if (disc)
-                        try
-                        {
-                            if (sftp.IsConnected)
-                                sftp.Disconnect();
-                            sftp.Dispose();
-                        }
-                        catch { }
                 }
             });
         }
@@ -689,14 +672,9 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<bool> deleteBkSftp(Backup bk, SftpUploader sftp = null)
         {
-            bool disc = false; //jestli se na konci metody odpojit
+            sftp = sftp ?? Manager.Get<SftpUploader>();
             if (sftp == null)
-            {
-                sftp = Manager.Get<SftpUploader>();
-                disc = true;
-                if ((await sftp.TryConnectAsync(2000)) != true)
-                    return false;
-            }
+                return false;
 
             string fpath = bk.GetRemoteInfoPath();
             return await Task.Run<bool>(() =>
@@ -710,17 +688,6 @@ namespace SmartModulBackupClasses.Managers
                 {
                     SmbLog.Error("Problém při odstraňování info o záloze ze SFTP serveru", ex, LogCategory.BackupInfoManager);
                     return false;
-                }
-                finally
-                {
-                    if (disc)
-                        try
-                        {
-                            if (sftp.IsConnected)
-                                sftp.Disconnect();
-                            sftp.Dispose();
-                        }
-                        catch { }
                 }
             });
         }
@@ -761,14 +728,9 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<bool> updateBkSftp(Backup bk, SftpUploader sftp = null)
         {
-            bool disc = false; //jestli se na konci metody odpojit
+            sftp = sftp ?? Manager.Get<SftpUploader>(true);
             if (sftp == null)
-            {
-                sftp = Manager.Get<SftpUploader>();
-                disc = true;
-                if ((await sftp.TryConnectAsync(2000)) != true)
-                    return false;
-            }
+                return false;
 
             string fpath = bk.GetRemoteInfoPath();
             return await Task.Run<bool>(() =>
@@ -784,17 +746,6 @@ namespace SmartModulBackupClasses.Managers
                 {
                     SmbLog.Error($"Problém při updatování info o záloze na SFTP serveru (bkinfo file: '{fpath}')", ex, LogCategory.BackupInfoManager);
                     return false;
-                }
-                finally
-                {
-                    if (disc)
-                        try
-                        {
-                            if (sftp.IsConnected)
-                                sftp.Disconnect();
-                            sftp.Dispose();
-                        }
-                        catch { }
                 }
             });
         }
@@ -827,9 +778,9 @@ namespace SmartModulBackupClasses.Managers
             Dictionary<string, string> dict;
 
             //porychtovat sftp informace o zálohách
-            using (var sftp = Manager.Get<SftpUploader>())
+            using (var sftp = Manager.Get<SftpUploader>(false))
             {
-                if (!sftp.TryConnect(1000)) //pokud se nám nepodaří připojit, přeskočit SFTP opravy
+                if (sftp == null) //pokud se nám nepodaří připojit, přeskočit SFTP opravy
                     goto SKIP_SFTP;
 
                 dict = new Dictionary<string, string>();
