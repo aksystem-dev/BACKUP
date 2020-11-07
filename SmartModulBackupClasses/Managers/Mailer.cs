@@ -36,14 +36,18 @@ namespace SmartModulBackupClasses.Managers
         /// Vrátí IEnumerable umožňující projít maily ve frontě k odeslání.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<MailFile> EnumerateMailQueue()
+        public IEnumerable<MailFile> EnumerateMailQueue<TKey>(Func<FileInfo, TKey> order, bool descending)
         {
             //ujistit se, že složka existuje
             Directory.CreateDirectory(MAIL_QUEUE_DIR);
 
+            var fnames = Directory.GetFiles(MAIL_QUEUE_DIR);
+            var enumerable = descending ?
+                fnames.OrderByDescending(fname => order(new FileInfo(fname))) :
+                fnames.OrderBy(fname => order(new FileInfo(fname)));
+
             //projít soubory
-            foreach(var fname in Directory.GetFiles(MAIL_QUEUE_DIR)
-                                          .OrderBy(f => new FileInfo(f).CreationTime))
+            foreach (var fname in enumerable)
             {
                 Mail mail = null;
                 try
@@ -71,11 +75,9 @@ namespace SmartModulBackupClasses.Managers
             Directory.CreateDirectory(MAIL_QUEUE_DIR);
 
             //projít soubory
-            foreach (var fname in Directory.GetFiles(MAIL_QUEUE_DIR)
-                                           .OrderByDescending(f => new FileInfo(f).CreationTime)
-                                           .Skip(MAX_PENDING_EMAILS))
+            foreach (var file in EnumerateMailQueue(f => f.CreationTime, true).Skip(10))
             {
-                try { File.Delete(fname); }
+                try { File.Delete(file.FilePath); }
                 catch (Exception ex) { error("Nepodařilo se odstranit starý mail", ex); }
             }
         }
@@ -107,6 +109,10 @@ namespace SmartModulBackupClasses.Managers
                 if (@throw)
                     throw;
                 return null;
+            }
+            finally
+            {
+                deleteOldPendingEmails();
             }
         }
 
@@ -356,7 +362,7 @@ namespace SmartModulBackupClasses.Managers
 
             cfg = cfg ?? getCfg();
 
-            var mails = EnumerateMailQueue().ToArray();
+            var mails = EnumerateMailQueue(f => f.CreationTime, true).Take(10).ToArray();
 
             foreach(var mail_file in mails)
             {
