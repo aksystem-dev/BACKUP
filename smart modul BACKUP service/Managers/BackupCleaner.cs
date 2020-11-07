@@ -91,7 +91,7 @@ namespace smart_modul_BACKUP_service
         /// <param name="bk_man">BackupInfoManager k použití; nechá-li se null, vezmeme Manager.Get<BackupInfoManager>()</BackupInfoManager></param>
         private void cleanuprule(BackupRule rule, SftpUploader sftp = null, BackupInfoManager bk_man = null)
         {
-            SmbLog.Info($"cleanuprule pravidla {rule.Name}", category: LogCategory.BackupCleaner);
+            SmbLog.Info($"cleanuprule pravidla {rule.Name} započata", category: LogCategory.BackupCleaner);
 
             bk_man = bk_man ?? Manager.Get<BackupInfoManager>();
 
@@ -133,6 +133,8 @@ namespace smart_modul_BACKUP_service
                     sftp.Disconnect();
                 }
                 catch { }
+
+            SmbLog.Info($"cleanuprule pravidla {rule.Name} hotova", category: LogCategory.BackupCleaner);
         }
 
         /// <summary>

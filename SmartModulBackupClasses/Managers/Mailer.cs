@@ -330,7 +330,7 @@ namespace SmartModulBackupClasses.Managers
             Action<MailCallbackArgs> sendCallback = null,
             EmailConfig cfg = null)
         {
-            SmbLog.Trace("SendPendingEmailsAsync zavoláno", null, LogCategory.Emails);
+            SmbLog.Info("SendPendingEmailsAsync zavoláno", null, LogCategory.Emails);
 
             cfg = cfg ?? getCfg();
 
@@ -341,6 +341,8 @@ namespace SmartModulBackupClasses.Managers
                 RemoveFromQueue(mail_file);
                 await SendSmartEachAsync(mail_file.Mail, cancelToken, sendCallback, cfg);
             }
+
+            SmbLog.Info("SendPendingEmailsAsync hotovo", null, LogCategory.Emails);
         }
         
     }
