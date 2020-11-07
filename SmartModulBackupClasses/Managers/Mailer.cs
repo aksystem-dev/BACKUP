@@ -32,42 +32,36 @@ namespace SmartModulBackupClasses.Managers
             catch { }
         }
 
-        object mailQueueEnumerableLock = new object();
-
         /// <summary>
         /// Vrátí IEnumerable umožňující projít maily ve frontě k odeslání.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<MailFile> EnumerateMailQueue<TKey>(Func<FileInfo, TKey> order, bool descending)
         {
-            lock (mailQueueEnumerableLock)
+            //ujistit se, že složka existuje
+            Directory.CreateDirectory(MAIL_QUEUE_DIR);
+
+            var files = Directory.EnumerateFiles(MAIL_QUEUE_DIR);
+            var orderedFiles = descending ?
+                files.OrderByDescending(fname => order(new FileInfo(fname))) :
+                files.OrderBy(fname => order(new FileInfo(fname)));
+
+            //projít soubory
+            foreach (var fname in orderedFiles)
             {
-
-                //ujistit se, že složka existuje
-                Directory.CreateDirectory(MAIL_QUEUE_DIR);
-
-                var files = Directory.EnumerateFiles(MAIL_QUEUE_DIR);
-                var orderedFiles = descending ?
-                    files.OrderByDescending(fname => order(new FileInfo(fname))) :
-                    files.OrderBy(fname => order(new FileInfo(fname)));
-
-                //projít soubory
-                foreach (var fname in orderedFiles)
+                Mail mail = null;
+                try
                 {
-                    Mail mail = null;
-                    try
-                    {
-                        //deserializovat
-                        mail = Mail.DeXml(File.ReadAllText(fname));
-                    }
-                    catch { }
-
-                    //pokud byla deserializace úspěšná, vrátit novou instanci MailFile
-                    if (mail != null)
-                        yield return new MailFile(mail, fname);
+                    //deserializovat
+                    mail = Mail.DeXml(File.ReadAllText(fname));
                 }
+                catch { }
 
+                //pokud byla deserializace úspěšná, vrátit novou instanci MailFile
+                if (mail != null)
+                    yield return new MailFile(mail, fname);
             }
+
         }
 
         public const int MAX_PENDING_EMAILS = 20;
@@ -91,7 +85,7 @@ namespace SmartModulBackupClasses.Managers
                 Directory.CreateDirectory(MAIL_QUEUE_DIR);
 
                 //projít soubory
-                foreach (var file in EnumerateMailQueue(f => f.CreationTime, true).Skip(10))
+                foreach (var file in EnumerateMailQueue(f => f.CreationTime, true).Skip(MAX_PENDING_EMAILS))
                 {
                     RemoveFromQueue(file, false);
                 }
@@ -393,7 +387,7 @@ namespace SmartModulBackupClasses.Managers
 
                 cfg = cfg ?? getCfg();
 
-                var mails = EnumerateMailQueue(f => f.CreationTime, true).Take(10);
+                var mails = EnumerateMailQueue(f => f.CreationTime, true).Take(MAX_PENDING_EMAILS);
 
                 foreach (var mail_file in mails)
                 {
