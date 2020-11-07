@@ -619,7 +619,7 @@ namespace smart_modul_BACKUP_service.BackupExe
             Manager.Get<SmbMailer>()?.ReportBackupAsync(B_Obj);
 
             //odpojení od serverů, vyčištění stínových kopií, odstranění dočasných souborů
-            //disconnectSftp(); - provádí se v SftpUploaderFactory
+            disconnectSftp(); 
             disconnectSql();
             cleanUpVss();
             deleteTempFolder();
@@ -663,6 +663,25 @@ namespace smart_modul_BACKUP_service.BackupExe
             }
         }
 
+        private bool disconnectSftp()
+        {
+            logInfo("Odpojuji se od sftp");
+            if (sftp == null)
+                return true;
+
+            try
+            {
+                sftp.Dispose();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logError("Prolbém při odpojování od SFTP serveru", ex);
+                return false;
+            }
+
+        }
+
         private bool disconnectSql()
         {
             logInfo("Odpojuji se od sql");
@@ -671,6 +690,7 @@ namespace smart_modul_BACKUP_service.BackupExe
                 try
                 {
                     sql.Close();
+                    sql.Dispose();
                     return true;
                 }
                 catch (Exception ex)

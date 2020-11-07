@@ -12,7 +12,7 @@ namespace smart_modul_BACKUP_service
     /// <summary>
     /// Umí vytvářet a obnovovat zálohy SQL serveru.
     /// </summary>
-    public class SqlBackuper
+    public class SqlBackuper : IDisposable
     {
         public SqlConnection connection { get; private set; }
 
@@ -132,6 +132,15 @@ namespace smart_modul_BACKUP_service
             com.Dispose();
 
             logInfo($"Databáze {database} úspěšně obnovena");
+        }
+
+        public bool Disposed { get; private set; } = false;
+        public void Dispose()
+        {
+            if (Disposed)
+                return;
+
+            connection.Dispose();
         }
     }
 }

@@ -17,8 +17,8 @@ namespace smart_modul_BACKUP_service
     {
         public bool Running { get; private set; } = false;
 
-        private static List<BackupTask> _ongoingBackups = new List<BackupTask>();
-        public static BackupTask[] OngoingBackups => _ongoingBackups.ToArray();
+        //private static List<BackupTask> _ongoingBackups = new List<BackupTask>();
+        //public static BackupTask[] OngoingBackups => _ongoingBackups.ToArray();
 
         private CancellationTokenSource _tokenSource;
         private Thread _loopThread;
@@ -94,6 +94,7 @@ namespace smart_modul_BACKUP_service
             }
         }
 
+        //TODO: HERE?
         private List<BackupTask> _tasks;
 
         public DateTime End { get; private set; }

@@ -198,7 +198,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
         {
             progress?.Update(RestoreState.Finishing, 0);
 
-            //disconnectSftp(); - provádí se v SftpUploaderFactory
+            disconnectSftp();
             disconnectSql();
             removeTempDir();
 
@@ -460,6 +460,21 @@ namespace smart_modul_BACKUP_service.RestoreExe
             }
         }
 
+        private bool disconnectSftp()
+        {
+            if (sftp == null) return true;
+
+            try
+            {
+                sftp.Dispose();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                SmbLog.Error("Problém při odpojování od SFTP serveru po obnově", ex, LogCategory.RestoreTask);
+                return false;
+            }
+        }
 
         private bool disconnectSql()
         {
@@ -470,7 +485,7 @@ namespace smart_modul_BACKUP_service.RestoreExe
                 //progress?.Update("ODPOJUJI SE OD SQL", 0.85f);
                 if (sql.connection.State == System.Data.ConnectionState.Open)
                     sql.Close();
-                sql.connection.Dispose();
+                sql.Dispose();
                 return true;
             }
             catch (Exception ex)
