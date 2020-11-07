@@ -282,7 +282,7 @@ namespace smart_modul_BACKUP_service
             Utils.GUIS.TestConnection();
 
             //odeslat maily k odeslání
-            Manager.Get<Mailer>()?.SendPendingEmailsAsync();
+            Task.Run(() => Manager.Get<Mailer>()?.SendPendingEmailsAsync() ?? Task.CompletedTask);
         }
 
         protected override void OnStop()

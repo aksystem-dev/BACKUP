@@ -32,38 +32,47 @@ namespace SmartModulBackupClasses.Managers
             catch { }
         }
 
+        object mailQueueEnumerableLock = new object();
+
         /// <summary>
         /// Vrátí IEnumerable umožňující projít maily ve frontě k odeslání.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<MailFile> EnumerateMailQueue<TKey>(Func<FileInfo, TKey> order, bool descending)
         {
-            //ujistit se, že složka existuje
-            Directory.CreateDirectory(MAIL_QUEUE_DIR);
-
-            var fnames = Directory.GetFiles(MAIL_QUEUE_DIR);
-            var enumerable = descending ?
-                fnames.OrderByDescending(fname => order(new FileInfo(fname))) :
-                fnames.OrderBy(fname => order(new FileInfo(fname)));
-
-            //projít soubory
-            foreach (var fname in enumerable)
+            lock (mailQueueEnumerableLock)
             {
-                Mail mail = null;
-                try
-                {
-                    //deserializovat
-                    mail = Mail.DeXml(File.ReadAllText(fname));
-                }
-                catch { }
 
-                //pokud byla deserializace úspěšná, vrátit novou instanci MailFile
-                if (mail != null)
-                    yield return new MailFile(mail, fname);
+                //ujistit se, že složka existuje
+                Directory.CreateDirectory(MAIL_QUEUE_DIR);
+
+                var files = Directory.EnumerateFiles(MAIL_QUEUE_DIR);
+                var orderedFiles = descending ?
+                    files.OrderByDescending(fname => order(new FileInfo(fname))) :
+                    files.OrderBy(fname => order(new FileInfo(fname)));
+
+                //projít soubory
+                foreach (var fname in orderedFiles)
+                {
+                    Mail mail = null;
+                    try
+                    {
+                        //deserializovat
+                        mail = Mail.DeXml(File.ReadAllText(fname));
+                    }
+                    catch { }
+
+                    //pokud byla deserializace úspěšná, vrátit novou instanci MailFile
+                    if (mail != null)
+                        yield return new MailFile(mail, fname);
+                }
+
             }
         }
 
-        public const int MAX_PENDING_EMAILS = 10;
+        public const int MAX_PENDING_EMAILS = 20;
+
+        private bool _isDeletingOldPendingEmails = false;
 
         /// <summary>
         /// Odstraní maily tak, aby jich ve frontě na odeslání zbylo
@@ -71,14 +80,25 @@ namespace SmartModulBackupClasses.Managers
         /// </summary>
         private void deleteOldPendingEmails()
         {
-            //ujistit se, že složka existuje
-            Directory.CreateDirectory(MAIL_QUEUE_DIR);
+            if (_isDeletingOldPendingEmails)
+                return;
 
-            //projít soubory
-            foreach (var file in EnumerateMailQueue(f => f.CreationTime, true).Skip(10))
+            _isDeletingOldPendingEmails = true;
+
+            try
             {
-                try { File.Delete(file.FilePath); }
-                catch (Exception ex) { error("Nepodařilo se odstranit starý mail", ex); }
+                //ujistit se, že složka existuje
+                Directory.CreateDirectory(MAIL_QUEUE_DIR);
+
+                //projít soubory
+                foreach (var file in EnumerateMailQueue(f => f.CreationTime, true).Skip(10))
+                {
+                    RemoveFromQueue(file, false);
+                }
+            }
+            finally
+            {
+                _isDeletingOldPendingEmails = false;
             }
         }
 
@@ -252,6 +272,8 @@ namespace SmartModulBackupClasses.Managers
             {
                 alles_gute = false;
                 exception = ex;
+
+                error($"Problém při odesílání e-mailu ({mail.Subject})", ex);
             }
             finally
             {
@@ -319,7 +341,7 @@ namespace SmartModulBackupClasses.Managers
             Action<MailCallbackArgs> sendCallback = null,
             EmailConfig cfg = null)
         {
-            SmbLog.Trace("SendSmartEachAsync zavoláno", null, LogCategory.Emails);
+            SmbLog.Info("SendSmartEachAsync zavoláno", null, LogCategory.Emails);
 
             //pokusit se odeslat mail
             var result = await SendDumbEachAsync(mail, cancelToken, cfg);
@@ -346,6 +368,8 @@ namespace SmartModulBackupClasses.Managers
             return result;
         }
 
+        public bool IsSendingPendingEmails { get; private set; } = false;
+
         /// <summary>
         /// Odešle maily ve frontě. Odeslané maily se z fronty odstraní.
         /// </summary>
@@ -358,19 +382,31 @@ namespace SmartModulBackupClasses.Managers
             Action<MailCallbackArgs> sendCallback = null,
             EmailConfig cfg = null)
         {
-            SmbLog.Info("SendPendingEmailsAsync zavoláno", null, LogCategory.Emails);
+            if (IsSendingPendingEmails)
+                return;
 
-            cfg = cfg ?? getCfg();
+            IsSendingPendingEmails = true;
 
-            var mails = EnumerateMailQueue(f => f.CreationTime, true).Take(10).ToArray();
-
-            foreach(var mail_file in mails)
+            try
             {
-                RemoveFromQueue(mail_file);
-                await SendSmartEachAsync(mail_file.Mail, cancelToken, sendCallback, cfg);
-            }
+                SmbLog.Info("SendPendingEmailsAsync zavoláno", null, LogCategory.Emails);
 
-            SmbLog.Info("SendPendingEmailsAsync hotovo", null, LogCategory.Emails);
+                cfg = cfg ?? getCfg();
+
+                var mails = EnumerateMailQueue(f => f.CreationTime, true).Take(10);
+
+                foreach (var mail_file in mails)
+                {
+                    RemoveFromQueue(mail_file);
+                    await SendSmartEachAsync(mail_file.Mail, cancelToken, sendCallback, cfg);
+                }
+
+                SmbLog.Info("SendPendingEmailsAsync hotovo", null, LogCategory.Emails);
+            }
+            finally
+            {
+                IsSendingPendingEmails = false;
+            }
         }
         
     }
