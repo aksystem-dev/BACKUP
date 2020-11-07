@@ -3,6 +3,8 @@ using SmartModulBackupClasses;
 using SmartModulBackupClasses.Managers;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace SmartModulBackupClasses
 {
@@ -12,6 +14,7 @@ namespace SmartModulBackupClasses
     public class SftpUploaderFactory : IFactory<SftpUploader>
     {
         private readonly AccountManager _accountManager;
+        private readonly string _logfile = $"sftpUploaderFactoryLog_{Assembly.GetEntryAssembly().GetName().Name}.txt";
 
         private Dictionary<SftpClient, int> _clients = new Dictionary<SftpClient, int>();
         private SftpClient _currentClient = null;
@@ -25,6 +28,13 @@ namespace SmartModulBackupClasses
             _accountManager.StateChanged += _accountManager_StateChanged;
 
             createSftpClient();
+        }
+
+        private void log(string msg)
+        {
+            using (StreamWriter sw = new StreamWriter(_logfile, true))
+                sw.WriteLine($"{DateTime.Now.ToString("dd.MM.yy HH:mm:ss")} {msg}");
+            SmbLog.Info(msg, null, LogCategory.SFTP);
         }
 
         private LoginState _lastState; //poslední stav accountmanageru
@@ -47,18 +57,24 @@ namespace SmartModulBackupClasses
 
             if (_accountManager.State == LoginState.LoginSuccessful)
             {
+                log("AccountManager logged in, changing SftpClient");
+
                 var sftp = _accountManager.SftpInfo;
                 _currentClient = new SftpClient(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
                 _clients.Add(_currentClient, 0);
             }
             else if (_accountManager.State == LoginState.Offline && cfg_man?.Config?.SFTP != null)
             {
+                log("AccountManager logged out, changing SftpClient");
+
                 var sftp = cfg_man.Config.SFTP;
                 _currentClient = new SftpClient(sftp.Host, sftp.Port, sftp.Username, sftp.Password.Value);
                 _clients.Add(_currentClient, 0);
             }
             else
             {
+                log("_currentClient = null");
+
                 _currentClient = null;
             }
         }
@@ -75,8 +91,14 @@ namespace SmartModulBackupClasses
 
             lock (_currentClient)
             {
-                if (_clients[_currentClient]++ == 0)
+                log($"a new user for SftpClient {_currentClient.GetHashCode()}");
+
+                _clients[_currentClient]++;
+                if (!_currentClient.IsConnected)
+                {
+                    log($"client {_currentClient} isn't connected. Connecting...");
                     _currentClient.Connect();
+                }
 
                 return _currentClient;
             }
@@ -92,11 +114,17 @@ namespace SmartModulBackupClasses
         {
             lock (client)
             {
+                log($"SftpClient {client.GetHashCode()} lost a user");
+
                 if (--_clients[client] == 0)
                 {
+                    log($"No one is using SftpClient {client.GetHashCode()}. Disconnecting... ");
+
                     client.Disconnect();
                     if (_currentClient != client)
                     {
+                        log($"SftpClient {client.GetHashCode()} is old. Disposing... ");
+
                         _clients.Remove(client);
                         client.Dispose();
                     }

@@ -1,6 +1,7 @@
 ﻿using SmartModulBackupClasses;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -51,10 +52,26 @@ namespace smart_modul_BACKUP_service.BackupExe
         /// </summary>
         public readonly BackupRule Rule;
 
+        //TODO: toto pryč
+        private readonly string _allocLog = "BackupTaskAllocLog.txt";
+
+        private void logctor(string msg)
+        {
+            using (var sw = new StreamWriter(_allocLog, true))
+                sw.WriteLine($"{GetHashCode()} {msg}");
+        }
+
         public BackupTask(BackupRule rule, DateTime scheduledStart)
         {
+            logctor("constructor");
+
             Rule = rule;
             ScheduledStart = scheduledStart;
+        }
+
+        ~BackupTask()
+        {
+            logctor("destructor");
         }
 
         /// <summary>
@@ -84,7 +101,10 @@ namespace smart_modul_BACKUP_service.BackupExe
             State = TaskState.Running; //změna stavu
 
             lock (_runningBackupTasks)
+            {
                 _runningBackupTasks.Add(this);
+                logctor("added to static list");
+            }
 
             Progress = Utils.InProgress.NewBackup(); //vytvoření objektu pro komunikaci s GUI
             Progress.RuleId = Rule.LocalID;
@@ -132,7 +152,10 @@ namespace smart_modul_BACKUP_service.BackupExe
             {
                 State = result.Status == TaskStatus.Faulted ? TaskState.Failed : TaskState.Finished;
                 lock (_runningBackupTasks)
+                {
                     _runningBackupTasks.Remove(this);
+                    logctor("removed from static list");
+                }
                 Utils.GUIS.CompleteBackup(Progress, B_Obj.LocalID);
                 Manager.Get<ProgressManager>().RemoveBackup(Progress);
             });
