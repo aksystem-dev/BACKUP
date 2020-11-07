@@ -67,9 +67,9 @@ namespace SmartModulBackupClasses.Managers
 
         /// <summary>
         /// nahraje informace o tomto PC na server (do parametru již připojenou instanci
-        /// SftpUploaderu)
+        /// SftpUploaderu); tato metoda může házet výjimky
         /// </summary>
-        private static void SetMyInfo(SftpUploader sftp)
+        private static void SetMyInfoThrows(SftpUploader sftp)
         {
             var me = PC_Info.This; //info o tomto PC
             var meStr = me.ToXML(); //převést ho na xml
@@ -107,14 +107,15 @@ namespace SmartModulBackupClasses.Managers
 
 
         /// <summary>
-        /// nahraje informace o tomto PC na server (používá se Manager.Get SftpUploader)
+        /// nahraje informace o tomto PC na server (používá se Manager.Get SftpUploader);
+        /// tato metoda chytá výjimky a vrací, zdali operace proběhla úspěšně
         /// </summary>
         public static bool SetMyInfo()
         {
             try
             {
                 using (var sftp = Manager.Get<SftpUploader>())
-                    SetMyInfo(sftp);
+                    SetMyInfoThrows(sftp);
                 return true;
             }
             catch (Exception ex)

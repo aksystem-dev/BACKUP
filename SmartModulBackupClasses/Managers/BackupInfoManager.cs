@@ -595,7 +595,9 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<bool> saveBkSftp(Backup bk, SftpUploader sftp = null)
         {
-            sftp = sftp ?? Manager.Get<SftpUploader>();
+            bool newSftpInstance = sftp == null;
+            sftp = sftp ?? Manager.Get<SftpUploader>(true);
+
             if (sftp == null)
                 return false;
 
@@ -613,6 +615,11 @@ namespace SmartModulBackupClasses.Managers
                 {
                     SmbLog.Error("Problém při nahrávání info o záloze na SFTP server", ex, LogCategory.BackupInfoManager);
                     return false;
+                }
+                finally
+                {
+                    if (newSftpInstance)
+                        sftp.Dispose();
                 }
             });
         }
@@ -672,7 +679,9 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<bool> deleteBkSftp(Backup bk, SftpUploader sftp = null)
         {
-            sftp = sftp ?? Manager.Get<SftpUploader>();
+            bool newSftpInstance = sftp == null;
+            sftp = sftp ?? Manager.Get<SftpUploader>(true);
+
             if (sftp == null)
                 return false;
 
@@ -688,6 +697,11 @@ namespace SmartModulBackupClasses.Managers
                 {
                     SmbLog.Error("Problém při odstraňování info o záloze ze SFTP serveru", ex, LogCategory.BackupInfoManager);
                     return false;
+                }
+                finally
+                {
+                    if (newSftpInstance)
+                        sftp.Dispose();
                 }
             });
         }
@@ -728,7 +742,9 @@ namespace SmartModulBackupClasses.Managers
 
         private async Task<bool> updateBkSftp(Backup bk, SftpUploader sftp = null)
         {
+            bool newSftpInstance = sftp == null;
             sftp = sftp ?? Manager.Get<SftpUploader>(true);
+
             if (sftp == null)
                 return false;
 
@@ -747,7 +763,13 @@ namespace SmartModulBackupClasses.Managers
                     SmbLog.Error($"Problém při updatování info o záloze na SFTP serveru (bkinfo file: '{fpath}')", ex, LogCategory.BackupInfoManager);
                     return false;
                 }
+                finally
+                {
+                    if (newSftpInstance)
+                        sftp.Dispose();
+                }
             });
+
         }
 
         /// <summary>
@@ -778,7 +800,7 @@ namespace SmartModulBackupClasses.Managers
             Dictionary<string, string> dict;
 
             //porychtovat sftp informace o zálohách
-            using (var sftp = Manager.Get<SftpUploader>(false))
+            using (var sftp = Manager.Get<SftpUploader>(true))
             {
                 if (sftp == null) //pokud se nám nepodaří připojit, přeskočit SFTP opravy
                     goto SKIP_SFTP;

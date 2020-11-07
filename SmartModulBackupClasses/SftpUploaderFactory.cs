@@ -91,7 +91,7 @@ namespace SmartModulBackupClasses
 
             lock (_currentClient)
             {
-                log($"a new user for SftpClient {_currentClient.GetHashCode()}; new user count: {_clients[_currentClient]}");
+                log($"a new user for SftpClient {_currentClient.GetHashCode()}; new user count: {_clients[_currentClient] + 1}");
 
                 _clients[_currentClient]++;
                 if (!_currentClient.IsConnected)
@@ -114,7 +114,7 @@ namespace SmartModulBackupClasses
         {
             lock (client)
             {
-                log($"SftpClient {client.GetHashCode()} lost a user; new user count: {_clients[client]}");
+                log($"SftpClient {client.GetHashCode()} lost a user; new user count: {_clients[client] - 1}");
 
                 if (--_clients[client] == 0)
                 {
