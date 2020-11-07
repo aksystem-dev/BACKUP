@@ -42,7 +42,8 @@ namespace SmartModulBackupClasses.Managers
             Directory.CreateDirectory(MAIL_QUEUE_DIR);
 
             //projít soubory
-            foreach(var fname in Directory.GetFiles(MAIL_QUEUE_DIR))
+            foreach(var fname in Directory.GetFiles(MAIL_QUEUE_DIR)
+                                          .OrderBy(f => new FileInfo(f).CreationTime))
             {
                 Mail mail = null;
                 try
@@ -55,6 +56,27 @@ namespace SmartModulBackupClasses.Managers
                 //pokud byla deserializace úspěšná, vrátit novou instanci MailFile
                 if (mail != null)
                     yield return new MailFile(mail, fname);
+            }
+        }
+
+        public const int MAX_PENDING_EMAILS = 10;
+
+        /// <summary>
+        /// Odstraní maily tak, aby jich ve frontě na odeslání zbylo
+        /// nejvýše MAX_PENDING_EMAILS. Nejprve odstraňuje ty nejstarší.
+        /// </summary>
+        private void deleteOldPendingEmails()
+        {
+            //ujistit se, že složka existuje
+            Directory.CreateDirectory(MAIL_QUEUE_DIR);
+
+            //projít soubory
+            foreach (var fname in Directory.GetFiles(MAIL_QUEUE_DIR)
+                                           .OrderByDescending(f => new FileInfo(f).CreationTime)
+                                           .Skip(MAX_PENDING_EMAILS))
+            {
+                try { File.Delete(fname); }
+                catch (Exception ex) { error("Nepodařilo se odstranit starý mail", ex); }
             }
         }
 
