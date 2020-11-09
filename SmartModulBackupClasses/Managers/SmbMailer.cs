@@ -12,6 +12,10 @@ namespace SmartModulBackupClasses.Managers
     /// </summary>
     public class SmbMailer
     {
+        public const string MAIL_TEMPLATES_FOLDER = "MailTemplates";
+        public const string BACKUP_REPORT_MAIL = "backup_error.html";
+        public const string CONCURRENTS_BACKUPS_MAIL = "concurrent_backups.html";
+
         private Mailer getMailer() => Manager.Get<Mailer>();
         private EmailConfig getCfg() => Manager.Get<ConfigManager>()?.Config?.EmailConfig;
 
@@ -61,6 +65,10 @@ namespace SmartModulBackupClasses.Managers
             await mailer.SendSmartEachAsync(mail, cfg: cfg);
         }
 
+        public async Task ReportBackupErrorAsync(Backup bk)
+        {
+
+        }
 
         /// <summary>
         /// Pro upozornění ohledně toho, že se jedno pravidlo spustilo víckrát najednou.
