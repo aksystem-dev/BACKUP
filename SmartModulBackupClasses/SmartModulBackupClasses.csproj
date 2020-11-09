@@ -122,6 +122,7 @@
     <Compile Include="SftpUploaderFactory.cs" />
     <Compile Include="SMB_Utils.cs" />
     <Compile Include="TaskQueue.cs" />
+    <Compile Include="Utils\StringInterpolator.cs" />
     <Compile Include="WCF\CommonFault.cs" />
     <Compile Include="WebApi\ActivateRequest.cs" />
     <Compile Include="WebApi\ApiResponse.cs" />
@@ -144,6 +145,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MailTemplates\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\SmartModulBackupWeb\packages\Microsoft.Data.SqlClient.SNI.1.0.19235.1\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\..\SmartModulBackupWeb\packages\Microsoft.Data.SqlClient.SNI.1.0.19235.1\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />

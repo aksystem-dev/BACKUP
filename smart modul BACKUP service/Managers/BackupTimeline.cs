@@ -177,7 +177,7 @@ namespace smart_modul_BACKUP_service
                                 continue;
                             //jinak pouze pošleme e-mail s upozorněním
                             else
-                                _ = Manager.Get<SmbMailer>().NotifyConcurrentExecution(backup.Rule);
+                                _ = Manager.Get<SmbMailer>().NotifyConcurrentExecutionAsync(backup.Rule);
                         }
 
                         //jinak pokračujeme spuštěním daného pravidla:
