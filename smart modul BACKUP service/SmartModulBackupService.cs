@@ -113,7 +113,7 @@ namespace smart_modul_BACKUP_service
                 //když dojde k výjimce, vypsat ji do eventlogu
                 AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-                DumbLogger.Log("Služba smart modul BACKUP spuštěna!!");
+                DumbLogger.Log("Služba smart modul BACKUP spuštěna!!!!!");
 
                 //pracujeme ve složce, kde je exe služby (ve stejné by mělo být exe GUI)
                 string cd = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
