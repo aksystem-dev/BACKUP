@@ -34,7 +34,6 @@ namespace smart_modul_BACKUP_service
         /// </summary>
         public static TimeSpan _scheduleInterval = new TimeSpan(0, 10, 0);
 
-        const bool WAIT_ON_START = false;
 
         /// <summary>
         /// Časovač využívaný pro reload (načítání konfigurace, pravidel, plánování záloh, apod);
@@ -107,9 +106,9 @@ namespace smart_modul_BACKUP_service
         {
             try
             {
-                //pokud je konstanta wait == true, počkat 10 vteřin, aby se mohly napojit debugovací nástroje
-                if (WAIT_ON_START)
-                    Thread.Sleep(10000);
+#if DEBUG
+                //Thread.Sleep(10000);
+#endif
 
                 //když dojde k výjimce, vypsat ji do eventlogu
                 AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -154,8 +153,7 @@ namespace smart_modul_BACKUP_service
                 //když se něco pokazí, kváknout
                 host.Closed += (_, __) => SmbLog.Warn("WCF služba ukončena?", null, LogCategory.ServiceHost);
                 host.Faulted += (_, __) => SmbLog.Error("Došlo k chybě při komunikaci s GUI", null, LogCategory.ServiceHost);
-
-                SftpMetadataManager.SetMyInfo(); //nahrát info o tomto PC na SFTP server
+                
                 Manager.Get<BackupInfoManager>().FixIDsAsync().Wait(); //opravit idy záloh
 
                 //načíst pravidla, zálohy, apod; parametr udává to, co se zavolá po načtení informací o zálohách
@@ -271,6 +269,8 @@ namespace smart_modul_BACKUP_service
 
             //odstranit staré zálohy
             Manager.Get<BackupCleaner>().CleanupAllRulesAsync();
+
+            SftpMetadataManager.SetMyInfo(); //nahrát info o tomto PC na SFTP server
 
             //spustit časovou osu
             timeline.Start(bk_tasks, plan_till);

@@ -829,7 +829,7 @@ namespace SmartModulBackupClasses.Managers
             //porychtovat sftp informace o zálohách
             using (var sftp = Manager.Get<SftpUploader>())
             {
-                if (!sftp.TryConnect(1000)) //pokud se nám nepodaří připojit, přeskočit SFTP opravy
+                if (sftp?.TryConnect(1000) != true) //pokud se nám nepodaří připojit, přeskočit SFTP opravy
                     goto SKIP_SFTP;
 
                 dict = new Dictionary<string, string>();

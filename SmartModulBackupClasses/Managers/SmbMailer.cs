@@ -133,7 +133,7 @@ namespace SmartModulBackupClasses.Managers
         private void replaceRule(StringInterpolator email, BackupRule rule)
         {
             email.Set("rule_name", rule.Name);
-            email.Set("rule_last_date_time", rule.LastExecution.ToString());
+            email.Set("rule_last_date_time", rule.LastExecution.ToString());//TODO: nebude to náhodou už to nové vyhodnocení?
             email.Set("rule_type", rule.RuleType.ToString());            
         }
 

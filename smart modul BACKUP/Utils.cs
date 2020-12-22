@@ -37,6 +37,9 @@ namespace smart_modul_BACKUP
         /// <returns></returns>
         public static bool InstallService(string path = null, bool uninstall = false)
         {
+            if (path != null)
+                path = Path.GetFullPath(path);
+
             var dialog = path == null ? new System.Windows.Forms.OpenFileDialog()
             {
                 Title = "Vyberte exe",

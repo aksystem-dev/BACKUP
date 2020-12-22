@@ -121,6 +121,9 @@ namespace SmartModulBackupClasses.Managers
         {
             using (var sftp = Manager.Get<SftpUploader>())
             {
+                if (sftp == null)
+                    return false;
+
                 try
                 {
                     sftp.Connect();
