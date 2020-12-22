@@ -806,8 +806,6 @@ namespace SmartModulBackupClasses.Managers
         /// <returns></returns>
         public async Task FixIDsAsync()
         {
-            //TODO: zprovoznit
-
             bool entered = semaphore.WaitOne(Patience);
             try
             {

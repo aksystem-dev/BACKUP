@@ -350,12 +350,14 @@ namespace SmartModulBackupClasses
         /// jinak vrátit cestu, kam by se mělo vzdáleně uožit
         /// </summary>
         /// <returns></returns>
-        public string GetRemoteInfoPath()
+        public string GetRemoteInfoPath(bool normalize = true)
         {
             if (_savedBkinfoRemotePath != null)
                 return _savedBkinfoRemotePath;
 
-            return Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), GenInfoFileName(false));
+            var ret = Path.Combine(SMB_Utils.GetRemoteBkinfosPath(), GenInfoFileName(false));
+            if (normalize) ret = ret.NormalizePath();
+            return ret;
         }
 
         //TODO: remove following commented code
