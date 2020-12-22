@@ -628,7 +628,8 @@ namespace smart_modul_BACKUP_service.BackupExe
             updateLastExecutionInfo();
 
             //odeslat mail o záloze
-            Manager.Get<SmbMailer>()?.ReportBackupErrorAsync(B_Obj);
+            if (!B_Obj.Success)
+                Manager.Get<SmbMailer>()?.ReportBackupErrorAsync(B_Obj);
 
             //odpojení od serverů, vyčištění stínových kopií, odstranění dočasných souborů
             disconnectSftp();
