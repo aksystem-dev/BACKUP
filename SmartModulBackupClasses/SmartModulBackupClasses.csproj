@@ -75,7 +75,9 @@
     <Compile Include="Mails\Mail.cs" />
     <Compile Include="Mails\MailCallbackArgs.cs" />
     <Compile Include="Mails\MailFile.cs" />
+    <Compile Include="Managers\DatabaseFinder.cs" />
     <Compile Include="Managers\Mailer.cs" />
+    <Compile Include="Managers\NewDatabaseHandler.cs" />
     <Compile Include="Managers\SftpMetadataManager.cs" />
     <Compile Include="Managers\SmbMailer.cs" />
     <Compile Include="OneToOneBackupStatus.cs" />

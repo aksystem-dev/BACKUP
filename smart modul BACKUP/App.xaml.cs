@@ -243,6 +243,9 @@ namespace smart_modul_BACKUP
         }
         private static void SetupRules()
         {
+            Manager.SetSingleton(new DatabaseFinder());
+            Manager.SetSingleton(new NewDatabaseHandler());
+
             var rloader = Manager.SetSingleton(new BackupRuleLoader()).Load();
             rloader.UI_Dispatcher = dispatch;
             rloader.OnRuleUpdated += Rloader_OnRuleUpdated;

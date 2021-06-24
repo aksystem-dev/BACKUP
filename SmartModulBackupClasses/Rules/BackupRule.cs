@@ -121,6 +121,11 @@ namespace SmartModulBackupClasses
         /// </summary>
         public bool DisableConcurrentExecution { get; set; } = false;
 
+        /// <summary>
+        /// zdali se má automaticky zaškrtnout "zálohovat" u nově přidaných databází
+        /// </summary>
+        public bool AutoBackupNewDatabases { get; set; } = false;
+
         public void SaveSelf()
         {
             XmlSerializer ser = new XmlSerializer(typeof(BackupRule));

@@ -26,6 +26,8 @@ namespace smart_modul_BACKUP
         {
             InitializeComponent();
 
+            //Task.Run(rules.Load);
+
             //Manager.Get<AvailableDbLoader>().Load();
             DataContext = rules;
 
@@ -143,5 +145,9 @@ namespace smart_modul_BACKUP
             popup_ruleTypeSelection.IsOpen = false;
         }
 
+        private void pageLoad(object sender, RoutedEventArgs e)
+        {
+            Task.Run(() => rules.Load());
+        }
     }
 }

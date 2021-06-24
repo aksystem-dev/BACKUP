@@ -133,6 +133,8 @@ namespace smart_modul_BACKUP_service
                 Manager.SetSingleton(new BackupCleaner()); //BackupCleaner - odstraňuje staré zálohy
                 Manager.SetSingleton(new Mailer()); //Mailer - umožňuje posílat maily
                 Manager.SetSingleton(new SmbMailer()); //SmbMailer - umožňuje generovat a posílat maily specifické pro smart modul BACKUP
+                Manager.SetSingleton(new DatabaseFinder());
+                Manager.SetSingleton(new NewDatabaseHandler());
                 observer = Manager.SetSingleton(new FolderObserver());
 
                 //Vytvořit BackupTimeline - ta se stará o spouštění záloh ve správné časy

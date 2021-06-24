@@ -185,7 +185,7 @@ namespace smart_modul_BACKUP
             //procházíme všechny db
             foreach (var db in Manager.Get<AvailableDbLoader>().availableDatabases)
             {
-                //pokud je tato databáze už načtená, načteme ještě název firmy
+                //pokud je tato databáze už načtená z pravidla
                 var already_laoded = databases.Where(f => f.DbInfo.name.ToLower() == db.name.ToLower());
                 if (already_laoded.Any())
                 {
@@ -213,12 +213,15 @@ namespace smart_modul_BACKUP
 
                 databases.Add(source);
             }
+
+            ForgetDeletedDatabases();
         }
 
         private void loadRuleDbs()
         {
             //načíst databáze, které pravidlo zná
             if (Rule.Sources.Databases != null)
+            {
                 foreach (var db in Rule.Sources.Databases)
                 {
                     BackupSourceModel model = new BackupSourceModel()
@@ -233,6 +236,21 @@ namespace smart_modul_BACKUP
 
                     databases.Add(model);
                 }
+            }
+        }
+
+        private void ForgetDeletedDatabases()
+        {
+            var existingDatabases = Manager.Get<AvailableDbLoader>().availableDatabases.Select(db => db.name).ToHashSet();
+
+            foreach (var database in databases.ToArray())
+            {
+                if (existingDatabases.Contains(database.DbInfo.name) == false && database.source.enabled == false)
+                {
+                    Rule.Sources.All.Remove(database.source);
+                    databases.Remove(database);
+                }
+            }
         }
 
         private void LoadDirs()
@@ -766,16 +784,20 @@ namespace smart_modul_BACKUP
 
         private void _dbReload(object sender, RoutedEventArgs e)
         {
-            //znovu načíst názvy db ze serveru
-            Manager.Get<AvailableDbLoader>().Load();
+            ////znovu načíst názvy db ze serveru
+            //Manager.Get<AvailableDbLoader>().Load();
 
-            //odstranit všechny databáze ze seznamu, které nebyly přidány do pravidla
-            foreach (var i in databases.ToArray())
-                if (!Rule.Sources.All.Contains(i.source))
-                    databases.Remove(i);
-            
-            //znovu načíst serverové databáze do observablecollection
-            loadServerDbs();
+            ////odstranit všechny databáze ze seznamu, které nebyly přidány do pravidla
+            //foreach (var i in databases.ToArray())
+            //    if (!Rule.Sources.All.Contains(i.source))
+            //        databases.Remove(i);
+
+            ////znovu načíst serverové databáze do observablecollection
+            //loadServerDbs();
+
+            Manager.Get<AvailableDbLoader>().Load();
+            Manager.Get<BackupRuleLoader>().TryInvokeDatabaseSourceUpdate();
+            LoadDbs();
         }
 
         private void mousewheel(object sender, System.Windows.Input.MouseWheelEventArgs e)

@@ -375,6 +375,11 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
+
+            <CheckBox Content="AUTOMATICKY ZÁLOHOVAT NOVĚ PŘIDANÉ DATABÁZE"
+                      IsChecked="{Binding Path=AutoBackupNewDatabases, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      HorizontalAlignment="Center"
+                      Margin="15" />
             <!--#endregion-->
         </StackPanel>
 

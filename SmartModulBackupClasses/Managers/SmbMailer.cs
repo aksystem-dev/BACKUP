@@ -17,6 +17,7 @@ namespace SmartModulBackupClasses.Managers
         public const string MAIL_TEMPLATES_FOLDER = "MailTemplates";
         public const string BACKUP_ERROR_REPORT_MAIL = "backup_error.html";
         public const string CONCURRENTS_BACKUPS_MAIL = "concurrent_backups.html";
+        public const string NEW_DATABASE_MAIL = "new_databases.html";
 
         private Mailer getMailer() => Manager.Get<Mailer>();
         private EmailConfig getCfg() => Manager.Get<ConfigManager>()?.Config?.EmailConfig;
@@ -66,6 +67,26 @@ namespace SmartModulBackupClasses.Managers
         //    var mailer = getMailer();
         //    await mailer.SendSmartEachAsync(mail, cfg: cfg);
         //}
+
+        public async Task ReportNewDatabasesAsync(IEnumerable<string> newDatabases)
+        {
+            var email = getNewDatabaseMail(newDatabases, NEW_DATABASE_MAIL);
+            if (email == null)
+            {
+                notifyTemplateMissing(NEW_DATABASE_MAIL);
+                return;
+            }
+
+            var mail = new Mail()
+            {
+                Content = email,
+                Html = true,
+                Subject = "smart modul BACKUP - nové databáze"
+            };
+
+            var mailer = getMailer();
+            await mailer.SendSmartEachAsync(mail, cfg: getCfg());
+        }
 
         public async Task ReportBackupErrorAsync(Backup bk)
         {
@@ -147,6 +168,19 @@ namespace SmartModulBackupClasses.Managers
             var email = new StringInterpolator(template);
             replaceCommon(email);
             replaceBackup(email, bk);
+
+            return email.ToString();
+        }
+
+        private string getNewDatabaseMail(IEnumerable<string> databases, string mailType)
+        {
+            var template = getTemplate(mailType);
+
+            if (template == null)
+                return null;
+
+            var email = new StringInterpolator(template);
+            email.Set("databases", string.Join(", ", databases));
 
             return email.ToString();
         }

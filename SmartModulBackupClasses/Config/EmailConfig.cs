@@ -31,6 +31,11 @@ namespace SmartModulBackupClasses
         public bool SendErrors { get; set; } = false;
 
         /// <summary>
+        /// zdali je povolena notifikace uživatele o nových databázích přes e-mail.
+        /// </summary>
+        public bool SendNewDatabases { get; set; }
+
+        /// <summary>
         /// Adresa, z níž posílámě maily.
         /// </summary>
         public string FromAddress { get; set; } = "";
