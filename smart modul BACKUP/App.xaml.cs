@@ -52,9 +52,12 @@ namespace smart_modul_BACKUP
         /// Umožňuje volat funkce ve vlákně GUI z jiných vláken.
         /// </summary>
         /// <param name="a"></param>
-        public static void dispatch(Action a)
+        public static void dispatch(Action a, bool sync)
         {
-            Application.Current.Dispatcher.InvokeAsync(() =>
+            var dgate = sync ? new Action<Action>(Application.Current.Dispatcher.Invoke)
+                : new Action<Action>(a_ => Application.Current.Dispatcher.InvokeAsync(a_));
+
+            dgate(() =>
             {
                 try
                 {
@@ -66,6 +69,8 @@ namespace smart_modul_BACKUP
                 }
             });
         }
+
+        public static void dispatch(Action a) => dispatch(a, false);      
 
         private void OnAppStart(object sender, StartupEventArgs e)
         {
@@ -162,6 +167,7 @@ namespace smart_modul_BACKUP
             SetupAvailableDbs(); //nastavit AvailableDbLoader
             SetupSftp(); //nastavit SftpUploaderFactory
             Manager.SetSingleton(new InProgress()); //nastavit InProgress
+            SetupMail();
 
             apiTask.Wait(); //počkat na task
             
@@ -171,6 +177,12 @@ namespace smart_modul_BACKUP
             //po vyhodnocení metody Setup (v níž se mohou otevírat dialogová okna) můžeme
             //zase nastavit ShutdownMode tak, aby se aplikace vypla pokud se vypne MainWindow
             ShutdownMode = ShutdownMode.OnMainWindowClose;
+        }
+
+        private static void SetupMail()
+        {
+            Manager.SetSingleton(new Mailer());
+            Manager.SetSingleton(new SmbMailer());
         }
 
         private static void SetupGuicom()

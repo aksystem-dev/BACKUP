@@ -125,6 +125,8 @@
                 
                 <CheckBox HorizontalAlignment="Center" Content="POSÍLAT E-MAILY PŘI CHYBÁCH" Margin="10"
                           IsChecked="{Binding Path=EmailConfig.SendErrors, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <CheckBox HorizontalAlignment="Center" Content="POSÁLAT E-MAILY PŘI ZJIŠTĚNÍ NOVÝCH DATABÁZÍ" Margin="10"
+                          IsChecked="{Binding Path=EmailConfig.SendNewDatabases, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <local:LabelTextBox LabelText="SMTP SERVER"
                                     Text="{Binding Path=EmailConfig.SmtpHost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

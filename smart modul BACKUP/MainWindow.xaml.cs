@@ -145,7 +145,13 @@ namespace smart_modul_BACKUP
 
             //uložit konfiguraci, pokud je otevřená ConfigPage
             if (frame.Content is ConfigPage)
+            {
                 saveCfg();
+            }
+            else if (frame.Content is SingleRulePage singleRulePage)
+            {
+                Manager.Get<BackupRuleLoader>().Update(singleRulePage.Rule);
+            }
 
             Manager.Get<ServiceState>().Reload();
 

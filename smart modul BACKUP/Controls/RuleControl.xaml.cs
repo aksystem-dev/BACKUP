@@ -796,7 +796,8 @@ namespace smart_modul_BACKUP
             //loadServerDbs();
 
             Manager.Get<AvailableDbLoader>().Load();
-            Manager.Get<BackupRuleLoader>().TryInvokeDatabaseSourceUpdate();
+            this.DataContext = Manager.Get<BackupRuleLoader>().Load().Rules.First(rule => rule.LocalID == Rule.LocalID);
+            
             LoadDbs();
         }
 

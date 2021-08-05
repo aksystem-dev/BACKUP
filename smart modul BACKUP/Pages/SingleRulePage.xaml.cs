@@ -20,7 +20,7 @@ namespace smart_modul_BACKUP
 
         BackupRuleLoader rules => Manager.Get<BackupRuleLoader>();
 
-        BackupRule rule => DataContext as BackupRule;
+        public BackupRule Rule => DataContext as BackupRule;
         public SingleRulePage(BackupRule rule, bool add = false)
         {
             this.add = add;
@@ -42,11 +42,11 @@ namespace smart_modul_BACKUP
         private bool can_save()
         {
             txt_rulename.Text = txt_rulename.Text.Trim();
-            if (rule.Name == "")
+            if (Rule.Name == "")
                 MessageBox.Show("Pravidlo musí mít název.");
-            else if (add && rules.Any(r => r.Name == rule.Name))
+            else if (add && rules.Any(r => r.Name == Rule.Name))
                 MessageBox.Show("Pravidlo s takovým názvem již existuje.");
-            else if (!rule.Name.All(ch => char.IsLetterOrDigit(ch) || ch == ' '))
+            else if (!Rule.Name.All(ch => char.IsLetterOrDigit(ch) || ch == ' '))
                 MessageBox.Show("Název pravidla může obsahovat pouze písmena, čísla a mezery.");
             else return true;
             return false;
@@ -78,7 +78,7 @@ namespace smart_modul_BACKUP
 
             try
             {
-                rules.Update(rule);
+                rules.Update(this.Rule);
                 Utils.DoSingleBackup(Rule);
             }
             catch (Exception ex)
@@ -120,12 +120,12 @@ namespace smart_modul_BACKUP
 
             if (add)
             {
-                rule.path = Path.Combine(Const.RULES_FOLDER, rule.Name + ".xml");
-                rules.Add(rule);
+                Rule.path = Path.Combine(Const.RULES_FOLDER, Rule.Name + ".xml");
+                rules.Add(Rule);
             }
             else
             {
-                rules.Update(rule);
+                rules.Update(Rule);
             }
         }
     }

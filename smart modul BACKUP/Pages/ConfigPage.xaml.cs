@@ -307,7 +307,7 @@ namespace smart_modul_BACKUP
             config.ToAddresses.Clear();
             config.ToAddresses.AddRange(ToAddresses.Select(str => str.Value));
 
-            var mailer = new Mailer();
+            var mailer = Manager.Get<Mailer>();
 
             var result = await mailer.SendDumbEachAsync(new Mail()
             {

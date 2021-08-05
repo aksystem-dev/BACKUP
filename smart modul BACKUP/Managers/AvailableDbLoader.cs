@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace smart_modul_BACKUP.Managers
 {
@@ -113,10 +114,11 @@ namespace smart_modul_BACKUP.Managers
                 {
                     //nastavit observable collection podle tohoto
                     App.dispatch(() =>
-                    {
+                    {                        
                         availableDatabases.UpdateCollectionByCompare(adbs, (db1, db2) => db1.name == db2.name);
-                        Loading = false;
-                    });
+                    }, sync: true);
+
+                    Loading = false;
                 }
             }
         }

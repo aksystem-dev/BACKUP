@@ -17,13 +17,20 @@ namespace SmartModulBackupClasses.Managers
 
             if (sendMails)
             {
+                SmbLog.Info("sending mail about new databases", category: LogCategory.Emails);
                 StartSendingNewDatabasesEmail(newDatabases);
+            }
+            else
+            {
+                SmbLog.Info("not sending mail about new databases", category: LogCategory.Emails);
             }
 
             foreach (var rule in rules.Where(r => r.AutoBackupNewDatabases))
             {
                 foreach (var databaseName in newDatabases.Where(dbName => !rule.Sources.Databases.Any(src => src.path == dbName)))
                 {
+                    SmbLog.Info($"automatically adding database '{databaseName}' to rule '{rule.Name}'");
+
                     rule.Sources.All.Add(new BackupSource()
                     {
                         enabled = true,

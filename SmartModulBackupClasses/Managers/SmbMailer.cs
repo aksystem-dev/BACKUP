@@ -180,6 +180,7 @@ namespace SmartModulBackupClasses.Managers
                 return null;
 
             var email = new StringInterpolator(template);
+            replaceCommon(email);
             email.Set("databases", string.Join(", ", databases));
 
             return email.ToString();
