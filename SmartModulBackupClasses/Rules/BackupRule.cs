@@ -128,33 +128,67 @@ namespace SmartModulBackupClasses
 
         public void SaveSelf()
         {
-            XmlSerializer ser = new XmlSerializer(typeof(BackupRule));
-            using (StreamWriter writer = new StreamWriter(path))
-                ser.Serialize(writer, this);
+            Guid saveGuid = Guid.NewGuid(); // TODO: toto je tu kvůli testování, později odstranit
+            SmbLog.Info($"saving rule '{Name}' to '{path}' (save job id: '{saveGuid}')");
+
+            try
+            {
+                XmlSerializer ser = new XmlSerializer(typeof(BackupRule));
+                using (StreamWriter writer = new StreamWriter(path))
+                {
+                    ser.Serialize(writer, this);
+                }
+            }
+            catch
+            {
+                SmbLog.Error($"saving rule '{Name}' to '{path}' FAILED (save job id: '{saveGuid}')");
+                throw;
+            }
+
+            SmbLog.Info($"SUCCESSFULLY saved rule '{Name}' to '{path}' (save job id: '{saveGuid}')");
         }
 
         public static BackupRule LoadFromXml(string file, bool autoSaveSelf = false)
         {
+            Guid loadGuid = Guid.NewGuid(); // TODO: toto je tu kvůli testování, později odstranit
+            SmbLog.Info($"loading rule from '{file}' (load job id: '{loadGuid}')");
+
             XmlSerializer ser = new XmlSerializer(typeof(BackupRule));
             BackupRule rule = null;
 
-            //načíst pravidlo
-            using (StreamReader reader = new StreamReader(file))
-                rule = ser.Deserialize(reader) as BackupRule;
+            try
+            {
+                //načíst pravidlo
+                using (StreamReader reader = new StreamReader(file))
+                {
+                    rule = ser.Deserialize(reader) as BackupRule;
+                }
 
-            //pokud je z nějakého důvodu null, vrátit null
-            if (rule == null) return null;
+                //pokud je z nějakého důvodu null, vrátit null
+                if (rule == null) { return null; }
 
-            //zařídit, aby bylo pravidlo správně
-            rule.Sources.FixIds();
+                //zařídit, aby bylo pravidlo správně
+                rule.Sources.FixIds();
 
-            if (autoSaveSelf)
-                //uložit změny provedené Fix()
-                using (StreamWriter writer = new StreamWriter(file, false))
-                    ser.Serialize(writer, rule);
+                if (autoSaveSelf)
+                {
+                    //uložit změny provedené Fix()
+                    using (StreamWriter writer = new StreamWriter(file, false))
+                    {
+                        ser.Serialize(writer, rule);
+                    }
+                }
 
-            //předat info o umístění
-            rule.path = file;
+                //předat info o umístění
+                rule.path = file;
+            }
+            catch
+            {
+                SmbLog.Error($"loading rule from '{file}' FAILED (load job id: '{loadGuid}')");
+                throw;
+            }
+
+            SmbLog.Info($"SUCCESSFULLY loaded rule from '{file}' (load job id: '{loadGuid}')");
 
             //vrátit pravidlo
             return rule;

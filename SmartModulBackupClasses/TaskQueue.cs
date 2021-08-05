@@ -13,7 +13,7 @@ namespace SmartModulBackupClasses
     /// </summary>
     public class TaskQueue
     {
-        BlockingCollection<Func<Task>> tasks;
+        readonly BlockingCollection<Func<Task>> tasks;
         CancellationTokenSource tokenSource;
         Thread loopThread = null;
         public bool Running => loopThread != null && loopThread.ThreadState == ThreadState.Running;
@@ -22,29 +22,33 @@ namespace SmartModulBackupClasses
 
         public TaskQueue()
         {
+            tasks = new BlockingCollection<Func<Task>>();
         }
 
         void start()
         {
             if (loopThread?.Join(1000) == false)
+            {
                 throw new InvalidOperationException("Už běžím!");
+            }
 
             //Console.WriteLine("start");
-            tasks = new BlockingCollection<Func<Task>>();
+            
             tokenSource = new CancellationTokenSource();
-            loopThread = new Thread(loop);
+            loopThread = new Thread(() => loop().Wait()); // TODO: toto je fujky fujky...
             loopThread.Start();
         }
 
         void exit()
         {
-            tasks = null;
+            SmbLog.Info("TaskQueue exit called");
+
             tokenSource = null;
             loopThread = null;
         }
         
 
-        async void loop()
+        async Task loop()
         {
             try
             {
@@ -61,19 +65,38 @@ namespace SmartModulBackupClasses
                         OnExceptionCaught?.Invoke(this, ex);
                     }
                 }
-
-                exit();
             }
             catch (Exception ex)
             {
-
+                SmbLog.Error("error in TaskQueue", ex);
+                OnExceptionCaught?.Invoke(this, ex);
+            }
+            finally
+            {
+                exit();
             }
         }
 
         public void Enqueue(Func<Task> task)
         {
+            if (task == null)
+            {
+                SmbLog.Error("NULL passes to TaskQueue.Enqueue!!!");
+                throw new ArgumentNullException(nameof(task));
+            }
+
             if (!Running)
+            {
+                SmbLog.Info("TaskQueue thread not running. callin start...");
                 start();
+            }
+
+            if (tasks == null)
+            {
+                SmbLog.Error("BlockingCollection for tasks is null for some reason");
+                throw new NullReferenceException("tasks queue BlockingCollection is null");
+            }
+ 
             tasks.Add(task);
         }
 

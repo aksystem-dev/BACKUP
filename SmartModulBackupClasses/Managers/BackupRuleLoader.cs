@@ -277,12 +277,36 @@ namespace SmartModulBackupClasses.Managers
         /// <returns></returns>
         public BackupRule Update(BackupRule rule)
         {
+            SmbLog.Info("BackupRuleLoader.Update called");
+
+            if (rule == null)
+            {
+                SmbLog.Error("NULL PASSED TO BackupRuleLoader!!!");
+                throw new ArgumentNullException(nameof(rule));
+            }
+
+            if (ruleList == null) // TODO: pryč
+            {
+                SmbLog.Error("ruleList IS NULL for some reason...");
+                throw new NullReferenceException($"ruleList is null");
+            }
+
+            if (ruleList.Any(r => r == null))
+            {
+                SmbLog.Error("ruleList CONTAINS NULLS!");
+                throw new NullReferenceException("ruleList contains nulls");
+            }
+
             if (ruleList.Any(r => r.Name == rule.Name && r.LocalID != rule.LocalID))
+            {
                 throw new InvalidOperationException($"Pravidla musí mít unikátní názvy! Název {rule.Name} je již zabrán.");
+            }
 
             var f_rule = ruleList.FirstOrDefault(f => f.LocalID == rule.LocalID);
             if (f_rule == null)
+            {
                 throw new InvalidOperationException("Nelze updatovat neexistující pravidlo.");
+            }
             else
             {
                 if (f_rule != rule)
@@ -290,7 +314,15 @@ namespace SmartModulBackupClasses.Managers
 
                 rule.LastEdit = DateTime.Now;
                 rule.SaveSelf();
-                apiQueue.Enqueue(() => ruleUpdate(rule));
+
+                if (apiQueue == null) // TODO: odstranit
+                {
+                    SmbLog.Warn("apiQueue is null");
+                }
+                else
+                {
+                    apiQueue.Enqueue(() => ruleUpdate(rule));
+                }
             }
 
             invokeRuleUpdated(rule);
