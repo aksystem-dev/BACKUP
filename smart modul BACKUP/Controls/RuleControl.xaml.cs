@@ -795,6 +795,7 @@ namespace smart_modul_BACKUP
             ////znovu načíst serverové databáze do observablecollection
             //loadServerDbs();
 
+            this.Rule.SaveSelf();
             Manager.Get<AvailableDbLoader>().Load();
             this.DataContext = Manager.Get<BackupRuleLoader>().Load().Rules.First(rule => rule.LocalID == Rule.LocalID);
             
